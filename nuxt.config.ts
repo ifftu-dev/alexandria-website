@@ -32,6 +32,12 @@ export default defineNuxtConfig({
         { name: 'twitter:title', content: 'Alexandria — Free, Decentralized Learning' },
         { name: 'twitter:description', content: 'A free, decentralized learning platform that runs natively on every device. P2P networking, offline-first, blockchain-verified credentials.' },
       ],
+      script: [
+        {
+          innerHTML: `(function(){try{var t=localStorage.getItem('alexandria-theme');var d=document.documentElement;if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme:dark)').matches))d.classList.add('dark')}catch(e){}})()`,
+          type: 'text/javascript',
+        },
+      ],
       link: [
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
