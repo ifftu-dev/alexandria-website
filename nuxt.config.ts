@@ -2,6 +2,14 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
 
+  modules: [
+    '@nuxtjs/sitemap',
+  ],
+
+  site: {
+    url: 'https://alexandria.ifftu.dev',
+  },
+
   css: ['~/assets/css/main.css'],
 
   vite: {
@@ -25,12 +33,12 @@ export default defineNuxtConfig({
         { name: 'color-scheme', content: 'light dark' },
         { name: 'keywords', content: 'learning platform, free education, open source, decentralized, blockchain credentials, peer-to-peer learning, offline-first, native app, Tauri, Cardano' },
         { property: 'og:type', content: 'website' },
-        { property: 'og:title', content: 'Alexandria — Free, Decentralized Learning for Everyone' },
-        { property: 'og:description', content: 'A free, decentralized learning platform that runs natively on every device. P2P networking, offline-first, blockchain-verified credentials.' },
         { property: 'og:site_name', content: 'Alexandria' },
+        { property: 'og:image', content: 'https://alexandria.ifftu.dev/og-image.png' },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'Alexandria — Free, Decentralized Learning' },
-        { name: 'twitter:description', content: 'A free, decentralized learning platform that runs natively on every device. P2P networking, offline-first, blockchain-verified credentials.' },
+        { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og-image.png' },
       ],
       script: [
         {

@@ -5,6 +5,27 @@ useHead({
   title: 'Alexandria Recruiting — Hire Verified Talent, Not Resumes',
   meta: [
     { name: 'description', content: 'Discover candidates through blockchain-verified skill proofs, evidence-based credentials, and transparent learning trajectories. No resumes. No guesswork.' },
+    { property: 'og:title', content: 'Alexandria Recruiting — Hire Verified Talent, Not Resumes' },
+    { property: 'og:description', content: 'Discover candidates through blockchain-verified skill proofs and evidence-based credentials. No resumes. No guesswork. Just proof.' },
+    { property: 'og:url', content: 'https://alexandria.ifftu.dev/recruiter' },
+    { name: 'twitter:title', content: 'Alexandria Recruiting — Hire Verified Talent, Not Resumes' },
+    { name: 'twitter:description', content: 'Discover candidates through blockchain-verified skill proofs and evidence-based credentials. No resumes. Just proof.' },
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://alexandria.ifftu.dev/recruiter' },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: 'Alexandria Recruiting',
+        description: 'Hire verified talent through blockchain-verified skill proofs, evidence-based credentials, and transparent learning trajectories.',
+        url: 'https://alexandria.ifftu.dev/recruiter',
+        isPartOf: { '@type': 'WebSite', name: 'Alexandria', url: 'https://alexandria.ifftu.dev' },
+      }),
+    },
   ],
 })
 

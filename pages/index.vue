@@ -3,6 +3,42 @@ definePageMeta({
   layout: 'landing',
 })
 
+useHead({
+  title: 'Alexandria — Free, Decentralized Learning for Everyone',
+  meta: [
+    { name: 'description', content: 'A free, open-source learning platform that runs natively on macOS, Windows, Linux, iOS, and Android. Peer-to-peer networking, offline-first design, blockchain-verified credentials. No servers. No gatekeepers.' },
+    { property: 'og:title', content: 'Alexandria — Free, Decentralized Learning for Everyone' },
+    { property: 'og:description', content: 'A native app for every platform. P2P learning with blockchain-verified credentials, offline-first by design.' },
+    { property: 'og:url', content: 'https://alexandria.ifftu.dev/' },
+    { name: 'twitter:title', content: 'Alexandria — Free, Decentralized Learning for Everyone' },
+    { name: 'twitter:description', content: 'A native app for every platform. P2P learning with blockchain-verified credentials, offline-first by design.' },
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://alexandria.ifftu.dev/' },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'Alexandria',
+        applicationCategory: 'EducationalApplication',
+        operatingSystem: 'macOS, Windows, Linux, iOS, Android',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        description: 'A free, open-source, decentralized learning platform with blockchain-verified credentials.',
+        url: 'https://alexandria.ifftu.dev',
+        downloadUrl: 'https://github.com/ifftu-dev/alexandria/releases/latest',
+        author: {
+          '@type': 'Organization',
+          name: 'IFFTU',
+          url: 'https://ifftu.dev',
+        },
+      }),
+    },
+  ],
+})
+
 const { download, allPlatformsUrl } = useDownload()
 
 // ─── Scroll-triggered reveal via IntersectionObserver ───

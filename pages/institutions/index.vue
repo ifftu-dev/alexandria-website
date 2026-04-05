@@ -5,6 +5,27 @@ useHead({
   title: 'Alexandria for Institutions — Your LMS, Their Credentials',
   meta: [
     { name: 'description', content: 'The open-source LMS that gives credentials back to students. Blockchain-verified, skill-mapped, and decentralised by default. FERPA/GDPR ready with zero vendor lock-in.' },
+    { property: 'og:title', content: 'Alexandria for Institutions — Your LMS, Their Credentials' },
+    { property: 'og:description', content: 'An open-source LMS where every credential is blockchain-verified, every skill is structurally mapped, and students own their achievements forever.' },
+    { property: 'og:url', content: 'https://alexandria.ifftu.dev/institutions' },
+    { name: 'twitter:title', content: 'Alexandria for Institutions — Your LMS, Their Credentials' },
+    { name: 'twitter:description', content: 'An open-source LMS where every credential is blockchain-verified and students own their achievements forever.' },
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://alexandria.ifftu.dev/institutions' },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: 'Alexandria for Institutions',
+        description: 'The open-source LMS that gives credentials back to students. Blockchain-verified, skill-mapped, FERPA/GDPR ready.',
+        url: 'https://alexandria.ifftu.dev/institutions',
+        isPartOf: { '@type': 'WebSite', name: 'Alexandria', url: 'https://alexandria.ifftu.dev' },
+      }),
+    },
   ],
 })
 
