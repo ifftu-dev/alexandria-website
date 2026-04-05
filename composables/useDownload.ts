@@ -1,5 +1,5 @@
 interface DownloadInfo {
-  platform: 'macos' | 'windows' | 'linux' | 'unknown'
+  platform: 'macos' | 'windows' | 'linux' | 'ios' | 'android' | 'unknown'
   arch: 'x64' | 'arm64' | 'unknown'
   platformLabel: string
   downloadUrl: string
@@ -35,9 +35,14 @@ function detectPlatform(): { platform: DownloadInfo['platform']; arch: DownloadI
   const ua = navigator.userAgent.toLowerCase()
   const platform = (navigator as any).userAgentData?.platform?.toLowerCase() ?? navigator.platform?.toLowerCase() ?? ''
 
-  // Detect OS
+  // Detect OS — check mobile platforms first so they don't fall through
+  // to desktop matches (iOS UA contains "Mac OS", Android UA contains "Linux")
   let os: DownloadInfo['platform'] = 'unknown'
-  if (platform.includes('mac') || ua.includes('macintosh') || ua.includes('mac os')) {
+  if (ua.includes('iphone') || ua.includes('ipad') || ua.includes('ipod')) {
+    os = 'ios'
+  } else if (ua.includes('android')) {
+    os = 'android'
+  } else if (platform.includes('mac') || ua.includes('macintosh') || ua.includes('mac os')) {
     os = 'macos'
   } else if (platform.includes('win') || ua.includes('windows')) {
     os = 'windows'
@@ -101,6 +106,10 @@ function getPlatformLabel(platform: DownloadInfo['platform'], arch: DownloadInfo
       return 'Windows'
     case 'linux':
       return 'Linux'
+    case 'ios':
+      return 'Desktop'
+    case 'android':
+      return 'Desktop'
     default:
       return 'your platform'
   }
@@ -109,6 +118,8 @@ function getPlatformLabel(platform: DownloadInfo['platform'], arch: DownloadInfo
 function getPlatformIcon(platform: DownloadInfo['platform']): string {
   switch (platform) {
     case 'macos': return 'apple'
+    case 'ios': return 'download'
+    case 'android': return 'download'
     case 'windows': return 'windows'
     case 'linux': return 'linux'
     default: return 'download'
