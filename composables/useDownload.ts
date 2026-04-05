@@ -6,8 +6,28 @@ interface DownloadInfo {
   platformIcon: string
 }
 
+interface GitHubAsset {
+  name: string
+  browser_download_url: string
+}
+
+interface GitHubRelease {
+  tag_name: string
+  html_url: string
+  assets: GitHubAsset[]
+}
+
 const GITHUB_REPO_URL = 'https://github.com/ifftu-dev/alexandria'
 const RELEASES_URL = `${GITHUB_REPO_URL}/releases`
+
+const ASSET_PATTERNS: Record<string, RegExp> = {
+  'macos-arm64': /aarch64\.dmg$/,
+  'macos-x64': /aarch64\.dmg$/, // no Intel build — use ARM (runs via Rosetta)
+  'windows-x64': /x64-setup\.exe$/,
+  'windows-arm64': /x64-setup\.exe$/, // no ARM Windows build
+  'linux-x64': /amd64\.AppImage$/,
+  'linux-arm64': /aarch64\.AppImage$/,
+}
 
 function detectPlatform(): { platform: DownloadInfo['platform']; arch: DownloadInfo['arch'] } {
   if (import.meta.server) return { platform: 'unknown', arch: 'unknown' }
@@ -59,15 +79,18 @@ function detectPlatform(): { platform: DownloadInfo['platform']; arch: DownloadI
   return { platform: os, arch }
 }
 
-function buildDownloadUrl(_platform: DownloadInfo['platform'], _arch: DownloadInfo['arch']): string {
-  // No releases published yet — point to repo until first release
-  // TODO: Once releases exist, construct direct asset URLs:
-  //   const tag = '0.0.1-alpha'
-  //   const base = `${RELEASES_URL}/download/${tag}`
-  //   macos:   `${base}/Alexandria_${tag}_aarch64.dmg`
-  //   windows: `${base}/Alexandria_${tag}_x64-setup.exe`
-  //   linux:   `${base}/Alexandria_${tag}_amd64.AppImage`
-  return GITHUB_REPO_URL
+function findAssetUrl(assets: GitHubAsset[], platform: DownloadInfo['platform'], arch: DownloadInfo['arch']): string | null {
+  const pattern = ASSET_PATTERNS[`${platform}-${arch}`]
+  if (!pattern) return null
+  const asset = assets.find(a => pattern.test(a.name))
+  return asset?.browser_download_url ?? null
+}
+
+async function fetchLatestRelease(): Promise<GitHubRelease | null> {
+  const res = await fetch('https://api.github.com/repos/ifftu-dev/alexandria/releases')
+  if (!res.ok) return null
+  const releases: GitHubRelease[] = await res.json()
+  return releases[0] ?? null
 }
 
 function getPlatformLabel(platform: DownloadInfo['platform'], arch: DownloadInfo['arch']): string {
@@ -101,21 +124,37 @@ export function useDownload() {
     platformIcon: 'download',
   })
 
-  onMounted(() => {
+  const allPlatformsUrl = ref(RELEASES_URL)
+
+  onMounted(async () => {
     const { platform, arch } = detectPlatform()
+
     info.value = {
       platform,
       arch,
       platformLabel: getPlatformLabel(platform, arch),
-      downloadUrl: buildDownloadUrl(platform, arch),
+      downloadUrl: GITHUB_REPO_URL,
       platformIcon: getPlatformIcon(platform),
+    }
+
+    try {
+      const release = await fetchLatestRelease()
+      if (release) {
+        allPlatformsUrl.value = release.html_url
+        const assetUrl = findAssetUrl(release.assets, platform, arch)
+        if (assetUrl) {
+          info.value = { ...info.value, downloadUrl: assetUrl }
+        } else {
+          info.value = { ...info.value, downloadUrl: release.html_url }
+        }
+      }
+    } catch {
+      // API failed — keep fallback URLs
     }
   })
 
-  const allPlatformsUrl = `${RELEASES_URL}/latest`
-
   return {
     download: readonly(info),
-    allPlatformsUrl,
+    allPlatformsUrl: readonly(allPlatformsUrl),
   }
 }
