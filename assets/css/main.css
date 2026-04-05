@@ -477,6 +477,15 @@ body {
               transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Fallback: make content visible if JS fails to load or hydrate */
+@media (scripting: none) {
+  .landing-scroll-reveal,
+  .landing-scroll-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 .landing-scroll-reveal.is-visible {
   opacity: 1;
   transform: translateY(0);

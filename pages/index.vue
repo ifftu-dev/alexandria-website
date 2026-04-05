@@ -22,6 +22,11 @@ function useScrollReveal() {
       { threshold: 0.15, rootMargin: '0px 0px -40px 0px' },
     )
     els.forEach((el) => observer.observe(el))
+
+    // Safety: force all content visible after 3s in case observer fails
+    setTimeout(() => {
+      els.forEach((el) => el.classList.add('is-visible'))
+    }, 3000)
   })
 }
 
