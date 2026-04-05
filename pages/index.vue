@@ -215,7 +215,7 @@ const stats = [
 
         <!-- BACK LAYER -->
         <div ref="layerBack" class="landing-parallax-layer absolute inset-0 will-change-transform">
-          <svg class="absolute inset-0 h-full w-full landing-drift-slow" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
+          <svg class="absolute inset-0 h-full w-full" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
             <circle cx="160" cy="160" r="120" fill="url(#hero-node-glow)" />
             <circle cx="1280" cy="140" r="110" fill="url(#hero-node-glow)" />
             <circle cx="200" cy="640" r="115" fill="url(#hero-node-glow)" />
@@ -242,7 +242,7 @@ const stats = [
 
         <!-- MID LAYER -->
         <div ref="layerMid" class="landing-parallax-layer absolute inset-0 will-change-transform">
-          <svg class="absolute inset-0 h-full w-full landing-drift-mid" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
+          <svg class="absolute inset-0 h-full w-full" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
             <g class="landing-line-draw" opacity="0.1">
               <path d="M40,120 Q130,80 220,140" stroke="rgb(var(--color-primary))" stroke-width="1" fill="none" />
               <path d="M220,140 Q310,200 180,260" stroke="rgb(var(--color-primary))" stroke-width="0.75" fill="none" />
@@ -274,7 +274,7 @@ const stats = [
 
         <!-- FRONT LAYER — Starfield -->
         <div ref="layerFront" class="landing-parallax-layer absolute inset-0 will-change-transform">
-          <svg class="absolute inset-0 h-full w-full landing-drift-fast" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
+          <svg class="absolute inset-0 h-full w-full" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
             <g fill="rgb(var(--color-primary))">
               <circle cx="220" cy="140" r="4" opacity="0.6" />
               <circle cx="1200" cy="100" r="4" opacity="0.55" />
