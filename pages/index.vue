@@ -378,8 +378,16 @@ const stats = [
             zero servers between you and knowledge.
           </p>
 
+          <!-- Early access disclaimer -->
+          <div class="landing-reveal landing-reveal-delay-3 mx-auto mt-10 max-w-xl rounded-xl border border-amber-400/20 bg-amber-500/5 px-5 py-4 backdrop-blur-sm">
+            <p class="text-sm leading-relaxed text-amber-200/90">
+              <span class="mr-1.5 font-semibold text-amber-300">Early Preview</span>
+              &mdash; Alexandria is in active development and not yet production-ready. Do not use with real credentials, real funds, or sensitive data.
+            </p>
+          </div>
+
           <!-- CTA buttons -->
-          <div class="landing-reveal landing-reveal-delay-3 mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               :href="download.downloadUrl"
               class="btn btn-primary btn-lg group w-full sm:w-auto"
@@ -569,7 +577,13 @@ const stats = [
           <p class="mx-auto mt-6 max-w-xl text-lg text-[rgb(var(--color-muted-foreground))]">
             Download Alexandria and join a decentralized learning network. Free for learners, forever.
           </p>
-          <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <div class="mx-auto mt-6 max-w-md rounded-xl border border-amber-400/20 bg-amber-500/5 px-4 py-3 backdrop-blur-sm">
+            <p class="text-sm leading-relaxed text-amber-200/90">
+              <span class="mr-1 font-semibold text-amber-300">Early Preview</span>
+              &mdash; not yet production-ready.
+            </p>
+          </div>
+          <div class="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <a
               :href="download.downloadUrl"
               class="btn btn-primary btn-lg"
