@@ -59,19 +59,15 @@ function detectPlatform(): { platform: DownloadInfo['platform']; arch: DownloadI
   return { platform: os, arch }
 }
 
-function buildDownloadUrl(platform: DownloadInfo['platform'], _arch: DownloadInfo['arch']): string {
-  const tag = '0.0.1-alpha'
-  const base = `${RELEASES_URL}/download/${tag}`
-  switch (platform) {
-    case 'macos':
-      return `${base}/Alexandria_${tag}_aarch64.dmg`
-    case 'windows':
-      return `${base}/Alexandria_${tag}_x64-setup.exe`
-    case 'linux':
-      return `${base}/Alexandria_${tag}_amd64.AppImage`
-    default:
-      return `${RELEASES_URL}/tag/${tag}`
-  }
+function buildDownloadUrl(_platform: DownloadInfo['platform'], _arch: DownloadInfo['arch']): string {
+  // No releases published yet — point to repo until first release
+  // TODO: Once releases exist, construct direct asset URLs:
+  //   const tag = '0.0.1-alpha'
+  //   const base = `${RELEASES_URL}/download/${tag}`
+  //   macos:   `${base}/Alexandria_${tag}_aarch64.dmg`
+  //   windows: `${base}/Alexandria_${tag}_x64-setup.exe`
+  //   linux:   `${base}/Alexandria_${tag}_amd64.AppImage`
+  return GITHUB_REPO_URL
 }
 
 function getPlatformLabel(platform: DownloadInfo['platform'], arch: DownloadInfo['arch']): string {
@@ -101,7 +97,7 @@ export function useDownload() {
     platform: 'unknown',
     arch: 'unknown',
     platformLabel: 'your platform',
-    downloadUrl: `${RELEASES_URL}/latest`,
+    downloadUrl: GITHUB_REPO_URL,
     platformIcon: 'download',
   })
 
