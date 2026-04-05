@@ -59,14 +59,19 @@ function detectPlatform(): { platform: DownloadInfo['platform']; arch: DownloadI
   return { platform: os, arch }
 }
 
-function buildDownloadUrl(_platform: DownloadInfo['platform'], _arch: DownloadInfo['arch']): string {
-  // TODO: Once releases are published, construct direct asset URLs here.
-  // Example for Tauri naming:
-  //   macos arm64: `${RELEASES_URL}/latest/download/Alexandria_aarch64.dmg`
-  //   macos x64:   `${RELEASES_URL}/latest/download/Alexandria_x64.dmg`
-  //   windows:     `${RELEASES_URL}/latest/download/Alexandria_x64-setup.exe`
-  //   linux:       `${RELEASES_URL}/latest/download/Alexandria_amd64.AppImage`
-  return `${RELEASES_URL}/latest`
+function buildDownloadUrl(platform: DownloadInfo['platform'], _arch: DownloadInfo['arch']): string {
+  const tag = '0.0.1-alpha'
+  const base = `${RELEASES_URL}/download/${tag}`
+  switch (platform) {
+    case 'macos':
+      return `${base}/Alexandria_${tag}_aarch64.dmg`
+    case 'windows':
+      return `${base}/Alexandria_${tag}_x64-setup.exe`
+    case 'linux':
+      return `${base}/Alexandria_${tag}_amd64.AppImage`
+    default:
+      return `${RELEASES_URL}/tag/${tag}`
+  }
 }
 
 function getPlatformLabel(platform: DownloadInfo['platform'], arch: DownloadInfo['arch']): string {
