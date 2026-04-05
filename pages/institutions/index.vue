@@ -215,7 +215,7 @@ onMounted(() => {
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- HERO                                                              -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+    <section class="relative min-h-[calc(90vh-4rem)] flex items-center justify-center overflow-hidden">
       <!-- Gradient backdrop -->
       <div class="absolute inset-0 bg-gradient-to-b from-[rgb(var(--color-institution)/0.06)] via-transparent to-[rgb(var(--color-muted)/0.3)]" />
       <div class="absolute inset-0 bg-grid opacity-[0.04]" />

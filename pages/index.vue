@@ -190,7 +190,7 @@ const stats = [
 <template>
   <div>
     <!-- ═══ HERO SECTION ═══ -->
-    <section ref="heroRef" class="landing-hero relative flex h-[90vh] min-h-[600px] items-center justify-center overflow-hidden">
+    <section ref="heroRef" class="landing-hero relative flex min-h-[calc(90vh-4rem)] items-center justify-center overflow-hidden">
       <!-- Background layer: galaxy starfield — 3 parallax layers -->
       <div class="absolute inset-0" aria-hidden="true">
         <!-- Base gradient (static) -->
@@ -393,7 +393,7 @@ const stats = [
       <!-- Gradient overlay for smooth transition -->
       <div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-[rgb(var(--color-background))] pointer-events-none" aria-hidden="true" />
 
-      <div class="container relative">
+      <div class="container relative py-12">
         <div class="mx-auto max-w-5xl">
           <!-- Kicker -->
           <div class="landing-reveal mb-8 flex items-center justify-center gap-3">
