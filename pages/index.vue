@@ -213,9 +213,9 @@ const stats = [
           </defs>
         </svg>
 
-        <!-- BACK LAYER -->
+        <!-- BACK LAYER — slow drift for ambient movement -->
         <div ref="layerBack" class="landing-parallax-layer absolute inset-0 will-change-transform">
-          <svg class="absolute inset-0 h-full w-full" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
+          <svg class="absolute inset-0 h-full w-full landing-drift-slow will-change-transform" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
             <circle cx="160" cy="160" r="120" fill="url(#hero-node-glow)" />
             <circle cx="1280" cy="140" r="110" fill="url(#hero-node-glow)" />
             <circle cx="200" cy="640" r="115" fill="url(#hero-node-glow)" />
@@ -420,6 +420,14 @@ const stats = [
               <span class="text-xs text-[rgb(var(--color-muted-foreground))]">{{ stat.label }}</span>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 landing-reveal landing-reveal-delay-5">
+        <div class="flex flex-col items-center gap-2">
+          <span class="text-[10px] font-medium uppercase tracking-widest text-[rgb(var(--color-muted-foreground))]">Scroll</span>
+          <div class="h-8 w-px bg-gradient-to-b from-[rgb(var(--color-primary)/0.5)] to-transparent animate-pulse" />
         </div>
       </div>
     </section>
