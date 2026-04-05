@@ -1,7 +1,6 @@
 [build]
-  command = "node -v && npm -v && npm ci && npm run generate"
+  command = "npm run generate"
   publish = ".output/public"
 
 [build.environment]
   NODE_VERSION = "22"
-  NPM_FLAGS = "--prefer-offline"
