@@ -149,7 +149,7 @@ const stats = [
 <template>
   <div>
     <!-- ═══ HERO SECTION ═══ -->
-    <section ref="heroRef" class="landing-hero relative flex min-h-[90vh] items-center justify-center overflow-hidden">
+    <section ref="heroRef" class="landing-hero relative flex h-[90vh] min-h-[600px] items-center justify-center overflow-hidden">
       <!-- Background layer: galaxy starfield — 3 parallax layers -->
       <div class="absolute inset-0" aria-hidden="true">
         <!-- Base gradient (static) -->
