@@ -446,18 +446,18 @@ const stats = [
     </section>
 
     <!-- ═══ FEATURES ═══ -->
-    <section class="relative bg-[rgb(var(--color-background))] py-24 sm:py-32">
+    <section class="relative bg-[rgb(var(--color-background))] py-16 sm:py-24 lg:py-32">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div class="landing-scroll-reveal text-center">
-          <h2 class="landing-serif text-3xl font-bold tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-5xl">
+          <h2 class="landing-serif text-2xl font-bold tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-5xl">
             Education without infrastructure.
           </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-lg text-[rgb(var(--color-muted-foreground))]">
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
             No cloud servers, no subscriptions, no data collection. Just a native app that connects learners directly.
           </p>
         </div>
 
-        <div class="mt-20 grid gap-12 md:grid-cols-2">
+        <div class="mt-12 grid gap-10 sm:mt-20 md:grid-cols-2">
           <div
             v-for="(feature, i) in features"
             :key="feature.title"
@@ -485,18 +485,18 @@ const stats = [
     </section>
 
     <!-- ═══ HOW IT WORKS ═══ -->
-    <section class="relative bg-[rgb(var(--color-muted))] py-24 sm:py-32">
+    <section class="relative bg-[rgb(var(--color-muted))] py-16 sm:py-24 lg:py-32">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div class="landing-scroll-reveal text-center">
-          <h2 class="landing-serif text-3xl font-bold tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-5xl">
+          <h2 class="landing-serif text-2xl font-bold tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-5xl">
             How it works.
           </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-lg text-[rgb(var(--color-muted-foreground))]">
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
             From download to decentralized credentials in four steps.
           </p>
         </div>
 
-        <div class="relative mt-20">
+        <div class="relative mt-12 sm:mt-20">
           <!-- Connecting line -->
           <div class="absolute left-5 top-0 bottom-0 z-0 hidden w-px bg-gradient-to-b from-[rgb(var(--color-primary))] via-[rgb(var(--color-primary)/0.3)] to-transparent sm:block" />
 
@@ -525,41 +525,41 @@ const stats = [
     </section>
 
     <!-- ═══ PLATFORM SUPPORT ═══ -->
-    <section class="relative bg-[rgb(var(--color-background))] py-24 sm:py-32">
+    <section class="relative bg-[rgb(var(--color-background))] py-16 sm:py-24 lg:py-32">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div class="landing-scroll-reveal text-center">
-          <h2 class="landing-serif text-3xl font-bold tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-5xl">
+          <h2 class="landing-serif text-2xl font-bold tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-5xl">
             Runs everywhere.
           </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-lg text-[rgb(var(--color-muted-foreground))]">
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
             One codebase. Every platform. Native performance.
           </p>
         </div>
 
-        <div class="mt-16 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
+        <div class="mt-10 grid grid-cols-3 gap-3 sm:mt-16 sm:grid-cols-3 sm:gap-6 lg:grid-cols-5">
           <div
             v-for="platform in ['macOS', 'Windows', 'Linux', 'iOS', 'Android']"
             :key="platform"
-            class="landing-scroll-reveal flex flex-col items-center gap-3 rounded-2xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] p-6 text-center transition-all hover:border-[rgb(var(--color-primary)/0.3)] hover:shadow-md"
+            class="landing-scroll-reveal flex flex-col items-center gap-2 rounded-xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] p-4 text-center transition-all hover:border-[rgb(var(--color-primary)/0.3)] hover:shadow-md sm:gap-3 sm:rounded-2xl sm:p-6"
           >
             <!-- macOS -->
-            <svg v-if="platform === 'macOS'" class="h-8 w-8 text-[rgb(var(--color-foreground))]" fill="currentColor" viewBox="0 0 24 24">
+            <svg v-if="platform === 'macOS'" class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="currentColor" viewBox="0 0 24 24">
               <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
             </svg>
             <!-- Windows -->
-            <svg v-else-if="platform === 'Windows'" class="h-8 w-8 text-[rgb(var(--color-foreground))]" fill="currentColor" viewBox="0 0 24 24">
+            <svg v-else-if="platform === 'Windows'" class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="currentColor" viewBox="0 0 24 24">
               <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" />
             </svg>
             <!-- Linux -->
-            <svg v-else-if="platform === 'Linux'" class="h-8 w-8 text-[rgb(var(--color-foreground))]" fill="currentColor" viewBox="0 0 24 24">
+            <svg v-else-if="platform === 'Linux'" class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2l.003.003c.391.778 1.113 1.368 1.884 1.5.899.2 1.983-.26 3.181-.734.803-.334 1.503-.73 1.998-1.198.39-.37.704-.73.87-1.205.088-.251.112-.478.166-.733.054-.259.132-.532.132-.803v-.2c0-.26-.008-.47-.06-.67-.085-.32-.263-.6-.455-.86-.377-.4-.848-.597-1.302-.85-.259-.133-.535-.25-.715-.385-.18-.132-.29-.266-.29-.466z" />
             </svg>
             <!-- iOS -->
-            <svg v-else-if="platform === 'iOS'" class="h-8 w-8 text-[rgb(var(--color-foreground))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <svg v-else-if="platform === 'iOS'" class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
             </svg>
             <!-- Android -->
-            <svg v-else class="h-8 w-8 text-[rgb(var(--color-foreground))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <svg v-else class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
             </svg>
             <span class="text-sm font-medium text-[rgb(var(--color-foreground))]">{{ platform }}</span>
@@ -569,17 +569,17 @@ const stats = [
     </section>
 
     <!-- ═══ CTA ═══ -->
-    <section class="relative overflow-hidden py-24 sm:py-32">
+    <section class="relative overflow-hidden py-16 sm:py-24 lg:py-32">
       <div class="absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-primary)/0.06)] via-[rgb(var(--color-muted)/0.4)] to-[rgb(var(--color-primary)/0.03)]" />
       <div class="absolute inset-0 bg-grid opacity-[0.03]" />
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-[rgb(var(--color-primary)/0.06)] blur-3xl" />
 
       <div class="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
         <div class="landing-scroll-reveal">
-          <h2 class="landing-serif text-3xl font-bold tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-5xl">
+          <h2 class="landing-serif text-2xl font-bold tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-5xl">
             Start learning. Own your credentials.
           </h2>
-          <p class="mx-auto mt-6 max-w-xl text-lg text-[rgb(var(--color-muted-foreground))]">
+          <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:mt-6 sm:text-lg">
             Download Alexandria and join a decentralized learning network. Free for learners, forever.
           </p>
           <div class="mx-auto mt-6 max-w-md rounded-xl border border-amber-400/20 bg-amber-500/5 px-4 py-3 backdrop-blur-sm">

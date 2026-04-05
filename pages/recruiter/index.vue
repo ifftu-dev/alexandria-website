@@ -156,14 +156,14 @@ onMounted(() => {
     </section>
 
     <!-- ═══ PROBLEM / SOLUTION ═══ -->
-    <section id="how-it-works" class="relative bg-[rgb(var(--color-background))] py-24 sm:py-32">
+    <section id="how-it-works" class="relative bg-[rgb(var(--color-background))] py-16 sm:py-24 lg:py-32">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div class="scroll-reveal text-center">
-          <h2 class="recruiter-serif text-3xl text-[rgb(var(--color-foreground))] sm:text-5xl">
+          <h2 class="recruiter-serif text-2xl text-[rgb(var(--color-foreground))] sm:text-3xl lg:text-5xl">
             The hiring problem is a
             <span class="text-recruiter-gradient">verification</span> problem.
           </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-lg text-[rgb(var(--color-muted-foreground))]">
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
             Traditional hiring relies on unverifiable claims. Alexandria replaces trust with proof.
           </p>
         </div>
@@ -223,13 +223,13 @@ onMounted(() => {
     </section>
 
     <!-- ═══ FEATURES ═══ -->
-    <section id="features" class="relative bg-[rgb(var(--color-muted))] py-24 sm:py-32">
+    <section id="features" class="relative bg-[rgb(var(--color-muted))] py-16 sm:py-24 lg:py-32">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div class="scroll-reveal text-center">
-          <h2 class="recruiter-serif text-3xl text-[rgb(var(--color-foreground))] sm:text-5xl">
+          <h2 class="recruiter-serif text-2xl text-[rgb(var(--color-foreground))] sm:text-3xl lg:text-5xl">
             Intelligence, not intuition.
           </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-lg text-[rgb(var(--color-muted-foreground))]">
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
             Every tool built on verifiable evidence and cryptographic proof.
           </p>
         </div>
@@ -265,13 +265,13 @@ onMounted(() => {
     </section>
 
     <!-- ═══ HOW IT WORKS (Pipeline) ═══ -->
-    <section class="relative bg-[rgb(var(--color-background))] py-24 sm:py-32">
+    <section class="relative bg-[rgb(var(--color-background))] py-16 sm:py-24 lg:py-32">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div class="scroll-reveal text-center">
-          <h2 class="recruiter-serif text-3xl text-[rgb(var(--color-foreground))] sm:text-5xl">
+          <h2 class="recruiter-serif text-2xl text-[rgb(var(--color-foreground))] sm:text-3xl lg:text-5xl">
             From search to hire.
           </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-lg text-[rgb(var(--color-muted-foreground))]">
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
             A streamlined workflow built on transparency at every stage.
           </p>
         </div>
@@ -310,13 +310,13 @@ onMounted(() => {
     </section>
 
     <!-- ═══ TESTIMONIALS ═══ -->
-    <section class="relative bg-[rgb(var(--color-muted))] py-24 sm:py-32">
+    <section class="relative bg-[rgb(var(--color-muted))] py-16 sm:py-24 lg:py-32">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div class="scroll-reveal text-center">
-          <h2 class="recruiter-serif text-3xl text-[rgb(var(--color-foreground))] sm:text-5xl">
+          <h2 class="recruiter-serif text-2xl text-[rgb(var(--color-foreground))] sm:text-3xl lg:text-5xl">
             Trusted by forward-thinking teams.
           </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-lg text-[rgb(var(--color-muted-foreground))]">
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
             Early adopters are already transforming how they discover and verify talent.
           </p>
         </div>
@@ -340,14 +340,14 @@ onMounted(() => {
     </section>
 
     <!-- ═══ CTA ═══ -->
-    <section class="relative overflow-hidden py-24 sm:py-32">
+    <section class="relative overflow-hidden py-16 sm:py-24 lg:py-32">
       <div class="absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-recruiter)/0.06)] via-[rgb(var(--color-muted)/0.4)] to-[rgb(var(--color-recruiter)/0.03)]" />
       <div class="absolute inset-0 bg-grid opacity-[0.03]" />
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-[rgb(var(--color-recruiter)/0.06)] blur-3xl" />
 
       <div class="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
         <div class="scroll-reveal">
-          <h2 class="recruiter-serif text-3xl text-[rgb(var(--color-foreground))] sm:text-5xl">
+          <h2 class="recruiter-serif text-2xl text-[rgb(var(--color-foreground))] sm:text-3xl lg:text-5xl">
             Stop guessing. Start verifying.
           </h2>
           <p class="mx-auto mt-6 max-w-xl text-lg text-[rgb(var(--color-muted-foreground))]">

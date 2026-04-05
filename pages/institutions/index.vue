@@ -291,14 +291,14 @@ onMounted(() => {
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- PROMISE SECTION                                                   -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section class="relative bg-[rgb(var(--color-background))] py-24 sm:py-32">
+    <section class="relative bg-[rgb(var(--color-background))] py-16 sm:py-24 lg:py-32">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div class="scroll-reveal text-center">
-          <h2 class="institution-serif text-3xl text-[rgb(var(--color-foreground))] sm:text-5xl">
+          <h2 class="institution-serif text-2xl text-[rgb(var(--color-foreground))] sm:text-3xl lg:text-5xl">
             The LMS that gives credentials
             <span class="text-institution-gradient">back to students.</span>
           </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-lg text-[rgb(var(--color-muted-foreground))]">
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
             Most learning platforms lock credentials inside their walls. Alexandria makes them portable, verifiable, and permanently student-owned.
           </p>
         </div>
@@ -349,24 +349,24 @@ onMounted(() => {
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- TABBED FEATURES                                                   -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section id="features" class="relative bg-[rgb(var(--color-muted))] py-24 sm:py-32">
+    <section id="features" class="relative bg-[rgb(var(--color-muted))] py-16 sm:py-24 lg:py-32">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div class="scroll-reveal text-center">
-          <h2 class="institution-serif text-3xl text-[rgb(var(--color-foreground))] sm:text-5xl">
+          <h2 class="institution-serif text-2xl text-[rgb(var(--color-foreground))] sm:text-3xl lg:text-5xl">
             Everything you need.
             <span class="text-institution-gradient">Nothing you don't.</span>
           </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-lg text-[rgb(var(--color-muted-foreground))]">
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
             A complete LMS with capabilities no other platform offers — open-source and built for institutions that care about what credentials actually mean.
           </p>
         </div>
 
         <!-- Category pills -->
-        <div class="scroll-reveal mt-12 flex flex-wrap items-center justify-center gap-2">
+        <div class="scroll-reveal mt-8 flex flex-wrap items-center justify-center gap-2 sm:mt-12">
           <button
             v-for="cat in featureCategories"
             :key="cat.key"
-            class="rounded-full px-5 py-2 text-sm font-medium transition-all"
+            class="rounded-full px-4 py-2.5 text-xs font-medium transition-all sm:px-5 sm:py-2 sm:text-sm"
             :class="activeCategory === cat.key
               ? 'bg-[rgb(var(--color-institution))] text-white shadow-lg shadow-[rgb(var(--color-institution)/0.25)]'
               : 'bg-[rgb(var(--color-card))] text-[rgb(var(--color-muted-foreground))] border border-[rgb(var(--color-border))] hover:border-[rgb(var(--color-institution)/0.3)] hover:text-[rgb(var(--color-foreground))]'"
@@ -377,11 +377,11 @@ onMounted(() => {
         </div>
 
         <!-- Feature cards -->
-        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           <div
             v-for="(feature, i) in featuresByCategory[activeCategory]"
             :key="`${activeCategory}-${i}`"
-            class="group rounded-2xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] p-7 transition-all hover:border-[rgb(var(--color-institution)/0.3)] hover:shadow-lg"
+            class="group rounded-xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] p-5 sm:rounded-2xl sm:p-7 transition-all hover:border-[rgb(var(--color-institution)/0.3)] hover:shadow-lg"
           >
             <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-[rgb(var(--color-institution)/0.1)] text-[rgb(var(--color-institution))] transition-colors group-hover:bg-[rgb(var(--color-institution)/0.15)]">
               <!-- pen -->
@@ -480,27 +480,28 @@ onMounted(() => {
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- COMPETITOR COMPARISON TABLE                                       -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section class="relative bg-[rgb(var(--color-background))] py-24 sm:py-32">
+    <section class="relative bg-[rgb(var(--color-background))] py-16 sm:py-24 lg:py-32">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div class="scroll-reveal text-center">
-          <h2 class="institution-serif text-3xl text-[rgb(var(--color-foreground))] sm:text-5xl">
+          <h2 class="institution-serif text-2xl text-[rgb(var(--color-foreground))] sm:text-3xl lg:text-5xl">
             How Alexandria
             <span class="text-institution-gradient">compares.</span>
           </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-lg text-[rgb(var(--color-muted-foreground))]">
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
             A transparent look at how we stack up against the incumbents.
           </p>
         </div>
 
-        <div class="scroll-reveal mt-12 overflow-x-auto rounded-2xl border border-[rgb(var(--color-border))]">
-          <table class="w-full min-w-[640px] text-sm">
+        <p class="scroll-reveal mt-8 text-center text-xs text-[rgb(var(--color-muted-foreground))] sm:hidden">Swipe to compare &rarr;</p>
+        <div class="scroll-reveal mt-2 overflow-x-auto rounded-xl border border-[rgb(var(--color-border))] sm:mt-12 sm:rounded-2xl">
+          <table class="w-full min-w-[640px] text-xs sm:text-sm">
             <thead>
               <tr class="border-b border-[rgb(var(--color-border))] bg-[rgb(var(--color-muted))]">
-                <th class="px-6 py-4 text-left font-semibold text-[rgb(var(--color-foreground))]">Feature</th>
-                <th class="px-6 py-4 text-center font-semibold text-[rgb(var(--color-institution))] bg-[rgb(var(--color-institution)/0.06)]">Alexandria</th>
-                <th class="px-6 py-4 text-center font-semibold text-[rgb(var(--color-muted-foreground))]">Canvas</th>
-                <th class="px-6 py-4 text-center font-semibold text-[rgb(var(--color-muted-foreground))]">Blackboard</th>
-                <th class="px-6 py-4 text-center font-semibold text-[rgb(var(--color-muted-foreground))]">Moodle</th>
+                <th class="px-3 py-3 text-left font-semibold text-[rgb(var(--color-foreground))] sm:px-6 sm:py-4">Feature</th>
+                <th class="px-3 py-3 text-center font-semibold text-[rgb(var(--color-institution))] bg-[rgb(var(--color-institution)/0.06)] sm:px-6 sm:py-4">Alexandria</th>
+                <th class="px-3 py-3 text-center font-semibold text-[rgb(var(--color-muted-foreground))] sm:px-6 sm:py-4">Canvas</th>
+                <th class="px-3 py-3 text-center font-semibold text-[rgb(var(--color-muted-foreground))] sm:px-6 sm:py-4">Blackboard</th>
+                <th class="px-3 py-3 text-center font-semibold text-[rgb(var(--color-muted-foreground))] sm:px-6 sm:py-4">Moodle</th>
               </tr>
             </thead>
             <tbody>
@@ -568,14 +569,14 @@ onMounted(() => {
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- PRICING                                                           -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section id="pricing" class="relative bg-[rgb(var(--color-muted))] py-24 sm:py-32">
+    <section id="pricing" class="relative bg-[rgb(var(--color-muted))] py-16 sm:py-24 lg:py-32">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div class="scroll-reveal text-center">
-          <h2 class="institution-serif text-3xl text-[rgb(var(--color-foreground))] sm:text-5xl">
+          <h2 class="institution-serif text-2xl text-[rgb(var(--color-foreground))] sm:text-3xl lg:text-5xl">
             Simple, transparent
             <span class="text-institution-gradient">pricing.</span>
           </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-lg text-[rgb(var(--color-muted-foreground))]">
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
             Start free. Scale when you're ready. No surprises.
           </p>
         </div>
@@ -664,13 +665,13 @@ onMounted(() => {
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- TESTIMONIALS PLACEHOLDER                                          -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section class="relative bg-[rgb(var(--color-muted))] py-24 sm:py-32">
+    <section class="relative bg-[rgb(var(--color-muted))] py-16 sm:py-24 lg:py-32">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div class="scroll-reveal text-center">
-          <h2 class="institution-serif text-3xl text-[rgb(var(--color-foreground))] sm:text-5xl">
+          <h2 class="institution-serif text-2xl text-[rgb(var(--color-foreground))] sm:text-3xl lg:text-5xl">
             Trusted by forward-thinking institutions.
           </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-lg text-[rgb(var(--color-muted-foreground))]">
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
             Early adopters are already transforming how they deliver and verify education.
           </p>
         </div>
@@ -696,10 +697,10 @@ onMounted(() => {
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- FAQ                                                               -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section id="faq" class="relative bg-[rgb(var(--color-background))] py-24 sm:py-32">
+    <section id="faq" class="relative bg-[rgb(var(--color-background))] py-16 sm:py-24 lg:py-32">
       <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div class="scroll-reveal text-center">
-          <h2 class="institution-serif text-3xl text-[rgb(var(--color-foreground))] sm:text-5xl">
+          <h2 class="institution-serif text-2xl text-[rgb(var(--color-foreground))] sm:text-3xl lg:text-5xl">
             Frequently asked
             <span class="text-institution-gradient">questions.</span>
           </h2>
@@ -746,14 +747,14 @@ onMounted(() => {
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- CTA                                                               -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section class="relative overflow-hidden py-24 sm:py-32">
+    <section class="relative overflow-hidden py-16 sm:py-24 lg:py-32">
       <div class="absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-institution)/0.06)] via-[rgb(var(--color-muted)/0.4)] to-[rgb(var(--color-institution)/0.03)]" />
       <div class="absolute inset-0 bg-grid opacity-[0.03]" />
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-[rgb(var(--color-institution)/0.06)] blur-3xl" />
 
       <div class="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
         <div class="scroll-reveal">
-          <h2 class="institution-serif text-3xl text-[rgb(var(--color-foreground))] sm:text-5xl">
+          <h2 class="institution-serif text-2xl text-[rgb(var(--color-foreground))] sm:text-3xl lg:text-5xl">
             Give your students credentials
             <span class="text-institution-gradient">they actually own.</span>
           </h2>

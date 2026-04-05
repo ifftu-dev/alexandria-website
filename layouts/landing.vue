@@ -116,7 +116,7 @@ function closeMobileMenu() {
 
     <!-- Footer -->
     <footer class="border-t border-[rgb(var(--color-border))] bg-[rgb(var(--color-muted))]">
-      <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-7xl px-4 py-10 sm:py-16 sm:px-6 lg:px-8">
         <!-- Brand Section -->
         <div class="mb-12 text-center">
           <div class="mb-4 flex items-center justify-center gap-3">
@@ -150,7 +150,7 @@ function closeMobileMenu() {
         </div>
 
         <!-- Links Grid -->
-        <div class="grid grid-cols-2 gap-8 border-t border-[rgb(var(--color-border))] pt-12 md:grid-cols-4">
+        <div class="grid grid-cols-2 gap-6 border-t border-[rgb(var(--color-border))] pt-8 sm:gap-8 sm:pt-12 md:grid-cols-4">
           <!-- Platform -->
           <div>
             <h4 class="mb-4 font-semibold text-[rgb(var(--color-foreground))]">Platform</h4>
