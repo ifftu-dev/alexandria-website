@@ -420,9 +420,9 @@ const stats = [
           </p>
 
           <!-- Early access disclaimer -->
-          <div class="landing-reveal landing-reveal-delay-3 mx-auto mt-10 max-w-xl rounded-xl border border-amber-400/20 bg-amber-500/5 px-5 py-4 backdrop-blur-sm">
-            <p class="text-sm leading-relaxed text-amber-200/90">
-              <span class="mr-1.5 font-semibold text-amber-300">Early Preview</span>
+          <div class="landing-reveal landing-reveal-delay-3 mx-auto mt-10 max-w-xl rounded-xl border border-amber-600/30 bg-amber-500/10 px-5 py-4 backdrop-blur-sm dark:border-amber-400/20 dark:bg-amber-500/5">
+            <p class="text-sm leading-relaxed text-amber-800 dark:text-amber-200/90">
+              <span class="mr-1.5 font-semibold text-amber-700 dark:text-amber-300">Early Preview</span>
               &mdash; Alexandria is in active development and not yet production-ready. Do not use with real credentials, real funds, or sensitive data.
             </p>
           </div>
@@ -618,9 +618,9 @@ const stats = [
           <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:mt-6 sm:text-lg">
             Download Alexandria and join a decentralized learning network. Free for learners, forever.
           </p>
-          <div class="mx-auto mt-6 max-w-md rounded-xl border border-amber-400/20 bg-amber-500/5 px-4 py-3 backdrop-blur-sm">
-            <p class="text-sm leading-relaxed text-amber-200/90">
-              <span class="mr-1 font-semibold text-amber-300">Early Preview</span>
+          <div class="mx-auto mt-6 max-w-md rounded-xl border border-amber-600/30 bg-amber-500/10 px-4 py-3 backdrop-blur-sm dark:border-amber-400/20 dark:bg-amber-500/5">
+            <p class="text-sm leading-relaxed text-amber-800 dark:text-amber-200/90">
+              <span class="mr-1 font-semibold text-amber-700 dark:text-amber-300">Early Preview</span>
               &mdash; not yet production-ready.
             </p>
           </div>
