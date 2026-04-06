@@ -244,7 +244,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
       <div class="absolute bottom-32 right-[15%] h-48 w-48 rounded-full bg-[rgb(var(--color-institution)/0.08)] blur-3xl landing-drift" style="animation-delay: -7s" />
 
       <!-- Hero content -->
-      <div class="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-center justify-center px-4 text-center sm:px-6 lg:px-8">
+      <div class="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-center justify-center px-4 pt-14 pb-8 text-center sm:px-6 sm:py-0 lg:px-8">
         <!-- Eyebrow badge -->
         <div class="landing-reveal mb-6 inline-flex items-center gap-2 rounded-full border border-[rgb(var(--color-institution)/0.2)] bg-[rgb(var(--color-institution)/0.06)] px-4 py-1.5">
           <span class="h-1.5 w-1.5 rounded-full bg-[rgb(var(--color-institution))] animate-pulse" />

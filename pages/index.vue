@@ -395,7 +395,7 @@ const stats = [
       <!-- Gradient overlay for smooth transition -->
       <div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-[rgb(var(--color-background))] pointer-events-none" aria-hidden="true" />
 
-      <div class="container relative flex flex-col items-center justify-center py-8 sm:py-12">
+      <div class="container relative flex flex-col items-center justify-center pt-14 pb-8 sm:py-12">
         <div class="mx-auto max-w-5xl">
           <!-- Kicker -->
           <div class="landing-reveal mb-8 flex items-center justify-center gap-3">
