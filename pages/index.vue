@@ -392,7 +392,7 @@ const stats = [
       <!-- Gradient overlay for smooth transition -->
       <div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-[rgb(var(--color-background))] pointer-events-none" aria-hidden="true" />
 
-      <div class="container relative py-12">
+      <div class="container relative flex flex-col items-center justify-center py-8 sm:py-12">
         <div class="mx-auto max-w-5xl">
           <!-- Kicker -->
           <div class="landing-reveal mb-8 flex items-center justify-center gap-3">
@@ -471,7 +471,7 @@ const stats = [
           </div>
 
           <!-- Stats badges -->
-          <div class="landing-reveal landing-reveal-delay-4 mt-16 flex flex-wrap items-center justify-center gap-3">
+          <div class="landing-reveal landing-reveal-delay-4 mt-8 hidden flex-wrap items-center justify-center gap-3 sm:mt-16 sm:flex">
             <div
               v-for="stat in stats"
               :key="stat.label"
@@ -482,15 +482,15 @@ const stats = [
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Scroll indicator -->
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 landing-reveal landing-reveal-delay-5">
-        <div class="flex flex-col items-center gap-1.5">
-          <span class="text-[10px] font-medium uppercase tracking-widest text-[rgb(var(--color-muted-foreground))]">Scroll</span>
-          <svg class="scroll-indicator-chevron h-5 w-5 text-[rgb(var(--color-primary)/0.7)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
+        <!-- Scroll indicator -->
+        <div class="landing-reveal landing-reveal-delay-5 mt-auto pt-4">
+          <div class="flex flex-col items-center gap-1.5">
+            <span class="text-[10px] font-medium uppercase tracking-widest text-[rgb(var(--color-muted-foreground))]">Scroll</span>
+            <svg class="scroll-indicator-chevron h-5 w-5 text-[rgb(var(--color-primary)/0.7)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </div>
       </div>
     </section>
