@@ -425,6 +425,15 @@ body {
   50% { opacity: 1; transform: scale(1.15); }
 }
 
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
+.scroll-indicator-chevron {
+  animation: scroll-bounce 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
 /* Entrance animation base class */
 .landing-reveal {
   opacity: 0;
