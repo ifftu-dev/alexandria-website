@@ -215,7 +215,7 @@ onMounted(() => {
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- HERO                                                              -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section class="relative min-h-[calc(90vh-4rem)] flex items-center justify-center overflow-hidden">
+    <section class="relative h-[calc(100dvh-4rem)] flex items-center justify-center overflow-hidden">
       <!-- Gradient backdrop -->
       <div class="absolute inset-0 bg-gradient-to-b from-[rgb(var(--color-institution)/0.06)] via-transparent to-[rgb(var(--color-muted)/0.3)]" />
       <div class="absolute inset-0 bg-grid opacity-[0.04]" />
@@ -302,9 +302,11 @@ onMounted(() => {
 
       <!-- Scroll indicator -->
       <div class="absolute bottom-8 left-1/2 -translate-x-1/2 landing-reveal landing-reveal-delay-5">
-        <div class="flex flex-col items-center gap-2">
+        <div class="flex flex-col items-center gap-1.5">
           <span class="text-[10px] font-medium uppercase tracking-widest text-[rgb(var(--color-muted-foreground))]">Scroll</span>
-          <div class="h-8 w-px bg-gradient-to-b from-[rgb(var(--color-institution)/0.5)] to-transparent animate-pulse" />
+          <svg class="scroll-indicator-chevron h-5 w-5 text-[rgb(var(--color-institution)/0.7)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
         </div>
       </div>
     </section>
