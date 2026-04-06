@@ -39,7 +39,6 @@ useHead({
   ],
 })
 
-const { download, allPlatformsUrl } = useDownload()
 
 // ─── Scroll-triggered reveal via IntersectionObserver ───
 function useScrollReveal() {
@@ -190,7 +189,7 @@ const stats = [
 <template>
   <div>
     <!-- ═══ HERO SECTION ═══ -->
-    <section ref="heroRef" class="landing-hero relative flex min-h-[calc(90vh-4rem)] items-center justify-center overflow-hidden">
+    <section ref="heroRef" class="landing-hero relative flex h-[calc(100dvh-4rem)] items-center justify-center overflow-hidden">
       <!-- Background layer: galaxy starfield — 3 parallax layers -->
       <div class="absolute inset-0" aria-hidden="true">
         <!-- Base gradient (static) -->
@@ -398,10 +397,6 @@ const stats = [
           <!-- Kicker -->
           <div class="landing-reveal mb-8 flex items-center justify-center gap-3">
             <span class="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--color-primary)/0.2)] bg-[rgb(var(--color-card)/0.8)] px-4 py-1.5 text-sm font-medium text-[rgb(var(--color-primary))] backdrop-blur-sm">
-              <span class="relative flex h-2 w-2">
-                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[rgb(var(--color-primary))] opacity-50" />
-                <span class="relative inline-flex h-2 w-2 rounded-full bg-[rgb(var(--color-primary))]" />
-              </span>
               Free & Open Source
             </span>
           </div>
@@ -419,42 +414,59 @@ const stats = [
             zero servers between you and knowledge.
           </p>
 
-          <!-- Early access disclaimer -->
-          <div class="landing-reveal landing-reveal-delay-3 mx-auto mt-10 max-w-xl rounded-xl border border-[rgb(var(--color-primary)/0.3)] bg-[rgb(var(--color-foreground)/0.05)] px-5 py-4 backdrop-blur-sm">
-            <p class="text-sm leading-relaxed text-[rgb(var(--color-foreground)/0.7)]">
-              <span class="mr-1.5 font-semibold text-[rgb(var(--color-primary))]">Early Preview</span>
-              &mdash; Alexandria is in active development and not yet production-ready. Do not use with real credentials, real funds, or sensitive data.
-            </p>
-          </div>
-
-          <!-- CTA buttons -->
-          <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <!-- Coming Soon + platforms -->
+          <div class="landing-reveal landing-reveal-delay-3 mt-10 flex flex-col items-center gap-6">
+            <span class="inline-flex items-center gap-2.5 rounded-full border border-[rgb(var(--color-primary)/0.25)] bg-[rgb(var(--color-card)/0.6)] px-6 py-2.5 text-base font-semibold text-[rgb(var(--color-primary))] backdrop-blur-sm">
+              <span class="relative flex h-2 w-2">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[rgb(var(--color-primary))] opacity-50" />
+                <span class="relative inline-flex h-2 w-2 rounded-full bg-[rgb(var(--color-primary))]" />
+              </span>
+              Coming Soon
+            </span>
+            <div class="flex flex-wrap items-center justify-center gap-6 text-[rgb(var(--color-muted-foreground))]">
+              <!-- macOS -->
+              <div class="flex items-center gap-2">
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+                </svg>
+                <span class="text-sm font-medium">macOS</span>
+              </div>
+              <!-- Windows -->
+              <div class="flex items-center gap-2">
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" />
+                </svg>
+                <span class="text-sm font-medium">Windows</span>
+              </div>
+              <!-- Linux -->
+              <div class="flex items-center gap-2">
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20.581 19.049c-.55-.446-.336-1.431-.907-1.917.553-3.365-.997-6.331-2.845-8.232-1.551-1.595-1.639-3.926-1.342-6.399C15.707.752 14.108 0 12 0S8.293.752 8.513 2.501c.297 2.473.209 4.804-1.342 6.399-1.848 1.901-3.398 4.867-2.845 8.232-.571.486-.357 1.471-.907 1.917-1.226.993-2.063 2.088-.796 2.577 1.268.489 3.255.025 4.078-.842.261-.275.39-.622.39-.994 0-.113-.012-.225-.035-.334a1.751 1.751 0 00-.07-.253c-.079-.228-.196-.438-.36-.614-.163-.176-.252-.263-.316-.386-.065-.124-.102-.281-.102-.456 0-.098.013-.2.041-.305a.85.85 0 01.386-.494c.22-.13.498-.194.83-.194.329 0 .645.061.934.17.277.105.504.271.693.446.187.175.341.358.498.506.319.301.653.525 1.185.525h.164c.532 0 .866-.224 1.185-.525.157-.148.311-.331.498-.506.189-.175.416-.341.693-.446.289-.109.605-.17.934-.17.332 0 .61.064.83.194a.85.85 0 01.386.494c.028.105.041.207.041.305 0 .175-.037.332-.102.456-.064.123-.153.21-.316.386-.164.176-.281.386-.36.614a1.751 1.751 0 00-.07.253c-.023.109-.035.221-.035.334 0 .372.129.719.39.994.823.867 2.81 1.331 4.078.842 1.267-.489.43-1.584-.796-2.577zM10 10a1 1 0 110-2 1 1 0 010 2zm4 0a1 1 0 110-2 1 1 0 010 2z" />
+                </svg>
+                <span class="text-sm font-medium">Linux</span>
+              </div>
+              <!-- iOS -->
+              <div class="flex items-center gap-2">
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+                </svg>
+                <span class="text-sm font-medium">iOS</span>
+              </div>
+              <!-- Android -->
+              <div class="flex items-center gap-2">
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M17.532 15.106a1.003 1.003 0 1 1 .001-2.007 1.003 1.003 0 0 1 0 2.007m-11.044 0a1.003 1.003 0 1 1 .001-2.007 1.003 1.003 0 0 1 0 2.007m11.4-6.018 2.006-3.459a.413.413 0 1 0-.721-.403l-2.03 3.5A12.26 12.26 0 0 0 12.011 7.5a12.26 12.26 0 0 0-5.132 1.226l-2.03-3.5a.413.413 0 1 0-.72.403l2.005 3.46C2.593 11.066.003 14.812 0 19.2h24.022c-.003-4.388-2.593-8.134-6.134-10.112" />
+                </svg>
+                <span class="text-sm font-medium">Android</span>
+              </div>
+            </div>
             <a
-              :href="download.downloadUrl"
-              class="btn btn-primary btn-lg group w-full sm:w-auto"
-            >
-              <!-- Platform icons -->
-              <svg v-if="download.platformIcon === 'apple'" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-              </svg>
-              <svg v-else-if="download.platformIcon === 'windows'" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" />
-              </svg>
-              <svg v-else-if="download.platformIcon === 'linux'" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.368 1.884 1.5.899.2 1.983-.26 3.181-.734.803-.334 1.503-.73 1.998-1.198.39-.37.704-.73.87-1.205.088-.251.112-.478.166-.733.054-.259.132-.532.132-.803v-.2c0-.26-.008-.47-.06-.67-.085-.32-.263-.6-.455-.86-.377-.4-.848-.597-1.302-.85-.259-.133-.535-.25-.715-.385-.18-.132-.29-.266-.29-.466 0-.2.2-.93.244-1.403.044-.468 0-.867-.26-1.334-.268-.466-.739-.8-1.346-.8H14.5c-.003 0-.008 0-.015.003-.26 0-.515.065-.737.2-.212.133-.39.333-.536.534-1.025 1.268-2.174 2.131-2.65 3.598-.178.602-.313 1.335-.156 1.835.16.6.47 1.05.867 1.368.184.133.395.2.612.266.07.02.14.05.21.067a3.58 3.58 0 001.154.2c.195.012.39.005.578-.025h.005a1.16 1.16 0 00.154-.04c.078-.02.154-.05.22-.08.132-.066.25-.2.37-.3z" />
-              </svg>
-              <svg v-else class="h-4 w-4 transition-transform group-hover:translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-              </svg>
-              Download for {{ download.platformLabel }}
-            </a>
-            <a
-              :href="allPlatformsUrl"
+              href="https://github.com/ifftu-dev/alexandria"
               target="_blank"
               rel="noopener noreferrer"
               class="btn btn-outline btn-lg w-full sm:w-auto"
             >
-              All Platforms
+              View on GitHub
             </a>
           </div>
 
@@ -474,9 +486,11 @@ const stats = [
 
       <!-- Scroll indicator -->
       <div class="absolute bottom-8 left-1/2 -translate-x-1/2 landing-reveal landing-reveal-delay-5">
-        <div class="flex flex-col items-center gap-2">
+        <div class="flex flex-col items-center gap-1.5">
           <span class="text-[10px] font-medium uppercase tracking-widest text-[rgb(var(--color-muted-foreground))]">Scroll</span>
-          <div class="h-8 w-px bg-gradient-to-b from-[rgb(var(--color-primary)/0.5)] to-transparent animate-pulse" />
+          <svg class="scroll-indicator-chevron h-5 w-5 text-[rgb(var(--color-primary)/0.7)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
         </div>
       </div>
     </section>
@@ -588,15 +602,15 @@ const stats = [
             </svg>
             <!-- Linux -->
             <svg v-else-if="platform === 'Linux'" class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2l.003.003c.391.778 1.113 1.368 1.884 1.5.899.2 1.983-.26 3.181-.734.803-.334 1.503-.73 1.998-1.198.39-.37.704-.73.87-1.205.088-.251.112-.478.166-.733.054-.259.132-.532.132-.803v-.2c0-.26-.008-.47-.06-.67-.085-.32-.263-.6-.455-.86-.377-.4-.848-.597-1.302-.85-.259-.133-.535-.25-.715-.385-.18-.132-.29-.266-.29-.466z" />
+              <path d="M20.581 19.049c-.55-.446-.336-1.431-.907-1.917.553-3.365-.997-6.331-2.845-8.232-1.551-1.595-1.639-3.926-1.342-6.399C15.707.752 14.108 0 12 0S8.293.752 8.513 2.501c.297 2.473.209 4.804-1.342 6.399-1.848 1.901-3.398 4.867-2.845 8.232-.571.486-.357 1.471-.907 1.917-1.226.993-2.063 2.088-.796 2.577 1.268.489 3.255.025 4.078-.842.261-.275.39-.622.39-.994 0-.113-.012-.225-.035-.334a1.751 1.751 0 00-.07-.253c-.079-.228-.196-.438-.36-.614-.163-.176-.252-.263-.316-.386-.065-.124-.102-.281-.102-.456 0-.098.013-.2.041-.305a.85.85 0 01.386-.494c.22-.13.498-.194.83-.194.329 0 .645.061.934.17.277.105.504.271.693.446.187.175.341.358.498.506.319.301.653.525 1.185.525h.164c.532 0 .866-.224 1.185-.525.157-.148.311-.331.498-.506.189-.175.416-.341.693-.446.289-.109.605-.17.934-.17.332 0 .61.064.83.194a.85.85 0 01.386.494c.028.105.041.207.041.305 0 .175-.037.332-.102.456-.064.123-.153.21-.316.386-.164.176-.281.386-.36.614a1.751 1.751 0 00-.07.253c-.023.109-.035.221-.035.334 0 .372.129.719.39.994.823.867 2.81 1.331 4.078.842 1.267-.489.43-1.584-.796-2.577zM10 10a1 1 0 110-2 1 1 0 010 2zm4 0a1 1 0 110-2 1 1 0 010 2z" />
             </svg>
             <!-- iOS -->
-            <svg v-else-if="platform === 'iOS'" class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+            <svg v-else-if="platform === 'iOS'" class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
             </svg>
             <!-- Android -->
-            <svg v-else class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+            <svg v-else class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.532 15.106a1.003 1.003 0 1 1 .001-2.007 1.003 1.003 0 0 1 0 2.007m-11.044 0a1.003 1.003 0 1 1 .001-2.007 1.003 1.003 0 0 1 0 2.007m11.4-6.018 2.006-3.459a.413.413 0 1 0-.721-.403l-2.03 3.5A12.26 12.26 0 0 0 12.011 7.5a12.26 12.26 0 0 0-5.132 1.226l-2.03-3.5a.413.413 0 1 0-.72.403l2.005 3.46C2.593 11.066.003 14.812 0 19.2h24.022c-.003-4.388-2.593-8.134-6.134-10.112" />
             </svg>
             <span class="text-sm font-medium text-[rgb(var(--color-foreground))]">{{ platform }}</span>
           </div>
@@ -616,21 +630,34 @@ const stats = [
             Start learning. Own your credentials.
           </h2>
           <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:mt-6 sm:text-lg">
-            Download Alexandria and join a decentralized learning network. Free for learners, forever.
+            Alexandria is coming to every platform. Free for learners, forever.
           </p>
-          <div class="mx-auto mt-6 max-w-md rounded-xl border border-[rgb(var(--color-primary)/0.3)] bg-[rgb(var(--color-foreground)/0.05)] px-4 py-3 backdrop-blur-sm">
-            <p class="text-sm leading-relaxed text-[rgb(var(--color-foreground)/0.7)]">
-              <span class="mr-1 font-semibold text-[rgb(var(--color-primary))]">Early Preview</span>
-              &mdash; not yet production-ready.
-            </p>
-          </div>
-          <div class="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <a
-              :href="download.downloadUrl"
-              class="btn btn-primary btn-lg"
-            >
-              Download for {{ download.platformLabel }}
-            </a>
+          <div class="mt-6 flex flex-col items-center gap-5">
+            <span class="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--color-primary)/0.25)] bg-[rgb(var(--color-card)/0.6)] px-5 py-2 text-sm font-semibold text-[rgb(var(--color-primary))] backdrop-blur-sm">
+              Coming Soon
+            </span>
+            <div class="flex flex-wrap items-center justify-center gap-5 text-[rgb(var(--color-muted-foreground))]">
+              <div class="flex items-center gap-1.5">
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" /></svg>
+                <span class="text-xs font-medium">macOS</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" /></svg>
+                <span class="text-xs font-medium">Windows</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.581 19.049c-.55-.446-.336-1.431-.907-1.917.553-3.365-.997-6.331-2.845-8.232-1.551-1.595-1.639-3.926-1.342-6.399C15.707.752 14.108 0 12 0S8.293.752 8.513 2.501c.297 2.473.209 4.804-1.342 6.399-1.848 1.901-3.398 4.867-2.845 8.232-.571.486-.357 1.471-.907 1.917-1.226.993-2.063 2.088-.796 2.577 1.268.489 3.255.025 4.078-.842.261-.275.39-.622.39-.994 0-.113-.012-.225-.035-.334a1.751 1.751 0 00-.07-.253c-.079-.228-.196-.438-.36-.614-.163-.176-.252-.263-.316-.386-.065-.124-.102-.281-.102-.456 0-.098.013-.2.041-.305a.85.85 0 01.386-.494c.22-.13.498-.194.83-.194.329 0 .645.061.934.17.277.105.504.271.693.446.187.175.341.358.498.506.319.301.653.525 1.185.525h.164c.532 0 .866-.224 1.185-.525.157-.148.311-.331.498-.506.189-.175.416-.341.693-.446.289-.109.605-.17.934-.17.332 0 .61.064.83.194a.85.85 0 01.386.494c.028.105.041.207.041.305 0 .175-.037.332-.102.456-.064.123-.153.21-.316.386-.164.176-.281.386-.36.614a1.751 1.751 0 00-.07.253c-.023.109-.035.221-.035.334 0 .372.129.719.39.994.823.867 2.81 1.331 4.078.842 1.267-.489.43-1.584-.796-2.577zM10 10a1 1 0 110-2 1 1 0 010 2zm4 0a1 1 0 110-2 1 1 0 010 2z" /></svg>
+                <span class="text-xs font-medium">Linux</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" /></svg>
+                <span class="text-xs font-medium">iOS</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.532 15.106a1.003 1.003 0 1 1 .001-2.007 1.003 1.003 0 0 1 0 2.007m-11.044 0a1.003 1.003 0 1 1 .001-2.007 1.003 1.003 0 0 1 0 2.007m11.4-6.018 2.006-3.459a.413.413 0 1 0-.721-.403l-2.03 3.5A12.26 12.26 0 0 0 12.011 7.5a12.26 12.26 0 0 0-5.132 1.226l-2.03-3.5a.413.413 0 1 0-.72.403l2.005 3.46C2.593 11.066.003 14.812 0 19.2h24.022c-.003-4.388-2.593-8.134-6.134-10.112" /></svg>
+                <span class="text-xs font-medium">Android</span>
+              </div>
+            </div>
             <a
               href="https://github.com/ifftu-dev/alexandria"
               target="_blank"
