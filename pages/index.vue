@@ -67,8 +67,11 @@ function useScrollReveal() {
 
 useScrollReveal()
 
-// ─── Parallax scroll effect for hero background layers ───
+// ─── Scroll indicator visibility ───
 const heroRef = ref<HTMLElement | null>(null)
+const { showIndicator } = useScrollIndicator(heroRef)
+
+// ─── Parallax scroll effect for hero background layers ───
 const layerBack = ref<HTMLElement | null>(null)
 const layerMid = ref<HTMLElement | null>(null)
 const layerFront = ref<HTMLElement | null>(null)
@@ -483,15 +486,17 @@ const stats = [
           </div>
         </div>
 
-        <!-- Scroll indicator -->
-        <div class="landing-reveal landing-reveal-delay-5 mt-auto pt-4">
-          <div class="flex flex-col items-center gap-1.5">
-            <span class="text-[10px] font-medium uppercase tracking-widest text-[rgb(var(--color-muted-foreground))]">Scroll</span>
-            <svg class="scroll-indicator-chevron h-5 w-5 text-[rgb(var(--color-primary)/0.7)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
+        <!-- Scroll indicator — only visible when content below is off-screen -->
+        <Transition name="scroll-indicator">
+          <div v-show="showIndicator" class="landing-reveal landing-reveal-delay-5 mt-auto pt-4">
+            <div class="flex flex-col items-center gap-1.5">
+              <span class="text-[10px] font-medium uppercase tracking-widest text-[rgb(var(--color-muted-foreground))]">Scroll</span>
+              <svg class="scroll-indicator-chevron h-5 w-5 text-[rgb(var(--color-primary)/0.7)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
           </div>
-        </div>
+        </Transition>
       </div>
     </section>
 

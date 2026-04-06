@@ -434,6 +434,15 @@ body {
   animation: scroll-bounce 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
+.scroll-indicator-enter-active,
+.scroll-indicator-leave-active {
+  transition: opacity 0.4s ease;
+}
+.scroll-indicator-enter-from,
+.scroll-indicator-leave-to {
+  opacity: 0;
+}
+
 /* Entrance animation base class */
 .landing-reveal {
   opacity: 0;
