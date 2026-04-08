@@ -41,13 +41,13 @@ const featureCategories = [
   { key: 'analytics', label: 'Analytics & Outcomes' },
 ]
 
-const featuresByCategory: Record<string, Array<{ title: string, description: string, icon: string }>> = {
+const featuresByCategory: Record<string, Array<{ title: string, description: string, icon: string, planned?: boolean }>> = {
   core: [
     { title: 'Course Authoring & Delivery', description: 'Build rich courses with multimedia content, structured modules, and flexible release conditions. Supports drag-and-drop organisation, prerequisite chains, and adaptive pathways.', icon: 'pen' },
-    { title: 'Assignments, Quizzes & Gradebook', description: 'Full-featured assessment engine with rubrics, auto-grading, peer review, and a unified gradebook with weighted categories, late policies, and bulk actions.', icon: 'clipboard' },
-    { title: 'Discussion Forums', description: 'Threaded discussions with rich text, inline media, @mentions, and instructor endorsement. Supports graded participation and topic pinning.', icon: 'chat' },
-    { title: 'Video Lectures', description: 'Integrated video hosting with chaptering, speed controls, in-video quizzes, and automatic transcription. No third-party streaming fees.', icon: 'video' },
-    { title: 'Mobile-Responsive with Offline', description: 'Progressive web app that works across all devices. Students can download content for offline access and sync progress when reconnected.', icon: 'mobile' },
+    { title: 'Assignments, Quizzes & Gradebook', description: 'Full-featured assessment engine with rubrics, auto-grading, peer review, and a unified gradebook with weighted categories, late policies, and bulk actions.', icon: 'clipboard', planned: true },
+    { title: 'Discussion Forums', description: 'Threaded discussions with rich text, inline media, @mentions, and instructor endorsement. Supports graded participation and topic pinning.', icon: 'chat', planned: true },
+    { title: 'Video Lectures', description: 'Integrated video hosting with chaptering, speed controls, in-video quizzes, and automatic transcription. No third-party streaming fees.', icon: 'video', planned: true },
+    { title: 'Mobile-Responsive with Offline', description: 'Native app that works across all devices. Students can download content for offline access and sync progress when reconnected.', icon: 'mobile' },
   ],
   differentiators: [
     { title: 'Blockchain-Verified Credentials', description: 'Every credential minted as an NFT on Cardano with full metadata on IPFS. Students own them permanently. Employers verify them independently. No middleman.', icon: 'shield' },
@@ -57,19 +57,19 @@ const featuresByCategory: Record<string, Array<{ title: string, description: str
     { title: 'IPFS Decentralised Content', description: 'Course content stored on IPFS for permanent availability. No single point of failure. Content persists even if the platform goes down.', icon: 'decentralised' },
   ],
   admin: [
-    { title: 'Multi-Department Management', description: 'Hierarchical organisation structure supporting colleges, departments, and programs. Delegate administration while maintaining institutional oversight.', icon: 'building' },
-    { title: 'SIS Integration', description: 'Bi-directional sync with Student Information Systems via REST APIs and standard data interchange formats. Automate enrolments, grade passback, and student records.', icon: 'sync' },
-    { title: 'SSO via SAML/OIDC', description: 'Enterprise single sign-on supporting SAML 2.0 and OpenID Connect. Integrate with your existing identity provider — Active Directory, Okta, Auth0, or custom.', icon: 'key' },
-    { title: 'Custom Branding', description: 'White-label the platform with your institution\'s logo, colours, typography, and custom domain. Your LMS, your brand.', icon: 'palette' },
-    { title: 'FERPA/GDPR Compliance', description: 'Built-in privacy controls, data retention policies, consent management, and audit logging. Deploy in your jurisdiction. Your data stays where you need it.', icon: 'lock' },
-    { title: 'LTI 1.3 & SCORM/xAPI Import', description: 'Bring your existing content. Full LTI 1.3 tool integration, SCORM 1.2/2004 package import, and xAPI statement tracking for interoperability.', icon: 'plug' },
+    { title: 'Multi-Department Management', description: 'Hierarchical organisation structure supporting colleges, departments, and programs. Delegate administration while maintaining institutional oversight.', icon: 'building', planned: true },
+    { title: 'SIS Integration', description: 'Bi-directional sync with Student Information Systems via REST APIs and standard data interchange formats. Automate enrolments, grade passback, and student records.', icon: 'sync', planned: true },
+    { title: 'SSO via SAML/OIDC', description: 'Enterprise single sign-on supporting SAML 2.0 and OpenID Connect. Integrate with your existing identity provider — Active Directory, Okta, Auth0, or custom.', icon: 'key', planned: true },
+    { title: 'Custom Branding', description: 'White-label the platform with your institution\'s logo, colours, typography, and custom domain. Your LMS, your brand.', icon: 'palette', planned: true },
+    { title: 'FERPA/GDPR Compliance', description: 'Designed with compliance in mind: self-hosted deployment, student-controlled wallets, and no PII on-chain. Role-based access controls, data retention policies, and audit logging are on the roadmap.', icon: 'lock' },
+    { title: 'LTI 1.3 & SCORM/xAPI Import', description: 'Bring your existing content. Full LTI 1.3 tool integration, SCORM 1.2/2004 package import, and xAPI statement tracking for interoperability.', icon: 'plug', planned: true },
   ],
   analytics: [
-    { title: 'Real-Time Learning Analytics', description: 'Live dashboards showing engagement, completion, and performance metrics. Drill down from institutional overview to individual student activity.', icon: 'chart' },
+    { title: 'Real-Time Learning Analytics', description: 'Live dashboards showing engagement, completion, and performance metrics. Drill down from institutional overview to individual student activity.', icon: 'chart', planned: true },
     { title: 'Skill Gap Analysis', description: 'Identify which skills your curriculum develops well and where gaps exist. Compare intended learning outcomes against actual measured proficiency.', icon: 'gap' },
     { title: 'Instructor Effectiveness', description: 'Evidence-based instructor analytics tied to student outcomes. Identify effective teaching patterns and support continuous improvement — without relying on popularity contests.', icon: 'impact' },
-    { title: 'Predictive At-Risk Identification', description: 'Machine learning models flag students showing early warning signals. Intervene before failure with data-driven recommendations.', icon: 'alert' },
-    { title: 'Accreditation-Ready Reports', description: 'Generate reports mapped to accreditation standards. Evidence-backed documentation of student learning outcomes for review cycles.', icon: 'report' },
+    { title: 'Predictive At-Risk Identification', description: 'Machine learning models flag students showing early warning signals. Intervene before failure with data-driven recommendations.', icon: 'alert', planned: true },
+    { title: 'Accreditation-Ready Reports', description: 'Generate reports mapped to accreditation standards. Evidence-backed documentation of student learning outcomes for review cycles.', icon: 'report', planned: true },
   ],
 }
 
@@ -82,12 +82,12 @@ const comparisonFeatures = [
   { feature: 'Evidence-Based Portfolios', alexandria: true, canvas: false, blackboard: false, moodle: false },
   { feature: 'Student-Owned Data', alexandria: true, canvas: false, blackboard: false, moodle: false },
   { feature: 'IPFS Decentralised Storage', alexandria: true, canvas: false, blackboard: false, moodle: false },
-  { feature: 'LTI 1.3 Support', alexandria: true, canvas: true, blackboard: true, moodle: true },
-  { feature: 'SCORM/xAPI', alexandria: true, canvas: true, blackboard: true, moodle: true },
+  { feature: 'LTI 1.3 Support', alexandria: 'Planned', canvas: true, blackboard: true, moodle: true },
+  { feature: 'SCORM/xAPI', alexandria: 'Planned', canvas: true, blackboard: true, moodle: true },
   { feature: 'FERPA/GDPR Ready', alexandria: true, canvas: true, blackboard: true, moodle: 'Varies' },
-  { feature: 'SSO (SAML/OIDC)', alexandria: true, canvas: true, blackboard: true, moodle: true },
+  { feature: 'SSO (SAML/OIDC)', alexandria: 'Planned', canvas: true, blackboard: true, moodle: true },
   { feature: 'Mobile App', alexandria: true, canvas: true, blackboard: true, moodle: true },
-  { feature: 'Predictive Analytics', alexandria: true, canvas: 'Add-on', blackboard: 'Add-on', moodle: false },
+  { feature: 'Predictive Analytics', alexandria: 'Planned', canvas: 'Add-on', blackboard: 'Add-on', moodle: false },
   { feature: 'Vendor Lock-In', alexandria: 'None', canvas: 'High', blackboard: 'High', moodle: 'Low' },
   { feature: 'Per-Student Cost', alexandria: 'Free / $3', canvas: '$15–40', blackboard: '$20–50', moodle: 'Free + hosting' },
 ]
@@ -114,7 +114,7 @@ const faqs = [
   },
   {
     question: 'Can we migrate from Canvas/Blackboard/Moodle?',
-    answer: 'Yes. Alexandria supports LTI 1.3 tool integration, SCORM 1.2/2004 package import, and xAPI statement ingestion. We provide migration guides and tooling for bulk content transfer from major LMS platforms.',
+    answer: 'LTI 1.3 tool integration, SCORM 1.2/2004 package import, and xAPI statement ingestion are on the roadmap. Once available, these will enable bulk content transfer from major LMS platforms.',
   },
   {
     question: 'How is instructor reputation different from student evaluations?',
@@ -126,7 +126,7 @@ const faqs = [
   },
   {
     question: 'What about FERPA compliance?',
-    answer: 'Alexandria is built with FERPA compliance in mind: role-based access controls, audit logging, data retention policies, consent management, and the ability to self-host within your jurisdiction. Blockchain credentials use student-controlled wallets, so the institution doesn\'t expose PII on-chain.',
+    answer: 'Alexandria is designed with FERPA compliance in mind. The self-hosted deployment model keeps data in your jurisdiction, and blockchain credentials use student-controlled wallets so no PII is exposed on-chain. Role-based access controls, audit logging, data retention policies, and consent management tooling are on the roadmap.',
   },
 ]
 
@@ -498,7 +498,10 @@ const { showIndicator } = useScrollIndicator(heroRef)
               </svg>
             </div>
 
-            <h3 class="text-base font-semibold text-[rgb(var(--color-foreground))]">{{ feature.title }}</h3>
+            <h3 class="flex items-center gap-2 text-base font-semibold text-[rgb(var(--color-foreground))]">
+              {{ feature.title }}
+              <span v-if="feature.planned" class="inline-flex items-center rounded-full border border-[rgb(var(--color-institution)/0.25)] bg-[rgb(var(--color-institution)/0.08)] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-[rgb(var(--color-institution))]">Planned</span>
+            </h3>
             <p class="mt-2 text-sm leading-relaxed text-[rgb(var(--color-muted-foreground))]">{{ feature.description }}</p>
           </div>
         </div>
@@ -516,7 +519,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
             <span class="text-institution-gradient">compares.</span>
           </h2>
           <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
-            A transparent look at how we stack up against the incumbents.
+            An utterly biased look at how we stack up against the incumbents.
           </p>
         </div>
 
@@ -663,6 +666,16 @@ const { showIndicator } = useScrollIndicator(heroRef)
             </a>
           </div>
         </div>
+
+        <div class="scroll-reveal mx-auto mt-12 max-w-xl rounded-xl border border-[rgb(var(--color-institution)/0.2)] bg-[rgb(var(--color-institution)/0.04)] px-6 py-4 text-center">
+          <p class="inline-flex items-center gap-2 text-sm font-medium text-[rgb(var(--color-institution))]">
+            <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            All prices are indicative and subject to change.
+          </p>
+          <p class="mt-1 text-xs text-[rgb(var(--color-muted-foreground))]">Final pricing will be confirmed at launch.</p>
+        </div>
       </div>
     </section>
 
@@ -737,13 +750,12 @@ const { showIndicator } = useScrollIndicator(heroRef)
           </p>
         </div>
 
-        <div class="mt-12 space-y-3">
+        <div class="scroll-reveal mt-12 space-y-3">
           <div
             v-for="(faq, i) in faqs"
             :key="i"
-            class="scroll-reveal rounded-xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] transition-colors"
+            class="rounded-xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] transition-colors"
             :class="openFaq === i ? 'border-[rgb(var(--color-institution)/0.3)]' : ''"
-            :style="{ transitionDelay: `${i * 0.05}s` }"
           >
             <button
               class="flex w-full items-center justify-between px-6 py-5 text-left"

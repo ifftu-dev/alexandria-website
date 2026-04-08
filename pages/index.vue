@@ -132,7 +132,7 @@ const features = [
   },
   {
     title: 'Earn Verifiable Credentials',
-    description: 'Achievements stored on the Cardano blockchain — portable, tamper-proof, and independently verifiable without the platform.',
+    description: 'Achievements stored on the Cardano blockchain (preprod testnet) — portable, tamper-proof, and independently verifiable without the platform.',
     bullets: [
       'Blockchain-backed skill proofs',
       'Portable, employer-verifiable credentials',
@@ -141,7 +141,7 @@ const features = [
   },
   {
     title: 'Own Your Data',
-    description: 'Your keys, your identity, your content. Everything stored locally with military-grade encryption. Peer-to-peer sync — no cloud, no corporate servers.',
+    description: 'Your keys, your identity, your content. Everything stored locally with AES-256-GCM encryption. Peer-to-peer sync — no cloud, no corporate servers.',
     bullets: [
       'Self-sovereign identity with local key vault',
       'Content-addressed storage via iroh',
@@ -173,7 +173,7 @@ const steps = [
   {
     number: '03',
     title: 'Mint Credentials',
-    description: 'SkillProofs mint as NFTs on Cardano. Metadata is content-addressed. Your credentials exist independently of Alexandria — forever.',
+    description: 'SkillProofs mint as NFTs on Cardano (preprod testnet). Metadata is content-addressed. Your credentials exist independently of Alexandria — forever.',
   },
   {
     number: '04',
@@ -185,7 +185,7 @@ const steps = [
 const stats = [
   { label: 'Open Source', value: '100%' },
   { label: 'Cost to Learners', value: 'Free' },
-  { label: 'Servers Required', value: 'Zero' },
+  { label: 'Central Servers', value: 'None' },
 ]
 </script>
 
