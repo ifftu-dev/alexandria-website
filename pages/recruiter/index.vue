@@ -116,7 +116,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
       <div class="absolute top-20 left-[10%] h-64 w-64 rounded-full bg-[rgb(var(--color-recruiter)/0.06)] blur-3xl landing-drift" />
       <div class="absolute bottom-32 right-[15%] h-48 w-48 rounded-full bg-[rgb(var(--color-recruiter)/0.08)] blur-3xl landing-drift" style="animation-delay: -7s" />
 
-      <div class="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-center justify-center px-4 pt-14 pb-8 text-center sm:px-6 sm:py-0 lg:px-8">
+      <div class="relative z-10 mx-auto flex max-w-5xl flex-col items-center justify-center px-4 pt-14 pb-8 text-center sm:py-12 lg:px-8">
         <div class="landing-reveal mb-6 inline-flex items-center gap-2 rounded-full border border-[rgb(var(--color-recruiter)/0.2)] bg-[rgb(var(--color-recruiter)/0.06)] px-4 py-1.5">
           <span class="h-1.5 w-1.5 rounded-full bg-[rgb(var(--color-recruiter))] animate-pulse" />
           <span class="text-xs font-medium tracking-wide text-[rgb(var(--color-recruiter))] uppercase">Alexandria Recruiting</span>
@@ -169,18 +169,19 @@ const { showIndicator } = useScrollIndicator(heroRef)
             No global rankings
           </span>
         </div>
-        <!-- Scroll indicator — only visible when content below is off-screen -->
-        <Transition name="scroll-indicator">
-          <div v-show="showIndicator" class="landing-reveal landing-reveal-delay-5 mt-auto pt-4">
-            <div class="flex flex-col items-center gap-1.5">
-              <span class="text-[10px] font-medium uppercase tracking-widest text-[rgb(var(--color-muted-foreground))]">Scroll</span>
-              <svg class="scroll-indicator-chevron h-5 w-5 text-[rgb(var(--color-recruiter)/0.7)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-          </div>
-        </Transition>
       </div>
+
+      <!-- Scroll indicator — only visible when content below is off-screen -->
+      <Transition name="scroll-indicator">
+        <div v-show="showIndicator" class="landing-reveal landing-reveal-delay-5 absolute bottom-10 left-1/2 z-10 -translate-x-1/2">
+          <div class="flex flex-col items-center gap-1.5">
+            <span class="text-[10px] font-medium uppercase tracking-widest text-[rgb(var(--color-muted-foreground))]">Scroll</span>
+            <svg class="scroll-indicator-chevron h-5 w-5 text-[rgb(var(--color-recruiter)/0.7)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+      </Transition>
     </section>
 
     <!-- ═══ PROBLEM / SOLUTION ═══ -->
