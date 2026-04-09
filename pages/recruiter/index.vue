@@ -177,7 +177,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
 
       <!-- Scroll indicator — only visible when content below is off-screen -->
       <Transition name="scroll-indicator">
-        <div v-show="showIndicator" class="landing-reveal landing-reveal-delay-5 absolute bottom-10 left-1/2 z-10 -translate-x-1/2">
+        <div v-show="showIndicator" class="scroll-indicator-wrapper landing-reveal landing-reveal-delay-5 absolute bottom-10 left-1/2 z-10 -translate-x-1/2">
           <div class="flex flex-col items-center gap-1.5">
             <span class="text-[10px] font-medium uppercase tracking-widest text-[rgb(var(--color-muted-foreground))]">Scroll</span>
             <svg class="scroll-indicator-chevron h-5 w-5 text-[rgb(var(--color-recruiter)/0.7)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
