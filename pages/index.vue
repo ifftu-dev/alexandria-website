@@ -182,11 +182,6 @@ const steps = [
   },
 ]
 
-const stats = [
-  { label: 'Open Source', value: '100%' },
-  { label: 'Cost to Learners', value: 'Free' },
-  { label: 'Central Servers', value: 'None' },
-]
 </script>
 
 <template>
@@ -397,92 +392,42 @@ const stats = [
 
       <div class="container relative flex flex-col items-center justify-center pt-14 pb-8 sm:py-12">
         <div class="mx-auto max-w-5xl">
-          <!-- Kicker -->
-          <div class="landing-reveal mb-8 flex items-center justify-center gap-3">
-            <span class="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--color-primary)/0.2)] bg-[rgb(var(--color-card)/0.8)] px-4 py-1.5 text-sm font-medium text-[rgb(var(--color-primary))] backdrop-blur-sm">
-              Free & Open Source
-            </span>
-          </div>
-
           <!-- Headline -->
-          <h1 class="landing-reveal landing-reveal-delay-1 landing-serif text-center text-4xl font-bold leading-[1.2] tracking-tight text-[rgb(var(--color-foreground))] sm:text-5xl lg:text-6xl">
+          <h1 class="landing-reveal landing-serif text-center text-4xl font-bold leading-[1.2] tracking-tight text-[rgb(var(--color-foreground))] sm:text-5xl lg:text-6xl">
             Knowledge belongs<br>
             <span class="text-[rgb(var(--color-primary))]">to everyone.</span>
           </h1>
 
           <!-- Subheading -->
-          <p class="landing-reveal landing-reveal-delay-2 mx-auto mt-8 max-w-2xl text-center text-lg leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-xl">
-            A native app for every platform. Peer-to-peer learning with
-            blockchain-verified credentials, offline-first by design, and
-            zero servers between you and knowledge.
+          <p class="landing-reveal landing-reveal-delay-1 mx-auto mt-8 max-w-2xl text-center text-lg leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-xl">
+            Free, open-source learning for every platform.
+            Peer-to-peer, offline-first, with blockchain-verified credentials.
           </p>
 
-          <!-- Coming Soon + platforms -->
-          <div class="landing-reveal landing-reveal-delay-3 mt-10 flex flex-col items-center gap-6">
-            <span class="inline-flex items-center gap-2.5 rounded-full border border-[rgb(var(--color-primary)/0.25)] bg-[rgb(var(--color-card)/0.6)] px-6 py-2.5 text-base font-semibold text-[rgb(var(--color-primary))] backdrop-blur-sm">
-              <span class="relative flex h-2 w-2">
-                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[rgb(var(--color-primary))] opacity-50" />
-                <span class="relative inline-flex h-2 w-2 rounded-full bg-[rgb(var(--color-primary))]" />
+          <!-- CTA + Coming Soon -->
+          <div class="landing-reveal landing-reveal-delay-2 mt-10 flex flex-col items-center gap-5">
+            <div class="flex flex-col items-center gap-3 sm:flex-row">
+              <a
+                href="https://github.com/ifftu-dev/alexandria"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-outline btn-lg w-full sm:w-auto"
+              >
+                View on GitHub
+              </a>
+              <span class="inline-flex items-center gap-2 text-sm text-[rgb(var(--color-muted-foreground))]">
+                <span class="relative flex h-2 w-2">
+                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[rgb(var(--color-primary))] opacity-50" />
+                  <span class="relative inline-flex h-2 w-2 rounded-full bg-[rgb(var(--color-primary))]" />
+                </span>
+                Coming Soon
               </span>
-              Coming Soon
-            </span>
-            <div class="flex flex-wrap items-center justify-center gap-6 text-[rgb(var(--color-muted-foreground))]">
-              <!-- macOS -->
-              <div class="flex items-center gap-2">
-                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-                </svg>
-                <span class="text-sm font-medium">macOS</span>
-              </div>
-              <!-- Windows -->
-              <div class="flex items-center gap-2">
-                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" />
-                </svg>
-                <span class="text-sm font-medium">Windows</span>
-              </div>
-              <!-- Linux -->
-              <div class="flex items-center gap-2">
-                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M20.581 19.049c-.55-.446-.336-1.431-.907-1.917.553-3.365-.997-6.331-2.845-8.232-1.551-1.595-1.639-3.926-1.342-6.399C15.707.752 14.108 0 12 0S8.293.752 8.513 2.501c.297 2.473.209 4.804-1.342 6.399-1.848 1.901-3.398 4.867-2.845 8.232-.571.486-.357 1.471-.907 1.917-1.226.993-2.063 2.088-.796 2.577 1.268.489 3.255.025 4.078-.842.261-.275.39-.622.39-.994 0-.113-.012-.225-.035-.334a1.751 1.751 0 00-.07-.253c-.079-.228-.196-.438-.36-.614-.163-.176-.252-.263-.316-.386-.065-.124-.102-.281-.102-.456 0-.098.013-.2.041-.305a.85.85 0 01.386-.494c.22-.13.498-.194.83-.194.329 0 .645.061.934.17.277.105.504.271.693.446.187.175.341.358.498.506.319.301.653.525 1.185.525h.164c.532 0 .866-.224 1.185-.525.157-.148.311-.331.498-.506.189-.175.416-.341.693-.446.289-.109.605-.17.934-.17.332 0 .61.064.83.194a.85.85 0 01.386.494c.028.105.041.207.041.305 0 .175-.037.332-.102.456-.064.123-.153.21-.316.386-.164.176-.281.386-.36.614a1.751 1.751 0 00-.07.253c-.023.109-.035.221-.035.334 0 .372.129.719.39.994.823.867 2.81 1.331 4.078.842 1.267-.489.43-1.584-.796-2.577zM10 10a1 1 0 110-2 1 1 0 010 2zm4 0a1 1 0 110-2 1 1 0 010 2z" />
-                </svg>
-                <span class="text-sm font-medium">Linux</span>
-              </div>
-              <!-- iOS -->
-              <div class="flex items-center gap-2">
-                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-                </svg>
-                <span class="text-sm font-medium">iOS</span>
-              </div>
-              <!-- Android -->
-              <div class="flex items-center gap-2">
-                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M17.532 15.106a1.003 1.003 0 1 1 .001-2.007 1.003 1.003 0 0 1 0 2.007m-11.044 0a1.003 1.003 0 1 1 .001-2.007 1.003 1.003 0 0 1 0 2.007m11.4-6.018 2.006-3.459a.413.413 0 1 0-.721-.403l-2.03 3.5A12.26 12.26 0 0 0 12.011 7.5a12.26 12.26 0 0 0-5.132 1.226l-2.03-3.5a.413.413 0 1 0-.72.403l2.005 3.46C2.593 11.066.003 14.812 0 19.2h24.022c-.003-4.388-2.593-8.134-6.134-10.112" />
-                </svg>
-                <span class="text-sm font-medium">Android</span>
-              </div>
             </div>
-            <a
-              href="https://github.com/ifftu-dev/alexandria"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn btn-outline btn-lg w-full sm:w-auto"
-            >
-              View on GitHub
-            </a>
-          </div>
 
-          <!-- Stats badges -->
-          <div class="landing-reveal landing-reveal-delay-4 mt-8 hidden flex-wrap items-center justify-center gap-3 sm:mt-16 sm:flex">
-            <div
-              v-for="stat in stats"
-              :key="stat.label"
-              class="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card)/0.8)] px-4 py-2 backdrop-blur-sm"
-            >
-              <span class="text-sm font-semibold text-[rgb(var(--color-primary))]">{{ stat.value }}</span>
-              <span class="text-xs text-[rgb(var(--color-muted-foreground))]">{{ stat.label }}</span>
-            </div>
+            <!-- Platforms -->
+            <p class="text-xs tracking-wide text-[rgb(var(--color-muted-foreground)/0.6)]">
+              macOS &middot; Windows &middot; Linux &middot; iOS &middot; Android
+            </p>
           </div>
         </div>
 

@@ -251,6 +251,10 @@ const { showIndicator } = useScrollIndicator(heroRef)
           <span class="text-xs font-medium tracking-wide text-[rgb(var(--color-institution))] uppercase">Alexandria for Institutions</span>
         </div>
 
+        <div class="landing-reveal mb-6 rounded-lg border border-amber-500/20 bg-amber-500/5 px-5 py-2.5 backdrop-blur-sm">
+          <p class="text-xs font-medium text-amber-400/90 sm:text-sm">This page describes what we're building. Institution features are not yet implemented.</p>
+        </div>
+
         <!-- Headline -->
         <h1 class="landing-reveal landing-reveal-delay-1 institution-serif text-4xl leading-[1.2] tracking-tight text-[rgb(var(--color-foreground))] sm:text-5xl lg:text-6xl">
           Your LMS, their
