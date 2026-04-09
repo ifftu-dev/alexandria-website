@@ -126,7 +126,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
           <p class="text-xs font-medium text-amber-400/90 sm:text-sm">This page describes what we're building. Recruiter features are not yet implemented.</p>
         </div>
 
-        <h1 class="landing-reveal landing-reveal-delay-1 recruiter-serif text-4xl leading-[1.2] tracking-tight text-[rgb(var(--color-foreground))] sm:text-5xl lg:text-6xl">
+        <h1 class="recruiter-serif text-4xl leading-[1.2] tracking-tight text-[rgb(var(--color-foreground))] sm:text-5xl lg:text-6xl">
           Hire verified talent,
           <br>
           <span class="text-recruiter-gradient">not resumes.</span>

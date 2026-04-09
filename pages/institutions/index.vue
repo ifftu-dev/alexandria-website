@@ -256,7 +256,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
         </div>
 
         <!-- Headline -->
-        <h1 class="landing-reveal landing-reveal-delay-1 institution-serif text-4xl leading-[1.2] tracking-tight text-[rgb(var(--color-foreground))] sm:text-5xl lg:text-6xl">
+        <h1 class="institution-serif text-4xl leading-[1.2] tracking-tight text-[rgb(var(--color-foreground))] sm:text-5xl lg:text-6xl">
           Your LMS, their
           <br>
           <span class="text-institution-gradient">credentials.</span>

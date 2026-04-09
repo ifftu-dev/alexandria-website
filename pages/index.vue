@@ -393,7 +393,7 @@ const steps = [
       <div class="container relative flex flex-col items-center justify-center pt-14 pb-8 sm:py-12">
         <div class="mx-auto max-w-5xl">
           <!-- Headline -->
-          <h1 class="landing-reveal landing-serif text-center text-4xl font-bold leading-[1.2] tracking-tight text-[rgb(var(--color-foreground))] sm:text-5xl lg:text-6xl">
+          <h1 class="landing-serif text-center text-4xl font-bold leading-[1.2] tracking-tight text-[rgb(var(--color-foreground))] sm:text-5xl lg:text-6xl">
             Knowledge belongs<br>
             <span class="text-[rgb(var(--color-primary))]">to everyone.</span>
           </h1>
