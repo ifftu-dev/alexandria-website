@@ -4,12 +4,12 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'Alexandria Recruiting — Hire Verified Talent, Not Resumes',
   meta: [
-    { name: 'description', content: 'Discover candidates through blockchain-verified skill proofs, evidence-based credentials, and transparent learning trajectories. No resumes. No guesswork.' },
+    { name: 'description', content: 'Discover candidates through Verifiable Credentials, evidence-based credentials, and transparent learning trajectories. No resumes. No guesswork.' },
     { property: 'og:title', content: 'Alexandria Recruiting — Hire Verified Talent, Not Resumes' },
-    { property: 'og:description', content: 'Discover candidates through blockchain-verified skill proofs and evidence-based credentials. No resumes. No guesswork. Just proof.' },
+    { property: 'og:description', content: 'Discover candidates through Verifiable Credentials and evidence-based credentials. No resumes. No guesswork. Just proof.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/recruiter' },
     { name: 'twitter:title', content: 'Alexandria Recruiting — Hire Verified Talent, Not Resumes' },
-    { name: 'twitter:description', content: 'Discover candidates through blockchain-verified skill proofs and evidence-based credentials. No resumes. Just proof.' },
+    { name: 'twitter:description', content: 'Discover candidates through Verifiable Credentials and evidence-based credentials. No resumes. Just proof.' },
   ],
   link: [
     { rel: 'canonical', href: 'https://alexandria.ifftu.dev/recruiter' },
@@ -21,7 +21,7 @@ useHead({
         '@context': 'https://schema.org',
         '@type': 'WebPage',
         name: 'Alexandria Recruiting',
-        description: 'Hire verified talent through blockchain-verified skill proofs, evidence-based credentials, and transparent learning trajectories.',
+        description: 'Hire verified talent through Verifiable Credentials, evidence-based credentials, and transparent learning trajectories.',
         url: 'https://alexandria.ifftu.dev/recruiter',
         isPartOf: { '@type': 'WebSite', name: 'Alexandria', url: 'https://alexandria.ifftu.dev' },
       }),
@@ -41,13 +41,13 @@ const features = [
     icon: 'chain',
   },
   {
-    title: 'Blockchain-Verified Credentials',
-    description: 'Credentials minted as NFTs on Cardano with metadata on IPFS. Independently verifiable without the platform. No fabrication possible.',
+    title: 'Blockchain-Anchored Credentials',
+    description: 'W3C-style Verifiable Credentials, Ed25519-signed under the candidate\'s DID and anchored to Cardano by hash. Independently verifiable — even offline. No fabrication possible.',
     icon: 'shield',
   },
   {
-    title: 'Privacy-First, Consent-Driven',
-    description: 'Candidates control visibility. Global toggles and per-credential overrides ensure learners choose what recruiters see. Opt-in only.',
+    title: 'Selective Disclosure & Consent',
+    description: 'Candidates choose what to reveal — the level only, or the full evidence chain. Opt-in by credential, replay-protected per recipient. Learners stay in control.',
     icon: 'lock',
   },
 ]
@@ -63,7 +63,7 @@ const solutions = [
   { label: 'Proofs replace claims', detail: 'Every skill backed by evidence records and weighted assessments' },
   { label: 'Depth, not snapshots', detail: 'Bloom\'s taxonomy levels from Remember through Create' },
   { label: 'Merit, not pedigree', detail: 'Reputation derived from outcomes, scoped to skills — not institutions' },
-  { label: 'On-chain verification', detail: 'Cardano NFTs with IPFS metadata — verify in seconds, not weeks' },
+  { label: 'On-chain verification', detail: 'Verifiable Credentials hash-anchored to Cardano — verify in seconds, even offline' },
 ]
 
 // Scroll-triggered reveal
@@ -133,7 +133,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
         </h1>
 
         <p class="landing-reveal landing-reveal-delay-2 mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-xl">
-          Discover candidates through blockchain-verified skill proofs, evidence-based credentials, and transparent learning trajectories.
+          Discover candidates through Verifiable Credentials, evidence-based credentials, and transparent learning trajectories.
           <span class="text-[rgb(var(--color-foreground)/0.8)]">No guesswork. No fabrication. Just proof.</span>
         </p>
 
@@ -384,7 +384,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
             Stop guessing. Start verifying.
           </h2>
           <p class="mx-auto mt-6 max-w-xl text-lg text-[rgb(var(--color-muted-foreground))]">
-            Join forward-thinking teams already hiring with blockchain-verified skill proofs. Free for learners. Powerful for recruiters.
+            Join forward-thinking teams already hiring with Verifiable Credentials. Free for learners. Powerful for recruiters.
           </p>
           <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <a
