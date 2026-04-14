@@ -11,6 +11,7 @@ export function useScrollIndicator(heroRef: Ref<HTMLElement | null>) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        if (!entry) return
         // Show indicator when the next section is NOT visible
         showIndicator.value = !entry.isIntersecting
       },
