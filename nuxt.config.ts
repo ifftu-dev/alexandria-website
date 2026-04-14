@@ -27,11 +27,11 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
-        { name: 'description', content: 'Alexandria is a free, open-source, decentralized learning platform. A native app for macOS, Windows, Linux, iOS, and Android. P2P networking, offline-first, blockchain-verified credentials. No servers. No gatekeepers.' },
+        { name: 'description', content: 'Alexandria is a free, open-source, decentralized learning platform. A native app for macOS, Windows, Linux, iOS, and Android. P2P networking, offline-first, W3C Verifiable Credentials anchored to Cardano. No servers. No gatekeepers.' },
         { name: 'theme-color', content: '#ffffff', media: '(prefers-color-scheme: light)' },
         { name: 'theme-color', content: '#0f172a', media: '(prefers-color-scheme: dark)' },
         { name: 'color-scheme', content: 'light dark' },
-        { name: 'keywords', content: 'learning platform, free education, open source, decentralized, blockchain credentials, peer-to-peer learning, offline-first, native app, Tauri, Cardano' },
+        { name: 'keywords', content: 'learning platform, free education, open source, decentralized, verifiable credentials, did, selective disclosure, peer-to-peer learning, offline-first, native app, Tauri, Cardano' },
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Alexandria' },
         { property: 'og:image', content: 'https://alexandria.ifftu.dev/og-image.png' },

@@ -6,12 +6,12 @@ definePageMeta({
 useHead({
   title: 'Alexandria — Free, Decentralized Learning for Everyone',
   meta: [
-    { name: 'description', content: 'A free, open-source learning platform that runs natively on macOS, Windows, Linux, iOS, and Android. Peer-to-peer networking, offline-first design, blockchain-verified credentials. No servers. No gatekeepers.' },
+    { name: 'description', content: 'A free, open-source learning platform that runs natively on macOS, Windows, Linux, iOS, and Android. Peer-to-peer networking, offline-first design, Verifiable Credentials anchored to Cardano. No servers. No gatekeepers.' },
     { property: 'og:title', content: 'Alexandria — Free, Decentralized Learning for Everyone' },
-    { property: 'og:description', content: 'A native app for every platform. P2P learning with blockchain-verified credentials, offline-first by design.' },
+    { property: 'og:description', content: 'A native app for every platform. P2P learning with Verifiable Credentials anchored to Cardano, offline-first by design.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/' },
     { name: 'twitter:title', content: 'Alexandria — Free, Decentralized Learning for Everyone' },
-    { name: 'twitter:description', content: 'A native app for every platform. P2P learning with blockchain-verified credentials, offline-first by design.' },
+    { name: 'twitter:description', content: 'A native app for every platform. P2P learning with Verifiable Credentials anchored to Cardano, offline-first by design.' },
   ],
   link: [
     { rel: 'canonical', href: 'https://alexandria.ifftu.dev/' },
@@ -26,7 +26,7 @@ useHead({
         applicationCategory: 'EducationalApplication',
         operatingSystem: 'macOS, Windows, Linux, iOS, Android',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-        description: 'A free, open-source, decentralized learning platform with blockchain-verified credentials.',
+        description: 'A free, open-source, decentralized learning platform with Verifiable Credentials anchored to Cardano.',
         url: 'https://alexandria.ifftu.dev',
         downloadUrl: 'https://github.com/ifftu-dev/alexandria/releases/latest',
         author: {
@@ -123,7 +123,7 @@ useHeroParallax()
 const features = [
   {
     title: 'Learn Without Limits',
-    description: 'Tutorials, courses, assessments, and articles — all free and open-source. A native app that works offline, syncs peer-to-peer, and runs on every platform.',
+    description: 'Structured courses, short-form video tutorials, and Field Commentary from credentialed practitioners — all free and open-source. A native app that works offline, syncs peer-to-peer, and runs on every platform.',
     bullets: [
       'Structured courses with real assessments',
       'Works offline — no internet required',
@@ -132,11 +132,11 @@ const features = [
   },
   {
     title: 'Earn Verifiable Credentials',
-    description: 'Achievements stored on the Cardano blockchain (preprod testnet) — portable, tamper-proof, and independently verifiable without the platform.',
+    description: 'W3C-style Verifiable Credentials, Ed25519-signed under your own DID and anchored to Cardano (preprod testnet) by hash. Independently verifiable without the platform — even offline.',
     bullets: [
-      'Blockchain-backed skill proofs',
-      'Portable, employer-verifiable credentials',
-      'Instructors earn reputation through learner success',
+      'Six credential types: formal, assessment, attestation, role, derived, self-asserted',
+      'Selective disclosure — share only the level, hold back the rest',
+      'Self-contained offline bundles for employers and registrars',
     ],
   },
   {
@@ -172,8 +172,8 @@ const steps = [
   },
   {
     number: '03',
-    title: 'Mint Credentials',
-    description: 'SkillProofs mint as NFTs on Cardano (preprod testnet). Metadata is content-addressed. Your credentials exist independently of Alexandria — forever.',
+    title: 'Issue & Anchor',
+    description: 'Credentials are signed under your DID, hashed, and anchored to Cardano in a metadata-only transaction (preprod testnet). Verifiable by anyone, anywhere — independent of Alexandria.',
   },
   {
     number: '04',
@@ -401,7 +401,7 @@ const steps = [
           <!-- Subheading -->
           <p class="landing-reveal landing-reveal-delay-1 mx-auto mt-8 max-w-2xl text-center text-lg leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-xl">
             Free, open-source learning for every platform.
-            Peer-to-peer, offline-first, with blockchain-verified credentials.
+            Peer-to-peer, offline-first, with Verifiable Credentials anchored to Cardano.
           </p>
 
           <!-- CTA + Coming Soon -->
