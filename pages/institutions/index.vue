@@ -273,7 +273,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
             :href="GITHUB_URL"
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-lg btn-institution group relative overflow-hidden rounded-lg px-8 py-4 text-base font-semibold"
+            class="plausible-event-name=CTA-GitHub btn btn-lg btn-institution group relative overflow-hidden rounded-lg px-8 py-4 text-base font-semibold"
           >
             <span class="relative z-10">Request a Demo</span>
             <div class="absolute inset-0 -translate-x-full bg-white/10 transition-transform duration-300 group-hover:translate-x-0" />
@@ -699,7 +699,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
             :href="GITHUB_URL"
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-lg btn-institution mt-8 inline-flex rounded-lg px-8 py-4 text-base font-semibold"
+            class="plausible-event-name=CTA-GitHub btn btn-lg btn-institution mt-8 inline-flex rounded-lg px-8 py-4 text-base font-semibold"
           >
             Talk to Us
           </a>
@@ -810,7 +810,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
               :href="GITHUB_URL"
               target="_blank"
               rel="noopener noreferrer"
-              class="btn btn-lg btn-institution rounded-lg px-10 py-4 text-base font-semibold"
+              class="plausible-event-name=CTA-GitHub btn btn-lg btn-institution rounded-lg px-10 py-4 text-base font-semibold"
             >
               Request a Demo
             </a>
@@ -818,7 +818,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
               :href="GITHUB_URL"
               target="_blank"
               rel="noopener noreferrer"
-              class="btn btn-lg rounded-lg border border-[rgb(var(--color-border))] px-8 py-4 text-base font-medium text-[rgb(var(--color-foreground))] hover:border-[rgb(var(--color-institution)/0.4)] hover:text-[rgb(var(--color-institution))]"
+              class="plausible-event-name=CTA-GitHub btn btn-lg rounded-lg border border-[rgb(var(--color-border))] px-8 py-4 text-base font-medium text-[rgb(var(--color-foreground))] hover:border-[rgb(var(--color-institution)/0.4)] hover:text-[rgb(var(--color-institution))]"
             >
               View on GitHub
             </a>

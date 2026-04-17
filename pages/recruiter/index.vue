@@ -391,7 +391,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
               href="https://github.com/ifftu-dev/alexandria"
               target="_blank"
               rel="noopener noreferrer"
-              class="btn btn-lg btn-recruiter rounded-lg px-10 py-4 text-base font-semibold"
+              class="plausible-event-name=CTA-GitHub btn btn-lg btn-recruiter rounded-lg px-10 py-4 text-base font-semibold"
             >
               Get Started
             </a>

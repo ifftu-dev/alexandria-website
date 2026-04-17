@@ -411,7 +411,7 @@ const steps = [
                 href="https://github.com/ifftu-dev/alexandria"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="btn btn-outline btn-lg w-full sm:w-auto"
+                class="plausible-event-name=CTA-GitHub btn btn-outline btn-lg w-full sm:w-auto"
               >
                 View on GitHub
               </a>
@@ -613,7 +613,7 @@ const steps = [
               href="https://github.com/ifftu-dev/alexandria"
               target="_blank"
               rel="noopener noreferrer"
-              class="btn btn-outline btn-lg"
+              class="plausible-event-name=CTA-GitHub btn btn-outline btn-lg"
             >
               View on GitHub
             </a>

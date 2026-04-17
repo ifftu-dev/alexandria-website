@@ -45,6 +45,15 @@ export default defineNuxtConfig({
           innerHTML: `(function(){try{var t=localStorage.getItem('alexandria-theme');var d=document.documentElement;if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme:dark)').matches))d.classList.add('dark')}catch(e){}})()`,
           type: 'text/javascript',
         },
+        {
+          src: 'https://plausible.io/js/script.outbound-links.file-downloads.tagged-events.js',
+          defer: true,
+          'data-domain': 'alexandria.ifftu.dev',
+        },
+        {
+          innerHTML: `window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)}`,
+          type: 'text/javascript',
+        },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
