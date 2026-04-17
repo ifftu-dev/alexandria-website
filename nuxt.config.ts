@@ -42,7 +42,7 @@ export default defineNuxtConfig({
       ],
       script: [
         {
-          innerHTML: `(function(){try{var t=localStorage.getItem('alexandria-theme');var d=document.documentElement;if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme:dark)').matches))d.classList.add('dark')}catch(e){}})()`,
+          innerHTML: `(function(){try{var t=localStorage.getItem('alexandria-theme')||'dark';var d=document.documentElement;if(t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme:dark)').matches))d.classList.add('dark')}catch(e){}})()`,
           type: 'text/javascript',
         },
         {
