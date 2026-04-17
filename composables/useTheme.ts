@@ -1,6 +1,6 @@
 type Theme = 'light' | 'dark' | 'system'
 
-const theme = ref<Theme>('system')
+const theme = ref<Theme>('dark')
 
 function getSystemTheme(): 'light' | 'dark' {
   if (import.meta.server) return 'light'
