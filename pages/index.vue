@@ -123,37 +123,61 @@ useHeroParallax()
 const features = [
   {
     title: 'Learn Without Limits',
-    description: 'Structured courses, short-form video tutorials, and Field Commentary from credentialed practitioners — all free and open-source. A native app that works offline, syncs peer-to-peer, and runs on every platform.',
+    icon: 'video',
+    description: 'Courses, tutorials, and Opinions from credentialed practitioners. Free, open-source, offline-first.',
     bullets: [
-      'Structured courses with real assessments',
+      'Courses with real assessments',
       'Works offline — no internet required',
-      'Runs on macOS, Windows, Linux, iOS, Android',
+      'macOS, Windows, Linux, iOS, Android',
+    ],
+  },
+  {
+    title: 'A Shared Map of Knowledge',
+    icon: 'graph',
+    description: 'Every lesson and credential is anchored to a public skill graph, so a credential means the same thing everywhere.',
+    bullets: [
+      'Three-tier taxonomy with prerequisite edges',
+      'Bloom\'s levels: Remember → Create',
+      'DAO-ratified, Ed25519-signed, versioned',
     ],
   },
   {
     title: 'Earn Verifiable Credentials',
-    description: 'W3C-style Verifiable Credentials, Ed25519-signed under your own DID and anchored to Cardano (preprod testnet) by hash. Independently verifiable without the platform — even offline.',
+    icon: 'shield',
+    description: 'W3C Verifiable Credentials, signed under your own DID and hash-anchored to Cardano. Verifiable without the platform — even offline.',
     bullets: [
-      'Six credential types: formal, assessment, attestation, role, derived, self-asserted',
-      'Selective disclosure — share only the level, hold back the rest',
-      'Self-contained offline bundles for employers and registrars',
+      'Six credential types',
+      'Selective disclosure',
+      'Offline-verifiable bundles',
+    ],
+  },
+  {
+    title: 'Reputation Without the Star Rating',
+    icon: 'reputation',
+    description: 'Instructors are scored on their impact on learners — a per-skill distribution with confidence bounds, not a single global number.',
+    bullets: [
+      'Grounded in learner outcomes, not popularity',
+      'Per-skill distributions with confidence bounds',
+      'No five-star averages, no global scores',
     ],
   },
   {
     title: 'Own Your Data',
-    description: 'Your keys, your identity, your content. Everything stored locally with AES-256-GCM encryption. Peer-to-peer sync — no cloud, no corporate servers.',
+    icon: 'key',
+    description: 'Your keys, your identity, your content. Local encrypted storage; peer-to-peer sync — no cloud, no servers.',
     bullets: [
-      'Self-sovereign identity with local key vault',
-      'Content-addressed storage via iroh',
-      'P2P networking — no central server',
+      'Self-sovereign identity + local key vault',
+      'Content-addressed via iroh',
+      'P2P — no central server',
     ],
   },
   {
     title: 'Community Governed',
-    description: 'DAOs mirror the knowledge taxonomy. Elections, nominations, and voting are driven by demonstrated expertise — not money.',
+    icon: 'building',
+    description: 'DAOs mirror the skill taxonomy. Voting power comes from demonstrated expertise — not stake, not seniority.',
     bullets: [
-      'Meritocratic governance model',
-      'Reputation-based voting power',
+      'Meritocratic, scoped per domain',
+      'Draft → committee → public vote',
       'Transparent, on-chain decisions',
     ],
   },
@@ -458,14 +482,40 @@ const steps = [
           </p>
         </div>
 
-        <div class="mt-12 grid gap-10 sm:mt-20 md:grid-cols-2">
+        <div class="mt-12 grid gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-3">
           <div
-            v-for="(feature, i) in features"
+            v-for="feature in features"
             :key="feature.title"
-            class="landing-scroll-reveal"
+            class="landing-scroll-reveal rounded-2xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] p-6 transition hover:border-[rgb(var(--color-primary)/0.4)] sm:p-8"
           >
-            <h3 class="text-xl font-semibold text-[rgb(var(--color-foreground))]">{{ feature.title }}</h3>
-            <p class="mt-3 leading-relaxed text-[rgb(var(--color-muted-foreground))]">
+            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-[rgb(var(--color-primary)/0.1)] text-[rgb(var(--color-primary))]">
+              <!-- video -->
+              <svg v-if="feature.icon === 'video'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
+              </svg>
+              <!-- graph -->
+              <svg v-else-if="feature.icon === 'graph'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+              </svg>
+              <!-- shield -->
+              <svg v-else-if="feature.icon === 'shield'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              <!-- key -->
+              <svg v-else-if="feature.icon === 'key'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+              </svg>
+              <!-- reputation -->
+              <svg v-else-if="feature.icon === 'reputation'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+              </svg>
+              <!-- building -->
+              <svg v-else-if="feature.icon === 'building'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+              </svg>
+            </div>
+            <h3 class="mt-5 text-lg font-semibold text-[rgb(var(--color-foreground))]">{{ feature.title }}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-[rgb(var(--color-muted-foreground))]">
               {{ feature.description }}
             </p>
             <ul class="mt-4 space-y-2">
