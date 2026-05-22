@@ -178,7 +178,7 @@ const features = [
     bullets: [
       'Meritocratic, scoped per domain',
       'Draft → committee → public vote',
-      'Transparent, on-chain decisions',
+      'Transparent governance, with on-chain enforcement rolling out',
     ],
   },
 ]
@@ -191,8 +191,8 @@ const steps = [
   },
   {
     number: '02',
-    title: 'Learn & Build Evidence',
-    description: 'Access free courses, tutorials, and assessments. Every completion generates evidence records that aggregate into verifiable skill proofs.',
+    title: 'Learn & Earn Credentials',
+    description: 'Access free courses, tutorials, and assessments. Every completed assessment is hashed into a course-completion proof that a Cardano validator witnesses — auto-issuing a W3C Verifiable Credential.',
   },
   {
     number: '03',
@@ -202,7 +202,7 @@ const steps = [
   {
     number: '04',
     title: 'Share & Govern',
-    description: 'Share credentials selectively with employers. Stake your reputation to participate in platform governance. Connect peer-to-peer with other learners.',
+    description: 'Share credentials selectively with employers. Your demonstrated proficiency weights your vote in platform governance. Connect peer-to-peer with other learners.',
   },
 ]
 

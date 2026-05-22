@@ -4,7 +4,7 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'Alexandria for Institutions — Your LMS, Their Credentials',
   meta: [
-    { name: 'description', content: 'The open-source LMS that gives credentials back to students. W3C Verifiable Credentials, skill-mapped curricula, decentralised by default. FERPA/GDPR ready with zero vendor lock-in.' },
+    { name: 'description', content: 'The open-source LMS that gives credentials back to students. W3C Verifiable Credentials, skill-mapped curricula, decentralised by default. FERPA/GDPR support in progress, with zero vendor lock-in.' },
     { property: 'og:title', content: 'Alexandria for Institutions — Your LMS, Their Credentials' },
     { property: 'og:description', content: 'An open-source LMS where every credential is a learner-owned W3C Verifiable Credential, every skill is structurally mapped, and students own their achievements forever.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/institutions' },
@@ -21,7 +21,7 @@ useHead({
         '@context': 'https://schema.org',
         '@type': 'WebPage',
         name: 'Alexandria for Institutions',
-        description: 'The open-source LMS that gives credentials back to students. W3C Verifiable Credentials, skill-mapped, FERPA/GDPR ready.',
+        description: 'The open-source LMS that gives credentials back to students. W3C Verifiable Credentials, skill-mapped, FERPA/GDPR support in progress.',
         url: 'https://alexandria.ifftu.dev/institutions',
         isPartOf: { '@type': 'WebSite', name: 'Alexandria', url: 'https://alexandria.ifftu.dev' },
       }),
@@ -52,8 +52,8 @@ const featuresByCategory: Record<string, Array<{ title: string, description: str
   differentiators: [
     { title: 'Blockchain-Anchored Credentials', description: 'Every credential is a W3C Verifiable Credential, signed under the student\'s own DID and anchored to Cardano by hash. Students own them permanently. Employers verify them independently — even offline. No middleman.', icon: 'shield' },
     { title: 'Skill-Mapped Curriculum', description: 'Map every course, module, and assessment to a skill taxonomy with Bloom\'s proficiency levels. See exactly which skills your programs actually develop.', icon: 'graph' },
-    { title: 'Evidence-Based Portfolios', description: 'Students accumulate evidence records — graded work, peer reviews, projects — that anchor every skill claim to verifiable proof.', icon: 'proof' },
-    { title: 'Evidence-Derived Instructor Reputation', description: 'Instructor quality measured through student outcomes and evidence chains, not popularity surveys. Reputation is scoped to skills, not global scores.', icon: 'reputation' },
+    { title: 'Credential-Backed Portfolios', description: 'Students accumulate W3C Verifiable Credentials — for graded work, peer reviews, and projects — that anchor every skill claim to verifiable proof.', icon: 'proof' },
+    { title: 'Outcome-Derived Instructor Reputation', description: 'Instructor quality measured through student outcomes and earned credentials, not popularity surveys. Reputation is scoped to skills, not global scores.', icon: 'reputation' },
     { title: 'Decentralised Content Distribution', description: 'Course content is content-addressed with BLAKE3 and distributed peer-to-peer via iroh. No single point of failure — content persists even if the platform goes down.', icon: 'decentralised' },
   ],
   admin: [
@@ -67,7 +67,7 @@ const featuresByCategory: Record<string, Array<{ title: string, description: str
   analytics: [
     { title: 'Real-Time Learning Analytics', description: 'Live dashboards showing engagement, completion, and performance metrics. Drill down from institutional overview to individual student activity.', icon: 'chart', planned: true },
     { title: 'Skill Gap Analysis', description: 'Identify which skills your curriculum develops well and where gaps exist. Compare intended learning outcomes against actual measured proficiency.', icon: 'gap' },
-    { title: 'Instructor Effectiveness', description: 'Evidence-based instructor analytics tied to student outcomes. Identify effective teaching patterns and support continuous improvement — without relying on popularity contests.', icon: 'impact' },
+    { title: 'Instructor Effectiveness', description: 'Outcome-based instructor analytics tied to student outcomes. Identify effective teaching patterns and support continuous improvement — without relying on popularity contests.', icon: 'impact' },
     { title: 'Predictive At-Risk Identification', description: 'Machine learning models flag students showing early warning signals. Intervene before failure with data-driven recommendations.', icon: 'alert', planned: true },
     { title: 'Accreditation-Ready Reports', description: 'Generate reports mapped to accreditation standards. Evidence-backed documentation of student learning outcomes for review cycles.', icon: 'report', planned: true },
   ],
@@ -79,12 +79,12 @@ const comparisonFeatures = [
   { feature: 'Self-Hosted Option', alexandria: true, canvas: true, blackboard: false, moodle: true },
   { feature: 'Verifiable Credentials (W3C)', alexandria: true, canvas: false, blackboard: false, moodle: false },
   { feature: 'Skill-Mapped Curriculum', alexandria: true, canvas: false, blackboard: false, moodle: false },
-  { feature: 'Evidence-Based Portfolios', alexandria: true, canvas: false, blackboard: false, moodle: false },
+  { feature: 'Credential-Backed Portfolios', alexandria: true, canvas: false, blackboard: false, moodle: false },
   { feature: 'Student-Owned Data', alexandria: true, canvas: false, blackboard: false, moodle: false },
   { feature: 'P2P Content Distribution', alexandria: true, canvas: false, blackboard: false, moodle: false },
   { feature: 'LTI 1.3 Support', alexandria: 'Planned', canvas: true, blackboard: true, moodle: true },
   { feature: 'SCORM/xAPI', alexandria: 'Planned', canvas: true, blackboard: true, moodle: true },
-  { feature: 'FERPA/GDPR Ready', alexandria: true, canvas: true, blackboard: true, moodle: 'Varies' },
+  { feature: 'FERPA/GDPR Ready', alexandria: 'In progress', canvas: true, blackboard: true, moodle: 'Varies' },
   { feature: 'SSO (SAML/OIDC)', alexandria: 'Planned', canvas: true, blackboard: true, moodle: true },
   { feature: 'Mobile App', alexandria: true, canvas: true, blackboard: true, moodle: true },
   { feature: 'Predictive Analytics', alexandria: 'Planned', canvas: 'Add-on', blackboard: 'Add-on', moodle: false },
@@ -118,7 +118,7 @@ const faqs = [
   },
   {
     question: 'How is instructor reputation different from student evaluations?',
-    answer: 'Traditional student evaluations measure popularity and are well-documented to be biased. Alexandria derives instructor reputation from student outcomes — actual skill progression, evidence quality, and learning trajectory data. Reputation is scoped to specific skills, not a single global score.',
+    answer: 'Traditional student evaluations measure popularity and are well-documented to be biased. Alexandria derives instructor reputation from student outcomes — actual skill progression and the credentials learners earn — as a per-skill distribution with confidence bounds. Reputation is scoped to specific skills, not a single global score.',
   },
   {
     question: 'Is the Community tier actually free?',
@@ -126,7 +126,7 @@ const faqs = [
   },
   {
     question: 'What about FERPA compliance?',
-    answer: 'Alexandria is designed with FERPA compliance in mind. The self-hosted deployment model keeps data in your jurisdiction, and credentials are signed under student-controlled DIDs — only a hash is anchored on-chain, so no PII is exposed publicly. Selective disclosure lets students share just the level, not the full evidence chain. Role-based access controls, audit logging, data retention policies, and consent management tooling are on the roadmap.',
+    answer: 'Alexandria is designed with FERPA compliance in mind. The self-hosted deployment model keeps data in your jurisdiction, and credentials are signed under student-controlled DIDs — only a hash is anchored on-chain, so no PII is exposed publicly. Selective disclosure lets students share just the level, not the full credential. Role-based access controls, audit logging, data retention policies, and consent management tooling are on the roadmap.',
   },
 ]
 
@@ -298,7 +298,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
           </span>
           <span class="flex items-center gap-1.5">
             <svg class="h-4 w-4 text-[rgb(var(--color-institution))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-            FERPA/GDPR ready
+            FERPA/GDPR in progress
           </span>
           <span class="flex items-center gap-1.5">
             <svg class="h-4 w-4 text-[rgb(var(--color-institution))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>

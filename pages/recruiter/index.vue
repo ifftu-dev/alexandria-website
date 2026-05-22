@@ -4,12 +4,12 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'Alexandria Recruiting — Hire Verified Talent, Not Resumes',
   meta: [
-    { name: 'description', content: 'Discover candidates through Verifiable Credentials, evidence-based credentials, and transparent learning trajectories. No resumes. No guesswork.' },
+    { name: 'description', content: 'Discover candidates through W3C Verifiable Credentials and transparent learning trajectories. No resumes. No guesswork.' },
     { property: 'og:title', content: 'Alexandria Recruiting — Hire Verified Talent, Not Resumes' },
-    { property: 'og:description', content: 'Discover candidates through Verifiable Credentials and evidence-based credentials. No resumes. No guesswork. Just proof.' },
+    { property: 'og:description', content: 'Discover candidates through W3C Verifiable Credentials. No resumes. No guesswork. Just proof.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/recruiter' },
     { name: 'twitter:title', content: 'Alexandria Recruiting — Hire Verified Talent, Not Resumes' },
-    { name: 'twitter:description', content: 'Discover candidates through Verifiable Credentials and evidence-based credentials. No resumes. Just proof.' },
+    { name: 'twitter:description', content: 'Discover candidates through W3C Verifiable Credentials. No resumes. Just proof.' },
   ],
   link: [
     { rel: 'canonical', href: 'https://alexandria.ifftu.dev/recruiter' },
@@ -21,7 +21,7 @@ useHead({
         '@context': 'https://schema.org',
         '@type': 'WebPage',
         name: 'Alexandria Recruiting',
-        description: 'Hire verified talent through Verifiable Credentials, evidence-based credentials, and transparent learning trajectories.',
+        description: 'Hire verified talent through W3C Verifiable Credentials and transparent learning trajectories.',
         url: 'https://alexandria.ifftu.dev/recruiter',
         isPartOf: { '@type': 'WebSite', name: 'Alexandria', url: 'https://alexandria.ifftu.dev' },
       }),
@@ -36,8 +36,8 @@ const features = [
     icon: 'search',
   },
   {
-    title: 'Evidence Chains',
-    description: 'Every skill proof links back to assessments, courses, and instructor attributions. Trace how a candidate actually learned — not just what they claim.',
+    title: 'Verifiable Credential Trails',
+    description: 'Every credential links back to assessments, courses, and instructor attributions. Trace how a candidate actually learned — not just what they claim.',
     icon: 'chain',
   },
   {
@@ -47,7 +47,7 @@ const features = [
   },
   {
     title: 'Selective Disclosure & Consent',
-    description: 'Candidates choose what to reveal — the level only, or the full evidence chain. Opt-in by credential, replay-protected per recipient. Learners stay in control.',
+    description: 'Candidates choose what to reveal — the level only, or the full credential trail. Opt-in by credential, replay-protected per recipient. Learners stay in control.',
     icon: 'lock',
   },
 ]
@@ -60,7 +60,7 @@ const problems = [
 ]
 
 const solutions = [
-  { label: 'Proofs replace claims', detail: 'Every skill backed by evidence records and weighted assessments' },
+  { label: 'Proofs replace claims', detail: 'Every skill backed by a Verifiable Credential and its underlying assessments' },
   { label: 'Depth, not snapshots', detail: 'Bloom\'s taxonomy levels from Remember through Create' },
   { label: 'Merit, not pedigree', detail: 'Reputation derived from outcomes, scoped to skills — not institutions' },
   { label: 'On-chain verification', detail: 'Verifiable Credentials hash-anchored to Cardano — verify in seconds, even offline' },
@@ -133,7 +133,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
         </h1>
 
         <p class="landing-reveal landing-reveal-delay-2 mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-xl">
-          Discover candidates through Verifiable Credentials, evidence-based credentials, and transparent learning trajectories.
+          Discover candidates through W3C Verifiable Credentials and transparent learning trajectories.
           <span class="text-[rgb(var(--color-foreground)/0.8)]">No guesswork. No fabrication. Just proof.</span>
         </p>
 
@@ -317,7 +317,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
               v-for="(step, i) in [
                 { n: 1, title: 'Define Your Requirements', desc: 'Build composite skill queries — required and optional skills, each with a Bloom\'s proficiency level and optional confidence threshold. Search by what people can do, not what they say.' },
                 { n: 2, title: 'Review Verified Matches', desc: 'See candidates ranked by skill match — no global scores, no opaque algorithms. Each result includes a human-readable explanation of why they matched and what gaps remain.' },
-                { n: 3, title: 'Verify & Deep-Dive', desc: 'Inspect evidence chains, verify credentials on-chain, view learning timelines, and see instructor attributions. Every data point is cryptographically anchored and independently verifiable.' },
+                { n: 3, title: 'Verify & Deep-Dive', desc: 'Inspect Verifiable Credentials, verify them against their Cardano anchor, view learning timelines, and see instructor attributions. Every data point is cryptographically anchored and independently verifiable.' },
                 { n: 4, title: 'Build Your Pipeline', desc: 'Organize candidates into pools, track pipeline stages, set up saved search alerts for new matches, and collaborate with your team — all with full audit trails.' },
               ]"
               :key="step.n"

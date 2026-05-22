@@ -107,9 +107,9 @@ function getPlatformLabel(platform: DownloadInfo['platform'], arch: DownloadInfo
     case 'linux':
       return 'Linux'
     case 'ios':
-      return 'Desktop'
+      return 'iOS'
     case 'android':
-      return 'Desktop'
+      return 'Android'
     default:
       return 'your platform'
   }
