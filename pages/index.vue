@@ -138,7 +138,7 @@ const features = [
     bullets: [
       'Three-tier taxonomy with prerequisite edges',
       'Bloom\'s levels: Remember → Create',
-      'DAO-ratified, Ed25519-signed, versioned',
+      'DAO-ratified via signed P2P gossip, Ed25519-signed, versioned',
     ],
   },
   {
@@ -174,11 +174,11 @@ const features = [
   {
     title: 'Community Governed',
     icon: 'building',
-    description: 'DAOs mirror the skill taxonomy. Voting power comes from demonstrated expertise — not stake, not seniority.',
+    description: 'DAOs mirror the skill taxonomy. Voice in peer-to-peer governance comes from demonstrated expertise — not stake, not seniority.',
     bullets: [
       'Meritocratic, scoped per domain',
-      'Draft → committee → public vote',
-      'Transparent governance, with on-chain enforcement rolling out',
+      'Draft → committee → public vote, via signed P2P gossip',
+      'Decisions anchored to Cardano for tamper-evidence',
     ],
   },
 ]
@@ -202,7 +202,7 @@ const steps = [
   {
     number: '04',
     title: 'Share & Govern',
-    description: 'Share credentials selectively with employers. Your demonstrated proficiency weights your vote in platform governance. Connect peer-to-peer with other learners.',
+    description: 'Share credentials selectively with employers. Your demonstrated proficiency weights your voice in peer-to-peer governance. Connect peer-to-peer with other learners.',
   },
 ]
 
@@ -616,6 +616,10 @@ const steps = [
             <span class="text-sm font-medium text-[rgb(var(--color-foreground))]">{{ platform }}</span>
           </div>
         </div>
+        <p class="mt-6 text-center text-sm text-[rgb(var(--color-muted-foreground))]">
+          Runs on macOS 10.15+, Windows 10+, Linux, iOS 16.4+, and Android 9+.
+          For live video tutoring on Android we recommend a device with 6&nbsp;GB+ RAM.
+        </p>
       </div>
     </section>
 
