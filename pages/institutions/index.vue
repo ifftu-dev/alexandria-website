@@ -47,7 +47,7 @@ const featuresByCategory: Record<string, Array<{ title: string, description: str
     { title: 'Assignments, Quizzes & Gradebook', description: 'Full-featured assessment engine with rubrics, auto-grading, peer review, and a unified gradebook with weighted categories, late policies, and bulk actions.', icon: 'clipboard', planned: true },
     { title: 'Discussion Forums', description: 'Threaded discussions with rich text, inline media, @mentions, and instructor endorsement. Supports graded participation and topic pinning.', icon: 'chat', planned: true },
     { title: 'Video Lectures', description: 'Integrated video hosting with chaptering, speed controls, in-video quizzes, and automatic transcription. No third-party streaming fees.', icon: 'video', planned: true },
-    { title: 'Mobile-Responsive with Offline', description: 'Native app that works across all devices. Students can download content for offline access and sync progress when reconnected.', icon: 'mobile' },
+    { title: 'Mobile-Responsive with Offline', description: 'Native app that works across modern desktop and mobile devices. Students can download content for offline access and sync progress when reconnected.', icon: 'mobile' },
   ],
   differentiators: [
     { title: 'Blockchain-Anchored Credentials', description: 'Every credential is a W3C Verifiable Credential, signed under the student\'s own DID and anchored to Cardano by hash. Students own them permanently. Employers verify them independently — even offline. No middleman.', icon: 'shield' },
