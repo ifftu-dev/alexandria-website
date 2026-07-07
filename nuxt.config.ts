@@ -6,6 +6,14 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap',
   ],
 
+  // Emit the prerendered static site to `dist/` so it matches
+  // netlify.toml's `publish = "dist"`. (Nuxt 4's default is
+  // `.output/public`.) Keeps public/.well-known + app-open.html in the
+  // published output for deep linking.
+  nitro: {
+    output: { publicDir: 'dist' },
+  },
+
   site: {
     url: 'https://alexandria.ifftu.dev',
   },

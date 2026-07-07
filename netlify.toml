@@ -18,3 +18,32 @@
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "DENY"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Deep linking — iOS Universal Links association file must be served as JSON
+# (no extension) with no redirect. See docs in the alexandria app repo.
+[[headers]]
+  for = "/.well-known/apple-app-site-association"
+  [headers.values]
+    Content-Type = "application/json"
+
+# Deep-link app paths: when the OS does NOT hand the https link to the
+# installed app (not installed / unverified), the browser lands here. These
+# rewrites (status 200 keeps the original URL) serve the interstitial, which
+# reconstructs the alexandria:// URL and offers a download fallback. Real
+# site pages are served before these, so nothing existing is shadowed.
+[[redirects]]
+  from = "/guardian/*"
+  to = "/app-open.html"
+  status = 200
+[[redirects]]
+  from = "/course/*"
+  to = "/app-open.html"
+  status = 200
+[[redirects]]
+  from = "/classroom/*"
+  to = "/app-open.html"
+  status = 200
+[[redirects]]
+  from = "/open"
+  to = "/app-open.html"
+  status = 200
