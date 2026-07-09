@@ -136,6 +136,7 @@ export function useDownload() {
   })
 
   const allPlatformsUrl = ref(RELEASES_URL)
+  const releaseTag = ref<string | null>(null)
 
   onMounted(async () => {
     const { platform, arch } = detectPlatform()
@@ -152,6 +153,7 @@ export function useDownload() {
       const release = await fetchLatestRelease()
       if (release) {
         allPlatformsUrl.value = release.html_url
+        releaseTag.value = release.tag_name
         const assetUrl = findAssetUrl(release.assets, platform, arch)
         if (assetUrl) {
           info.value = { ...info.value, downloadUrl: assetUrl }
@@ -167,5 +169,6 @@ export function useDownload() {
   return {
     download: readonly(info),
     allPlatformsUrl: readonly(allPlatformsUrl),
+    releaseTag: readonly(releaseTag),
   }
 }

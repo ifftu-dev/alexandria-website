@@ -71,6 +71,9 @@ useScrollReveal()
 const heroRef = ref<HTMLElement | null>(null)
 const { showIndicator } = useScrollIndicator(heroRef)
 
+// ─── Download button (temporary) — platform-detected + release tag ───
+const { download, allPlatformsUrl, releaseTag } = useDownload()
+
 // ─── Parallax scroll effect for hero background layers ───
 const layerBack = ref<HTMLElement | null>(null)
 const layerMid = ref<HTMLElement | null>(null)
@@ -431,6 +434,15 @@ const steps = [
           <!-- CTA + Coming Soon -->
           <div class="landing-reveal landing-reveal-delay-2 mt-10 flex flex-col items-center gap-5">
             <div class="flex flex-col items-center gap-3 sm:flex-row">
+              <!-- Temporary: platform-detected download button -->
+              <a
+                :href="download.downloadUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="plausible-event-name=CTA-Download btn btn-primary btn-lg w-full sm:w-auto"
+              >
+                Download for {{ download.platformLabel }}
+              </a>
               <a
                 href="https://github.com/ifftu-dev/alexandria"
                 target="_blank"
@@ -447,6 +459,18 @@ const steps = [
                 Coming Soon
               </span>
             </div>
+
+            <!-- Temporary: release tag pill -->
+            <a
+              v-if="releaseTag"
+              :href="allPlatformsUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 rounded-full border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] px-3 py-1 text-xs font-medium text-[rgb(var(--color-muted-foreground))] transition hover:border-[rgb(var(--color-primary)/0.4)] hover:text-[rgb(var(--color-foreground))]"
+            >
+              <span class="h-1.5 w-1.5 rounded-full bg-[rgb(var(--color-primary))]" />
+              {{ releaseTag }}
+            </a>
 
             <!-- Platforms -->
             <p class="text-xs tracking-wide text-[rgb(var(--color-muted-foreground)/0.6)]">
