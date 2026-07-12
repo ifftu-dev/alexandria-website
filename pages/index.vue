@@ -583,7 +583,7 @@ const steps = [
                 </div>
               </div>
               <div class="flex-1 rounded-2xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] p-6 sm:p-8">
-                <div class="sm:hidden mb-3 flex h-8 w-8 items-center justify-center rounded-lg bg-[rgb(var(--color-primary)/0.1)] text-xs font-mono font-semibold text-[rgb(var(--color-primary))]">
+                <div class="sm:hidden mb-3 flex h-8 w-8 items-center justify-center rounded-lg bg-[rgb(var(--color-primary))] text-xs font-mono font-semibold text-[rgb(var(--color-primary-foreground))]">
                   {{ step.number }}
                 </div>
                 <h3 class="text-lg font-semibold text-[rgb(var(--color-foreground))]">{{ step.title }}</h3>

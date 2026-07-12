@@ -14,7 +14,7 @@ function closeMobileMenu() {
     <header class="sticky top-0 z-50 border-b border-[rgb(var(--color-border))] bg-[rgb(var(--color-background))]">
       <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <!-- Logo -->
-        <NuxtLink to="/" class="flex items-center gap-2 text-xl font-semibold text-[rgb(var(--color-foreground))] transition-opacity hover:opacity-80">
+        <NuxtLink to="/" aria-label="Alexandria home" class="flex items-center gap-2 text-xl font-semibold text-[rgb(var(--color-foreground))] transition-opacity hover:opacity-80">
           <svg class="h-8 w-8 text-[rgb(var(--color-primary))]" viewBox="0 0 32 32" fill="none" width="32" height="32">
             <path d="M16 2L4 8v16l12 6 12-6V8L16 2z" stroke="currentColor" stroke-width="2" fill="none" />
             <path d="M16 8v16M8 12l8 4 8-4" stroke="currentColor" stroke-width="2" />
@@ -153,7 +153,7 @@ function closeMobileMenu() {
         <div class="grid grid-cols-2 gap-6 border-t border-[rgb(var(--color-border))] pt-8 sm:gap-8 sm:pt-12 md:grid-cols-4">
           <!-- Platform -->
           <div>
-            <h4 class="mb-4 font-semibold text-[rgb(var(--color-foreground))]">Platform</h4>
+            <h3 class="mb-4 font-semibold text-[rgb(var(--color-foreground))]">Platform</h3>
             <ul class="space-y-3 text-sm">
               <li><a href="https://github.com/ifftu-dev/alexandria/releases" target="_blank" rel="noopener noreferrer" class="plausible-event-name=Download text-[rgb(var(--color-muted-foreground))] transition-colors hover:text-[rgb(var(--color-foreground))]">Download</a></li>
               <li><a href="https://github.com/ifftu-dev/alexandria" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub text-[rgb(var(--color-muted-foreground))] transition-colors hover:text-[rgb(var(--color-foreground))]">Source Code</a></li>
@@ -162,7 +162,7 @@ function closeMobileMenu() {
 
           <!-- For -->
           <div>
-            <h4 class="mb-4 font-semibold text-[rgb(var(--color-foreground))]">For</h4>
+            <h3 class="mb-4 font-semibold text-[rgb(var(--color-foreground))]">For</h3>
             <ul class="space-y-3 text-sm">
               <li><NuxtLink to="/recruiter" class="plausible-event-name=Nav-Recruiter font-medium text-[rgb(var(--color-recruiter))] transition-colors hover:text-[rgb(var(--color-recruiter-dark))]">Recruiters</NuxtLink></li>
               <li><NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions font-medium text-[rgb(var(--color-institution))] transition-colors hover:text-[rgb(var(--color-institution-dark))]">Institutions</NuxtLink></li>
@@ -171,7 +171,7 @@ function closeMobileMenu() {
 
           <!-- About -->
           <div>
-            <h4 class="mb-4 font-semibold text-[rgb(var(--color-foreground))]">About</h4>
+            <h3 class="mb-4 font-semibold text-[rgb(var(--color-foreground))]">About</h3>
             <ul class="space-y-3 text-sm">
               <li><a href="https://github.com/ifftu-dev/alexandria" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub text-[rgb(var(--color-muted-foreground))] transition-colors hover:text-[rgb(var(--color-foreground))]">GitHub</a></li>
             </ul>
@@ -179,7 +179,7 @@ function closeMobileMenu() {
 
           <!-- Legal -->
           <div>
-            <h4 class="mb-4 font-semibold text-[rgb(var(--color-foreground))]">Legal</h4>
+            <h3 class="mb-4 font-semibold text-[rgb(var(--color-foreground))]">Legal</h3>
             <ul class="space-y-3 text-sm">
               <li><NuxtLink to="/privacy" class="text-[rgb(var(--color-muted-foreground))] transition-colors hover:text-[rgb(var(--color-foreground))]">Privacy Policy</NuxtLink></li>
               <li><a href="https://github.com/ifftu-dev/alexandria/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="text-[rgb(var(--color-muted-foreground))] transition-colors hover:text-[rgb(var(--color-foreground))]">License (MIT)</a></li>

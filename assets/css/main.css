@@ -271,6 +271,17 @@ body {
   box-shadow: 0 4px 14px rgb(var(--color-primary) / 0.25);
 }
 
+/* Dark mode: the pastel primary + dark text fails AA on buttons (3.82).
+   Use the saturated indigo + white — same treatment as light mode (~5.8). */
+.dark .btn-primary {
+  background-color: rgb(79 70 229);
+  color: #ffffff;
+}
+
+.dark .btn-primary:hover:not(:disabled) {
+  background-color: rgb(67 56 202);
+}
+
 .btn-outline {
   background-color: transparent;
   border: 1px solid rgb(var(--color-border));
