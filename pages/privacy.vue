@@ -60,8 +60,8 @@ useHead({
       <div>
         <h2 class="text-2xl font-semibold">04 / The app itself</h2>
         <p class="mt-3 leading-relaxed text-[rgb(var(--color-muted-foreground))]">
-          The Alexandria desktop and mobile app is a separate story — it's peer-to-peer, offline-first,
-          and runs on your device. No servers see your activity. This policy only covers
+          The Alexandria desktop and mobile app is a separate story — it works offline, runs on your device,
+          and syncs directly between your devices. No servers see your activity. This policy only covers
           <code class="rounded bg-[rgb(var(--color-muted))] px-1.5 py-0.5 font-mono text-sm">alexandria.ifftu.dev</code>,
           the marketing website.
         </p>

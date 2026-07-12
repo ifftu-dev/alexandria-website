@@ -4,14 +4,14 @@ definePageMeta({
 })
 
 useHead({
-  title: 'Alexandria — Free, Decentralized Learning for Everyone',
+  title: 'Alexandria — Free Learning, Credentials You Own',
   meta: [
-    { name: 'description', content: 'A free, open-source learning platform that runs natively on macOS, Windows, Linux, iOS, and Android. Peer-to-peer networking, offline-first design, Verifiable Credentials anchored to Cardano. No servers. No gatekeepers.' },
-    { property: 'og:title', content: 'Alexandria — Free, Decentralized Learning for Everyone' },
-    { property: 'og:description', content: 'A native app for every platform. P2P learning with Verifiable Credentials anchored to Cardano, offline-first by design.' },
+    { name: 'description', content: 'A free, open-source learning app for macOS, Windows, Linux, iOS, and Android. Study offline, earn credentials you truly own, and keep your learning and data on your own device — no accounts, no servers.' },
+    { property: 'og:title', content: 'Alexandria — Free Learning, Credentials You Own' },
+    { property: 'og:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours, and keep your data on your own device.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/' },
-    { name: 'twitter:title', content: 'Alexandria — Free, Decentralized Learning for Everyone' },
-    { name: 'twitter:description', content: 'A native app for every platform. P2P learning with Verifiable Credentials anchored to Cardano, offline-first by design.' },
+    { name: 'twitter:title', content: 'Alexandria — Free Learning, Credentials You Own' },
+    { name: 'twitter:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours, and keep your data on your own device.' },
   ],
   link: [
     { rel: 'canonical', href: 'https://alexandria.ifftu.dev/' },
@@ -26,7 +26,7 @@ useHead({
         applicationCategory: 'EducationalApplication',
         operatingSystem: 'macOS, Windows, Linux, iOS, Android',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-        description: 'A free, open-source, decentralized learning platform with Verifiable Credentials anchored to Cardano.',
+        description: 'A free, open-source learning app where you study offline and earn credentials you truly own.',
         url: 'https://alexandria.ifftu.dev',
         downloadUrl: 'https://github.com/ifftu-dev/alexandria/releases/latest',
         author: {
@@ -137,21 +137,21 @@ const features = [
   {
     title: 'A Shared Map of Knowledge',
     icon: 'graph',
-    description: 'Every lesson and credential is anchored to a public skill graph, so a credential means the same thing everywhere.',
+    description: 'Every lesson and credential is tied to a public map of skills, so a credential means the same thing everywhere.',
     bullets: [
-      'Three-tier taxonomy with prerequisite edges',
-      'Bloom\'s levels: Remember → Create',
-      'DAO-ratified via signed P2P gossip, Ed25519-signed, versioned',
+      'Skills organized from basics to mastery',
+      'Clear prerequisites, so you always know what comes next',
+      'Kept accurate by the community, not one company',
     ],
   },
   {
-    title: 'Earn Verifiable Credentials',
+    title: 'Earn Credentials You Own',
     icon: 'shield',
-    description: 'W3C Verifiable Credentials, signed under your own DID and hash-anchored to Cardano. Verifiable without the platform — even offline.',
+    description: 'Every credential is signed under your own identity and made tamper-proof, so anyone can check it — even offline, even without Alexandria.',
     bullets: [
-      'Six credential types',
-      'Selective disclosure',
-      'Offline-verifiable bundles',
+      'Six kinds of credential',
+      'Share only what you choose',
+      'Prove them offline, anywhere',
     ],
   },
   {
@@ -167,21 +167,21 @@ const features = [
   {
     title: 'Own Your Data',
     icon: 'key',
-    description: 'Your keys, your identity, your content. Local encrypted storage; peer-to-peer sync — no cloud, no servers.',
+    description: 'Your identity and your content live only on your device, encrypted. It syncs directly between your devices — no cloud, no servers.',
     bullets: [
-      'Self-sovereign identity + local key vault',
-      'Content-addressed via iroh',
-      'P2P — no central server',
+      'An identity only you control',
+      'Stored on your device, never collected',
+      'Syncs device to device — no middleman',
     ],
   },
   {
     title: 'Community Governed',
     icon: 'building',
-    description: 'DAOs mirror the skill taxonomy. Voice in peer-to-peer governance comes from demonstrated expertise — not stake, not seniority.',
+    description: 'Communities are organized around the same map of skills. Your say comes from proven expertise — not money, not seniority.',
     bullets: [
-      'Meritocratic, scoped per domain',
-      'Draft → committee → public vote, via signed P2P gossip',
-      'Decisions anchored to Cardano for tamper-evidence',
+      'Earned by what you can do, per subject',
+      'Draft → committee → public vote',
+      'Decisions are recorded so no one can quietly change them',
     ],
   },
 ]
@@ -190,22 +190,22 @@ const steps = [
   {
     number: '01',
     title: 'Download & Launch',
-    description: 'Install the native app on any platform. Create your identity with a local cryptographic vault — no account creation, no email, no server.',
+    description: 'Install the app on any device. Your account is created right on your device — no sign-up, no email, no server.',
   },
   {
     number: '02',
     title: 'Learn & Earn Credentials',
-    description: 'Access free courses, tutorials, and assessments. Every completed assessment is hashed into a course-completion proof that a Cardano validator witnesses — auto-issuing a W3C Verifiable Credential.',
+    description: 'Take free courses, tutorials, and assessments. Finish an assessment and you automatically earn a credential for it — no waiting, no paperwork.',
   },
   {
     number: '03',
-    title: 'Issue & Anchor',
-    description: 'Credentials are signed under your DID, hashed, and anchored to Cardano in a metadata-only transaction (preprod testnet). Verifiable by anyone, anywhere — independent of Alexandria.',
+    title: 'Own & Prove',
+    description: 'Each credential is signed under your own identity and made tamper-proof, so anyone can check it is genuine — anywhere, even without Alexandria.',
   },
   {
     number: '04',
-    title: 'Share & Govern',
-    description: 'Share credentials selectively with employers. Your demonstrated proficiency weights your voice in peer-to-peer governance. Connect peer-to-peer with other learners.',
+    title: 'Share & Take Part',
+    description: 'Share credentials with employers, choosing exactly what to reveal. What you have proven you can do gives you a say in how your community is run, and connects you with other learners.',
   },
 ]
 
@@ -427,8 +427,8 @@ const steps = [
 
           <!-- Subheading -->
           <p class="landing-reveal landing-reveal-delay-1 mx-auto mt-8 max-w-2xl text-center text-lg leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-xl">
-            Free, open-source learning for every platform.
-            Peer-to-peer, offline-first, with Verifiable Credentials anchored to Cardano.
+            Free, open-source learning for every device.
+            Study offline, own the credentials you earn, and keep your data on your own device.
           </p>
 
           <!-- CTA + Coming Soon -->
@@ -567,7 +567,7 @@ const steps = [
             How it works.
           </h2>
           <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
-            From download to decentralized credentials in four steps.
+            From download to credentials you own, in four steps.
           </p>
         </div>
 

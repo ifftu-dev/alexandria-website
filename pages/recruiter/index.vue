@@ -4,12 +4,12 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'Alexandria Recruiting — Hire Verified Talent, Not Resumes',
   meta: [
-    { name: 'description', content: 'Discover candidates through W3C Verifiable Credentials and transparent learning trajectories. No resumes. No guesswork.' },
+    { name: 'description', content: 'Discover candidates through credentials you can verify yourself and a transparent record of how they learned. No resumes. No guesswork.' },
     { property: 'og:title', content: 'Alexandria Recruiting — Hire Verified Talent, Not Resumes' },
-    { property: 'og:description', content: 'Discover candidates through W3C Verifiable Credentials. No resumes. No guesswork. Just proof.' },
+    { property: 'og:description', content: 'Discover candidates through credentials you can verify yourself. No resumes. No guesswork. Just proof.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/recruiter' },
     { name: 'twitter:title', content: 'Alexandria Recruiting — Hire Verified Talent, Not Resumes' },
-    { name: 'twitter:description', content: 'Discover candidates through W3C Verifiable Credentials. No resumes. Just proof.' },
+    { name: 'twitter:description', content: 'Discover candidates through credentials you can verify yourself. No resumes. Just proof.' },
   ],
   link: [
     { rel: 'canonical', href: 'https://alexandria.ifftu.dev/recruiter' },
@@ -21,7 +21,7 @@ useHead({
         '@context': 'https://schema.org',
         '@type': 'WebPage',
         name: 'Alexandria Recruiting',
-        description: 'Hire verified talent through W3C Verifiable Credentials and transparent learning trajectories.',
+        description: 'Hire verified talent through credentials you can verify yourself and a transparent record of how each candidate learned.',
         url: 'https://alexandria.ifftu.dev/recruiter',
         isPartOf: { '@type': 'WebSite', name: 'Alexandria', url: 'https://alexandria.ifftu.dev' },
       }),
@@ -36,18 +36,18 @@ const features = [
     icon: 'search',
   },
   {
-    title: 'Verifiable Credential Trails',
-    description: 'Every credential links back to assessments, courses, and instructor attributions. Trace how a candidate actually learned — not just what they claim.',
+    title: 'A Full Record Behind Every Credential',
+    description: 'Every credential links back to the assessments, courses, and instructors behind it. Trace how a candidate actually learned — not just what they claim.',
     icon: 'chain',
   },
   {
-    title: 'Blockchain-Anchored Credentials',
-    description: 'W3C-style Verifiable Credentials, Ed25519-signed under the candidate\'s DID and anchored to Cardano by hash. Independently verifiable — even offline. No fabrication possible.',
+    title: 'Credentials You Can Verify Yourself',
+    description: 'Each credential is signed by the candidate and made tamper-proof, so you can confirm it is genuine on your own — even offline. No fabrication possible. Under the hood: W3C Verifiable Credentials, Ed25519-signed under the candidate\'s DID and hash-anchored to Cardano.',
     icon: 'shield',
   },
   {
-    title: 'Selective Disclosure & Consent',
-    description: 'Candidates choose what to reveal — the level only, or the full credential trail. Opt-in by credential, replay-protected per recipient. Learners stay in control.',
+    title: 'Candidate Chooses What to Share',
+    description: 'Candidates choose what to reveal — just the level reached, or the full record behind it — one credential at a time, and each share works only for you. Candidates stay in control.',
     icon: 'lock',
   },
 ]
@@ -60,10 +60,10 @@ const problems = [
 ]
 
 const solutions = [
-  { label: 'Proofs replace claims', detail: 'Every skill backed by a Verifiable Credential and its underlying assessments' },
+  { label: 'Proofs replace claims', detail: 'Every skill backed by a credential you can verify and the assessments behind it' },
   { label: 'Depth, not snapshots', detail: 'Bloom\'s taxonomy levels from Remember through Create' },
   { label: 'Merit, not pedigree', detail: 'Reputation derived from outcomes, scoped to skills — not institutions' },
-  { label: 'On-chain verification', detail: 'Verifiable Credentials hash-anchored to Cardano — verify in seconds, even offline' },
+  { label: 'Verify it yourself', detail: 'Tamper-proof credentials you can confirm in seconds, even offline — no need to trust us' },
 ]
 
 // Scroll-triggered reveal
@@ -133,7 +133,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
         </h1>
 
         <p class="landing-reveal landing-reveal-delay-2 mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-xl">
-          Discover candidates through W3C Verifiable Credentials and transparent learning trajectories.
+          Discover candidates through credentials you can verify yourself and a transparent record of how they learned.
           <span class="text-[rgb(var(--color-foreground)/0.8)]">No guesswork. No fabrication. Just proof.</span>
         </p>
 
@@ -158,7 +158,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
             <svg class="h-4 w-4 text-[rgb(var(--color-recruiter))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
-            Blockchain verified
+            Independently verifiable
           </span>
           <span class="flex items-center gap-1.5">
             <svg class="h-4 w-4 text-[rgb(var(--color-recruiter))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -263,7 +263,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
             Intelligence, not intuition.
           </h2>
           <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
-            Every tool built on verifiable evidence and cryptographic proof.
+            Every tool built on proof you can check, not claims you have to trust.
           </p>
         </div>
 
@@ -317,7 +317,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
               v-for="(step, i) in [
                 { n: 1, title: 'Define Your Requirements', desc: 'Build composite skill queries — required and optional skills, each with a Bloom\'s proficiency level and optional confidence threshold. Search by what people can do, not what they say.' },
                 { n: 2, title: 'Review Verified Matches', desc: 'See candidates ranked by skill match — no global scores, no opaque algorithms. Each result includes a human-readable explanation of why they matched and what gaps remain.' },
-                { n: 3, title: 'Verify & Deep-Dive', desc: 'Inspect Verifiable Credentials, verify them against their Cardano anchor, view learning timelines, and see instructor attributions. Every data point is cryptographically anchored and independently verifiable.' },
+                { n: 3, title: 'Verify & Deep-Dive', desc: 'Inspect each credential, confirm it is genuine on your own, view learning timelines, and see which instructors were involved. Every data point is tamper-proof and something you can verify independently.' },
                 { n: 4, title: 'Build Your Pipeline', desc: 'Organize candidates into pools, track pipeline stages, set up saved search alerts for new matches, and collaborate with your team — all with full audit trails.' },
               ]"
               :key="step.n"
@@ -384,7 +384,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
             Stop guessing. Start verifying.
           </h2>
           <p class="mx-auto mt-6 max-w-xl text-lg text-[rgb(var(--color-muted-foreground))]">
-            Join forward-thinking teams already hiring with Verifiable Credentials. Free for learners. Powerful for recruiters.
+            Join forward-thinking teams already hiring with credentials they can verify. Free for learners. Powerful for recruiters.
           </p>
           <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <a

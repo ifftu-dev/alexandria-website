@@ -2,7 +2,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/60198459-38b1-418d-8443-8d430aee6008/deploy-status)](https://app.netlify.com/projects/alexandria-ifftu/deploys)
 
-Marketing website for [Alexandria](https://github.com/ifftu-dev/alexandria) — the free, open-source, decentralized learning platform.
+Marketing website for [Alexandria](https://github.com/ifftu-dev/alexandria) — the free, open-source learning app where you study offline and own the credentials you earn.
 
 **Live at [alexandria.ifftu.dev](https://alexandria.ifftu.dev)**
 
@@ -16,7 +16,7 @@ Marketing website for [Alexandria](https://github.com/ifftu-dev/alexandria) — 
 ## Pages
 
 - **/** — Landing page with parallax starfield hero and platform-aware download button
-- **/recruiter** — For recruiters: skill-based hiring, evidence chains, blockchain verification
+- **/recruiter** — For recruiters: skill-based hiring, full record behind every credential, credentials recruiters can verify themselves
 - **/institutions** — For institutions: LMS features, competitor comparison, pricing, FAQ
 - **/privacy** — Privacy policy (analytics disclosure, third parties)
 - **error.vue** — Root-level error page; fires a `404` goal on 404 responses

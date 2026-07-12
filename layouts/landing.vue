@@ -127,7 +127,7 @@ function closeMobileMenu() {
             <span class="text-2xl font-bold text-[rgb(var(--color-foreground))]">Alexandria</span>
           </div>
           <p class="mx-auto max-w-md text-[rgb(var(--color-muted-foreground))]">
-            Free, open-source, decentralized learning for everyone. A native app that runs on every platform. No servers. No gatekeepers.
+            Free, open-source learning for everyone. An app that runs on every device, keeps your data on your device, and works offline. No servers. No gatekeepers.
           </p>
           <!-- Social Icons -->
           <div class="mt-6 flex items-center justify-center gap-4">

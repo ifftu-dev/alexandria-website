@@ -4,12 +4,12 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'Alexandria for Institutions — Your LMS, Their Credentials',
   meta: [
-    { name: 'description', content: 'The open-source LMS that gives credentials back to students. W3C Verifiable Credentials, skill-mapped curricula, decentralised by default. FERPA/GDPR support in progress, with zero vendor lock-in.' },
+    { name: 'description', content: 'The open-source LMS that gives credentials back to students. Students own credentials they can prove anywhere (W3C Verifiable Credentials), curricula map to real skills, and content stays online with no single company in control. FERPA/GDPR support in progress, with zero vendor lock-in.' },
     { property: 'og:title', content: 'Alexandria for Institutions — Your LMS, Their Credentials' },
-    { property: 'og:description', content: 'An open-source LMS where every credential is a learner-owned W3C Verifiable Credential, every skill is structurally mapped, and students own their achievements forever.' },
+    { property: 'og:description', content: 'An open-source LMS where students own credentials they can prove anywhere, every skill is mapped, and students keep their achievements forever.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/institutions' },
     { name: 'twitter:title', content: 'Alexandria for Institutions — Your LMS, Their Credentials' },
-    { name: 'twitter:description', content: 'An open-source LMS where every credential is a learner-owned W3C Verifiable Credential and students own their achievements forever.' },
+    { name: 'twitter:description', content: 'An open-source LMS where students own credentials they can prove anywhere and keep their achievements forever.' },
   ],
   link: [
     { rel: 'canonical', href: 'https://alexandria.ifftu.dev/institutions' },
@@ -21,7 +21,7 @@ useHead({
         '@context': 'https://schema.org',
         '@type': 'WebPage',
         name: 'Alexandria for Institutions',
-        description: 'The open-source LMS that gives credentials back to students. W3C Verifiable Credentials, skill-mapped, FERPA/GDPR support in progress.',
+        description: 'The open-source LMS that gives credentials back to students. Credentials students can prove anywhere, skill-mapped curricula, FERPA/GDPR support in progress.',
         url: 'https://alexandria.ifftu.dev/institutions',
         isPartOf: { '@type': 'WebSite', name: 'Alexandria', url: 'https://alexandria.ifftu.dev' },
       }),
@@ -50,18 +50,18 @@ const featuresByCategory: Record<string, Array<{ title: string, description: str
     { title: 'Mobile-Responsive with Offline', description: 'Native app that works across modern desktop and mobile devices. Students can download content for offline access and sync progress when reconnected.', icon: 'mobile' },
   ],
   differentiators: [
-    { title: 'Blockchain-Anchored Credentials', description: 'Every credential is a W3C Verifiable Credential, signed under the student\'s own DID and anchored to Cardano by hash. Students own them permanently. Employers verify them independently — even offline. No middleman.', icon: 'shield' },
+    { title: 'Credentials Students Truly Own', description: 'Every credential is signed under the student\'s own identity and made tamper-proof, so employers can check it is genuine on their own — even offline, with no middleman. Students keep them permanently. Under the hood: W3C Verifiable Credentials signed by the student\'s DID and hash-anchored to Cardano.', icon: 'shield' },
     { title: 'Skill-Mapped Curriculum', description: 'Map every course, module, and assessment to a skill taxonomy with Bloom\'s proficiency levels. See exactly which skills your programs actually develop.', icon: 'graph' },
-    { title: 'Credential-Backed Portfolios', description: 'Students accumulate W3C Verifiable Credentials — for graded work, peer reviews, and projects — that anchor every skill claim to verifiable proof.', icon: 'proof' },
+    { title: 'Credential-Backed Portfolios', description: 'Students build up credentials — for graded work, peer reviews, and projects — that back every skill claim with proof anyone can check. Each is a W3C Verifiable Credential.', icon: 'proof' },
     { title: 'Outcome-Derived Instructor Reputation', description: 'Instructor quality measured through student outcomes and earned credentials, not popularity surveys. Reputation is scoped to skills, not global scores.', icon: 'reputation' },
-    { title: 'Decentralised Content Distribution', description: 'Course content is content-addressed with BLAKE3 and distributed peer-to-peer via iroh. No single point of failure — content persists even if the platform goes down.', icon: 'decentralised' },
+    { title: 'No Single Point of Failure', description: 'Course content is shared directly between devices, so it stays available even if the platform goes down — no central server to take it offline. Under the hood: content-addressed with BLAKE3 and distributed peer-to-peer via iroh.', icon: 'decentralised' },
   ],
   admin: [
     { title: 'Multi-Department Management', description: 'Hierarchical organisation structure supporting colleges, departments, and programs. Delegate administration while maintaining institutional oversight.', icon: 'building', planned: true },
     { title: 'SIS Integration', description: 'Bi-directional sync with Student Information Systems via REST APIs and standard data interchange formats. Automate enrolments, grade passback, and student records.', icon: 'sync', planned: true },
     { title: 'SSO via SAML/OIDC', description: 'Enterprise single sign-on supporting SAML 2.0 and OpenID Connect. Integrate with your existing identity provider — Active Directory, Okta, Auth0, or custom.', icon: 'key', planned: true },
     { title: 'Custom Branding', description: 'White-label the platform with your institution\'s logo, colours, typography, and custom domain. Your LMS, your brand.', icon: 'palette', planned: true },
-    { title: 'FERPA/GDPR Compliance', description: 'Designed with compliance in mind: self-hosted deployment, student-controlled wallets, and no PII on-chain. Role-based access controls, data retention policies, and audit logging are on the roadmap.', icon: 'lock' },
+    { title: 'FERPA/GDPR Compliance', description: 'Designed with compliance in mind: self-hosted deployment, student-controlled keys, and no personal data ever recorded publicly. Role-based access controls, data retention policies, and audit logging are on the roadmap.', icon: 'lock' },
     { title: 'LTI 1.3 & SCORM/xAPI Import', description: 'Bring your existing content. Full LTI 1.3 tool integration, SCORM 1.2/2004 package import, and xAPI statement tracking for interoperability.', icon: 'plug', planned: true },
   ],
   analytics: [
@@ -81,7 +81,7 @@ const comparisonFeatures = [
   { feature: 'Skill-Mapped Curriculum', alexandria: true, canvas: false, blackboard: false, moodle: false },
   { feature: 'Credential-Backed Portfolios', alexandria: true, canvas: false, blackboard: false, moodle: false },
   { feature: 'Student-Owned Data', alexandria: true, canvas: false, blackboard: false, moodle: false },
-  { feature: 'P2P Content Distribution', alexandria: true, canvas: false, blackboard: false, moodle: false },
+  { feature: 'Content Shared Device-to-Device', alexandria: true, canvas: false, blackboard: false, moodle: false },
   { feature: 'LTI 1.3 Support', alexandria: 'Planned', canvas: true, blackboard: true, moodle: true },
   { feature: 'SCORM/xAPI', alexandria: 'Planned', canvas: true, blackboard: true, moodle: true },
   { feature: 'FERPA/GDPR Ready', alexandria: 'In progress', canvas: true, blackboard: true, moodle: 'Varies' },
@@ -102,11 +102,11 @@ function toggleFaq(index: number) {
 const faqs = [
   {
     question: 'Do students really own their credentials?',
-    answer: 'Yes. Each credential is a W3C Verifiable Credential signed under the student\'s own DID (`did:key` / Ed25519). The credential hash is anchored to Cardano in a metadata-only transaction, and students can export self-contained bundles that verify offline — independent of Alexandria. If the platform disappears, the credentials remain provable forever.',
+    answer: 'Yes. Each credential is signed under the student\'s own identity and made tamper-proof, and students can export self-contained copies that anyone can check offline — independent of Alexandria. If the platform disappears, the credentials remain provable forever. Technically: a W3C Verifiable Credential signed under the student\'s DID (did:key / Ed25519), with its hash anchored to Cardano in a metadata-only transaction.',
   },
   {
     question: 'What happens to credentials if we leave Alexandria?',
-    answer: 'Nothing changes for the students. Credentials are already signed under their DID and anchored on-chain, so they remain independently verifiable with or without Alexandria. Course content is content-addressed (BLAKE3) and distributed peer-to-peer, so any node that has pinned it can keep serving it. There is no vendor lock-in by design.',
+    answer: 'Nothing changes for the students. Credentials are already signed under their own identity and made tamper-proof, so anyone can still check them with or without Alexandria. Course content is shared directly between devices, so any device that has kept a copy can keep serving it. There is no vendor lock-in by design. Technically: credentials are signed under the student\'s DID and hash-anchored on-chain; content is content-addressed with BLAKE3 and distributed peer-to-peer.',
   },
   {
     question: 'How does the skill-mapped curriculum work?',
@@ -126,7 +126,7 @@ const faqs = [
   },
   {
     question: 'What about FERPA compliance?',
-    answer: 'Alexandria is designed with FERPA compliance in mind. The self-hosted deployment model keeps data in your jurisdiction, and credentials are signed under student-controlled DIDs — only a hash is anchored on-chain, so no PII is exposed publicly. Selective disclosure lets students share just the level, not the full credential. Role-based access controls, audit logging, data retention policies, and consent management tooling are on the roadmap.',
+    answer: 'Alexandria is designed with FERPA compliance in mind. The self-hosted deployment model keeps data in your jurisdiction, and credentials are signed under identities the student controls — only a tamper-proof fingerprint is recorded publicly, so no personal data is ever exposed. Students can share just the level they reached, not the full credential. Role-based access controls, audit logging, data retention policies, and consent management tooling are on the roadmap. Technically: student-controlled DIDs, only a hash anchored on-chain, and selective disclosure of credential fields.',
   },
 ]
 
@@ -140,7 +140,7 @@ const pricingTiers = [
     features: [
       'Unlimited students & courses',
       'All core LMS features',
-      'Verifiable Credentials + Cardano anchoring',
+      'Credentials students own + tamper-proof anchoring',
       'Skill-mapped curriculum',
       'SCORM/xAPI/LTI 1.3',
       'Community support via GitHub',
@@ -264,7 +264,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
 
         <!-- Subhead -->
         <p class="landing-reveal landing-reveal-delay-2 mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-xl">
-          An open-source learning management system where students own Verifiable Credentials under their own DID, curricula map to real skills, and institutions keep full control.
+          An open-source learning management system where students own credentials they can prove anywhere, curricula map to real skills, and institutions keep full control.
         </p>
 
         <!-- CTAs -->
@@ -345,7 +345,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
             </div>
             <h3 class="text-xl font-semibold text-[rgb(var(--color-foreground))]">Verifiable, Not Claimable</h3>
             <p class="mt-3 leading-relaxed text-[rgb(var(--color-muted-foreground))]">
-              Every credential is a W3C Verifiable Credential, signed under the student's DID and hash-anchored to Cardano. Anyone can verify it independently — even offline, no API call to Alexandria required. Claims become proofs.
+              Every credential is signed under the student's own identity and made tamper-proof. Anyone can check it on their own — even offline, with no call back to Alexandria. Claims become proofs. Under the hood: a W3C Verifiable Credential signed by the student's DID and hash-anchored to Cardano.
             </p>
           </div>
 
@@ -369,9 +369,9 @@ const { showIndicator } = useScrollIndicator(heroRef)
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-[rgb(var(--color-foreground))]">Decentralised by Default</h3>
+            <h3 class="text-xl font-semibold text-[rgb(var(--color-foreground))]">No Servers to Depend On</h3>
             <p class="mt-3 leading-relaxed text-[rgb(var(--color-muted-foreground))]">
-              Content distributed peer-to-peer over iroh. Credentials hash-anchored to Cardano. No single point of failure, no vendor lock-in. Self-host or use our cloud — your data, your terms.
+              Content is shared directly between devices, and credentials are made tamper-proof. No single point of failure, no vendor lock-in. Self-host or use our cloud — your data, your terms. Under the hood: peer-to-peer distribution over iroh, credentials hash-anchored to Cardano.
             </p>
           </div>
         </div>

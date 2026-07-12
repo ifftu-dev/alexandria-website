@@ -31,11 +31,11 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'en',
       },
-      title: 'Alexandria — Free, Decentralized Learning for Everyone',
+      title: 'Alexandria — Free Learning, Credentials You Own',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
-        { name: 'description', content: 'Alexandria is a free, open-source, decentralized learning platform. A native app for macOS, Windows, Linux, iOS, and Android. P2P networking, offline-first, W3C Verifiable Credentials anchored to Cardano. No servers. No gatekeepers.' },
+        { name: 'description', content: 'Alexandria is a free, open-source learning app for macOS, Windows, Linux, iOS, and Android. Study offline, earn credentials you truly own, and keep your learning and data on your own device — no accounts, no servers.' },
         { name: 'theme-color', content: '#ffffff', media: '(prefers-color-scheme: light)' },
         { name: 'theme-color', content: '#0f172a', media: '(prefers-color-scheme: dark)' },
         { name: 'color-scheme', content: 'light dark' },
