@@ -365,7 +365,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
             <div class="mx-auto h-4 w-32 rounded bg-[rgb(var(--color-border)/0.5)]" />
             <div class="mx-auto mt-2 h-3 w-24 rounded bg-[rgb(var(--color-border)/0.3)]" />
             <p class="mt-4 text-sm italic text-[rgb(var(--color-muted-foreground)/0.6)]">
-              Testimonial coming soon
+              Awaiting first testimonials
             </p>
           </div>
         </div>

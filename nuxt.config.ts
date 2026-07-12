@@ -46,6 +46,8 @@ export default defineNuxtConfig({
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
         { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:site', content: '@Alexandria_FTU' },
+        { name: 'twitter:creator', content: '@Alexandria_FTU' },
         { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og-image.png' },
       ],
       script: [
