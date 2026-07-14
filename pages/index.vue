@@ -6,7 +6,7 @@ definePageMeta({
 useHead({
   title: 'Alexandria — Free Learning, Credentials You Own',
   meta: [
-    { name: 'description', content: 'A free, open-source learning app for macOS, Windows, Linux, iOS, and Android. Study offline, earn credentials you truly own, and keep your learning and data on your own device — no accounts, no servers.' },
+    { name: 'description', content: 'A free, open-source learning app for macOS, Windows, Linux, iOS, and Android. Study offline, earn credentials you truly own, and keep your learning and data on your own device — no accounts, no tracking.' },
     { property: 'og:title', content: 'Alexandria — Free Learning, Credentials You Own' },
     { property: 'og:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours, and keep your data on your own device.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/' },
@@ -123,20 +123,86 @@ function useHeroParallax() {
 
 useHeroParallax()
 
-const features = [
+// Accent palette (rgb triplets) — reused from the hero's cosmic accents.
+const accentRGB: Record<string, string> = {
+  primary: 'var(--color-primary)',
+  cyan: '34 211 238',
+  rose: '244 114 182',
+  amber: '251 191 36',
+}
+
+// Real plugin screenshots for the "Teach & Assess Anything" motif.
+const pluginShots = [
+  { src: '/plugins/editor.png', label: 'Code editor' },
+  { src: '/plugins/music.png', label: 'Music trainer' },
+]
+
+// Channel list for the Classrooms motif.
+const classChannels = ['announcements', 'questions', 'assignments', 'showcase']
+
+interface Feature {
+  title: string
+  icon: string
+  accent: string
+  description: string
+  motif?: 'channels' | 'plugins'
+  wide?: boolean
+  bullets?: string[]
+}
+
+const features: Feature[] = [
   {
     title: 'Learn Without Limits',
     icon: 'video',
-    description: 'Courses, tutorials, and Opinions from credentialed practitioners. Free, open-source, offline-first.',
+    accent: 'primary',
+    description: 'Courses, video tutorials, and Opinions — takes from practitioners who hold the very skill they teach. Free, open-source, offline-first.',
     bullets: [
-      'Courses with real assessments',
+      'Courses with real, hands-on assessments',
       'Works offline — no internet required',
-      'macOS, Windows, Linux, iOS, Android',
+      'Available in 9 languages, including Hindi, Bengali & Telugu',
     ],
+  },
+  {
+    title: 'Opinions',
+    icon: 'opinion',
+    accent: 'cyan',
+    description: 'Real learning isn\'t only settled facts — it\'s weighing competing views and forming your own. Opinions are credentialed takes from practitioners who hold the skill.',
+    bullets: [
+      'Credentialed takes, not anonymous hot takes',
+      'See where experts genuinely disagree',
+      'Learn the debates, then form your own view',
+    ],
+  },
+  {
+    title: 'Teach & Assess Anything',
+    icon: 'plugin',
+    accent: 'amber',
+    motif: 'plugins',
+    wide: true,
+    description: 'Videos, text, and multiple-choice aren\'t enough — different skills need different ways to teach and test. Plugins let Alexandria teach and assess almost anything: welding, music, engineering, surgery, and beyond.',
+  },
+  {
+    title: 'Learn Live, Together',
+    icon: 'live',
+    accent: 'rose',
+    description: 'Face-to-face tutoring is built in — video, audio, and screen-share connect learners and mentors directly, device to device.',
+    bullets: [
+      'Live one-on-one video tutoring',
+      'Share your screen and talk it through',
+      'Peer to peer — no call runs through a company',
+    ],
+  },
+  {
+    title: 'Classrooms',
+    icon: 'classroom',
+    accent: 'cyan',
+    motif: 'channels',
+    description: 'Teachers stay close to the students they invite, inside a safe, contained virtual space — organized into channels, with the tools a class actually needs to work together.',
   },
   {
     title: 'A Shared Map of Knowledge',
     icon: 'graph',
+    accent: 'rose',
     description: 'Every lesson and credential is tied to a public map of skills, so a credential means the same thing everywhere.',
     bullets: [
       'Skills organized from basics to mastery',
@@ -147,16 +213,18 @@ const features = [
   {
     title: 'Earn Credentials You Own',
     icon: 'shield',
+    accent: 'cyan',
     description: 'Every credential is signed under your own identity and made tamper-proof, so anyone can check it — even offline, even without Alexandria.',
     bullets: [
       'Six kinds of credential',
       'Share only what you choose',
-      'Prove them offline, anywhere',
+      'Yours forever, even if Alexandria disappears',
     ],
   },
   {
     title: 'Reputation Without the Star Rating',
     icon: 'reputation',
+    accent: 'primary',
     description: 'Instructors are scored on their impact on learners — a per-skill distribution with confidence bounds, not a single global number.',
     bullets: [
       'Grounded in learner outcomes, not popularity',
@@ -165,23 +233,36 @@ const features = [
     ],
   },
   {
+    title: 'Assessments You Can Trust',
+    icon: 'integrity',
+    accent: 'amber',
+    description: 'An optional integrity layer, Sentinel, keeps credentials honest — and it runs entirely on your device. Your camera feed, keystrokes, and behaviour are analysed locally and never leave your machine.',
+    bullets: [
+      'Runs 100% on your device',
+      'Camera and keystrokes are never uploaded',
+      'Only a final integrity score is ever shared',
+    ],
+  },
+  {
     title: 'Own Your Data',
     icon: 'key',
-    description: 'Your identity and your content live only on your device, encrypted. It syncs directly between your devices — no cloud, no servers.',
+    accent: 'primary',
+    description: 'Your identity and your content live only on your device, encrypted. They sync directly between your own devices — no company holds them, and the relays that help you connect can\'t read a thing.',
     bullets: [
       'An identity only you control',
       'Stored on your device, never collected',
-      'Syncs device to device — no middleman',
+      'Family-safe: guardians can privately oversee a child\'s learning',
     ],
   },
   {
     title: 'Community Governed',
     icon: 'building',
-    description: 'Communities are organized around the same map of skills. Your say comes from proven expertise — not money, not seniority.',
+    accent: 'amber',
+    description: 'Communities are organized around the same map of skills. Only people who have proven expertise in a subject get a vote on how it is taught — not money, not seniority.',
     bullets: [
-      'Earned by what you can do, per subject',
+      'A vote is earned by what you can do, per subject',
       'Draft → committee → public vote',
-      'Decisions are recorded so no one can quietly change them',
+      'Every decision is anchored on-chain, so no one can quietly change it',
     ],
   },
 ]
@@ -422,7 +503,7 @@ const steps = [
           <!-- Headline -->
           <h1 class="landing-serif text-center text-4xl font-bold leading-[1.2] tracking-tight text-[rgb(var(--color-foreground))] sm:text-5xl lg:text-6xl">
             Knowledge belongs<br>
-            <span class="text-[rgb(var(--color-primary))]">to everyone.</span>
+            <span class="bg-gradient-to-r from-[rgb(var(--color-primary))] via-[rgb(34_211_238)] to-[rgb(244_114_182)] bg-clip-text text-transparent">to everyone.</span>
           </h1>
 
           <!-- Subheading -->
@@ -491,24 +572,48 @@ const steps = [
     </section>
 
     <!-- ═══ FEATURES ═══ -->
-    <section class="relative bg-[rgb(var(--color-background))] py-16 sm:py-24 lg:py-32">
-      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div class="landing-scroll-reveal text-center">
-          <h2 class="landing-serif text-2xl font-bold tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-5xl">
-            Education without infrastructure.
+    <section class="relative overflow-hidden bg-[rgb(var(--color-background))] py-16 sm:py-24 lg:py-32">
+      <!-- Atmosphere: faint grid + drifting accent glows -->
+      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div class="absolute inset-0 bg-grid opacity-[0.04]" />
+        <div class="absolute -left-24 top-24 h-72 w-72 rounded-full bg-[rgb(var(--color-primary)/0.10)] blur-[100px]" />
+        <div class="absolute right-0 top-1/3 h-72 w-72 rounded-full bg-[rgb(34_211_238/0.07)] blur-[110px]" />
+        <div class="absolute bottom-10 left-1/3 h-64 w-64 rounded-full bg-[rgb(244_114_182/0.06)] blur-[110px]" />
+      </div>
+
+      <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div class="landing-scroll-reveal mx-auto max-w-3xl text-center">
+          <span class="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card)/0.6)] px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-[rgb(var(--color-muted-foreground))] backdrop-blur">
+            <span class="h-1.5 w-1.5 rounded-full bg-[rgb(var(--color-primary))]" />
+            One app, the whole system
+          </span>
+          <h2 class="landing-serif mt-6 text-3xl font-bold leading-[1.1] tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-[3.25rem]">
+            Education without
+            <span class="bg-gradient-to-r from-[rgb(var(--color-primary))] via-[rgb(34_211_238)] to-[rgb(244_114_182)] bg-clip-text text-transparent">infrastructure.</span>
           </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
-            No cloud servers, no subscriptions, no data collection. Just a native app that connects learners directly.
+          <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
+            No subscriptions, no data collection, no account to create. A native app that turns your device into a full participant in a global learning network — and everything below runs right on it.
           </p>
         </div>
 
-        <div class="mt-12 grid gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Feature grid — uniform height, some cards span wider -->
+        <div class="mt-12 grid grid-cols-1 gap-5 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3 lg:[grid-auto-flow:dense]">
           <div
             v-for="feature in features"
             :key="feature.title"
-            class="landing-scroll-reveal rounded-2xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] p-6 transition hover:border-[rgb(var(--color-primary)/0.4)] sm:p-8"
+            :style="{ '--ac': accentRGB[feature.accent] }"
+            :class="[
+              'landing-scroll-reveal group relative flex flex-col overflow-hidden rounded-2xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card)/0.7)] p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[rgb(var(--ac)/0.5)] hover:shadow-[0_24px_60px_-24px_rgb(var(--ac)/0.5)] sm:p-7',
+              feature.wide ? 'sm:col-span-2' : '',
+            ]"
           >
-            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-[rgb(var(--color-primary)/0.1)] text-[rgb(var(--color-primary))]">
+            <!-- accent top hairline -->
+            <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[rgb(var(--ac)/0.6)] to-transparent opacity-70" aria-hidden="true" />
+            <!-- corner glow on hover -->
+            <div class="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[rgb(var(--ac)/0.14)] blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden="true" />
+
+            <div class="relative flex items-center gap-4">
+              <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-[rgb(var(--ac)/0.12)] text-[rgb(var(--ac))] ring-1 ring-inset ring-[rgb(var(--ac)/0.25)] transition-transform duration-300 group-hover:scale-110">
               <!-- video -->
               <svg v-if="feature.icon === 'video'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
@@ -533,18 +638,96 @@ const steps = [
               <svg v-else-if="feature.icon === 'building'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
               </svg>
+              <!-- code -->
+              <svg v-else-if="feature.icon === 'code'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+              </svg>
+              <!-- live -->
+              <svg v-else-if="feature.icon === 'live'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+              </svg>
+              <!-- integrity -->
+              <svg v-else-if="feature.icon === 'integrity'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+              <!-- opinion -->
+              <svg v-else-if="feature.icon === 'opinion'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+              </svg>
+              <!-- plugin -->
+              <svg v-else-if="feature.icon === 'plugin'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 0 1-.657.643 48.39 48.39 0 0 1-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 0 1-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 0 0-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 0 1-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 0 0 .657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 0 1-.349-1.003c0-1.035 1.007-1.875 2.25-1.875s2.25.84 2.25 1.875c0 .369-.128.713-.349 1.003-.215.283-.401.604-.401.959v0c0 .333.277.599.61.58a48.1 48.1 0 0 0 5.427-.63 48.05 48.05 0 0 0 .582-4.717.532.532 0 0 0-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.959.401v0a.656.656 0 0 0 .659-.663 47.703 47.703 0 0 0-.31-4.82c-1.517.19-3.058.309-4.616.354a.64.64 0 0 1-.657-.643v0Z" />
+              </svg>
+              <!-- classroom -->
+              <svg v-else-if="feature.icon === 'classroom'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+              </svg>
+              </div>
+              <h3 class="text-lg font-semibold leading-tight text-[rgb(var(--color-foreground))]">{{ feature.title }}</h3>
             </div>
-            <h3 class="mt-5 text-lg font-semibold text-[rgb(var(--color-foreground))]">{{ feature.title }}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-[rgb(var(--color-muted-foreground))]">
+
+            <p class="relative mt-4 text-sm leading-relaxed text-[rgb(var(--color-muted-foreground))]">
               {{ feature.description }}
             </p>
-            <ul class="mt-4 space-y-2">
+
+            <!-- ── Motif: plugin screenshots ── -->
+            <div v-if="feature.motif === 'plugins'" class="relative mt-5">
+              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <figure
+                  v-for="shot in pluginShots"
+                  :key="shot.src"
+                  class="group/shot overflow-hidden rounded-lg border border-[rgb(var(--color-border))] bg-[rgb(var(--color-background)/0.6)]"
+                >
+                  <div class="flex items-center gap-1 border-b border-[rgb(var(--color-border))] px-2.5 py-2">
+                    <span class="h-1.5 w-1.5 rounded-full bg-[rgb(var(--color-muted-foreground)/0.4)]" />
+                    <span class="h-1.5 w-1.5 rounded-full bg-[rgb(var(--color-muted-foreground)/0.4)]" />
+                    <span class="ml-1.5 truncate text-[11px] font-medium text-[rgb(var(--color-muted-foreground))]">{{ shot.label }}</span>
+                  </div>
+                  <img
+                    :src="shot.src"
+                    :alt="shot.label"
+                    loading="lazy"
+                    class="h-36 w-full object-cover object-top transition-transform duration-500 group-hover/shot:scale-[1.05] sm:h-40"
+                  />
+                </figure>
+              </div>
+            </div>
+
+            <!-- ── Motif: classroom channels ── -->
+            <div v-else-if="feature.motif === 'channels'" class="relative mt-5 overflow-hidden rounded-xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-background)/0.6)] p-3">
+              <ul class="space-y-1">
+                <li
+                  v-for="(ch, chi) in classChannels"
+                  :key="ch"
+                  :class="[
+                    'flex items-center gap-2 rounded-md px-2 py-1.5 text-sm',
+                    chi === 0 ? 'bg-[rgb(var(--ac)/0.12)] text-[rgb(var(--color-foreground))]' : 'text-[rgb(var(--color-muted-foreground))]',
+                  ]"
+                >
+                  <span class="font-mono text-[rgb(var(--ac))]">#</span>
+                  <span>{{ ch }}</span>
+                </li>
+              </ul>
+              <div class="mt-3 flex items-center gap-2 border-t border-[rgb(var(--color-border))] px-2 pt-3">
+                <div class="flex -space-x-2">
+                  <span v-for="n in 4" :key="n" class="h-6 w-6 rounded-full border-2 border-[rgb(var(--color-card))] bg-[rgb(var(--ac)/0.3)]" />
+                </div>
+                <span class="text-xs text-[rgb(var(--color-muted-foreground))]">invite-only · you decide who's in</span>
+              </div>
+            </div>
+
+            <!-- ── Default: bullet list ── -->
+            <ul
+              v-else
+              class="relative mt-5 flex flex-col gap-y-2"
+            >
               <li
                 v-for="bullet in feature.bullets"
                 :key="bullet"
                 class="flex items-start gap-2 text-sm text-[rgb(var(--color-muted-foreground))]"
               >
-                <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-[rgb(var(--color-primary))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-[rgb(var(--ac))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
                 {{ bullet }}
@@ -560,7 +743,7 @@ const steps = [
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div class="landing-scroll-reveal text-center">
           <h2 class="landing-serif text-2xl font-bold tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-5xl">
-            How it works.
+            <span class="bg-gradient-to-r from-[rgb(var(--color-primary))] via-[rgb(34_211_238)] to-[rgb(244_114_182)] bg-clip-text text-transparent">How</span> it works.
           </h2>
           <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
             From download to credentials you own, in four steps.
@@ -600,7 +783,7 @@ const steps = [
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div class="landing-scroll-reveal text-center">
           <h2 class="landing-serif text-2xl font-bold tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-5xl">
-            Runs everywhere.
+            Runs <span class="bg-gradient-to-r from-[rgb(var(--color-primary))] via-[rgb(34_211_238)] to-[rgb(244_114_182)] bg-clip-text text-transparent">everywhere.</span>
           </h2>
           <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
             One codebase. Every platform. Native performance.

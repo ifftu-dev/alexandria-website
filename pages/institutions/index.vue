@@ -140,9 +140,11 @@ const pricingTiers = [
     features: [
       'Unlimited students & courses',
       'All core LMS features',
+      'Live code editors & interactive assessments',
+      'Extensible: build custom assessment types as sandboxed plugins',
       'Credentials students own + tamper-proof anchoring',
       'Skill-mapped curriculum',
-      'SCORM/xAPI/LTI 1.3',
+      'SCORM/xAPI/LTI 1.3 (planned)',
       'Community support via GitHub',
     ],
     cta: 'View on GitHub',
@@ -371,7 +373,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
             </div>
             <h3 class="text-xl font-semibold text-[rgb(var(--color-foreground))]">No Servers to Depend On</h3>
             <p class="mt-3 leading-relaxed text-[rgb(var(--color-muted-foreground))]">
-              Content is shared directly between devices, and credentials are made tamper-proof. No single point of failure, no vendor lock-in. Self-host or use our cloud — your data, your terms. Under the hood: peer-to-peer distribution over iroh, credentials hash-anchored to Cardano.
+              Content is shared directly between devices, and credentials are made tamper-proof. No single point of failure, no vendor lock-in. Relays help devices find each other but hold nothing and can be run by anyone. Self-host or use our cloud — your data, your terms. Under the hood: peer-to-peer distribution over iroh, credentials hash-anchored to Cardano.
             </p>
           </div>
         </div>
