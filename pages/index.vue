@@ -592,7 +592,7 @@ const steps = [
             <span class="bg-gradient-to-r from-[rgb(var(--color-primary))] via-[rgb(34_211_238)] to-[rgb(244_114_182)] bg-clip-text text-transparent">infrastructure.</span>
           </h2>
           <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
-            No subscriptions, no data collection, no account to create. A native app that turns your device into a full participant in a global learning network — and everything below runs right on it.
+            No subscriptions, no data collection. Just a free account on a native app on all major platforms that turns your device into a full participant in a global learning network — and everything below runs right on it.
           </p>
         </div>
 
