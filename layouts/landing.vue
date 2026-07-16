@@ -6,10 +6,48 @@ const mobileMenuOpen = ref(false)
 function closeMobileMenu() {
   mobileMenuOpen.value = false
 }
+
+// Announcement banner — dismissal persists forever per-browser via localStorage.
+// Start hidden and reveal on mount to avoid an SSR/hydration mismatch and to
+// keep dismissed users from seeing a flash of the banner.
+const ANNOUNCEMENT_DISMISS_KEY = 'alexandria-announcement-dismissed'
+const showBanner = ref(false)
+
+onMounted(() => {
+  showBanner.value = localStorage.getItem(ANNOUNCEMENT_DISMISS_KEY) !== '1'
+})
+
+function dismissBanner() {
+  showBanner.value = false
+  localStorage.setItem(ANNOUNCEMENT_DISMISS_KEY, '1')
+}
 </script>
 
 <template>
   <div class="flex min-h-screen flex-col bg-[rgb(var(--color-background))]">
+    <!-- Announcement banner -->
+    <div v-if="showBanner" class="relative bg-[rgb(var(--color-primary))] text-white">
+      <a
+        href="https://www.ifftu.dev/blog/introducing-alexandria/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="plausible-event-name=Announcement block px-10 py-2.5 text-center text-sm font-medium transition-opacity hover:opacity-90"
+      >
+        Read the announcement post
+        <span aria-hidden="true" class="ml-1">&rarr;</span>
+      </a>
+      <button
+        type="button"
+        class="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-md text-white/80 transition-colors hover:bg-white/15 hover:text-white"
+        aria-label="Dismiss announcement"
+        @click="dismissBanner"
+      >
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
     <!-- Header -->
     <header class="sticky top-0 z-50 border-b border-[rgb(var(--color-border))] bg-[rgb(var(--color-background))]">
       <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -190,6 +228,11 @@ function closeMobileMenu() {
         <!-- Bottom Bar -->
         <div class="mt-12 border-t border-[rgb(var(--color-border))] pt-8 text-center">
           <p class="text-sm text-[rgb(var(--color-muted-foreground))]">&copy; {{ new Date().getFullYear() }} Alexandria. Released under the MIT License.</p>
+          <p class="mt-2 text-sm text-[rgb(var(--color-muted-foreground))]">
+            An
+            <a href="https://www.ifftu.dev" target="_blank" rel="noopener noreferrer" class="font-medium text-[rgb(var(--color-foreground))] underline decoration-[rgb(var(--color-muted-foreground)/0.5)] underline-offset-2 transition-colors hover:text-[rgb(var(--color-primary))]">IFFTU</a>
+            product
+          </p>
         </div>
       </div>
     </footer>
