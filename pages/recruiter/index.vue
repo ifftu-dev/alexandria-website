@@ -53,7 +53,7 @@ const features = [
 ]
 
 const problems = [
-  { label: 'Resumes lie', detail: '78% of resumes contain misleading information' },
+  { label: 'Resumes lie', detail: 'Self-reported claims are easy to embellish and hard to verify' },
   { label: 'Skill tests are shallow', detail: 'One-shot assessments miss depth and learning trajectory' },
   { label: 'Degree bias persists', detail: 'Credentials from prestigious institutions outweigh actual ability' },
   { label: 'No verification standard', detail: 'Employer reference checks are slow, unreliable, and biased' },
@@ -347,10 +347,10 @@ const { showIndicator } = useScrollIndicator(heroRef)
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div class="scroll-reveal text-center">
           <h2 class="recruiter-serif text-2xl text-[rgb(var(--color-foreground))] sm:text-3xl lg:text-5xl">
-            Trusted by forward-thinking teams.
+            Built for forward-thinking teams.
           </h2>
           <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
-            Early adopters are already transforming how they discover and verify talent.
+            For teams ready to rethink how they discover and verify talent. Early adopter stories will appear here.
           </p>
         </div>
 
@@ -384,7 +384,7 @@ const { showIndicator } = useScrollIndicator(heroRef)
             Stop guessing. Start verifying.
           </h2>
           <p class="mx-auto mt-6 max-w-xl text-lg text-[rgb(var(--color-muted-foreground))]">
-            Join forward-thinking teams already hiring with credentials they can verify. Free for learners. Powerful for recruiters.
+            For forward-thinking teams who want to hire on credentials they can verify. Free for learners. Powerful for recruiters.
           </p>
           <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <a

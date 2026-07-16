@@ -716,10 +716,10 @@ const { showIndicator } = useScrollIndicator(heroRef)
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div class="scroll-reveal text-center">
           <h2 class="institution-serif text-2xl text-[rgb(var(--color-foreground))] sm:text-3xl lg:text-5xl">
-            Trusted by forward-thinking institutions.
+            Built for forward-thinking institutions.
           </h2>
           <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
-            Early adopters are already transforming how they deliver and verify education.
+            For institutions ready to rethink how they deliver and verify education. Early partner stories will appear here.
           </p>
         </div>
 
