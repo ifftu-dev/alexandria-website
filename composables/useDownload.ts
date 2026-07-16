@@ -4,6 +4,13 @@ interface DownloadInfo {
   platformLabel: string
   downloadUrl: string
   platformIcon: string
+  // Whether a real, installable build exists for this platform. Mobile builds
+  // are distributed via the app stores (not yet published), so there is no
+  // installable download to link a user to today.
+  installable: boolean
+  // Label for the CTA button — a download prompt on desktop, an honest
+  // "coming soon" on mobile.
+  ctaLabel: string
 }
 
 interface GitHubAsset {
@@ -115,6 +122,24 @@ function getPlatformLabel(platform: DownloadInfo['platform'], arch: DownloadInfo
   }
 }
 
+function isInstallable(platform: DownloadInfo['platform']): boolean {
+  // Mobile ships through the App Store / Google Play (not yet live); GitHub only
+  // carries a raw .ipa/.apk a normal user can't install, so there is no honest
+  // "download" to offer on mobile.
+  return platform !== 'ios' && platform !== 'android'
+}
+
+function getCtaLabel(platform: DownloadInfo['platform'], platformLabel: string): string {
+  switch (platform) {
+    case 'ios':
+      return 'Coming to the App Store'
+    case 'android':
+      return 'Coming to Google Play'
+    default:
+      return `Download for ${platformLabel}`
+  }
+}
+
 function getPlatformIcon(platform: DownloadInfo['platform']): string {
   switch (platform) {
     case 'macos': return 'apple'
@@ -133,6 +158,8 @@ export function useDownload() {
     platformLabel: 'your platform',
     downloadUrl: GITHUB_REPO_URL,
     platformIcon: 'download',
+    installable: true,
+    ctaLabel: 'Download for your platform',
   })
 
   const allPlatformsUrl = ref(RELEASES_URL)
@@ -141,12 +168,15 @@ export function useDownload() {
   onMounted(async () => {
     const { platform, arch } = detectPlatform()
 
+    const platformLabel = getPlatformLabel(platform, arch)
     info.value = {
       platform,
       arch,
-      platformLabel: getPlatformLabel(platform, arch),
+      platformLabel,
       downloadUrl: GITHUB_REPO_URL,
       platformIcon: getPlatformIcon(platform),
+      installable: isInstallable(platform),
+      ctaLabel: getCtaLabel(platform, platformLabel),
     }
 
     try {

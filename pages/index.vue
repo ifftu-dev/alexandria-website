@@ -262,7 +262,7 @@ const features: Feature[] = [
     bullets: [
       'A vote is earned by what you can do, per subject',
       'Draft → committee → public vote',
-      'Every decision is anchored on-chain, so no one can quietly change it',
+      'Decisions are designed to be anchored on-chain, so the record stays public and hard to quietly change',
     ],
   },
 ]
@@ -515,15 +515,25 @@ const steps = [
           <!-- CTA -->
           <div class="landing-reveal landing-reveal-delay-2 mt-10 flex flex-col items-center gap-5">
             <div class="flex items-center justify-center gap-3">
-              <!-- Temporary: platform-detected download button -->
+              <!-- Temporary: platform-detected download button.
+                   Desktop platforms get a real download; mobile ships via the
+                   app stores (not yet live), so we show an honest label rather
+                   than a link that dead-ends. -->
               <a
+                v-if="download.installable"
                 :href="download.downloadUrl"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="plausible-event-name=CTA-Download btn btn-primary btn-lg w-full sm:w-auto"
               >
-                Download for {{ download.platformLabel }}
+                {{ download.ctaLabel }}
               </a>
+              <span
+                v-else
+                class="btn btn-lg w-full cursor-default border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] text-[rgb(var(--color-muted-foreground))] sm:w-auto"
+              >
+                {{ download.ctaLabel }}
+              </span>
               <a
                 href="https://github.com/ifftu-dev/alexandria"
                 target="_blank"
