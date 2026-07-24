@@ -61,7 +61,7 @@ useHead({
         <h2 class="text-2xl font-semibold">04 / The app itself</h2>
         <p class="mt-3 leading-relaxed text-[rgb(var(--color-muted-foreground))]">
           The Alexandria desktop and mobile app is a separate story — it works offline, runs on your device,
-          and syncs directly between your devices. No servers see your activity. This policy only covers
+          and syncs directly between your devices. No servers see your learning activity. This policy only covers
           <code class="rounded bg-[rgb(var(--color-muted))] px-1.5 py-0.5 font-mono text-sm">alexandria.ifftu.dev</code>,
           the marketing website.
         </p>
@@ -73,7 +73,7 @@ useHead({
           Plausible hosts analytics for us in the EU. Their
           <a href="https://plausible.io/data-policy" target="_blank" rel="noopener noreferrer" class="text-[rgb(var(--color-primary))] underline-offset-4 hover:underline">data policy</a>
           explains exactly what they do and don't store. We don't use Google Analytics, Facebook Pixel, or any other profile-building tool.
-          Web fonts are loaded from Google Fonts; Google may log the IP address of font requests per their terms.
+          Web fonts are self-hosted — no third-party font origins, so no external server sees your font requests.
         </p>
       </div>
 

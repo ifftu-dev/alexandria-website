@@ -165,7 +165,7 @@ function dismissBanner() {
             <span class="text-2xl font-bold text-[rgb(var(--color-foreground))]">Alexandria</span>
           </div>
           <p class="mx-auto max-w-md text-[rgb(var(--color-muted-foreground))]">
-            Free, open-source learning for everyone. An app that runs on every device, keeps your data on your device, and works offline. No servers. No gatekeepers.
+            Free, open-source learning for everyone. An app that runs on every device, keeps your data on your device, and works offline. No accounts. No gatekeepers.
           </p>
           <!-- Social Icons -->
           <div class="mt-6 flex items-center justify-center gap-4">
@@ -220,14 +220,14 @@ function dismissBanner() {
             <h3 class="mb-4 font-semibold text-[rgb(var(--color-foreground))]">Legal</h3>
             <ul class="space-y-3 text-sm">
               <li><NuxtLink to="/privacy" class="text-[rgb(var(--color-muted-foreground))] transition-colors hover:text-[rgb(var(--color-foreground))]">Privacy Policy</NuxtLink></li>
-              <li><a href="https://github.com/ifftu-dev/alexandria/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="text-[rgb(var(--color-muted-foreground))] transition-colors hover:text-[rgb(var(--color-foreground))]">License (MIT)</a></li>
+              <li><a href="https://github.com/ifftu-dev/alexandria/blob/main/LICENSE.md" target="_blank" rel="noopener noreferrer" class="text-[rgb(var(--color-muted-foreground))] transition-colors hover:text-[rgb(var(--color-foreground))]">License (open-core)</a></li>
             </ul>
           </div>
         </div>
 
         <!-- Bottom Bar -->
         <div class="mt-12 border-t border-[rgb(var(--color-border))] pt-8 text-center">
-          <p class="text-sm text-[rgb(var(--color-muted-foreground))]">&copy; {{ new Date().getFullYear() }} Alexandria. Released under the MIT License.</p>
+          <p class="text-sm text-[rgb(var(--color-muted-foreground))]">&copy; {{ new Date().getFullYear() }} Alexandria. Core released under the MIT License; enterprise modules under the IFFTU Enterprise License.</p>
           <p class="mt-2 text-sm text-[rgb(var(--color-muted-foreground))]">
             An
             <a href="https://www.ifftu.dev" target="_blank" rel="noopener noreferrer" class="font-medium text-[rgb(var(--color-foreground))] underline decoration-[rgb(var(--color-muted-foreground)/0.5)] underline-offset-2 transition-colors hover:text-[rgb(var(--color-primary))]">IFFTU</a>
