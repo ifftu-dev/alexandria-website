@@ -20,20 +20,20 @@ const canvas = ref<HTMLCanvasElement | null>(null)
 
 /**
  * sx/sy are radians per second, so the drift is identical on a 60Hz laptop and
- * a 120Hz phone. Each orb takes 20–33 seconds per cycle: fast enough that the
- * movement is plain within a couple of seconds, slow enough to stay ambient.
- * The rates are mutually irrational-ish so the field never visibly repeats.
+ * a 120Hz phone. Each orb takes 8–13 seconds per cycle, which is plainly in
+ * motion the moment you look at it without tipping into distraction. The rates
+ * are mutually non-harmonic so the field never visibly repeats.
  */
 const SEEDS = [
-  { x: 0.22, y: 0.28, r: 0.78, sx: 0.27, sy: 0.21 },
-  { x: 0.78, y: 0.22, r: 0.66, sx: 0.22, sy: 0.30 },
-  { x: 0.68, y: 0.82, r: 0.60, sx: 0.32, sy: 0.19 },
-  { x: 0.16, y: 0.82, r: 0.46, sx: 0.19, sy: 0.26 },
-  { x: 0.50, y: 0.55, r: 0.52, sx: 0.25, sy: 0.23 },
+  { x: 0.22, y: 0.28, r: 0.78, sx: 0.68, sy: 0.53 },
+  { x: 0.78, y: 0.22, r: 0.66, sx: 0.56, sy: 0.75 },
+  { x: 0.68, y: 0.82, r: 0.60, sx: 0.80, sy: 0.47 },
+  { x: 0.16, y: 0.82, r: 0.46, sx: 0.49, sy: 0.66 },
+  { x: 0.50, y: 0.55, r: 0.52, sx: 0.62, sy: 0.58 },
 ]
 
 /** How far each orb wanders from its home position, as a share of the canvas. */
-const DRIFT = 0.17
+const DRIFT = 0.19
 
 onMounted(() => {
   const cv = canvas.value
