@@ -1064,3 +1064,13 @@ svg { flex-shrink: 0; }
 .prose li { margin-bottom: 7px; }
 .prose a { color: rgb(var(--color-primary)); text-decoration: underline; text-underline-offset: 2px; }
 .prose code { font-family: var(--font-mono); font-size: 13px; background: rgb(var(--color-muted)); padding: 2px 5px; border-radius: 4px; }
+
+.tablenote {
+  margin: 0;
+  padding: 0 16px 14px;
+  background: rgb(var(--color-muted));
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgb(var(--color-muted-foreground));
+  max-width: 90ch;
+}

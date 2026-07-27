@@ -110,7 +110,7 @@ const comparison: Row[] = [
   { feature: 'Mobile app', alexandria: true, canvas: true, blackboard: true, moodle: true },
   { feature: 'Predictive analytics', alexandria: 'Planned', canvas: 'Add-on', blackboard: 'Add-on', moodle: false },
   { feature: 'Vendor lock-in', alexandria: 'None', canvas: 'High', blackboard: 'High', moodle: 'Low' },
-  { feature: 'Per-student cost', alexandria: 'Free / $4 per mo', canvas: '$15–40 per yr', blackboard: '$20–50 per yr', moodle: 'Free + hosting' },
+  { feature: 'Per-student cost, per year', alexandria: 'Free / $48', canvas: '$5–30', blackboard: '$17–26', moodle: 'Free + hosting' },
 ]
 
 const onlyDifferences = ref(false)
@@ -353,6 +353,11 @@ const faqs = [
           </label>
           <p>{{ visibleRows.length }} of {{ comparison.length }} rows</p>
         </div>
+        <p class="tablenote">
+          Canvas and Blackboard are quote-only; the ranges are published list and framework pricing as of July 2026, and
+          large institutions negotiate below them. Alexandria's $48 is the Academic tier at $4 per student per month —
+          on price alone we are not the cheapest option here, only the one you can also run for free.
+        </p>
       </div>
     </section>
 
