@@ -20,16 +20,20 @@ const canvas = ref<HTMLCanvasElement | null>(null)
 
 /**
  * sx/sy are radians per second, so the drift is identical on a 60Hz laptop and
- * a 120Hz phone. These give each orb a 90–160 second cycle — slow enough that
- * the movement registers as atmosphere rather than animation.
+ * a 120Hz phone. Each orb takes 20–33 seconds per cycle: fast enough that the
+ * movement is plain within a couple of seconds, slow enough to stay ambient.
+ * The rates are mutually irrational-ish so the field never visibly repeats.
  */
 const SEEDS = [
-  { x: 0.22, y: 0.28, r: 0.78, sx: 0.055, sy: 0.042 },
-  { x: 0.78, y: 0.22, r: 0.66, sx: 0.045, sy: 0.061 },
-  { x: 0.68, y: 0.82, r: 0.60, sx: 0.066, sy: 0.038 },
-  { x: 0.16, y: 0.82, r: 0.46, sx: 0.039, sy: 0.053 },
-  { x: 0.50, y: 0.55, r: 0.52, sx: 0.050, sy: 0.047 },
+  { x: 0.22, y: 0.28, r: 0.78, sx: 0.27, sy: 0.21 },
+  { x: 0.78, y: 0.22, r: 0.66, sx: 0.22, sy: 0.30 },
+  { x: 0.68, y: 0.82, r: 0.60, sx: 0.32, sy: 0.19 },
+  { x: 0.16, y: 0.82, r: 0.46, sx: 0.19, sy: 0.26 },
+  { x: 0.50, y: 0.55, r: 0.52, sx: 0.25, sy: 0.23 },
 ]
+
+/** How far each orb wanders from its home position, as a share of the canvas. */
+const DRIFT = 0.17
 
 onMounted(() => {
   const cv = canvas.value
@@ -73,8 +77,8 @@ onMounted(() => {
 
     for (let i = 0; i < shapes.length; i++) {
       const b = shapes[i]!
-      const x = (b.x + Math.sin(elapsed * b.sx + i) * 0.13) * w
-      const y = (b.y + Math.cos(elapsed * b.sy + i * 1.7) * 0.13) * h
+      const x = (b.x + Math.sin(elapsed * b.sx + i) * DRIFT) * w
+      const y = (b.y + Math.cos(elapsed * b.sy + i * 1.7) * DRIFT) * h
       const rad = b.r * Math.max(w, h) * 0.62
       const g = ctx!.createRadialGradient(x, y, 0, x, y, rad)
       g.addColorStop(0, `rgba(${b.c},0.55)`)
