@@ -136,7 +136,7 @@ const year = new Date().getFullYear()
             </div>
             <p>
               Free, open-source learning for everyone. Runs on every device, keeps your data on your device,
-              and works offline. No accounts. No gatekeepers.
+              and works offline. Your account is yours alone. No gatekeepers.
             </p>
             <div class="foot-social">
               <a

@@ -4,7 +4,7 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'Alexandria — Free Learning, Credentials You Own',
   meta: [
-    { name: 'description', content: 'A free, open-source learning app for macOS, Windows, Linux, iOS, and Android. Study offline, earn credentials you truly own, and keep your learning and data on your own device — no accounts, no tracking.' },
+    { name: 'description', content: 'A free, open-source learning app for macOS, Windows, Linux, iOS, and Android. Study offline, earn credentials you truly own, and keep your learning and data on your own device — your account is created there and no company holds it.' },
     { property: 'og:title', content: 'Alexandria — Free Learning, Credentials You Own' },
     { property: 'og:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours, and keep your data on your own device.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/' },
@@ -157,7 +157,7 @@ const pluginShots = [
 ]
 
 const steps = [
-  { n: '01', title: 'Download & launch', body: 'Install on any device. Your account is created right on your device — no sign-up, no email, no server.' },
+  { n: '01', title: 'Download & launch', body: 'Install on any device. Your account is created on the device itself — no email, no password to lose, and nothing registered with a company.' },
   { n: '02', title: 'Learn & earn credentials', body: 'Take free courses, tutorials and assessments. Finish an assessment and you earn a credential for it — no waiting, no paperwork.' },
   { n: '03', title: 'Own & prove', body: 'Each credential is signed under your own identity and made tamper-proof, so anyone can check it is genuine — anywhere, even without Alexandria.' },
   { n: '04', title: 'Share & take part', body: 'Share credentials with employers, choosing exactly what to reveal. What you have proven gives you a say in how your community is run.' },
@@ -175,7 +175,7 @@ const stats = [
   { n: '5', label: 'Platforms', detail: 'One codebase, native on each' },
   { n: '9', label: 'Languages', detail: 'Hindi, Bengali and Telugu at launch' },
   { n: '6', label: 'Credential kinds', detail: 'Share only what you choose' },
-  { n: '0', label: 'Accounts or servers', detail: 'Identity is made on your device' },
+  { n: '0', label: 'Companies in the middle', detail: 'Your account is created and kept on your device' },
   { n: '100%', label: 'On-device integrity', detail: 'Camera and keystrokes never uploaded' },
 ]
 
@@ -193,7 +193,7 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
         <h1>Knowledge belongs to everyone.</h1>
         <p class="hero-lede">
           Free, open-source learning for every device. Study offline, own the credentials you earn,
-          and keep your data on your own device — no accounts, no servers, no tracking.
+          and keep your data on your own device — an account no company holds, and no tracking.
         </p>
         <div class="hero-cta">
           <a
@@ -341,7 +341,7 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
       <div class="pad">
         <p class="eyebrow">How it works</p>
         <h2 class="h-sec">From download to credentials you own, in four steps.</h2>
-        <p class="p-sub">No sign-up anywhere in this sequence — the first step creates your identity on your own device.</p>
+        <p class="p-sub">Nothing in this sequence registers you with anyone — the first step creates your account on the device itself.</p>
 
         <ol class="flow">
           <li v-for="step in steps" :key="step.n">
