@@ -18,12 +18,17 @@ const props = withDefaults(defineProps<{
 
 const canvas = ref<HTMLCanvasElement | null>(null)
 
+/**
+ * sx/sy are radians per second, so the drift is identical on a 60Hz laptop and
+ * a 120Hz phone. These give each orb a 90–160 second cycle — slow enough that
+ * the movement registers as atmosphere rather than animation.
+ */
 const SEEDS = [
-  { x: 0.22, y: 0.28, r: 0.78, sx: 0.00021, sy: 0.00016 },
-  { x: 0.78, y: 0.22, r: 0.66, sx: 0.00017, sy: 0.00023 },
-  { x: 0.68, y: 0.82, r: 0.60, sx: 0.00025, sy: 0.00013 },
-  { x: 0.16, y: 0.82, r: 0.46, sx: 0.00014, sy: 0.00020 },
-  { x: 0.50, y: 0.55, r: 0.52, sx: 0.00019, sy: 0.00018 },
+  { x: 0.22, y: 0.28, r: 0.78, sx: 0.055, sy: 0.042 },
+  { x: 0.78, y: 0.22, r: 0.66, sx: 0.045, sy: 0.061 },
+  { x: 0.68, y: 0.82, r: 0.60, sx: 0.066, sy: 0.038 },
+  { x: 0.16, y: 0.82, r: 0.46, sx: 0.039, sy: 0.053 },
+  { x: 0.50, y: 0.55, r: 0.52, sx: 0.050, sy: 0.047 },
 ]
 
 onMounted(() => {
@@ -35,7 +40,8 @@ onMounted(() => {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   let w = 0
   let h = 0
-  let t = 0
+  let elapsed = 0
+  let last = 0
   let raf: number | null = null
   let running = false
 
@@ -49,17 +55,26 @@ onMounted(() => {
     cv!.width = Math.max(1, Math.round(w * dpr))
     cv!.height = Math.max(1, Math.round(h * dpr))
     ctx!.setTransform(dpr, 0, 0, dpr, 0, 0)
+    // Setting width/height clears the canvas, so repaint straight away.
+    // Without this, a section that resizes while scrolled out of view (the
+    // CTA band, say) stays blank until it next animates.
+    paint()
   }
 
-  function draw() {
+  function paint(now = 0) {
+    // Advance by real elapsed time, clamped so a backgrounded tab doesn't
+    // resume with a jump. Paused frames simply don't accumulate.
+    if (last) elapsed += Math.min((now - last) / 1000, 0.1)
+    last = now
+
     ctx!.fillStyle = props.base
     ctx!.fillRect(0, 0, w, h)
     ctx!.globalCompositeOperation = 'lighter'
 
     for (let i = 0; i < shapes.length; i++) {
       const b = shapes[i]!
-      const x = (b.x + Math.sin(t * b.sx * 1000 + i) * 0.13) * w
-      const y = (b.y + Math.cos(t * b.sy * 1000 + i * 1.7) * 0.13) * h
+      const x = (b.x + Math.sin(elapsed * b.sx + i) * 0.13) * w
+      const y = (b.y + Math.cos(elapsed * b.sy + i * 1.7) * 0.13) * h
       const rad = b.r * Math.max(w, h) * 0.62
       const g = ctx!.createRadialGradient(x, y, 0, x, y, rad)
       g.addColorStop(0, `rgba(${b.c},0.55)`)
@@ -72,11 +87,14 @@ onMounted(() => {
     }
 
     ctx!.globalCompositeOperation = 'source-over'
-    if (!reduce) t += 1
+  }
+
+  function draw(now = 0) {
+    paint(now)
     raf = requestAnimationFrame(draw)
   }
 
-  function start() { if (!running) { running = true; draw() } }
+  function start() { if (!running) { running = true; last = 0; draw() } }
   function stop() { running = false; if (raf) cancelAnimationFrame(raf) }
 
   size()
@@ -90,8 +108,8 @@ onMounted(() => {
 
   let observer: IntersectionObserver | null = null
   if (reduce) {
-    draw()
-    stop()
+    // Single static frame — no loop, no drift.
+    paint()
   }
   else {
     observer = new IntersectionObserver((entries) => {

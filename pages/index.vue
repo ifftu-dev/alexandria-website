@@ -33,9 +33,23 @@ useHead({
 
 const { download, allPlatformsUrl, releaseTag } = useDownload()
 
-const features = [
+interface Feature {
+  span: string
+  accent: 'primary' | 'cyan' | 'rose' | 'amber'
+  title: string
+  icon: string
+  body: string
+  bullets?: string[]
+  motif?: 'plugins' | 'channels'
+}
+
+// Every capability the site has ever claimed, in the order the old page told
+// the story. Nothing here is aspirational — the two audience pages carry the
+// not-yet-built work behind their own notices.
+const features: Feature[] = [
   {
     span: 'span-4',
+    accent: 'primary',
     title: 'Learn without limits',
     icon: 'M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z',
     body: 'Courses, video tutorials and Opinions — takes from practitioners who hold the very skill they teach. Free, open-source, offline-first.',
@@ -47,34 +61,109 @@ const features = [
   },
   {
     span: 'span-2',
-    title: 'Credentials you own',
-    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
-    body: 'Signed under your own identity and made tamper-proof, so anyone can check it — even offline, even without Alexandria.',
+    accent: 'cyan',
+    title: 'Opinions',
+    icon: 'M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z',
+    body: 'Real learning is not only settled facts — it is weighing competing views and forming your own.',
+    bullets: [
+      'Credentialed takes, not anonymous hot takes',
+      'See where experts genuinely disagree',
+    ],
   },
   {
     span: 'span-3',
+    accent: 'amber',
     title: 'Teach and assess anything',
     icon: 'M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959a.64.64 0 01-.657.643 48.39 48.39 0 01-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 01-.658.663c-.355 0-.676-.186-.959-.401a1.647 1.647 0 00-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401.31 0 .555.26.532.57a48.039 48.039 0 01-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 00.657-.643c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.035 1.007-1.875 2.25-1.875s2.25.84 2.25 1.875c0 .369-.128.713-.349 1.003-.215.283-.401.604-.401.959 0 .333.277.599.61.58a48.1 48.1 0 005.427-.63 48.05 48.05 0 00.582-4.717.532.532 0 00-.533-.57c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.959.401a.656.656 0 00.659-.663 47.703 47.703 0 00-.31-4.82c-1.517.19-3.058.309-4.616.354a.64.64 0 01-.657-.643z',
-    body: 'Video, text and multiple choice are not enough. Plugins let Alexandria teach and assess welding, music, engineering, surgery, and beyond.',
+    body: 'Video, text and multiple choice are not enough — different skills need different ways to teach and test. Plugins let Alexandria assess welding, music, engineering, surgery, and beyond.',
+    motif: 'plugins',
   },
   {
     span: 'span-3',
-    title: 'Classrooms and live tutoring',
+    accent: 'cyan',
+    title: 'Classrooms',
     icon: 'M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.636 50.636 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0112 13.489a50.702 50.702 0 017.74-3.342',
-    body: 'Channels for the class, plus one-on-one video, audio and screen-share device to device. No call runs through a company.',
+    body: 'Teachers stay close to the students they invite, inside a safe, contained space — organised into channels.',
+    motif: 'channels',
   },
   {
-    span: 'span-3',
+    span: 'span-2',
+    accent: 'rose',
+    title: 'Learn live, together',
+    icon: 'M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z',
+    body: 'Face-to-face tutoring is built in — video, audio and screen-share connect learners and mentors directly, device to device.',
+    bullets: ['Live one-on-one video tutoring', 'Peer to peer — no call runs through a company'],
+  },
+  {
+    span: 'span-2',
+    accent: 'rose',
+    title: 'A shared map of knowledge',
+    icon: 'M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6z',
+    body: 'Every lesson and credential ties to a public map of skills, so a credential means the same thing everywhere.',
+    bullets: ['Clear prerequisites, so you know what comes next', 'Kept accurate by the community, not one company'],
+  },
+  {
+    span: 'span-2',
+    accent: 'cyan',
+    title: 'Earn credentials you own',
+    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+    body: 'Signed under your own identity and made tamper-proof, so anyone can check it — even offline, even without Alexandria.',
+    bullets: ['Six kinds of credential', 'Yours forever, even if Alexandria disappears'],
+  },
+  {
+    span: 'span-2',
+    accent: 'primary',
     title: 'Reputation without the star rating',
     icon: 'M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z',
     body: 'Instructors are scored on their impact on learners — a per-skill distribution with confidence bounds, not one global number.',
+    bullets: ['Grounded in learner outcomes, not popularity'],
   },
   {
-    span: 'span-3',
+    span: 'span-2',
+    accent: 'amber',
+    title: 'Assessments you can trust',
+    icon: 'M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178zM15 12a3 3 0 11-6 0 3 3 0 016 0z',
+    body: 'Sentinel, an optional integrity layer, keeps credentials honest — and runs entirely on your device.',
+    bullets: ['Camera and keystrokes are never uploaded', 'Only a final integrity score is ever shared'],
+  },
+  {
+    span: 'span-2',
+    accent: 'primary',
     title: 'Own your data',
     icon: 'M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z',
     body: 'Your identity and content live only on your device, encrypted, syncing directly between your own devices. The relays that help you connect cannot read a thing.',
+    bullets: ['Family-safe: guardians can privately oversee a child’s learning'],
   },
+  {
+    span: 'span-2',
+    accent: 'amber',
+    title: 'Community governed',
+    icon: 'M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z',
+    body: 'Only people who have proven expertise in a subject get a vote on how it is taught — not money, not seniority.',
+    bullets: ['A vote is earned by what you can do, per subject', 'Draft → committee → public vote'],
+  },
+]
+
+const channels = ['announcements', 'questions', 'assignments', 'showcase']
+
+const pluginShots = [
+  { src: '/plugins/editor.png', label: 'Code editor' },
+  { src: '/plugins/music.png', label: 'Music trainer' },
+]
+
+const steps = [
+  { n: '01', title: 'Download & launch', body: 'Install on any device. Your account is created right on your device — no sign-up, no email, no server.' },
+  { n: '02', title: 'Learn & earn credentials', body: 'Take free courses, tutorials and assessments. Finish an assessment and you earn a credential for it — no waiting, no paperwork.' },
+  { n: '03', title: 'Own & prove', body: 'Each credential is signed under your own identity and made tamper-proof, so anyone can check it is genuine — anywhere, even without Alexandria.' },
+  { n: '04', title: 'Share & take part', body: 'Share credentials with employers, choosing exactly what to reveal. What you have proven gives you a say in how your community is run.' },
+]
+
+const platforms = [
+  { name: 'macOS', d: 'M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z' },
+  { name: 'Windows', d: 'M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801' },
+  { name: 'Linux', d: 'M12.5 2c-2.5 0-3 2-3 4 0 1.2-.3 2-1 3-1 1.4-2 3-2 5 0 1 .3 2 1 3 .3.4.2 1-.2 1.4-.4.4-.8.6-.8 1.2 0 .8.8 1 1.8 1 1.2 0 2.4.4 3.4.4s2.2-.4 3.4-.4c1 0 1.8-.2 1.8-1 0-.6-.4-.8-.8-1.2-.4-.4-.5-1-.2-1.4.7-1 1-2 1-3 0-2-1-3.6-2-5-.7-1-1-1.8-1-3 0-2-.5-4-2.4-4zm-1.2 4.2c.4 0 .7.4.7.9s-.3.9-.7.9-.7-.4-.7-.9.3-.9.7-.9zm2.6 0c.4 0 .7.4.7.9s-.3.9-.7.9-.7-.4-.7-.9.3-.9.7-.9z' },
+  { name: 'iOS', d: 'M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z' },
+  { name: 'Android', d: 'M17.532 15.106a1.003 1.003 0 111.001-2.007 1.003 1.003 0 01-1 2.007m-11.044 0a1.003 1.003 0 111.001-2.007 1.003 1.003 0 01-1 2.007m11.4-6.018 2.006-3.459a.413.413 0 10-.721-.403l-2.03 3.5A12.26 12.26 0 0012.011 7.5a12.26 12.26 0 00-5.132 1.226l-2.03-3.5a.413.413 0 10-.72.403l2.005 3.46C2.593 11.066.003 14.812 0 19.2h24.022c-.003-4.388-2.593-8.134-6.134-10.112' },
 ]
 
 const stats = [
@@ -144,7 +233,13 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
       </p>
 
       <div class="bento">
-        <article v-for="feature in features" :key="feature.title" class="tile" :class="feature.span">
+        <article
+          v-for="feature in features"
+          :key="feature.title"
+          class="tile tile-accent"
+          :class="[feature.span, `accent-${feature.accent}`]"
+        >
+          <div class="tile-glow" aria-hidden="true" />
           <div class="tile-ic">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" :d="feature.icon" />
@@ -152,11 +247,61 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
           </div>
           <h3>{{ feature.title }}</h3>
           <p>{{ feature.body }}</p>
-          <ul v-if="feature.bullets">
+
+          <!-- real plugin screenshots, as on the old page -->
+          <div v-if="feature.motif === 'plugins'" class="shots">
+            <figure v-for="shot in pluginShots" :key="shot.src">
+              <figcaption>{{ shot.label }}</figcaption>
+              <img :src="shot.src" :alt="shot.label" loading="lazy" width="480" height="300">
+            </figure>
+          </div>
+
+          <div v-else-if="feature.motif === 'channels'" class="channels">
+            <span v-for="(channel, i) in channels" :key="channel" :class="{ on: i === 0 }">
+              <b>#</b>{{ channel }}
+            </span>
+            <p>invite-only · you decide who's in</p>
+          </div>
+
+          <ul v-else-if="feature.bullets">
             <li v-for="bullet in feature.bullets" :key="bullet">{{ bullet }}</li>
           </ul>
         </article>
       </div>
+    </section>
+
+    <!-- ═══ HOW IT WORKS ═══ -->
+    <section class="section section-wash">
+      <div class="pad">
+        <p class="eyebrow">How it works</p>
+        <h2 class="h-sec">From download to credentials you own, in four steps.</h2>
+        <p class="p-sub">No sign-up anywhere in this sequence — the first step creates your identity on your own device.</p>
+
+        <ol class="flow">
+          <li v-for="step in steps" :key="step.n">
+            <span class="flow-n">{{ step.n }}</span>
+            <h3>{{ step.title }}</h3>
+            <p>{{ step.body }}</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ═══ PLATFORMS ═══ -->
+    <section class="section pad">
+      <p class="eyebrow">Runs everywhere</p>
+      <h2 class="h-sec">One codebase. Every platform. Native performance.</h2>
+
+      <div class="platforms">
+        <div v-for="platform in platforms" :key="platform.name">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path :d="platform.d" /></svg>
+          <span>{{ platform.name }}</span>
+        </div>
+      </div>
+      <p class="platform-note">
+        Runs on macOS 10.15+, Windows 10+, Linux, iOS 16.4+, and Android 9+.
+        For live video tutoring on Android we recommend a device with 6&nbsp;GB+ RAM.
+      </p>
     </section>
 
     <!-- ═══ STATS ═══ -->

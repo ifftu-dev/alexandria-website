@@ -374,11 +374,167 @@ svg { flex-shrink: 0; }
 
 /* Bento spans (landing) */
 .bento { display: grid; gap: 16px; margin-top: 34px; grid-template-columns: 1fr; }
-@media (min-width: 760px) {
+@media (min-width: 620px) { .bento { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) {
   .bento { grid-template-columns: repeat(6, 1fr); }
   .span-4 { grid-column: span 4; }
   .span-3 { grid-column: span 3; }
   .span-2 { grid-column: span 2; }
+}
+
+/* ─── Accent-driven feature tiles ──────────────────────
+   Each tile carries its own accent as --tint, so the icon, hairline, bullets
+   and hover glow all agree without a class per colour. */
+.accent-primary { --tint: var(--color-primary); }
+.accent-cyan { --tint: var(--color-cyan); }
+.accent-rose { --tint: var(--color-rose); }
+.accent-amber { --tint: var(--color-amber); }
+
+.tile-accent { position: relative; overflow: hidden; isolation: isolate; }
+.tile-accent::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(var(--tint) / 0.75), transparent);
+  opacity: 0.8;
+}
+.tile-glow {
+  position: absolute;
+  inset-block-start: -60px;
+  inset-inline-end: -60px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: rgb(var(--tint) / 0.22);
+  filter: blur(44px);
+  opacity: 0;
+  transition: opacity 400ms ease;
+  z-index: -1;
+}
+.tile-accent:hover { border-color: rgb(var(--tint) / 0.45); }
+.tile-accent:hover .tile-glow { opacity: 1; }
+.tile-accent .tile-ic {
+  background: linear-gradient(135deg, rgb(var(--tint)), rgb(var(--tint) / 0.55));
+  box-shadow: 0 6px 16px -8px rgb(var(--tint) / 0.9);
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.tile-accent:hover .tile-ic { transform: scale(1.08) rotate(-3deg); }
+.tile-accent li::before { color: rgb(var(--tint)); }
+
+/* plugin screenshots */
+.shots { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.shots figure {
+  margin: 0;
+  border: 1px solid rgb(var(--color-border));
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgb(var(--color-muted));
+}
+.shots figcaption {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: rgb(var(--color-muted-foreground));
+  padding: 6px 9px;
+  border-bottom: 1px solid rgb(var(--color-border));
+}
+.shots img {
+  display: block;
+  width: 100%;
+  height: 96px;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.shots figure:hover img { transform: scale(1.06); }
+
+/* classroom channels */
+.channels {
+  margin-top: 14px;
+  border: 1px solid rgb(var(--color-border));
+  border-radius: 10px;
+  padding: 8px;
+  background: rgb(var(--color-muted));
+}
+.channels span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 9px;
+  border-radius: 7px;
+  font-size: 13px;
+  color: rgb(var(--color-muted-foreground));
+}
+.channels span b { font-family: var(--font-mono); color: rgb(var(--tint)); }
+.channels span.on { background: rgb(var(--tint) / 0.12); color: rgb(var(--color-foreground)); font-weight: 600; }
+.channels p {
+  margin: 8px 0 2px;
+  padding-top: 8px;
+  border-top: 1px solid rgb(var(--color-border));
+  font-size: 11.5px;
+  color: rgb(var(--color-muted-foreground));
+}
+
+/* ─── How it works ─────────────────────────────────────── */
+.flow {
+  list-style: none;
+  margin: 38px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
+  counter-reset: flow;
+}
+.flow li { position: relative; padding-top: 20px; border-top: 2px solid rgb(var(--color-border)); transition: border-color 250ms ease; }
+.flow li:hover { border-top-color: rgb(var(--color-primary)); }
+.flow-n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  background: rgb(var(--color-primary) / 0.12);
+  color: rgb(var(--color-primary));
+}
+.flow h3 { font-size: 16px; letter-spacing: -0.02em; margin: 12px 0 6px; font-weight: 700; }
+.flow p { margin: 0; font-size: 13.5px; color: rgb(var(--color-muted-foreground)); line-height: 1.55; }
+
+/* ─── Platforms ────────────────────────────────────────── */
+.platforms {
+  display: grid;
+  gap: 12px;
+  margin-top: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+.platforms div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 12px;
+  border: 1px solid rgb(var(--color-border));
+  border-radius: 14px;
+  background: rgb(var(--color-card));
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), border-color 220ms ease, box-shadow 220ms ease;
+}
+.platforms div:hover {
+  transform: translateY(-3px);
+  border-color: rgb(var(--color-primary) / 0.4);
+  box-shadow: var(--shadow-card);
+}
+.platforms svg { width: 26px; height: 26px; color: rgb(var(--color-foreground)); }
+.platforms span { font-size: 13.5px; font-weight: 600; }
+.platform-note {
+  margin: 20px 0 0;
+  font-size: 13.5px;
+  color: rgb(var(--color-muted-foreground));
+  max-width: 62ch;
 }
 
 /* ─── Stats band ───────────────────────────────────────── */
@@ -455,7 +611,12 @@ svg { flex-shrink: 0; }
 .proof h2 { font-size: clamp(26px, 3.7vw, 38px); line-height: 1.14; letter-spacing: -0.025em; margin: 0; font-weight: 700; }
 .proof .p-sub { color: rgb(231 236 250 / 0.78); }
 .proof .chev { color: rgb(var(--color-cyan)); }
-.proof-metrics { display: flex; gap: 30px; flex-wrap: wrap; margin-top: 26px; }
+.proof-metrics {
+  display: grid;
+  gap: 22px 26px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  margin-top: 26px;
+}
 .proof-metrics .n { font-size: 24px; font-weight: 700; letter-spacing: -0.03em; color: #fff; }
 .proof-metrics .l { font-size: 12.5px; color: rgb(231 236 250 / 0.66); }
 
@@ -759,6 +920,47 @@ svg { flex-shrink: 0; }
   --app-primary-foreground: 17 24 39;
   --app-verified: 74 222 128;
   --app-gov-text: 251 191 36;
+}
+
+/* ─── Small screens ────────────────────────────────────
+   One place for the phone-sized spacing, so section rhythm stays even
+   instead of drifting per component. */
+@media (max-width: 640px) {
+  .section { padding: 46px 0; }
+  .band { padding: 56px 0; margin: 26px 0; }
+  .proof { padding: 66px 0; margin-top: 18px; }
+  .cta { padding: 56px 0; }
+
+  .tiles, .bento, .aud, .prices, .steps, .flow { margin-top: 26px; gap: 12px; }
+  .stats { margin-top: 28px; gap: 22px; }
+  .platforms { margin-top: 24px; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); }
+  .platforms div { padding: 15px 8px; gap: 8px; }
+  .platforms svg { width: 22px; height: 22px; }
+
+  .tile { padding: 18px; }
+  .aud-body { padding: 20px; }
+  .price { padding: 22px 20px; }
+  .faq summary { padding: 14px 15px; font-size: 14.5px; }
+  .faq .ans { padding: 0 15px 15px; }
+  .tablebar { padding: 12px 14px; }
+
+  .p-sub { font-size: 15.5px; }
+  .eyebrow { margin-bottom: 10px; }
+  .shelf-cap { font-size: 10px; }
+  .proof-metrics { gap: 18px; grid-template-columns: repeat(2, 1fr); }
+  .code pre { font-size: 11.5px; padding: 14px; }
+  .code-tabs button { padding: 10px 12px; }
+
+  /* the diagonal cut eats less of the copy on a narrow screen */
+  .hero-split { padding-bottom: 44px; }
+  .notice { font-size: 12.5px; padding: 8px 12px; }
+  .trust { gap: 6px 14px; font-size: 12.5px; margin-top: 18px; }
+}
+
+@media (max-width: 420px) {
+  .shots { grid-template-columns: 1fr; }
+  .shots img { height: 120px; }
+  .platforms { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* ─── Prose (privacy) ──────────────────────────────────── */
