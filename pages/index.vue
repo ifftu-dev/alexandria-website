@@ -285,22 +285,11 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
             </div>
           </div>
 
-          <!-- skill graph: prerequisites and Bloom levels -->
+          <!-- the app's own sidebar skill-graph widget -->
           <div v-else-if="feature.motif === 'graph'" class="shot">
-            <div class="shot-bar"><b>Skill map</b><span class="mono">welding.*</span></div>
-            <div class="shot-body graph-body">
-              <svg viewBox="0 0 320 96" role="img" aria-label="Skill graph: metallurgy and safety lead to 6G pipe welding, which leads to NDT inspection">
-                <line x1="52" y1="28" x2="150" y2="48" /><line x1="52" y1="70" x2="150" y2="48" />
-                <line x1="188" y1="48" x2="272" y2="28" /><line x1="188" y1="48" x2="272" y2="70" />
-                <circle cx="40" cy="28" r="7" class="done" /><circle cx="40" cy="70" r="7" class="done" />
-                <circle cx="168" cy="48" r="10" class="now" />
-                <circle cx="284" cy="28" r="6" /><circle cx="284" cy="70" r="6" />
-              </svg>
-              <div class="graph-key">
-                <span><i class="done" />Apply or above</span>
-                <span><i class="now" />In progress</span>
-                <span><i />Unlocked next</span>
-              </div>
+            <div class="shot-bar"><b>Skill map</b><span class="mono">FROM THE APP SIDEBAR</span></div>
+            <div class="shot-body">
+              <SkillGraph :height="196" />
             </div>
           </div>
 

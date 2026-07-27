@@ -246,6 +246,11 @@ onUnmounted(() => {
             </button>
           </div>
         </nav>
+
+        <!-- Skill graph widget, pinned to the foot of the sidebar as in the app -->
+        <div v-show="!collapsed" class="sb-graph">
+          <SkillGraph :height="150" :node-scale="0.5" />
+        </div>
       </aside>
 
       <!-- main -->
@@ -545,6 +550,11 @@ button { font-family: inherit; }
 }
 .app-replica.collapsed .sb { width: 4rem; }
 .sb-nav { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 0.75rem 0.5rem; display: flex; flex-direction: column; gap: 0.125rem; }
+.sb-graph {
+  flex: none;
+  padding: 0.5rem 0.75rem 0.75rem;
+  border-top: 1px solid rgb(var(--app-border));
+}
 .sb-item {
   display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.5rem 0.75rem; border: none;
   border-radius: 0.625rem; background: transparent; color: rgb(var(--app-muted-foreground));
