@@ -110,7 +110,7 @@ const comparison: Row[] = [
   { feature: 'Mobile app', alexandria: true, canvas: true, blackboard: true, moodle: true },
   { feature: 'Predictive analytics', alexandria: 'Planned', canvas: 'Add-on', blackboard: 'Add-on', moodle: false },
   { feature: 'Vendor lock-in', alexandria: 'None', canvas: 'High', blackboard: 'High', moodle: 'Low' },
-  { feature: 'Per-student cost', alexandria: 'Free / $3', canvas: '$15–40', blackboard: '$20–50', moodle: 'Free + hosting' },
+  { feature: 'Per-student cost', alexandria: 'Free / $4 per mo', canvas: '$15–40 per yr', blackboard: '$20–50 per yr', moodle: 'Free + hosting' },
 ]
 
 const onlyDifferences = ref(false)
@@ -147,7 +147,7 @@ const tiers = [
   },
   {
     name: 'Academic',
-    price: '$3',
+    price: '$4',
     period: 'per student / month',
     desc: 'Managed hosting with premium support for universities and colleges.',
     features: [
