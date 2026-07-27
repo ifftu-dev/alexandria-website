@@ -40,7 +40,7 @@ interface Feature {
   icon: string
   body: string
   bullets?: string[]
-  motif?: 'plugins' | 'channels'
+  motif?: 'plugins' | 'channels' | 'sentinel' | 'graph' | 'credential' | 'reputation'
 }
 
 // Every capability the site has ever claimed, in the order the old page told
@@ -95,47 +95,39 @@ const features: Feature[] = [
     bullets: ['Live one-on-one video tutoring', 'Peer to peer — no call runs through a company'],
   },
   {
-    span: 'span-2',
+    span: 'span-4',
     accent: 'rose',
     title: 'A shared map of knowledge',
     icon: 'M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6z',
-    body: 'Every lesson and credential ties to a public map of skills, so a credential means the same thing everywhere.',
-    bullets: ['Clear prerequisites, so you know what comes next', 'Kept accurate by the community, not one company'],
+    body: 'Every lesson and credential ties to a public map of skills with clear prerequisites, so a credential means the same thing everywhere — and it is kept accurate by the community, not one company.',
+    motif: 'graph',
   },
   {
-    span: 'span-2',
+    span: 'span-3',
     accent: 'cyan',
-    title: 'Earn credentials you own',
+    title: 'Your credentials, your data, your device',
     icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
-    body: 'Signed under your own identity and made tamper-proof, so anyone can check it — even offline, even without Alexandria.',
-    bullets: ['Six kinds of credential', 'Yours forever, even if Alexandria disappears'],
+    body: 'One identity, created on your device. It signs every credential you earn and encrypts everything you keep — syncing straight between your own devices, with relays that cannot read a thing.',
+    motif: 'credential',
   },
   {
-    span: 'span-2',
-    accent: 'primary',
-    title: 'Reputation without the star rating',
-    icon: 'M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z',
-    body: 'Instructors are scored on their impact on learners — a per-skill distribution with confidence bounds, not one global number.',
-    bullets: ['Grounded in learner outcomes, not popularity'],
-  },
-  {
-    span: 'span-2',
+    span: 'span-3',
     accent: 'amber',
     title: 'Assessments you can trust',
     icon: 'M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178zM15 12a3 3 0 11-6 0 3 3 0 016 0z',
     body: 'Sentinel, an optional integrity layer, keeps credentials honest — and runs entirely on your device.',
-    bullets: ['Camera and keystrokes are never uploaded', 'Only a final integrity score is ever shared'],
+    motif: 'sentinel',
   },
   {
-    span: 'span-2',
+    span: 'span-3',
     accent: 'primary',
-    title: 'Own your data',
-    icon: 'M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z',
-    body: 'Your identity and content live only on your device, encrypted, syncing directly between your own devices. The relays that help you connect cannot read a thing.',
-    bullets: ['Family-safe: guardians can privately oversee a child’s learning'],
+    title: 'Reputation without the star rating',
+    icon: 'M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z',
+    body: 'Instructors are scored on their impact on learners — a per-skill distribution with confidence bounds, not one global number.',
+    motif: 'reputation',
   },
   {
-    span: 'span-2',
+    span: 'span-3',
     accent: 'amber',
     title: 'Community governed',
     icon: 'M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z',
@@ -145,6 +137,19 @@ const features: Feature[] = [
 ]
 
 const channels = ['announcements', 'questions', 'assignments', 'showcase']
+
+// Signal names come from the app's own Sentinel panel (sentinel.engine.*).
+const sentinelSignals = [
+  { label: 'Typing', value: 96 },
+  { label: 'Mouse', value: 91 },
+  { label: 'Smart models', value: 88 },
+]
+
+const reputation = [
+  { skill: 'welding.pipe.6g', low: 62, mid: 74, high: 83 },
+  { skill: 'welding.tig', low: 38, mid: 57, high: 79 },
+  { skill: 'inspection.ndt', low: 70, mid: 78, high: 85 },
+]
 
 const pluginShots = [
   { src: '/plugins/editor.png', label: 'Code editor' },
@@ -261,6 +266,78 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
               <b>#</b>{{ channel }}
             </span>
             <p>invite-only · you decide who's in</p>
+          </div>
+
+          <!-- Sentinel status, mirroring the panel in SentinelTrainingWizard.vue -->
+          <div v-else-if="feature.motif === 'sentinel'" class="shot">
+            <div class="shot-bar"><b>Sentinel status</b><span class="mono">3/3 ready</span></div>
+            <div class="shot-body">
+              <div class="sig" v-for="signal in sentinelSignals" :key="signal.label">
+                <span class="sig-name">{{ signal.label }}</span>
+                <span class="sig-track"><i :style="{ width: `${signal.value}%` }" /></span>
+                <span class="sig-val mono">{{ (signal.value / 100).toFixed(2) }}</span>
+              </div>
+              <div class="score">
+                <span class="score-n mono">0.94</span>
+                <span class="score-l">Integrity score · <b>High</b></span>
+              </div>
+              <p class="shot-foot">Quiet snapshots every 15–45s. Raw camera, typing and mouse data never leave this device.</p>
+            </div>
+          </div>
+
+          <!-- skill graph: prerequisites and Bloom levels -->
+          <div v-else-if="feature.motif === 'graph'" class="shot">
+            <div class="shot-bar"><b>Skill map</b><span class="mono">welding.*</span></div>
+            <div class="shot-body graph-body">
+              <svg viewBox="0 0 320 96" role="img" aria-label="Skill graph: metallurgy and safety lead to 6G pipe welding, which leads to NDT inspection">
+                <line x1="52" y1="28" x2="150" y2="48" /><line x1="52" y1="70" x2="150" y2="48" />
+                <line x1="188" y1="48" x2="272" y2="28" /><line x1="188" y1="48" x2="272" y2="70" />
+                <circle cx="40" cy="28" r="7" class="done" /><circle cx="40" cy="70" r="7" class="done" />
+                <circle cx="168" cy="48" r="10" class="now" />
+                <circle cx="284" cy="28" r="6" /><circle cx="284" cy="70" r="6" />
+              </svg>
+              <div class="graph-key">
+                <span><i class="done" />Apply or above</span>
+                <span><i class="now" />In progress</span>
+                <span><i />Unlocked next</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- a credential as the app renders it, plus device sync -->
+          <div v-else-if="feature.motif === 'credential'" class="shot">
+            <div class="shot-bar"><b>Credential</b><span class="mono">SIGNED BY YOU</span></div>
+            <div class="shot-body">
+              <div class="cred-row">
+                <span class="cred-seal">✦</span>
+                <span>
+                  <span class="cred-t">Root pass, 6G pipe</span>
+                  <span class="cred-m mono">did:key:z6Mkha…QYtP · ed25519</span>
+                </span>
+                <span class="cred-ok">Genuine</span>
+              </div>
+              <div class="sync">
+                <span>This Mac</span>
+                <span class="sync-line"><i /></span>
+                <span>Your phone</span>
+              </div>
+              <p class="shot-foot">Encrypted end to end. Six kinds of credential — yours forever, even if Alexandria disappears.</p>
+            </div>
+          </div>
+
+          <!-- per-skill distribution with confidence bounds -->
+          <div v-else-if="feature.motif === 'reputation'" class="shot">
+            <div class="shot-bar"><b>Instructor impact</b><span class="mono">PER SKILL</span></div>
+            <div class="shot-body">
+              <div v-for="row in reputation" :key="row.skill" class="dist">
+                <span class="dist-name mono">{{ row.skill }}</span>
+                <span class="dist-track">
+                  <i class="bound" :style="{ left: `${row.low}%`, width: `${row.high - row.low}%` }" />
+                  <i class="point" :style="{ left: `${row.mid}%` }" />
+                </span>
+              </div>
+              <p class="shot-foot">Bars show confidence bounds — wider means less evidence. No global score anywhere.</p>
+            </div>
           </div>
 
           <ul v-else-if="feature.bullets">

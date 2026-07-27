@@ -477,6 +477,98 @@ svg { flex-shrink: 0; }
   color: rgb(var(--color-muted-foreground));
 }
 
+/* ─── App-view motifs ──────────────────────────────────
+   Small recreations of real product views (Sentinel status, skill map,
+   credential, instructor impact), drawn with the app's own chrome so a
+   feature card can show the thing rather than describe it. */
+.shot {
+  margin-top: 14px;
+  border: 1px solid rgb(var(--color-border));
+  border-radius: 11px;
+  overflow: hidden;
+  background: rgb(var(--color-muted));
+}
+.shot-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border-bottom: 1px solid rgb(var(--color-border));
+  background: rgb(var(--color-card));
+}
+.shot-bar b { font-size: 11.5px; font-weight: 700; letter-spacing: -0.01em; }
+.shot-bar span { margin-inline-start: auto; font-size: 9.5px; letter-spacing: 0.09em; color: rgb(var(--color-muted-foreground)); }
+.shot-body { padding: 11px; }
+.shot-foot {
+  margin: 10px 0 0;
+  padding-top: 9px;
+  border-top: 1px solid rgb(var(--color-border));
+  font-size: 11px;
+  line-height: 1.45;
+  color: rgb(var(--color-muted-foreground));
+}
+
+/* Sentinel signals */
+.sig { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; }
+.sig-name { font-size: 11.5px; min-width: 8ch; }
+.sig-track { flex: 1; height: 4px; border-radius: 99px; background: rgb(var(--color-border)); overflow: hidden; }
+.sig-track i { display: block; height: 100%; border-radius: 99px; background: rgb(var(--tint)); }
+.sig-val { font-size: 10.5px; color: rgb(var(--color-muted-foreground)); font-variant-numeric: tabular-nums; }
+.score { display: flex; align-items: baseline; gap: 9px; margin-top: 11px; }
+.score-n { font-size: 21px; font-weight: 700; letter-spacing: -0.03em; color: rgb(var(--tint)); }
+.score-l { font-size: 11.5px; color: rgb(var(--color-muted-foreground)); }
+.score-l b { color: rgb(var(--color-ok)); font-weight: 700; }
+
+/* skill graph */
+.graph-body svg { display: block; width: 100%; height: auto; }
+.graph-body line { stroke: rgb(var(--color-muted-foreground) / 0.4); stroke-width: 1.5; }
+.graph-body circle { fill: rgb(var(--color-card)); stroke: rgb(var(--color-muted-foreground) / 0.55); stroke-width: 1.5; }
+.graph-body circle.done { fill: rgb(var(--tint)); stroke: none; }
+.graph-body circle.now { fill: rgb(var(--tint) / 0.22); stroke: rgb(var(--tint)); stroke-width: 2; }
+.graph-key { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 8px; }
+.graph-key span { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; color: rgb(var(--color-muted-foreground)); }
+.graph-key i {
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 1.5px solid rgb(var(--color-muted-foreground) / 0.55);
+  display: block;
+}
+.graph-key i.done { background: rgb(var(--tint)); border-color: transparent; }
+.graph-key i.now { background: rgb(var(--tint) / 0.22); border-color: rgb(var(--tint)); }
+
+/* credential + sync */
+.cred-row { display: flex; align-items: center; gap: 9px; }
+.cred-seal {
+  width: 28px; height: 28px; border-radius: 8px; flex: none; display: grid; place-items: center;
+  font-size: 12px; color: #fff;
+  background: linear-gradient(135deg, rgb(var(--tint)), rgb(var(--color-rose)));
+}
+.cred-t { display: block; font-size: 12.5px; font-weight: 600; }
+.cred-m { display: block; font-size: 9.5px; color: rgb(var(--color-muted-foreground)); letter-spacing: 0.02em; }
+.cred-ok {
+  margin-inline-start: auto; flex: none;
+  font-size: 9.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+  padding: 3px 7px; border-radius: 5px;
+  background: rgb(var(--color-ok) / 0.16); color: rgb(var(--color-ok));
+}
+.sync { display: flex; align-items: center; gap: 9px; margin-top: 12px; font-size: 10.5px; color: rgb(var(--color-muted-foreground)); }
+.sync-line { flex: 1; height: 2px; border-radius: 99px; background: rgb(var(--color-border)); position: relative; overflow: hidden; }
+.sync-line i {
+  position: absolute; inset-block: 0; width: 34%; border-radius: 99px;
+  background: linear-gradient(90deg, transparent, rgb(var(--tint)), transparent);
+  animation: sync-slide 3.6s ease-in-out infinite;
+}
+@keyframes sync-slide { 0% { left: -34%; } 100% { left: 100%; } }
+
+/* instructor impact distribution */
+.dist { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
+.dist-name { font-size: 10px; min-width: 11ch; color: rgb(var(--color-muted-foreground)); }
+.dist-track { position: relative; flex: 1; height: 12px; border-radius: 99px; background: rgb(var(--color-border) / 0.7); }
+.dist-track .bound { position: absolute; inset-block: 3px; border-radius: 99px; background: rgb(var(--tint) / 0.35); }
+.dist-track .point {
+  position: absolute; inset-block: 0; width: 3px; border-radius: 99px;
+  background: rgb(var(--tint)); transform: translateX(-1.5px);
+}
+
 /* ─── How it works ─────────────────────────────────────── */
 .flow {
   list-style: none;
