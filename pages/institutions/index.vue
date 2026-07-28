@@ -110,7 +110,7 @@ const comparison: Row[] = [
   { feature: 'Mobile app', alexandria: true, canvas: true, blackboard: true, moodle: true },
   { feature: 'Predictive analytics', alexandria: 'Planned', canvas: 'Add-on', blackboard: 'Add-on', moodle: false },
   { feature: 'Vendor lock-in', alexandria: 'None', canvas: 'High', blackboard: 'High', moodle: 'Low' },
-  { feature: 'Per-student cost, per year', alexandria: 'Free / $48', canvas: '$5–30', blackboard: '$17–26', moodle: 'Free + hosting' },
+  { feature: 'Per-student cost, per year', alexandria: 'Free / $24', canvas: '$5–30', blackboard: '$17–26', moodle: 'Free + hosting' },
 ]
 
 const onlyDifferences = ref(false)
@@ -147,7 +147,7 @@ const tiers = [
   },
   {
     name: 'Academic',
-    price: '$4',
+    price: '$2',
     period: 'per student / month',
     desc: 'Managed hosting with premium support for universities and colleges.',
     features: [
@@ -355,8 +355,9 @@ const faqs = [
         </div>
         <p class="tablenote">
           Canvas and Blackboard are quote-only; the ranges are published list and framework pricing as of July 2026, and
-          large institutions negotiate below them. Alexandria's $48 is the Academic tier at $4 per student per month —
-          on price alone we are not the cheapest option here, only the one you can also run for free.
+          large institutions negotiate below them. Alexandria's $24 is the Academic tier at $2 per student per month —
+          under Blackboard's framework rate, inside Canvas's range, and above what the largest institutions negotiate on
+          Canvas. The Community tier stays free at any size.
         </p>
       </div>
     </section>
