@@ -58,6 +58,13 @@ const year = new Date().getFullYear()
         </nav>
 
         <div class="nav-right">
+          <NuxtLink
+            to="/#early-access"
+            active-class=""
+            exact-active-class=""
+            aria-current-value="false"
+            class="plausible-event-name=EarlyAccess nav-cta"
+          >Early access</NuxtLink>
           <a
             href="https://github.com/ifftu-dev/alexandria"
             target="_blank"
@@ -96,13 +103,14 @@ const year = new Date().getFullYear()
             <div class="drawer-links">
               <NuxtLink to="/recruiter" class="plausible-event-name=Nav-Recruiter link-recruiter" @click="closeMobileMenu">For recruiters</NuxtLink>
               <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution" @click="closeMobileMenu">For institutions</NuxtLink>
-              <a
-                href="https://github.com/ifftu-dev/alexandria/releases"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="plausible-event-name=Download"
+              <NuxtLink
+                to="/#early-access"
+                active-class=""
+                exact-active-class=""
+                aria-current-value="false"
+                class="plausible-event-name=EarlyAccess"
                 @click="closeMobileMenu"
-              >Download</a>
+              >Get early access</NuxtLink>
               <a
                 href="https://github.com/ifftu-dev/alexandria"
                 target="_blank"
@@ -160,7 +168,7 @@ const year = new Date().getFullYear()
           <div class="foot-col">
             <h2>Platform</h2>
             <ul>
-              <li><a href="https://github.com/ifftu-dev/alexandria/releases" target="_blank" rel="noopener noreferrer" class="plausible-event-name=Download">Download</a></li>
+              <li><NuxtLink to="/#early-access" active-class="" exact-active-class="" aria-current-value="false" class="plausible-event-name=EarlyAccess">Early access</NuxtLink></li>
               <li><a href="https://github.com/ifftu-dev/alexandria" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub">Source code</a></li>
             </ul>
           </div>
@@ -243,7 +251,45 @@ const year = new Date().getFullYear()
 .link-recruiter:hover { background: rgb(var(--color-recruiter) / 0.12); }
 .link-institution { color: rgb(var(--color-institution)); }
 .link-institution:hover { background: rgb(var(--color-institution) / 0.12); }
+
+/* Current page. NuxtLink sets router-link-active plus aria-current="page", so
+   the state is announced as well as shown — colour alone would not carry it. */
+.nav-links a.router-link-active {
+  font-weight: 700;
+  background: rgb(var(--color-primary) / 0.1);
+}
+.nav-links a.router-link-active::after {
+  content: "";
+  position: absolute;
+  inset-inline: 12px;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+.nav-links a { position: relative; }
+.link-recruiter.router-link-active { background: rgb(var(--color-recruiter) / 0.14); }
+.link-institution.router-link-active { background: rgb(var(--color-institution) / 0.14); }
+
+/* Home has no nav item of its own, so the wordmark carries the state.
+   Must be exact-active: "/" is a prefix of every route, so router-link-active
+   would mark it current on all four pages. */
+.brand.router-link-exact-active { color: rgb(var(--color-primary)); }
 .nav-right { display: flex; align-items: center; gap: 6px; }
+.nav-cta {
+  display: none;
+  font-size: 14.5px;
+  font-weight: 600;
+  text-decoration: none;
+  color: rgb(var(--color-primary));
+  border: 1px solid rgb(var(--color-primary) / 0.35);
+  border-radius: 999px;
+  padding: 7px 15px;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+@media (min-width: 760px) { .nav-cta { display: inline-flex; } }
+.nav-cta:hover { background: rgb(var(--color-primary) / 0.1); border-color: rgb(var(--color-primary) / 0.6); }
+
 .nav-gh {
   display: none; align-items: center; justify-content: center; width: 38px; height: 38px;
   border-radius: 10px; color: rgb(var(--color-muted-foreground)); transition: color 150ms ease, background 150ms ease;
@@ -286,6 +332,20 @@ const year = new Date().getFullYear()
   color: rgb(var(--color-foreground)); transition: background 150ms ease;
 }
 .drawer-links a:hover { background: rgb(var(--color-muted)); }
+.drawer-links a.router-link-active {
+  background: rgb(var(--color-primary) / 0.12);
+  font-weight: 700;
+}
+.drawer-links a.router-link-active::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+  background: currentColor;
+  margin-inline-end: 9px;
+  vertical-align: -2px;
+}
 .drawer-foot {
   margin: 0; padding: 16px 18px; border-top: 1px solid rgb(var(--color-border));
   font-size: 12.5px; color: rgb(var(--color-muted-foreground));
@@ -311,6 +371,7 @@ const year = new Date().getFullYear()
 .foot-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .foot-col a { font-size: 14px; color: rgb(var(--color-muted-foreground)); text-decoration: none; }
 .foot-col a:hover { color: rgb(var(--color-primary)); }
+.foot-col a.router-link-exact-active { color: rgb(var(--color-primary)); font-weight: 600; }
 .foot-base {
   margin-top: 40px; padding-top: 22px; border-top: 1px solid rgb(var(--color-border));
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;

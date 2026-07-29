@@ -16,10 +16,26 @@ useHead({
   <div class="pad privacy">
     <p class="eyebrow">Data policy</p>
     <h1>Privacy</h1>
-    <p class="lede">Short version: we don't track you. Long version: read on.</p>
+    <p class="lede">
+      Short version: we don't track you, and the only thing we ever ask for is an email address
+      you choose to give us. Long version: read on.
+    </p>
 
     <div class="prose">
-      <h2>What we collect</h2>
+      <h2>The early-access list</h2>
+      <p>
+        If you enter your email address to ask for early access, we store two things: the address
+        itself, and which platform your browser reported so we know which build you are waiting for.
+        That is the only personal data this site ever collects, and only because you typed it in.
+      </p>
+      <ul>
+        <li>Used for one thing: telling you when an alpha build is ready for your platform.</li>
+        <li>Never sold, never shared, never used to advertise to you.</li>
+        <li>Held by <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener noreferrer">Netlify</a>, who host this site — no other company sees it.</li>
+        <li>Email <a href="mailto:admin@ifftu.dev">admin@ifftu.dev</a> and we delete it. No account to close, no form to find.</li>
+      </ul>
+
+      <h2>What we collect otherwise</h2>
       <p>
         This site uses
         <a href="https://plausible.io/privacy-focused-web-analytics" target="_blank" rel="noopener noreferrer">Plausible Analytics</a>,
@@ -30,7 +46,7 @@ useHead({
       <h2>What we don't collect</h2>
       <ul>
         <li>No cookies.</li>
-        <li>No personal identifiers.</li>
+        <li>No personal identifiers in analytics — the early-access list above is separate, and never joined to it.</li>
         <li>No cross-site tracking.</li>
         <li>No fingerprinting.</li>
         <li>No data sold or shared with third parties.</li>
@@ -39,8 +55,9 @@ useHead({
 
       <h2>Why we collect anything</h2>
       <p>
-        We want to know which platforms people download from, which pages land, and which nav items
-        get clicked — so we spend our time improving the parts that actually get used.
+        We want to know which platforms people are waiting on, which pages land, and which nav items
+        get clicked — so we spend our time improving the parts that actually get used, and build for
+        the platforms people actually asked for.
       </p>
 
       <h2>The app itself</h2>

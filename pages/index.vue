@@ -31,8 +31,6 @@ useHead({
   ],
 })
 
-const { download, allPlatformsUrl, releaseTag } = useDownload()
-
 interface Feature {
   span: string
   accent: 'primary' | 'cyan' | 'rose' | 'amber'
@@ -191,40 +189,19 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
       <MeshGradient />
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-centered">
-        <p class="eyebrow hero-eyebrow">One app · five platforms · nine languages</p>
+        <p class="eyebrow hero-eyebrow">Alpha · early access</p>
         <h1>Knowledge belongs to everyone.</h1>
         <p class="hero-lede">
           Free, open-source learning for every device. Study offline, own the credentials you earn,
           and keep your data on your own device — an account no company holds, and no tracking.
         </p>
-        <div class="hero-cta">
-          <!-- `file` downloads the build itself; `releases` still has somewhere
-               useful to go; only iOS has nothing to offer yet. -->
-          <a
-            v-if="download.action === 'file'"
-            :href="download.downloadUrl"
-            class="plausible-event-name=CTA-Download btn"
-          >{{ download.ctaLabel }}</a>
-          <a
-            v-else-if="download.action === 'releases'"
-            :href="download.downloadUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="plausible-event-name=CTA-Download btn"
-          >{{ download.ctaLabel }}</a>
-          <span v-else class="btn-ghost">{{ download.ctaLabel }}</span>
-          <a
-            href="https://github.com/ifftu-dev/alexandria"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="plausible-event-name=CTA-GitHub btn-ghost"
-          >View the source</a>
+        <div class="hero-cta hero-cta-form" id="early-access">
+          <EarlyAccessForm variant="hero" />
         </div>
         <p class="hero-note">
           <!-- Rendered from the start, label swapped once the release resolves:
                introducing it later re-wrapped this line and shifted the page. -->
-          <a :href="allPlatformsUrl" target="_blank" rel="noopener noreferrer" class="tag-link">{{ releaseTag || 'Latest release' }}</a>
-          · MIT core · macOS, Windows, Linux, iOS, Android
+          Alpha is invite-only while we harden it · MIT core · macOS, Windows, Linux, iOS, Android
         </p>
       </div>
     </section>
@@ -511,34 +488,20 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
       <MeshGradient />
       <div class="hero-scrim" />
       <div class="pad cta-inner">
-        <h2>Start learning. Own your credentials.</h2>
-        <p>Alexandria runs on every platform and is free for learners, forever.</p>
-        <div class="cta-row">
-          <a
-            v-if="download.action === 'file'"
-            :href="download.downloadUrl"
-            class="plausible-event-name=CTA-Download btn"
-          >{{ download.ctaLabel }}</a>
-          <a
-            v-else
-            :href="allPlatformsUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="plausible-event-name=CTA-Download btn"
-          >{{ download.ctaLabel }}</a>
+        <h2>Be there when it opens.</h2>
+        <p>We are letting people in a group at a time while the alpha settles. Leave your address and we will send a build for your platform.</p>
+        <div class="cta-row cta-row-form">
+          <EarlyAccessForm variant="hero" />
+        </div>
+        <p class="cta-alt">
+          Prefer to read the code first?
           <a
             href="https://github.com/ifftu-dev/alexandria"
             target="_blank"
             rel="noopener noreferrer"
-            class="plausible-event-name=CTA-GitHub btn-ghost"
-          >Star on GitHub</a>
-          <a
-            href="https://x.com/Alexandria_FTU"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="plausible-event-name=CTA-Follow btn-ghost"
-          >Follow for updates</a>
-        </div>
+            class="plausible-event-name=CTA-GitHub"
+          >It's all on GitHub</a>.
+        </p>
       </div>
     </section>
   </div>
