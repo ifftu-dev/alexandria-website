@@ -198,8 +198,15 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
           and keep your data on your own device — an account no company holds, and no tracking.
         </p>
         <div class="hero-cta">
+          <!-- `file` downloads the build itself; `releases` still has somewhere
+               useful to go; only iOS has nothing to offer yet. -->
           <a
-            v-if="download.installable"
+            v-if="download.action === 'file'"
+            :href="download.downloadUrl"
+            class="plausible-event-name=CTA-Download btn"
+          >{{ download.ctaLabel }}</a>
+          <a
+            v-else-if="download.action === 'releases'"
             :href="download.downloadUrl"
             target="_blank"
             rel="noopener noreferrer"
@@ -508,8 +515,13 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
         <p>Alexandria runs on every platform and is free for learners, forever.</p>
         <div class="cta-row">
           <a
-            v-if="download.installable"
+            v-if="download.action === 'file'"
             :href="download.downloadUrl"
+            class="plausible-event-name=CTA-Download btn"
+          >{{ download.ctaLabel }}</a>
+          <a
+            v-else
+            :href="allPlatformsUrl"
             target="_blank"
             rel="noopener noreferrer"
             class="plausible-event-name=CTA-Download btn"
