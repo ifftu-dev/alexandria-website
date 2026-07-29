@@ -5,17 +5,16 @@ const mobileMenuOpen = ref(false)
 function closeMobileMenu() { mobileMenuOpen.value = false }
 
 // Announcement banner — dismissal persists forever per-browser via localStorage.
-// Start hidden and reveal on mount to avoid an SSR/hydration mismatch and to
-// keep dismissed users from seeing a flash of the banner.
+// The banner ships in the server-rendered HTML and the pre-paint script in
+// nuxt.config.ts sets data-announce="off" on <html> when it was dismissed, so
+// CSS hides it before anything is painted. Toggling it after hydration instead
+// would reflow the whole page.
 const ANNOUNCEMENT_DISMISS_KEY = 'alexandria-announcement-dismissed'
-const showBanner = ref(false)
-
-onMounted(() => {
-  showBanner.value = localStorage.getItem(ANNOUNCEMENT_DISMISS_KEY) !== '1'
-})
+const bannerDismissed = ref(false)
 
 function dismissBanner() {
-  showBanner.value = false
+  bannerDismissed.value = true
+  document.documentElement.setAttribute('data-announce', 'off')
   localStorage.setItem(ANNOUNCEMENT_DISMISS_KEY, '1')
 }
 
@@ -25,7 +24,7 @@ const year = new Date().getFullYear()
 <template>
   <div class="shell">
     <!-- Announcement banner -->
-    <div v-if="showBanner" class="announce">
+    <div v-if="!bannerDismissed" class="announce">
       <a
         href="https://www.ifftu.dev/blog/introducing-alexandria/"
         target="_blank"

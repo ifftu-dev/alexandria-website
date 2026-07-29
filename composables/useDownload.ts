@@ -179,6 +179,15 @@ export function useDownload() {
       ctaLabel: getCtaLabel(platform, platformLabel),
     }
 
+    // Platform detection above is synchronous, so the button is already
+    // correct and clickable. Resolving the exact asset needs a call to
+    // api.github.com, which has no business competing with hydration for
+    // bandwidth or main thread — wait for idle.
+    await new Promise<void>((resolve) => {
+      if (typeof requestIdleCallback === 'function') requestIdleCallback(() => resolve(), { timeout: 3000 })
+      else setTimeout(resolve, 1200)
+    })
+
     try {
       const release = await fetchLatestRelease()
       if (release) {

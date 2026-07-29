@@ -246,7 +246,7 @@ const faqs = [
           </div>
         </div>
 
-        <CurriculumMap />
+        <LazyCurriculumMap hydrate-on-idle />
       </div>
     </section>
 

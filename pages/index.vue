@@ -151,9 +151,11 @@ const reputation = [
   { skill: 'inspection.ndt', low: 70, mid: 78, high: 85 },
 ]
 
+// Sized and re-encoded for the ~130x96 box they actually render in; the
+// source PNGs were 1800px wide and 464 KB between them.
 const pluginShots = [
-  { src: '/plugins/editor.png', label: 'Code editor' },
-  { src: '/plugins/music.png', label: 'Music trainer' },
+  { src: '/plugins/editor.webp', label: 'Code editor', w: 700, h: 784 },
+  { src: '/plugins/music.webp', label: 'Music trainer', w: 700, h: 436 },
 ]
 
 const steps = [
@@ -212,8 +214,10 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
           >View the source</a>
         </div>
         <p class="hero-note">
-          <a v-if="releaseTag" :href="allPlatformsUrl" target="_blank" rel="noopener noreferrer" class="tag-link">{{ releaseTag }}</a>
-          <span v-if="releaseTag"> · </span>MIT core · macOS, Windows, Linux, iOS, Android
+          <!-- Rendered from the start, label swapped once the release resolves:
+               introducing it later re-wrapped this line and shifted the page. -->
+          <a :href="allPlatformsUrl" target="_blank" rel="noopener noreferrer" class="tag-link">{{ releaseTag || 'Latest release' }}</a>
+          · MIT core · macOS, Windows, Linux, iOS, Android
         </p>
       </div>
     </section>
@@ -221,7 +225,7 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
     <!-- ═══ APP WINDOW, straddling the fold ═══ -->
     <div class="pad shelf">
       <div class="shelf-window">
-        <AppReplica />
+        <LazyAppReplica hydrate-on-idle />
       </div>
       <p class="shelf-cap">
         The real shell — press <b>/</b> for search, open <b>Skills &amp; Credentials</b> and verify one
@@ -257,7 +261,14 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
           <div v-if="feature.motif === 'plugins'" class="shots">
             <figure v-for="shot in pluginShots" :key="shot.src">
               <figcaption>{{ shot.label }}</figcaption>
-              <img :src="shot.src" :alt="shot.label" loading="lazy" width="480" height="300">
+              <img
+                :src="shot.src"
+                :alt="shot.label"
+                :width="shot.w"
+                :height="shot.h"
+                loading="lazy"
+                decoding="async"
+              >
             </figure>
           </div>
 
@@ -289,7 +300,7 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
           <div v-else-if="feature.motif === 'graph'" class="shot">
             <div class="shot-bar"><b>Skill map</b><span class="mono">FROM THE APP SIDEBAR</span></div>
             <div class="shot-body">
-              <SkillGraph :height="196" />
+              <LazySkillGraph hydrate-on-visible :height="196" />
             </div>
           </div>
 

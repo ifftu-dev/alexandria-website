@@ -104,7 +104,7 @@ const steps = [
           </div>
         </div>
 
-        <SkillQuery />
+        <LazySkillQuery hydrate-on-idle />
       </div>
     </section>
 
