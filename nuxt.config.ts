@@ -1,5 +1,11 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
+
+  // Pinned explicitly. Pages, layouts and components live at the repo root,
+  // and Nuxt 4 will treat an `app/` directory as the source root if it finds
+  // one — which it now does, because router options must live at
+  // `<srcDir>/app/router.options.ts`.
+  srcDir: '.',
   devtools: { enabled: true },
 
   modules: [
