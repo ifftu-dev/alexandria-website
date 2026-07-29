@@ -2,21 +2,21 @@
 /**
  * Early-access signup.
  *
- * Posts to Netlify Forms, which is already part of this site's deploy — no
- * extra service, no API keys, and the addresses stay in the same account that
- * hosts the site. Netlify registers the form by parsing the prerendered HTML
- * at deploy time, which is why the markup carries `data-netlify` and the
- * hidden `form-name` field even though submission happens over fetch.
+ * Posts to `/api/early-access`, a Netlify function that forwards to Kit. The
+ * API key stays server-side: Kit's form endpoint would accept a public key
+ * straight from the browser, but that key can be used by anyone who reads the
+ * bundle to add subscribers to the account.
  *
- * Swapping providers later means changing `submit()` and the form attributes;
- * nothing else on the page knows how this works.
+ * Swapping providers later means changing that function; this component only
+ * knows it posts an email and a platform to an endpoint that answers
+ * `{ ok: true }`.
  */
 const props = withDefaults(defineProps<{
   /** `hero` sits on the gradient, `band` on a light section. */
   variant?: 'hero' | 'band'
 }>(), { variant: 'hero' })
 
-const FORM_NAME = 'early-access'
+const ENDPOINT = '/api/early-access'
 
 const email = ref('')
 const botField = ref('')
@@ -26,12 +26,6 @@ const errorMessage = ref('')
 // Reuse the platform detection the download button used, so we learn which
 // builds people are actually waiting for without asking them.
 const { download } = useDownload()
-
-function encode(data: Record<string, string>) {
-  return Object.entries(data)
-    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
-    .join('&')
-}
 
 async function submit() {
   if (state.value === 'sending') return
@@ -47,17 +41,24 @@ async function submit() {
   errorMessage.value = ''
 
   try {
-    const res = await fetch('/', {
+    const res = await fetch(ENDPOINT, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encode({
-        'form-name': FORM_NAME,
-        'email': value,
-        'platform': download.value.platformLabel,
-        'bot-field': botField.value,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: value,
+        platform: download.value.platformLabel,
+        botField: botField.value,
       }),
     })
-    if (!res.ok) throw new Error(String(res.status))
+    const body = await res.json().catch(() => ({})) as { ok?: boolean, error?: string }
+
+    if (!res.ok || !body.ok) {
+      state.value = 'error'
+      // The function explains itself when it can — a bad address and an
+      // outage are not the same problem and should not read the same.
+      errorMessage.value = body.error ?? 'Could not add you just now. Try again in a moment.'
+      return
+    }
     state.value = 'done'
   }
   catch {
@@ -65,22 +66,17 @@ async function submit() {
     errorMessage.value = 'Could not reach the list. Try again in a moment.'
   }
 }
+
 </script>
 
 <template>
   <div class="ea" :class="`ea-${props.variant}`">
     <form
       v-if="state !== 'done'"
-      :name="FORM_NAME"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
       class="ea-form"
       @submit.prevent="submit"
     >
-      <!-- Netlify reads these from the prerendered HTML -->
-      <input type="hidden" name="form-name" :value="FORM_NAME">
-      <input type="hidden" name="platform" :value="download.platformLabel">
+      <!-- Off-screen rather than hidden, so bots still fill it in. -->
       <p class="ea-bot">
         <label>Leave this field empty<input v-model="botField" name="bot-field" tabindex="-1" autocomplete="off"></label>
       </p>

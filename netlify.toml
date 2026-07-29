@@ -2,6 +2,12 @@
   command = "npm install && npm run generate"
   publish = "dist"
 
+# Early-access signup proxies to Kit through here, so the API key stays off
+# the client. The function declares its own route (/api/early-access) via
+# `config.path`, so it needs no redirect rule.
+[functions]
+  directory = "netlify/functions"
+
 [build.environment]
   NODE_VERSION = "22"
 

@@ -31,7 +31,7 @@ useHead({
       <ul>
         <li>Used for one thing: telling you when an alpha build is ready for your platform.</li>
         <li>Never sold, never shared, never used to advertise to you.</li>
-        <li>Held by <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener noreferrer">Netlify</a>, who host this site — no other company sees it.</li>
+        <li>Held by <a href="https://kit.com/privacy" target="_blank" rel="noopener noreferrer">Kit</a>, the mailing-list service we use to send the invitations. Nobody else receives it.</li>
         <li>Email <a href="mailto:admin@ifftu.dev">admin@ifftu.dev</a> and we delete it. No account to close, no form to find.</li>
       </ul>
 
