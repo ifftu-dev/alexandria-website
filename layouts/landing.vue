@@ -4,17 +4,20 @@ useTheme()
 const mobileMenuOpen = ref(false)
 function closeMobileMenu() { mobileMenuOpen.value = false }
 
-// Announcement banner — dismissal persists forever per-browser via localStorage.
-// The banner ships in the server-rendered HTML and the pre-paint script in
-// nuxt.config.ts sets data-announce="off" on <html> when it was dismissed, so
-// CSS hides it before anything is painted. Toggling it after hydration instead
-// would reflow the whole page.
+// Announcement toast — bottom-right, dismissal persists per-browser.
+// It is fixed-position and mounts after hydration, so it cannot move the page;
+// the old full-width banner sat in the flow and pushed everything down.
 const ANNOUNCEMENT_DISMISS_KEY = 'alexandria-announcement-dismissed'
-const bannerDismissed = ref(false)
+const showToast = ref(false)
 
-function dismissBanner() {
-  bannerDismissed.value = true
-  document.documentElement.setAttribute('data-announce', 'off')
+onMounted(() => {
+  if (localStorage.getItem(ANNOUNCEMENT_DISMISS_KEY) === '1') return
+  // Let the page land before asking for attention.
+  setTimeout(() => { showToast.value = true }, 1400)
+})
+
+function dismissToast() {
+  showToast.value = false
   localStorage.setItem(ANNOUNCEMENT_DISMISS_KEY, '1')
 }
 
@@ -23,24 +26,6 @@ const year = new Date().getFullYear()
 
 <template>
   <div class="shell">
-    <!-- Announcement banner -->
-    <div v-if="!bannerDismissed" class="announce">
-      <a
-        href="https://www.ifftu.dev/blog/introducing-alexandria/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="plausible-event-name=Announcement announce-link"
-      >
-        Read the announcement post
-        <span aria-hidden="true">&rarr;</span>
-      </a>
-      <button type="button" class="announce-x" aria-label="Dismiss announcement" @click="dismissBanner">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
-
     <!-- Header -->
     <header class="site-nav">
       <div class="pad nav-in">
@@ -129,6 +114,31 @@ const year = new Date().getFullYear()
       <slot />
     </main>
 
+    <!-- Announcement toast -->
+    <Teleport to="body">
+      <Transition name="toast">
+        <aside v-if="showToast" class="toast" aria-label="Announcement">
+          <a
+            href="https://www.ifftu.dev/blog/introducing-alexandria/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="plausible-event-name=Announcement toast-link"
+          >
+            <span class="toast-eyebrow">New</span>
+            <span class="toast-text">Read the announcement post</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M9 7h8v8" />
+            </svg>
+          </a>
+          <button type="button" class="toast-x" aria-label="Dismiss announcement" @click="dismissToast">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </aside>
+      </Transition>
+    </Teleport>
+
     <!-- Footer -->
     <footer class="site-foot">
       <div class="pad">
@@ -210,23 +220,6 @@ const year = new Date().getFullYear()
 <style scoped>
 .shell { display: flex; min-height: 100vh; flex-direction: column; background: rgb(var(--color-background)); }
 .shell-main { flex: 1; }
-
-/* announcement */
-.announce { position: relative; background: rgb(var(--color-primary)); color: rgb(var(--color-primary-foreground)); }
-.announce-link {
-  display: block; padding: 10px 40px; text-align: center; font-size: 14px; font-weight: 600;
-  text-decoration: none; color: inherit; transition: opacity 150ms ease;
-}
-.announce-link:hover { opacity: 0.9; }
-.announce-link span { margin-inline-start: 4px; }
-.announce-x {
-  position: absolute; inset-inline-end: 8px; top: 50%; transform: translateY(-50%);
-  display: flex; height: 28px; width: 28px; align-items: center; justify-content: center;
-  border: none; border-radius: 8px; background: transparent; color: inherit; opacity: 0.8; cursor: pointer;
-  transition: background 150ms ease, opacity 150ms ease;
-}
-.announce-x:hover { background: rgb(255 255 255 / 0.18); opacity: 1; }
-.announce-x svg { width: 15px; height: 15px; }
 
 /* header */
 .site-nav {
@@ -354,6 +347,70 @@ const year = new Date().getFullYear()
 .drawer-enter-active .drawer, .drawer-leave-active .drawer { transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1); }
 .drawer-enter-from, .drawer-leave-to { opacity: 0; }
 .drawer-enter-from .drawer, .drawer-leave-to .drawer { transform: translateX(100%); }
+
+/* announcement toast */
+.toast {
+  position: fixed;
+  z-index: 90;
+  inset-inline-end: 20px;
+  inset-block-end: 20px;
+  display: flex;
+  align-items: stretch;
+  max-width: min(22rem, calc(100vw - 32px));
+  border: 1px solid rgb(var(--color-border));
+  border-radius: 14px;
+  background: color-mix(in srgb, rgb(var(--color-card)) 92%, transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-lift);
+  overflow: hidden;
+}
+@media (max-width: 560px) {
+  .toast { inset-inline: 16px; inset-block-end: 16px; max-width: none; }
+}
+.toast-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 6px 13px 15px;
+  text-decoration: none;
+  color: rgb(var(--color-foreground));
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  flex: 1;
+  min-width: 0;
+}
+.toast-link:hover { background: rgb(var(--color-primary) / 0.06); }
+.toast-eyebrow {
+  flex: none;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgb(var(--color-primary) / 0.14);
+  color: rgb(var(--color-primary));
+}
+.toast-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.toast-link svg { width: 13px; height: 13px; flex: none; color: rgb(var(--color-muted-foreground)); }
+.toast-link:hover svg { color: rgb(var(--color-primary)); }
+.toast-x {
+  flex: none;
+  width: 38px;
+  border: none;
+  border-inline-start: 1px solid rgb(var(--color-border));
+  background: transparent;
+  color: rgb(var(--color-muted-foreground));
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+}
+.toast-x:hover { background: rgb(var(--color-muted)); color: rgb(var(--color-foreground)); }
+.toast-x svg { width: 14px; height: 14px; }
+
+.toast-enter-active { transition: opacity 320ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1); }
+.toast-leave-active { transition: opacity 200ms ease, transform 200ms ease; }
+.toast-enter-from, .toast-leave-to { opacity: 0; transform: translateY(12px) scale(0.98); }
 
 /* footer */
 .site-foot { background: rgb(var(--color-muted)); border-top: 1px solid rgb(var(--color-border)); padding: 54px 0 40px; }

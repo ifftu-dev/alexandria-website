@@ -192,17 +192,12 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
         <p class="eyebrow hero-eyebrow">Alpha · early access</p>
         <h1>Knowledge belongs to everyone.</h1>
         <p class="hero-lede">
-          Free, open-source learning for every device. Study offline, own the credentials you earn,
-          and keep your data on your own device — an account no company holds, and no tracking.
+          Free, open-source learning for every device. Study offline, own what you earn,
+          and keep your data on your own device.
         </p>
         <div class="hero-cta hero-cta-form" id="early-access">
           <EarlyAccessForm variant="hero" />
         </div>
-        <p class="hero-note">
-          <!-- Rendered from the start, label swapped once the release resolves:
-               introducing it later re-wrapped this line and shifted the page. -->
-          Alpha is invite-only while we harden it · MIT core · macOS, Windows, Linux, iOS, Android
-        </p>
       </div>
     </section>
 

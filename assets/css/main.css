@@ -284,7 +284,7 @@ svg { flex-shrink: 0; }
   position: relative;
   overflow: hidden;
   color: #fff;
-  padding: clamp(52px, 8vw, 80px) 0 0;
+  padding: clamp(60px, 9vw, 96px) 0 0;
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - clamp(30px, 4vw, 54px)), 0 100%);
 }
 .hero-inner { position: relative; z-index: 2; }
@@ -317,8 +317,8 @@ svg { flex-shrink: 0; }
 
 /* Hero B — centred copy, window straddling the fold */
 .hero-centered { text-align: center; padding-bottom: clamp(118px, 17vw, 190px); }
-.hero-centered h1 { max-width: 17ch; margin: 0 auto; }
-.hero-centered .hero-lede { max-width: 56ch; margin-left: auto; margin-right: auto; }
+.hero-centered h1 { max-width: 16ch; margin: 0 auto; }
+.hero-centered .hero-lede { max-width: 46ch; margin-left: auto; margin-right: auto; margin-top: 24px; }
 .hero-centered .hero-cta { justify-content: center; }
 
 .shelf { margin-top: calc(-1 * clamp(96px, 14vw, 168px)); position: relative; z-index: 5; }
@@ -1043,12 +1043,6 @@ svg { flex-shrink: 0; }
   --app-gov-text: 251 191 36;
 }
 
-/* Announcement banner: server-rendered, then hidden before first paint when
-   the visitor dismissed it previously (attribute set by the inline script in
-   nuxt.config.ts). Lives here because scoped styles cannot reliably target
-   <html>, and Vue's :global() is dropped by this CSS pipeline. */
-html[data-announce="off"] .announce { display: none; }
-
 /* ─── Small screens ────────────────────────────────────
    One place for the phone-sized spacing, so section rhythm stays even
    instead of drifting per component. */
@@ -1092,7 +1086,7 @@ html[data-announce="off"] .announce { display: none; }
 
 /* Early-access CTA blocks: the form replaces the button row, so it needs to
    sit centred rather than as a flex row of buttons. */
-.hero-cta-form { display: block; margin-top: 30px; }
+.hero-cta-form { display: block; margin-top: 36px; }
 .cta-row-form { display: block; margin-top: 28px; }
 .cta-alt { margin: 18px 0 0; font-size: 13.5px; color: rgb(255 255 255 / 0.72); }
 .cta-alt a { color: #fff; text-decoration: underline; text-underline-offset: 2px; }

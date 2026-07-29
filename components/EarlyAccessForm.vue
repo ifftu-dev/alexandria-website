@@ -81,7 +81,7 @@ async function submit() {
         <label>Leave this field empty<input v-model="botField" name="bot-field" tabindex="-1" autocomplete="off"></label>
       </p>
 
-      <label class="ea-label" for="ea-email">Email address</label>
+      <label class="ea-label sr-only" for="ea-email">Email address</label>
       <div class="ea-row">
         <input
           id="ea-email"
@@ -101,7 +101,7 @@ async function submit() {
         </button>
       </div>
       <p class="ea-note" :class="{ 'ea-err': state === 'error' }" role="status" aria-live="polite">
-        {{ state === 'error' ? errorMessage : 'We email you when a build is ready for your platform. Nothing else, ever.' }}
+        {{ state === 'error' ? errorMessage : 'One email when a build is ready for your platform. Nothing else.' }}
       </p>
     </form>
 
@@ -118,6 +118,16 @@ async function submit() {
 <style scoped>
 .ea { width: 100%; max-width: 30rem; }
 .ea-hero { margin-inline: auto; }
+
+/* Kept for screen readers — the placeholder carries it visually. */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 
 .ea-label {
   display: block;

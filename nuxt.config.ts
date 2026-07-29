@@ -58,11 +58,10 @@ export default defineNuxtConfig({
       ],
       script: [
         {
-          // Runs before first paint. Sets the theme class, and marks a
-          // previously dismissed announcement so the banner — which is in the
-          // server-rendered HTML — is hidden by CSS rather than removed after
-          // hydration. Removing it later shifted the whole page (CLS ~0.08).
-          innerHTML: `(function(){try{var d=document.documentElement;var t=localStorage.getItem('alexandria-theme')||'dark';if(t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme:dark)').matches))d.classList.add('dark');if(localStorage.getItem('alexandria-announcement-dismissed')==='1')d.setAttribute('data-announce','off')}catch(e){}})()`,
+          // Runs before first paint so the theme is right on the first frame.
+          // The announcement is a fixed-position toast now, so it no longer
+          // needs hiding here to avoid moving the page.
+          innerHTML: `(function(){try{var d=document.documentElement;var t=localStorage.getItem('alexandria-theme')||'dark';if(t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme:dark)').matches))d.classList.add('dark')}catch(e){}})()`,
           type: 'text/javascript',
         },
         {
