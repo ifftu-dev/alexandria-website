@@ -109,13 +109,18 @@ async function detectPlatform(): Promise<{ platform: DownloadInfo['platform'], a
       // Hints unavailable — fall through.
     }
 
-    // 2. The GPU string names the chip on Apple Silicon.
+    // 2. The GPU string names the chip on Apple Silicon. Prefer the plain
+    //    RENDERER parameter: WEBGL_debug_renderer_info is deprecated and warns
+    //    on every call in Firefox, which is noisy for a detail this minor.
     if (!decided) {
       try {
         const gl = document.createElement('canvas').getContext('webgl')
-        const dbg = gl?.getExtension('WEBGL_debug_renderer_info')
-        if (gl && dbg) {
-          const renderer = String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL))
+        if (gl) {
+          let renderer = String(gl.getParameter(gl.RENDERER) ?? '')
+          if (!/apple/i.test(renderer)) {
+            const dbg = gl.getExtension('WEBGL_debug_renderer_info')
+            if (dbg) renderer = String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) ?? '')
+          }
           if (renderer.includes('Apple M') || renderer.includes('Apple GPU')) { arch = 'arm64'; decided = true }
         }
       } catch {
