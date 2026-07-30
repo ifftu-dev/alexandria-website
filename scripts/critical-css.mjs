@@ -43,6 +43,14 @@ const CRITICAL = [
   /^\.btn/, /^\.ea\b/, /^\.ea-/, /^\.tag-link/,
   // utilities on the gradient layer and canvas
   /^\.absolute$/, /^\.relative$/, /^\.inset-0$/, /^\.h-full$/, /^\.w-full$/,
+  // First screen of the audience pages: the section wrapper, the "not built yet"
+  // notice under each hero, the trust row, section headings and the first tile
+  // grid. Found by diffing the classes used in the opening markup of every page
+  // against what the allowlist above already covered — without these, those
+  // pages flash unstyled until the async sheet lands.
+  /^\.section\b/, /^\.notice\b/, /^\.trust\b/, /^\.p-sub\b/, /^\.h-sec\b/,
+  /^\.prose\b/, /^\.lede\b/, /^\.grid2\b/, /^\.tiles?\b/, /^\.tile-/,
+  /^\.pa-/, /^\.mk\b/, /^\.on$/, /^\.n$/,
 ]
 
 /** At-rules that must survive regardless of what they contain. */
