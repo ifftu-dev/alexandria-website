@@ -6,6 +6,7 @@ export default defineNuxtConfig({
   // one — which it now does, because router options must live at
   // `<srcDir>/app/router.options.ts`.
   srcDir: '.',
+
   devtools: { enabled: true },
 
   modules: [

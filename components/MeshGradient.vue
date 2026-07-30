@@ -4,7 +4,8 @@
  * and CTA band. Drawn rather than layered as CSS blurs so it stays cheap:
  * one canvas, additive radial fills, paused whenever it scrolls out of view.
  *
- * Honours prefers-reduced-motion by painting a single static frame.
+ * Reduced-motion visitors and narrow viewports get no canvas at all — the
+ * static CSS layer behind it stands in, so there is nothing to paint.
  */
 const props = withDefaults(defineProps<{
   /** rgb triplets, one per blob, e.g. '79,70,229' */
@@ -32,16 +33,53 @@ const SEEDS = [
   { x: 0.50, y: 0.55, r: 0.52, sx: 0.62, sy: 0.58 },
 ]
 
+/**
+ * A static CSS rendering of the same gradient, server-rendered underneath the
+ * canvas.
+ *
+ * The canvas is transparent until `onMounted` paints it, and `.hero` sets
+ * `color: #fff` with no background of its own — so between first paint and
+ * hydration the hero was white text on the page background, i.e. invisible, and
+ * then appeared to "load" a second later. Whatever the measured metrics said,
+ * that is what a visitor actually saw.
+ *
+ * Built from `props.blobs`, `props.base` and the same SEEDS, so each page keeps
+ * its own palette without a second source of truth. Stops mirror the canvas
+ * (0.55/0.16/0 at 0/50/100%), pulled down slightly because CSS layers composite
+ * normally where the canvas uses `lighter`: the canvas arriving should read as
+ * the colour deepening, never as a jump.
+ */
+const staticBackground = computed(() => {
+  const layers = props.blobs.map((c, i) => {
+    const seed = SEEDS[i % SEEDS.length]!
+    const x = (seed.x * 100).toFixed(1)
+    const y = (seed.y * 100).toFixed(1)
+    return `radial-gradient(circle at ${x}% ${y}%, rgba(${c},0.5) 0%, rgba(${c},0.16) 50%, rgba(${c},0) 72%)`
+  })
+  return `${layers.join(', ')}, ${props.base}`
+})
+
 /** How far each orb wanders from its home position, as a share of the canvas. */
 const DRIFT = 0.19
 
 onMounted(() => {
   const cv = canvas.value
   if (!cv) return
+
+  // Narrow viewports and reduced-motion visitors keep the static CSS layer and
+  // never start a canvas at all. Animating costs a full-viewport fill plus five
+  // radial gradients every frame — the largest single item under "Rendering" on
+  // a throttled phone — to drift a backdrop nobody is studying, on the devices
+  // least able to afford it. The static layer is built from the same palette, so
+  // the only thing given up is the movement.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    || window.matchMedia('(max-width: 700px)').matches) {
+    return
+  }
+
   const ctx = cv.getContext('2d')
   if (!ctx) return
 
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   let w = 0
   let h = 0
   let elapsed = 0
@@ -115,17 +153,12 @@ onMounted(() => {
   const resizeObserver = new ResizeObserver(size)
   resizeObserver.observe(cv)
 
-  let observer: IntersectionObserver | null = null
-  if (reduce) {
-    // Single static frame — no loop, no drift.
-    paint()
-  }
-  else {
-    observer = new IntersectionObserver((entries) => {
-      entries[0]?.isIntersecting ? start() : stop()
-    }, { threshold: 0.02 })
-    observer.observe(cv)
-  }
+  // Reduced-motion visitors returned above, so the only path left is the
+  // animated one, gated on visibility.
+  const observer = new IntersectionObserver((entries) => {
+    entries[0]?.isIntersecting ? start() : stop()
+  }, { threshold: 0.02 })
+  observer.observe(cv)
 
   onUnmounted(() => {
     stop()
@@ -136,6 +169,12 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- Painted by the browser on first paint; the canvas takes over on mount. -->
+  <div
+    class="absolute inset-0"
+    :style="{ background: staticBackground }"
+    aria-hidden="true"
+  />
   <canvas
     ref="canvas"
     class="absolute inset-0 h-full w-full"
