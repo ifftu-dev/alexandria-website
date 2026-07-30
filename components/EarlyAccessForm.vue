@@ -79,11 +79,6 @@ function togglePlatform(id: PlatformId) {
     : [...chosen.value, id]
 }
 
-/** Their picks in the order the chips appear, for the success message. */
-const chosenLabels = computed(() =>
-  PLATFORMS.filter(p => chosen.value.includes(p.id)).map(p => p.label).join(', '),
-)
-
 async function submit() {
   if (state.value === 'sending') return
 
@@ -226,8 +221,8 @@ async function submit() {
         <p class="ea-done-t">You're on the waiting list.</p>
         <p class="ea-note">
           Check your inbox — we've sent a confirmation. This doesn't open the alpha yet: we'll
-          email you what to do next when there's a build ready for
-          {{ chosenLabels || 'your platform' }}.
+          email you what to do next when we have apps on these platforms ready for you to take on
+          a test drive. Don't worry! It's close :)
         </p>
       </div>
     </div>
