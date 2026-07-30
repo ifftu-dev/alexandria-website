@@ -8,6 +8,8 @@ useHead({
     { property: 'og:title', content: 'Alexandria — Free Learning, Credentials You Own' },
     { property: 'og:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours, and keep your data on your own device.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/' },
+    { property: 'og:image', content: 'https://alexandria.ifftu.dev/og/home.jpg' },
+    { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og/home.jpg' },
     { name: 'twitter:title', content: 'Alexandria — Free Learning, Credentials You Own' },
     { name: 'twitter:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours, and keep your data on your own device.' },
   ],

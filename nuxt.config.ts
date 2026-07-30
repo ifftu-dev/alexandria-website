@@ -58,13 +58,19 @@ export default defineNuxtConfig({
         { name: 'keywords', content: 'learning platform, free education, open source, decentralized, verifiable credentials, did, selective disclosure, peer-to-peer learning, offline-first, native app, Tauri, Cardano' },
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Alexandria' },
-        { property: 'og:image', content: 'https://alexandria.ifftu.dev/og-image.png' },
+        // Per-page cards override these; this is the fallback for any route
+        // that does not set its own. Regenerate with scripts/generate-og.py.
+        { property: 'og:image', content: 'https://alexandria.ifftu.dev/og/home.jpg' },
+        { property: 'og:image:type', content: 'image/jpeg' },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
+        { property: 'og:image:alt', content: 'Alexandria — knowledge belongs to everyone. A free, open-source learning app.' },
+        { property: 'og:locale', content: 'en' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:site', content: '@Alexandria_FTU' },
         { name: 'twitter:creator', content: '@Alexandria_FTU' },
-        { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og-image.png' },
+        { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og/home.jpg' },
+        { name: 'twitter:image:alt', content: 'Alexandria — knowledge belongs to everyone. A free, open-source learning app.' },
       ],
       script: [
         {
