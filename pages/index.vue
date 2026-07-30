@@ -194,8 +194,8 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
         <p class="eyebrow hero-eyebrow">One app · five platforms · nine languages</p>
         <h1>Knowledge belongs to everyone.</h1>
         <p class="hero-lede">
-          Free, open-source learning for every device. Study offline, own the credentials you earn,
-          and keep your data on your own device — an account no company holds, and no tracking.
+          Free, open-source learning for every device. Study offline, own what you earn,
+          and keep your data on your own device.
         </p>
         <div class="hero-cta">
           <!-- `file` downloads the build itself; `releases` still has somewhere
@@ -224,7 +224,7 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
           <!-- Rendered from the start, label swapped once the release resolves:
                introducing it later re-wrapped this line and shifted the page. -->
           <a :href="allPlatformsUrl" target="_blank" rel="noopener noreferrer" class="tag-link">{{ releaseTag || 'Latest release' }}</a>
-          · MIT core · macOS, Windows, Linux, iOS, Android
+          · MIT core
         </p>
       </div>
     </section>

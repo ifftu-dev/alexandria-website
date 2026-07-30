@@ -11,3 +11,8 @@ dist
 
 # Netlify CLI writes this when it boots the edge-function runtime
 deno.lock
+
+# Local secrets for `netlify dev` — never commit
+.env
+.env.*
+!.env.example
