@@ -16,8 +16,11 @@
  * way, and telling someone to retry would create a duplicate.
  *
  * Configure in Netlify → Site settings → Environment variables:
- *   PLUNK_API_KEY   secret key (sk_…)
- *   PLUNK_API_BASE  optional, defaults to Plunk's hosted API
+ *   PLUNK_API_KEY    secret key (sk_…)
+ *   PLUNK_API_BASE   optional, defaults to Plunk's hosted API
+ *   PLUNK_FROM       optional sender address; must be on a domain verified in
+ *                    Plunk. Defaults to admin@ifftu.dev
+ *   PLUNK_FROM_NAME  optional display name, defaults to Alexandria
  *
  * Netlify v2 function: routed by `config.path`, so no redirect rule.
  */
@@ -39,6 +42,11 @@ interface PlunkContact { _meta?: ContactMeta, data?: { _meta?: ContactMeta } }
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const DEFAULT_BASE = 'https://next-api.useplunk.com'
+// Plunk rejects /v1/send without a sender: 422 "Sender email is required
+// either in request or template". Must be an address on a domain verified in
+// the Plunk account, or the mail is accepted and then never delivered.
+const DEFAULT_FROM = 'admin@ifftu.dev'
+const DEFAULT_FROM_NAME = 'Alexandria'
 
 function json(body: Record<string, unknown>, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -149,6 +157,8 @@ export default async function handler(request: Request): Promise<Response> {
         headers: auth,
         body: JSON.stringify({
           to: email,
+          from: process.env.PLUNK_FROM ?? DEFAULT_FROM,
+          name: process.env.PLUNK_FROM_NAME ?? DEFAULT_FROM_NAME,
           subject: "You're on the Alexandria early-access list",
           body: confirmationBody(platform),
         }),
