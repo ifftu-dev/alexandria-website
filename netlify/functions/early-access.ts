@@ -1,13 +1,13 @@
 /**
- * Early-access signup → Plunk.
+ * Waiting-list signup → Plunk.
  *
  * The browser posts here rather than to Plunk directly, so the secret key stays
- * server-side and honeypot hits and malformed addresses are dropped before they
- * reach the account.
+ * server-side and honeypot hits, malformed addresses and anything outside the
+ * role/platform allowlists are dropped before they reach the account.
  *
  * Two calls, in order:
- *   1. POST /contacts   upsert the address with the platform they are waiting
- *                       on. Plunk answers with `_meta.isNew`.
+ *   1. POST /contacts   upsert the address with their role and platforms, in a
+ *                       shape Plunk can filter on. Answers with `_meta.isNew`.
  *   2. POST /v1/send    a confirmation, but only when the contact is new — a
  *                       second submission of the same address should not send
  *                       a second email.
@@ -33,7 +33,9 @@ declare const process: { env: Record<string, string | undefined> }
 
 interface Payload {
   email?: unknown
-  platform?: unknown
+  role?: unknown
+  platforms?: unknown
+  detected?: unknown
   botField?: unknown
 }
 
@@ -41,6 +43,24 @@ interface ContactMeta { isNew?: boolean, isUpdate?: boolean }
 interface PlunkContact { _meta?: ContactMeta, data?: { _meta?: ContactMeta } }
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+
+/**
+ * Mirrors the app's `AccountRole` ('learner' | 'instructor' | 'parent'). Labels
+ * match the role cards in the app's onboarding.
+ */
+const ROLES: Record<string, string> = {
+  learner: 'Learner',
+  instructor: 'Instructor',
+  parent: 'Parent / Guardian',
+}
+
+const PLATFORMS: Record<string, string> = {
+  macos: 'macOS',
+  windows: 'Windows',
+  linux: 'Linux',
+  ios: 'iOS',
+  android: 'Android',
+}
 const DEFAULT_BASE = 'https://next-api.useplunk.com'
 // Plunk rejects /v1/send without a sender: 422 "Sender email is required
 // either in request or template". Must be an address on a domain verified in
@@ -73,14 +93,24 @@ function json(body: Record<string, unknown>, status = 200) {
  * Plunk's own footer is added to marketing sends only, so the link has to be in
  * our copy.
  */
-function confirmationBody(platform: string) {
-  const waiting = platform && platform !== 'unknown' && platform !== 'your platform'
-    ? `for ${platform}`
-    : 'for your platform'
+function confirmationBody(role: string, platformLabels: string[]) {
+  const waiting = platformLabels.length > 0
+    ? platformLabels.join(', ')
+    : 'your platform'
 
-  return `<p>You're on the list.</p>
-<p>We'll write once there's an alpha build ready ${waiting}. That is the only reason we'll email you — no newsletter, no updates you didn't ask for.</p>
-<p>Alexandria is free and open source. If you'd rather read the code than wait, it's at <a href="https://github.com/ifftu-dev/alexandria">github.com/ifftu-dev/alexandria</a>.</p>
+  // One line per role, from what that role will actually meet first. Learner is
+  // the default, so its line has to read well for someone who never opened the
+  // controls at all.
+  const forRole: Record<string, string> = {
+    learner: 'Courses, tutorials and assessments — and the credentials you earn from them are signed under a key only you hold.',
+    instructor: 'You said you want to teach, so you will be among the people we ask about the authoring and review tools while they can still change.',
+    parent: 'You said you are here for a child\'s learning. Linking a guardian to a learner is part of what we will want tested early.',
+  }
+
+  return `<p>You're on the waiting list. That is what this confirms — not access yet.</p>
+<p>We are letting people in gradually, so the alpha does not fall over on its first day. When it is your turn we will email you what to do next, with a build for ${waiting}.</p>
+<p>${forRole[role] ?? forRole.learner}</p>
+<p>Nothing else will arrive in the meantime. Alexandria is free and open source, so if you would rather read the code than wait, it is at <a href="https://github.com/ifftu-dev/alexandria">github.com/ifftu-dev/alexandria</a>.</p>
 <p>Want off the list? <a href="{{unsubscribeUrl}}">Unsubscribe in one click</a> — no login, no reply needed. Or write to admin@ifftu.dev and we'll delete your address.</p>
 <p>— Alexandria</p>`
 }
@@ -109,7 +139,56 @@ export default async function handler(request: Request): Promise<Response> {
     return json({ ok: false, error: 'That address does not look right — check and try again.' }, 400)
   }
 
-  const platform = typeof payload.platform === 'string' ? payload.platform.slice(0, 60) : 'unknown'
+  // Both arrive from a browser, so both are checked against the allowlists above
+  // rather than stored as sent. An unknown role falls back to the default the
+  // form ships with; unknown platform ids are dropped silently.
+  const role = typeof payload.role === 'string' && payload.role in ROLES ? payload.role : 'learner'
+
+  const platforms = Array.isArray(payload.platforms)
+    ? [...new Set(payload.platforms.filter((p): p is string => typeof p === 'string' && p in PLATFORMS))]
+    : []
+
+  if (platforms.length === 0) {
+    return json({ ok: false, error: 'Pick at least one platform, so we know what to tell you about.' }, 400)
+  }
+
+  const detected = typeof payload.detected === 'string' && payload.detected in PLATFORMS
+    ? payload.detected
+    : null
+
+  // Keys in the order PLATFORMS declares them, so the string reads the way the
+  // form's chips do rather than in click order.
+  const platformLabels = Object.keys(PLATFORMS).filter(id => platforms.includes(id)).map(id => PLATFORMS[id]!)
+
+  /**
+   * The shape is dictated by how Plunk filters. `SegmentService` turns
+   * `data.<key>` into a JSON path, where `equals` is exact equality and
+   * `contains` is Prisma's `string_contains` — a substring match on a *string*.
+   * An array is therefore unfilterable: `equals` would need the whole array and
+   * `contains` needs a string. One boolean per platform filters exactly, with
+   * `data.platform_windows equals true`.
+   *
+   * `detected_platform` deliberately avoids the `platform_*` prefix: everything
+   * with that prefix is a boolean flag, and a key that looked like one but held
+   * a string would invite `data.platform_detected equals true`, which silently
+   * matches nothing.
+   *
+   * `null` is load-bearing. Plunk *merges* incoming data into what is already
+   * stored and deletes any key sent as null, so unselected platforms must be
+   * nulled explicitly — otherwise someone who picks macOS today and Linux
+   * tomorrow ends up filed under both forever. `platform` is nulled for the same
+   * reason: it is the retired key from when this stored one display string.
+   */
+  const data: Record<string, unknown> = {
+    role,
+    role_label: ROLES[role],
+    platforms: platformLabels.join(', '),
+    detected_platform: detected,
+    platform: null,
+  }
+  for (const id of Object.keys(PLATFORMS)) {
+    data[`platform_${id}`] = platforms.includes(id) ? true : null
+  }
 
   const apiKey = process.env.PLUNK_API_KEY
   const base = (process.env.PLUNK_API_BASE ?? DEFAULT_BASE).replace(/\/$/, '')
@@ -134,9 +213,7 @@ export default async function handler(request: Request): Promise<Response> {
       body: JSON.stringify({
         email,
         subscribed: true,
-        // Arbitrary keys, so "how many are waiting on Windows" stays
-        // answerable without pre-declaring a field.
-        data: { platform },
+        data,
       }),
     })
 
@@ -177,8 +254,8 @@ export default async function handler(request: Request): Promise<Response> {
           to: email,
           from: process.env.PLUNK_FROM ?? DEFAULT_FROM,
           name: process.env.PLUNK_FROM_NAME ?? DEFAULT_FROM_NAME,
-          subject: "You're on the Alexandria early-access list",
-          body: confirmationBody(platform),
+          subject: "You're on the Alexandria waiting list",
+          body: confirmationBody(role, platformLabels),
         }),
       })
       if (!res.ok) {

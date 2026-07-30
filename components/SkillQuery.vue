@@ -190,6 +190,9 @@ const matches = computed(() => {
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
 .chip {
   font-family: var(--font-mono); font-size: 11.5px; padding: 5px 11px; border-radius: 999px; cursor: pointer;
+  /* These are the primary controls of the recruiter demo and get tapped, not
+     clicked, on the widths where this page is read most. */
+  display: inline-flex; align-items: center; min-height: 40px;
   border: 1px solid rgb(var(--color-border)); background: transparent; color: rgb(var(--color-muted-foreground));
   transition: border-color 150ms, color 150ms, background 150ms;
 }
@@ -206,6 +209,7 @@ const matches = computed(() => {
 .seg { display: flex; border: 1px solid rgb(var(--color-border)); border-radius: 8px; overflow: hidden; }
 .seg button {
   flex: 1; font-family: inherit; font-size: 11.5px; font-weight: 600; padding: 7px 4px; border: none;
+  min-height: 40px;
   background: transparent; color: rgb(var(--color-muted-foreground)); cursor: pointer;
   transition: background 150ms, color 150ms;
 }

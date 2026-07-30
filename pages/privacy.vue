@@ -6,14 +6,14 @@ useHead({
   meta: [
     { name: 'description', content: 'How Alexandria handles data on alexandria.ifftu.dev. Short version: we don’t track you.' },
     { property: 'og:title', content: 'Privacy — Alexandria' },
-    { property: 'og:description', content: 'We don’t track you. The only thing we ever ask for is an email address, and only if you ask for early access.' },
+    { property: 'og:description', content: 'We don’t track you. The only thing we ever ask for is an email address, and only if you join the waiting list.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/privacy' },
     { property: 'og:image', content: 'https://alexandria.ifftu.dev/og/privacy.jpg' },
     { property: 'og:image:alt', content: 'Alexandria privacy — we don’t track you.' },
     { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og/privacy.jpg' },
     { name: 'twitter:image:alt', content: 'Alexandria privacy — we don’t track you.' },
     { name: 'twitter:title', content: 'Privacy — Alexandria' },
-    { name: 'twitter:description', content: 'We don’t track you. The only thing we ever ask for is an email address, and only if you ask for early access.' },
+    { name: 'twitter:description', content: 'We don’t track you. The only thing we ever ask for is an email address, and only if you join the waiting list.' },
   ],
   link: [
     { rel: 'canonical', href: 'https://alexandria.ifftu.dev/privacy' },
@@ -31,14 +31,16 @@ useHead({
     </p>
 
     <div class="prose">
-      <h2>The early-access list</h2>
+      <h2>The waiting list</h2>
       <p>
-        If you enter your email address to ask for early access, we store two things: the address
-        itself, and which platform your browser reported so we know which build you are waiting for.
-        That is the only personal data this site ever collects, and only because you typed it in.
+        If you join the waiting list, we store the address you typed, the role you chose
+        (learner, instructor, or parent / guardian), and the platforms you picked. Your browser's
+        guess at your platform is stored alongside them, so we can tell a deliberate choice from a
+        default. That is the only personal data this site ever collects, and only because you
+        entered it.
       </p>
       <ul>
-        <li>Used for one thing: telling you when an alpha build is ready for your platform.</li>
+        <li>Used for one thing: telling you when it is your turn, with a build for a platform you picked. Role and platforms decide which message you get, nothing more.</li>
         <li>Never sold, never shared, never used to advertise to you.</li>
         <li>Held by <a href="https://www.useplunk.com/legal/privacy" target="_blank" rel="noopener noreferrer">Plunk</a>, the open-source mailing service we use to send the invitations. Nobody else receives it.</li>
         <li>You get one confirmation email straight away, so you know the address registered. After that, nothing until there is a build.</li>
@@ -56,7 +58,7 @@ useHead({
       <h2>What we don't collect</h2>
       <ul>
         <li>No cookies.</li>
-        <li>No personal identifiers in analytics — the early-access list above is separate, and never joined to it.</li>
+        <li>No personal identifiers in analytics — the waiting list above is separate, and never joined to it.</li>
         <li>No cross-site tracking.</li>
         <li>No fingerprinting.</li>
         <li>No data sold or shared with third parties.</li>

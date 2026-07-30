@@ -6,7 +6,7 @@ Marketing website for [Alexandria](https://github.com/ifftu-dev/alexandria) — 
 
 **Live at [alexandria.ifftu.dev](https://alexandria.ifftu.dev)**
 
-> **This branch collects early-access signups instead of offering downloads.**
+> **This branch collects waiting-list signups instead of offering downloads.**
 > `feat/site-redesign` is the same site with platform-detected download buttons,
 > for when the alpha opens to everyone. The two differ only in what the CTA asks for.
 
@@ -24,7 +24,7 @@ Marketing website for [Alexandria](https://github.com/ifftu-dev/alexandria) — 
 - **/** — Landing page: mesh-gradient hero, an interactive replica of the real app shell, the full feature grid, how it works, platform support, and the credential-verification section
 - **/recruiter** — For recruiters: an interactive composite skill query, problem/answer split, features, hiring pipeline
 - **/institutions** — For institutions: interactive curriculum mapper, tabbed capabilities, competitor comparison, pricing, FAQ
-- **/privacy** — Privacy policy: the early-access list, analytics, third parties
+- **/privacy** — Privacy policy: the waiting list, analytics, third parties
 - **error.vue** — Root-level error page; fires a `404` goal on 404 responses
 
 Both audience pages carry a visible "not built yet" notice — those features are described, not shipped.
@@ -38,11 +38,12 @@ Both audience pages carry a visible "not built yet" notice — those features ar
 | `MeshGradient.vue` | Animated gradient behind every hero and CTA band. Time-based, so drift is identical at 60 Hz and 120 Hz; pauses off-screen; static under `prefers-reduced-motion` |
 | `SkillQuery.vue` | Recruiter hero: composite skill query with Bloom levels and confidence thresholds |
 | `CurriculumMap.vue` | Institutions hero: which skills a module develops, at which level |
-| `EarlyAccessForm.vue` | Email capture, posting to the function below |
+| `EarlyAccessForm.vue` | Waiting-list form — address, role, platforms. Role and platform controls stay collapsed until the email field is touched, so the fast path is unchanged |
+| `WaitlistModal.vue` | The form in a native `<dialog>`. Rendered once from the layout; the nav, drawer, footer, hero and CTA band all open this one instance through `useWaitlist` |
 | `ui/ThemeToggle.vue` | Light / dark / system |
 
 `usePlatform` answers "which OS and CPU is this?" from the user agent alone. `useDownload`
-shares it rather than duplicating the detection, and the early-access form uses it
+shares it rather than duplicating the detection, and the waiting-list form uses it
 directly — pulling in `useDownload` there meant fetching every GitHub release (25 KB of
 third-party JSON, plus DNS and TLS) to render one string.
 
@@ -61,16 +62,19 @@ mark is the nav's SVG, and the type is the same self-hosted Inter. JPEG at quali
 rather than PNG, because these are flat gradients that PNG stores badly — the previous
 hand-made card was a single 205 KB PNG, and WhatsApp declines previews much past 300 KB.
 
-## Early-access signups
+## Waiting-list signups
 
 The form posts JSON to `/api/early-access` — a Netlify function
 (`netlify/functions/early-access.ts`) that forwards to [Plunk](https://www.useplunk.com).
-The secret key stays server-side, and the function drops honeypot hits and malformed
-addresses before they reach the account.
+The secret key stays server-side, and the function drops honeypot hits, malformed
+addresses and anything outside the role/platform allowlists before it reaches the account.
+The route keeps its `/api/early-access` name, and the Plausible goal keeps `EarlyAccess`,
+because renaming either would break inbound links and funnel history for nothing a
+visitor would notice.
 
 Two calls per signup:
 
-1. `POST /contacts` — upsert the address with `data.platform`, the platform their browser reported. Plunk answers with `_meta.isNew` at the **top level** of the response: the dashboard endpoints return the resource directly, with no `success`/`data` wrapper. (The public endpoints like `/v1/send` do wrap, which is why the function accepts both shapes.)
+1. `POST /contacts` — upsert the address with the role and platforms below. Plunk answers with `_meta.isNew` at the **top level** of the response: the dashboard endpoints return the resource directly, with no `success`/`data` wrapper. (The public endpoints like `/v1/send` do wrap, which is why the function accepts both shapes.)
 2. `POST /v1/send` — a confirmation email, **only when the contact is new**, so re-submitting an address does not send a second one. The payload must carry `from`, or Plunk answers `422 VALIDATION_ERROR — "Sender email is required either in request or template"`.
 
 A failed confirmation does not fail the signup. They are on the list either way, and
@@ -92,8 +96,51 @@ Until the key is set the endpoint answers `503` with a message that blames the
 configuration rather than the visitor's address.
 
 Addresses are trimmed and lower-cased before sending, so casing variants do not become
-separate contacts. `data.platform` takes arbitrary keys — no field needs declaring in
-Plunk first.
+separate contacts.
+
+### What gets stored, and why it looks like this
+
+```json
+{
+  "role": "instructor",
+  "role_label": "Instructor",
+  "platform_macos": true,
+  "platform_windows": true,
+  "platform_linux": null,
+  "platform_ios": null,
+  "platform_android": null,
+  "platforms": "macOS, Windows",
+  "detected_platform": "macos",
+  "platform": null
+}
+```
+
+The shape is dictated by how Plunk filters, not by preference.
+`SegmentService.buildJsonFieldCondition` maps `data.<key>` to a JSON path where `equals`
+is exact equality and `contains` is Prisma's `string_contains` — a substring match on a
+*string*. **An array is therefore unfilterable**: `equals` would need the whole array and
+`contains` needs a string. One boolean per platform filters exactly:
+
+| Question | Filter |
+| :--- | :--- |
+| Instructors | `data.role` `equals` `instructor` |
+| Waiting on Windows | `data.platform_windows` `equals` `true` |
+
+Three things worth knowing before changing this:
+
+- **The `null`s are load-bearing.** Plunk *merges* incoming contact data and treats a
+  `null` as "delete this key", so unselected platforms are nulled explicitly. Without
+  that, someone who picks macOS today and Linux tomorrow stays filed under both forever.
+  The retired `platform` key is nulled for the same reason.
+- **`detected_platform` avoids the `platform_*` prefix on purpose.** Everything with that
+  prefix is a boolean; a string key that looked like one would invite
+  `data.platform_detected equals true`, which silently matches nothing.
+- **Roles mirror the app**, not the site: `AccountRole` is `learner | instructor | parent`
+  (`src/types/index.ts` in the app repo), and the labels come from its onboarding cards.
+  Learner is the default because every account is a learner.
+
+Eight DYNAMIC segments exist in Plunk for these — three by role, five by platform — so
+targeting a campaign is a selection rather than a filter someone has to rebuild.
 
 ### Mail authentication
 
@@ -155,6 +202,11 @@ Yahoo bulk-sender rules) but leaves someone who wants out reaching for "report s
 instead, and a complaint costs sending reputation far more than an unsubscribe costs the
 list.
 
+A draft campaign already exists for the launch wave, typed `MARKETING` and using
+`{{platforms}}` — not `{{platform}}`, which was retired when the form started asking for
+several. A template still interpolating the old key would send a blank or a literal
+placeholder.
+
 **Send the launch announcement as a Plunk campaign, not through `/v1/send`.** A campaign
 is classified `marketing`, so it gets the header pair, Plunk's hosted unsubscribe footer,
 and `Precedence: bulk` / `Auto-Submitted: auto-generated` /
@@ -173,13 +225,32 @@ and must stay that way: Netlify's secrets scanner fails the build outright — e
 `2` at the "building site" stage — if it finds the value of one of its own environment
 variables committed to the repo, which is the friendlier of the two consequences.
 
+## Responsive checks
+
+`scripts/responsive-audit.mjs` loads every page at eleven widths (320 to 1440) and reports
+horizontal overflow, section gutters that disagree with each other, and tap targets under
+40px:
+
+```sh
+npm run generate
+npx serve dist &        # or any static server
+node scripts/responsive-audit.mjs http://localhost:3000
+```
+
+Two things it deliberately does *not* flag, both learned by getting them wrong first: an
+element that a clipping ancestor makes invisible rather than broken (decorative glows sit
+outside their box on purpose), and inline links inside running text, which are not tap
+targets in the 40px sense and bury the standalone controls that are. It also uses flat
+`*.html` paths, because a local static server hands back a directory listing for
+`/recruiter` and would silently audit the wrong page.
+
 ## Analytics
 
 [Plausible](https://plausible.io) — cookieless, no personal identifiers. Loaded from `nuxt.config.ts` (`app.head.script[]`) with `data-domain="alexandria.ifftu.dev"`. Pageviews, referrers, outbound clicks and file downloads are automatic; custom goals use the `plausible-event-name=<Goal>` class convention:
 
 | Goal | Fired by |
 | :--- | :--- |
-| `EarlyAccess` | Signup button, plus the nav, drawer and footer links to it |
+| `EarlyAccess` | Every trigger that opens the waiting-list dialog: the hero and CTA-band buttons, and the nav, drawer and footer entries |
 | `Nav-Recruiter` / `Nav-Institutions` | Nav, drawer, footer and cross-page links |
 | `CTA-GitHub` | Every "view the source" / "request a demo" / GitHub link |
 | `Announcement` | The dismissible banner link |
@@ -210,7 +281,7 @@ card before the redesign.
 ```sh
 npm install
 npm run dev          # http://localhost:3000
-netlify dev          # also runs the early-access function
+netlify dev          # also runs the waiting-list function
 ```
 
 ## Commands

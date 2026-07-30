@@ -36,15 +36,21 @@ function say(message: string) {
   toastTimer = setTimeout(() => { toast.value = '' }, 1900)
 }
 
-const NAV = [
+/**
+ * Sidebar order, and the only place it is defined. Goals sits third rather than
+ * being appended after the loop, so the sequence here is the sequence rendered;
+ * its icon is concentric rings rather than a path, hence the `rings` flag.
+ */
+const NAV: { key: string, label: string, d?: string, rings?: true }[] = [
   { key: 'home', label: 'Home', d: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
   { key: 'opinions', label: 'Opinions', d: 'M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z' },
-  { key: 'community', label: 'Community', d: 'M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3' },
+  { key: 'goals', label: 'Goals', rings: true },
   { key: 'skills', label: 'Skills & Credentials', d: 'M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z' },
-] as const
+  { key: 'community', label: 'Community', d: 'M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3' },
+]
 
 const TABS = [
-  { key: 'home', label: 'Home', d: NAV[0].d },
+  { key: 'home', label: 'Home', d: NAV[0]!.d! },
   { key: 'tutoring', label: 'Tutoring', d: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z' },
   { key: 'classroom', label: 'Classrooms', d: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253' },
   { key: 'skills', label: 'Skills', d: 'M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 0 0 1.946-.806 3.42 3.42 0 0 1 4.438 0 3.42 3.42 0 0 0 1.946.806 3.42 3.42 0 0 1 3.138 3.138 3.42 3.42 0 0 0 .806 1.946 3.42 3.42 0 0 1 0 4.438 3.42 3.42 0 0 0-.806 1.946 3.42 3.42 0 0 1-3.138 3.138 3.42 3.42 0 0 0-1.946.806 3.42 3.42 0 0 1-4.438 0 3.42 3.42 0 0 0-1.946-.806 3.42 3.42 0 0 1-3.138-3.138 3.42 3.42 0 0 0-.806-1.946 3.42 3.42 0 0 1 0-4.438 3.42 3.42 0 0 0 .806-1.946 3.42 3.42 0 0 1 3.138-3.138z' },
@@ -208,14 +214,13 @@ onUnmounted(() => {
             :class="{ on: screen === item.key }"
             @click="go(item.key as Screen)"
           >
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" :d="item.d" /></svg>
-            <span class="sb-label">{{ item.label }}</span>
-          </button>
-          <button type="button" class="sb-item" :class="{ on: screen === 'goals' }" @click="go('goals')">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
-              <circle cx="12" cy="12" r="8.25" /><circle cx="12" cy="12" r="4.5" /><circle cx="12" cy="12" r="1" />
+              <template v-if="item.rings">
+                <circle cx="12" cy="12" r="8.25" /><circle cx="12" cy="12" r="4.5" /><circle cx="12" cy="12" r="1" />
+              </template>
+              <path v-else stroke-linecap="round" stroke-linejoin="round" :d="item.d" />
             </svg>
-            <span class="sb-label">Goals</span>
+            <span class="sb-label">{{ item.label }}</span>
           </button>
 
           <div class="sb-sep" />
@@ -226,10 +231,10 @@ onUnmounted(() => {
           </div>
           <div v-show="openSections.tutoring" class="sb-rows">
             <button type="button" class="sb-row" @click="go('tutoring')">
-              <span class="in">RK</span><span class="tt">Ravi K · 6G root pass</span><span class="sb-live" />
+              <span class="in">RK</span><span class="tt">Ravi K · System design</span><span class="sb-live" />
             </button>
             <button type="button" class="sb-row" @click="go('tutoring')">
-              <span class="in">AM</span><span class="tt">Aisha M · Fretboard</span>
+              <span class="in">AM</span><span class="tt">Aisha M · 6G root pass</span>
             </button>
           </div>
 
@@ -239,10 +244,10 @@ onUnmounted(() => {
           </div>
           <div v-show="openSections.classrooms" class="sb-rows">
             <button type="button" class="sb-row" @click="go('classroom')">
-              <span class="in">W</span><span class="tt">Welding · Batch 12</span><span class="mt">24</span>
+              <span class="in">SD</span><span class="tt">System Design · Cohort 4</span><span class="mt">24</span>
             </button>
             <button type="button" class="sb-row" @click="go('classroom')">
-              <span class="in">M</span><span class="tt">Music theory</span><span class="mt">9</span>
+              <span class="in">W</span><span class="tt">Welding · Batch 12</span><span class="mt">24</span>
             </button>
           </div>
         </nav>
@@ -272,10 +277,10 @@ onUnmounted(() => {
 
           <div class="sec-h"><b>Your goal</b><button type="button" @click="go('goals')">All goals</button></div>
           <div class="card goal">
-            <span class="ring" style="--p:68"><span>68%</span></span>
+            <span class="ring" style="--p:58"><span>58%</span></span>
             <span>
-              <span class="goal-t">Certified on 6G pipe welding</span>
-              <span class="goal-m">4 of 6 skills at Apply · 2 assessments left</span>
+              <span class="goal-t">Become an Engineering Manager</span>
+              <span class="goal-m">4 of 7 skills at Apply · 2 mentoring attestations to go</span>
             </span>
           </div>
 
@@ -377,49 +382,117 @@ onUnmounted(() => {
           <p class="greet">Goals</p>
           <p class="greet-sub">Tracked against the public skill map, not a streak counter</p>
           <div class="card goal">
-            <span class="ring" style="--p:68"><span>68%</span></span>
-            <span><span class="goal-t">Certified on 6G pipe welding</span><span class="goal-m">2 assessments left · est. 3 weeks at current pace</span></span>
+            <span class="ring" style="--p:58"><span>58%</span></span>
+            <span><span class="goal-t">Become an Engineering Manager</span><span class="goal-m">System design at Apply · 2 mentoring attestations short of Analyse</span></span>
           </div>
           <div class="card goal">
-            <span class="ring" style="--p:34"><span>34%</span></span>
-            <span><span class="goal-t">Teach a course this year</span><span class="goal-m">Instructor mode unlocks at Analyse in one skill</span></span>
+            <span class="ring" style="--p:41"><span>41%</span></span>
+            <span><span class="goal-t">$100,000 job</span><span class="goal-m">9 skills verifiable · recruiters can check them without asking us</span></span>
           </div>
           <div class="card goal">
-            <span class="ring" style="--p:12"><span>12%</span></span>
-            <span><span class="goal-t">Play through Blackbird cleanly</span><span class="goal-m">Assessed by the music plugin, on device</span></span>
+            <span class="ring" style="--p:23"><span>23%</span></span>
+            <span><span class="goal-t">UPSC 2027</span><span class="goal-m">Polity at Apply, Modern History at Remember · mock 12 of 40</span></span>
           </div>
         </section>
 
         <!-- TUTORING -->
         <section v-else-if="screen === 'tutoring'" class="scr">
           <p class="greet">Live tutoring</p>
-          <p class="greet-sub">Peer to peer — no call runs through a company</p>
-          <div class="card live">
-            <span class="live-av">RK</span>
-            <span>
-              <span class="goal-t">Ravi K · 6G root pass review</span>
-              <span class="goal-m">Live now · video, audio, screen-share · direct connection</span>
-            </span>
-            <span class="sb-live" />
+          <p class="greet-sub">Video, audio and screen-share go straight between the two devices</p>
+
+          <div class="card stage">
+            <div class="tiles">
+              <div class="tile">
+                <span class="tile-av">RK</span>
+                <span class="tile-name">Ravi K <i>mentor</i></span>
+                <span class="tile-share">sharing screen</span>
+              </div>
+              <div class="tile self">
+                <span class="tile-av">P</span>
+                <span class="tile-name">You</span>
+                <span class="tile-muted" aria-hidden="true">mic off</span>
+              </div>
+            </div>
+            <div class="ctl">
+              <button type="button" class="ctl-b on" @click="say('Mic stays on your device — the stream is peer to peer')">Mic</button>
+              <button type="button" class="ctl-b on" @click="say('Camera on · encrypted, direct connection')">Camera</button>
+              <button type="button" class="ctl-b" @click="say('Share a window or the whole screen')">Share</button>
+              <button type="button" class="ctl-b leave" @click="say('Leaves the session — nothing is recorded anywhere')">Leave</button>
+            </div>
+            <p class="hint stage-meta">
+              <span class="dot-live" aria-hidden="true" /> 24:11 · direct connection · encrypted · 38 ms
+            </p>
           </div>
-          <div class="sec-h"><b>Upcoming</b></div>
-          <div class="card hint">Aisha M · Fretboard theory · Thursday 18:00 local</div>
+
+          <div class="sec-h"><b>This session</b><button type="button" @click="go('skills')">Open skill</button></div>
+          <div class="card agenda">
+            <span class="ag-row"><b>Reviewing</b>systems.design.tradeoffs · at Apply, aiming for Analyse</span>
+            <span class="ag-row"><b>Evidence</b>Ravi can attest the skill afterwards — you keep the credential</span>
+            <span class="ag-row"><b>Notes</b>Stay yours, on this device</span>
+          </div>
+
+          <div class="sec-h"><b>Upcoming</b><button type="button" @click="say('Mentors are ranked per skill by whether their learners actually progressed')">Find a mentor</button></div>
+          <button type="button" class="card slot" @click="say('Thursday 18:00 · joins directly, no lobby')">
+            <span class="live-av sm">AM</span>
+            <span><span class="goal-t">Aisha M · 6G root pass review</span><span class="goal-m">Thursday 18:00 local · 45 min · screen-share from the booth camera</span></span>
+            <span class="slot-when">Thu</span>
+          </button>
+          <button type="button" class="card slot" @click="say('Sunday 09:30 · mock interview, one to one')">
+            <span class="live-av sm">DS</span>
+            <span><span class="goal-t">Dev S · Mock system design interview</span><span class="goal-m">Sunday 09:30 local · 60 min · counts toward the EM goal</span></span>
+            <span class="slot-when">Sun</span>
+          </button>
         </section>
 
         <!-- CLASSROOM -->
         <section v-else class="scr">
-          <p class="greet">Welding · Batch 12</p>
+          <p class="greet">System Design · Cohort 4</p>
           <p class="greet-sub">Invite-only · 24 members · you decide who's in</p>
+
           <div class="card chan">
-            <span class="chan-row on"><b>#</b>announcements</span>
-            <span class="chan-row"><b>#</b>questions</span>
+            <span class="chan-row on"><b>#</b>announcements<i class="chan-n">2</i></span>
+            <span class="chan-row"><b>#</b>questions<i class="chan-n">7</i></span>
             <span class="chan-row"><b>#</b>assignments</span>
             <span class="chan-row"><b>#</b>showcase</span>
           </div>
-          <div class="sec-h"><b>Latest in #announcements</b></div>
-          <div class="card hint">
-            <b>Instructor:</b> Root-pass assessments open Friday. Everything runs locally — no internet needed during the test.
+
+          <div class="sec-h"><b>#announcements</b><button type="button" @click="say('Members are invited by the instructor — nothing here is public')">Members</button></div>
+          <div class="card thread">
+            <div class="msg">
+              <span class="msg-av ins">MR</span>
+              <span class="msg-b">
+                <span class="msg-h">Meera R <i>instructor</i><em>09:12</em></span>
+                <span class="msg-t">Design review Friday. Bring a diagram — we assess the tradeoffs you argue for, not the diagram itself.</span>
+              </span>
+            </div>
+            <div class="msg">
+              <span class="msg-av">DS</span>
+              <span class="msg-b">
+                <span class="msg-h">Dev S<em>09:31</em></span>
+                <span class="msg-t">Is the assessment offline? I'm on patchy wifi this week.</span>
+              </span>
+            </div>
+            <div class="msg">
+              <span class="msg-av ins">MR</span>
+              <span class="msg-b">
+                <span class="msg-h">Meera R <i>instructor</i><em>09:34</em></span>
+                <span class="msg-t">Entirely. It runs on your machine and syncs the result when you reconnect.</span>
+              </span>
+            </div>
           </div>
+          <div class="composer">
+            <span class="composer-in">Message #announcements</span>
+            <button type="button" class="composer-b" @click="say('Messages pass between members\' devices, not through a server')">Send</button>
+          </div>
+
+          <div class="sec-h"><b>Open assignment</b><button type="button" @click="go('skills')">Rubric</button></div>
+          <button type="button" class="card asg" @click="say('Submissions are graded on device; the credential is signed under your own key')">
+            <span class="asg-l">
+              <span class="goal-t">Design a read-heavy feed at 10M users</span>
+              <span class="goal-m">Due Friday 23:00 local · assessed on device · earns systems.design.tradeoffs</span>
+            </span>
+            <span class="asg-r"><b>18</b><i>of 24 in</i></span>
+          </button>
         </section>
       </main>
     </div>
@@ -725,6 +798,101 @@ button { font-family: inherit; }
 .chan-row b { font-family: var(--font-mono); color: rgb(var(--app-muted-foreground)); }
 .chan-row.on { background: rgb(var(--app-primary) / 0.1); }
 .chan-row.on b { color: rgb(var(--app-primary)); }
+.chan-row { position: relative; }
+.chan-n {
+  margin-inline-start: auto; font-style: normal; font-size: 0.625rem; font-weight: 700;
+  min-width: 1.05rem; padding: 0 0.25rem; border-radius: 999px; text-align: center;
+  background: rgb(var(--app-primary)); color: rgb(var(--app-primary-foreground));
+}
+
+/* live session — two tiles, controls, connection line. Faces are initials on a
+   tinted block rather than stock photography: this is a replica of a UI, and a
+   fake person's face would be the one dishonest pixel in it. */
+.stage { padding: 0.6rem; }
+.tiles { display: grid; grid-template-columns: 1.6fr 1fr; gap: 0.4rem; }
+.tile {
+  position: relative; border-radius: 0.55rem; min-height: 6.5rem; padding: 0.5rem;
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 0.3rem; overflow: hidden;
+  background: linear-gradient(150deg, rgb(var(--app-primary) / 0.22), rgb(var(--app-seal-b) / 0.16));
+}
+.tile.self { background: linear-gradient(150deg, rgb(var(--app-muted-foreground) / 0.22), rgb(var(--app-primary) / 0.1)); }
+.tile-av {
+  position: absolute; inset-block-start: 0.5rem; inset-inline-start: 0.5rem;
+  width: 1.75rem; height: 1.75rem; border-radius: 0.45rem; display: grid; place-items: center;
+  font-size: 0.7rem; font-weight: 700; background: rgb(var(--app-card) / 0.85); color: rgb(var(--app-primary));
+}
+.tile-name { font-size: 0.7rem; font-weight: 600; display: flex; align-items: center; gap: 0.3rem; }
+.tile-name i { font-style: normal; font-size: 0.6rem; font-weight: 600; color: rgb(var(--app-muted-foreground)); }
+.tile-share, .tile-muted {
+  align-self: flex-start; font-size: 0.6rem; font-weight: 600; padding: 0.1rem 0.35rem;
+  border-radius: 999px; background: rgb(var(--app-card) / 0.8); color: rgb(var(--app-muted-foreground));
+}
+.tile-share { color: rgb(var(--app-primary)); }
+
+.ctl { display: flex; gap: 0.35rem; margin-top: 0.5rem; flex-wrap: wrap; }
+.ctl-b {
+  flex: 1 1 auto; font-size: 0.7rem; font-weight: 600; padding: 0.4rem 0.5rem; border-radius: 0.45rem;
+  border: 1px solid rgb(var(--app-border)); background: transparent;
+  color: rgb(var(--app-muted-foreground)); cursor: pointer;
+}
+.ctl-b:hover { background: rgb(var(--app-muted)); }
+.ctl-b.on { background: rgb(var(--app-primary) / 0.12); border-color: transparent; color: rgb(var(--app-primary)); }
+.ctl-b.leave { color: rgb(var(--app-no)); }
+.stage-meta { display: flex; align-items: center; gap: 0.4rem; }
+.dot-live { width: 0.4rem; height: 0.4rem; border-radius: 50%; background: rgb(var(--app-no)); flex: none; }
+
+.agenda { display: grid; gap: 0.4rem; }
+.ag-row { display: flex; gap: 0.5rem; font-size: 0.7rem; color: rgb(var(--app-muted-foreground)); }
+.ag-row b {
+  flex: none; min-width: 4.25rem; font-size: 0.625rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: rgb(var(--app-foreground)); padding-top: 0.05rem;
+}
+
+.slot { display: flex; align-items: center; gap: 0.7rem; cursor: pointer; }
+.slot:hover { border-color: rgb(var(--app-primary) / 0.4); }
+.live-av.sm { width: 2.25rem; height: 2.25rem; font-size: 0.75rem; border-radius: 0.5rem; }
+.slot-when {
+  margin-inline-start: auto; flex: none; font-size: 0.65rem; font-weight: 700;
+  color: rgb(var(--app-muted-foreground));
+}
+
+/* classroom thread */
+.thread { display: grid; gap: 0.7rem; }
+.msg { display: flex; gap: 0.55rem; }
+.msg-av {
+  flex: none; width: 1.75rem; height: 1.75rem; border-radius: 0.45rem; display: grid; place-items: center;
+  font-size: 0.65rem; font-weight: 700;
+  background: rgb(var(--app-muted-foreground) / 0.16); color: rgb(var(--app-muted-foreground));
+}
+.msg-av.ins { background: rgb(var(--app-primary) / 0.16); color: rgb(var(--app-primary)); }
+.msg-b { min-width: 0; }
+.msg-h { display: flex; align-items: baseline; gap: 0.35rem; font-size: 0.72rem; font-weight: 600; flex-wrap: wrap; }
+.msg-h i { font-style: normal; font-size: 0.575rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: rgb(var(--app-primary)); }
+.msg-h em { font-style: normal; font-size: 0.6rem; font-weight: 500; color: rgb(var(--app-muted-foreground)); }
+.msg-t { display: block; font-size: 0.72rem; line-height: 1.45; color: rgb(var(--app-muted-foreground)); margin-top: 0.1rem; }
+
+.composer { display: flex; gap: 0.4rem; align-items: center; }
+.composer-in {
+  flex: 1; min-width: 0; font-size: 0.72rem; padding: 0.5rem 0.7rem; border-radius: 999px;
+  border: 1px solid rgb(var(--app-border)); background: rgb(var(--app-card));
+  color: rgb(var(--app-muted-foreground)); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.composer-b {
+  flex: none; font-size: 0.7rem; font-weight: 700; padding: 0.5rem 0.85rem; border-radius: 999px;
+  border: none; background: rgb(var(--app-primary)); color: rgb(var(--app-primary-foreground)); cursor: pointer;
+}
+
+.asg { display: flex; align-items: center; gap: 0.7rem; cursor: pointer; }
+.asg:hover { border-color: rgb(var(--app-primary) / 0.4); }
+/* Grows, so the count column ends up against the right edge instead of floating
+   mid-card with dead space beside it. */
+.asg-l { flex: 1; min-width: 0; }
+.asg-r {
+  flex: none; text-align: center; padding-inline-start: 0.6rem;
+  border-inline-start: 1px solid rgb(var(--app-border));
+}
+.asg-r b { display: block; font-size: 1rem; font-weight: 700; line-height: 1; }
+.asg-r i { font-style: normal; font-size: 0.575rem; color: rgb(var(--app-muted-foreground)); }
 
 /* mobile tab bar */
 .mtab { display: none; border-top: 1px solid rgb(var(--app-border)); background: rgb(var(--app-card)); flex-shrink: 0; }
