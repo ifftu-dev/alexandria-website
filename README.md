@@ -65,7 +65,7 @@ Set these in **Netlify → Site settings → Environment variables**:
 | :--- | :--- |
 | `PLUNK_API_KEY` | Secret key (`sk_…`). The public `pk_…` key only works for `/v1/track` and is not enough here |
 | `PLUNK_API_BASE` | Optional; defaults to `https://next-api.useplunk.com` |
-| `PLUNK_FROM` | Optional sender address; defaults to `admin@ifftu.dev`. Must be on a domain verified in the Plunk account |
+| `PLUNK_FROM` | Optional sender address; defaults to `admin@alexandria.ifftu.dev`. Must be on a domain verified in the Plunk account |
 | `PLUNK_FROM_NAME` | Optional display name; defaults to `Alexandria` |
 
 Until the key is set the endpoint answers `503` with a message that blames the
@@ -75,8 +75,11 @@ Addresses are trimmed and lower-cased before sending, so casing variants do not 
 separate contacts. `data.platform` takes arbitrary keys — no field needs declaring in
 Plunk first.
 
-**Before this sends anything real:** verify the `PLUNK_FROM` domain in Plunk and set SPF,
-DKIM and DMARC on it. Deliverability is yours to own on a self-serve sender in a way it
+**Before this sends anything real:** verify `alexandria.ifftu.dev` as a sending domain in
+Plunk and set SPF, DKIM and DMARC on it. DNS lives in Netlify DNS (NS1). One trap: that
+subdomain already carries `MX → smtp.google.com`, so its SPF record has to authorise
+Google Workspace *and* Plunk — a single TXT record with both includes, since a domain
+with two SPF records has none that validate. Deliverability is yours to own on a self-serve sender in a way it
 would not be on a managed marketing platform, and the launch announcement is the one
 email that must not land in spam. A `200` from `/v1/send` means accepted, not delivered —
 an unverified sender is the likeliest reason a `200` still produces nothing in the inbox.

@@ -19,7 +19,7 @@
  *   PLUNK_API_KEY    secret key (sk_…)
  *   PLUNK_API_BASE   optional, defaults to Plunk's hosted API
  *   PLUNK_FROM       optional sender address; must be on a domain verified in
- *                    Plunk. Defaults to admin@ifftu.dev
+ *                    Plunk. Defaults to admin@alexandria.ifftu.dev
  *   PLUNK_FROM_NAME  optional display name, defaults to Alexandria
  *
  * Netlify v2 function: routed by `config.path`, so no redirect rule.
@@ -45,7 +45,7 @@ const DEFAULT_BASE = 'https://next-api.useplunk.com'
 // Plunk rejects /v1/send without a sender: 422 "Sender email is required
 // either in request or template". Must be an address on a domain verified in
 // the Plunk account, or the mail is accepted and then never delivered.
-const DEFAULT_FROM = 'admin@ifftu.dev'
+const DEFAULT_FROM = 'admin@alexandria.ifftu.dev'
 const DEFAULT_FROM_NAME = 'Alexandria'
 
 function json(body: Record<string, unknown>, status = 200) {
