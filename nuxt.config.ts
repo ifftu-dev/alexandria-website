@@ -18,6 +18,16 @@ export default defineNuxtConfig({
   // published output for deep linking.
   nitro: {
     output: { publicDir: 'dist' },
+
+    prerender: {
+      // Emit `recruiter.html`, not `recruiter/index.html`. With the default,
+      // Netlify serves the page at `/recruiter/` and 301s `/recruiter` to it —
+      // while every canonical, sitemap entry and internal link says
+      // `/recruiter`. Canonicals pointing at a redirect is the kind of thing
+      // that quietly wastes crawl budget. Flat files make the served URL and
+      // the declared one the same string.
+      autoSubfolderIndex: false,
+    },
   },
 
   site: {
@@ -48,13 +58,19 @@ export default defineNuxtConfig({
         { name: 'keywords', content: 'learning platform, free education, open source, decentralized, verifiable credentials, did, selective disclosure, peer-to-peer learning, offline-first, native app, Tauri, Cardano' },
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Alexandria' },
-        { property: 'og:image', content: 'https://alexandria.ifftu.dev/og-image.png' },
+        // Per-page cards override these; this is the fallback for any route
+        // that does not set its own. Regenerate with scripts/generate-og.py.
+        { property: 'og:image', content: 'https://alexandria.ifftu.dev/og/home.jpg' },
+        { property: 'og:image:type', content: 'image/jpeg' },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
+        { property: 'og:image:alt', content: 'Alexandria — knowledge belongs to everyone. A free, open-source learning app.' },
+        { property: 'og:locale', content: 'en' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:site', content: '@Alexandria_FTU' },
         { name: 'twitter:creator', content: '@Alexandria_FTU' },
-        { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og-image.png' },
+        { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og/home.jpg' },
+        { name: 'twitter:image:alt', content: 'Alexandria — knowledge belongs to everyone. A free, open-source learning app.' },
       ],
       script: [
         {
@@ -75,6 +91,13 @@ export default defineNuxtConfig({
         },
       ],
       link: [
+        // Plausible is the only third-party origin left on the page. The script
+        // is deferred, so the browser discovers it late; warming DNS, TCP and
+        // TLS up front is worth ~80ms on desktop and ~300ms on mobile.
+        // No `crossorigin` here on purpose: the Plausible tag is a classic
+        // script fetched in non-CORS mode, and a CORS-mode preconnect opens a
+        // separate connection that the script then cannot reuse.
+        { rel: 'preconnect', href: 'https://plausible.io' },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
         { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },

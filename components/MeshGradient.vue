@@ -53,7 +53,12 @@ onMounted(() => {
 
   function size() {
     const rect = cv!.getBoundingClientRect()
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+    // Deliberately below the device ratio. Every shape here is a wide, soft
+    // radial gradient, so there is no high-frequency detail for the extra
+    // pixels to resolve — they only cost fill rate, and this canvas spans the
+    // viewport. A phone at DPR 3 was painting ~5M pixels per frame for an
+    // image that looks identical at a quarter of that.
+    const dpr = Math.min(window.devicePixelRatio || 1, rect.width < 700 ? 1 : 1.5)
     w = rect.width
     h = rect.height
     cv!.width = Math.max(1, Math.round(w * dpr))

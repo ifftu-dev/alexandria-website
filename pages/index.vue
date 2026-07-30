@@ -4,10 +4,12 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'Alexandria — Free Learning, Credentials You Own',
   meta: [
-    { name: 'description', content: 'A free, open-source learning app for macOS, Windows, Linux, iOS, and Android. Study offline, earn credentials you truly own, and keep your learning and data on your own device — your account is created there and no company holds it.' },
+    { name: 'description', content: 'A free, open-source learning app for Mac, Windows, Linux, iOS and Android. Study offline, earn credentials you truly own, and keep your data on your own device.' },
     { property: 'og:title', content: 'Alexandria — Free Learning, Credentials You Own' },
     { property: 'og:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours, and keep your data on your own device.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/' },
+    { property: 'og:image', content: 'https://alexandria.ifftu.dev/og/home.jpg' },
+    { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og/home.jpg' },
     { name: 'twitter:title', content: 'Alexandria — Free Learning, Credentials You Own' },
     { name: 'twitter:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours, and keep your data on your own device.' },
   ],
@@ -149,11 +151,13 @@ const reputation = [
   { skill: 'inspection.ndt', low: 70, mid: 78, high: 85 },
 ]
 
-// Sized and re-encoded for the ~130x96 box they actually render in; the
-// source PNGs were 1800px wide and 464 KB between them.
+// Sized and re-encoded for the box they actually render in; the source PNGs
+// were 1800px wide and 464 KB between them. 512px wide covers the 256px
+// display box at 2x, and the intrinsic w/h below must keep matching the files
+// or the aspect-ratio reservation goes wrong and CLS returns.
 const pluginShots = [
-  { src: '/plugins/editor.webp', label: 'Code editor', w: 700, h: 784 },
-  { src: '/plugins/music.webp', label: 'Music trainer', w: 700, h: 436 },
+  { src: '/plugins/editor.webp', label: 'Code editor', w: 512, h: 574 },
+  { src: '/plugins/music.webp', label: 'Music trainer', w: 512, h: 319 },
 ]
 
 const steps = [

@@ -1,3 +1,5 @@
+import { detectPlatform, platformLabel as sharedPlatformLabel } from './usePlatform'
+
 interface DownloadInfo {
   platform: 'macos' | 'windows' | 'linux' | 'ios' | 'android' | 'unknown'
   arch: 'x64' | 'arm64' | 'unknown'
@@ -62,81 +64,6 @@ const ASSET_MATCHERS: Record<string, RegExp[]> = {
   'android-x64': [/\.apk$/i],
 }
 
-async function detectPlatform(): Promise<{ platform: DownloadInfo['platform'], arch: DownloadInfo['arch'] }> {
-  if (import.meta.server) return { platform: 'unknown', arch: 'unknown' }
-
-  const ua = navigator.userAgent.toLowerCase()
-  const platform = (navigator as any).userAgentData?.platform?.toLowerCase() ?? navigator.platform?.toLowerCase() ?? ''
-
-  // Detect OS — check mobile platforms first so they don't fall through
-  // to desktop matches (iOS UA contains "Mac OS", Android UA contains "Linux")
-  let os: DownloadInfo['platform'] = 'unknown'
-  if (ua.includes('iphone') || ua.includes('ipad') || ua.includes('ipod')) {
-    os = 'ios'
-  } else if (ua.includes('android')) {
-    os = 'android'
-  } else if (platform.includes('mac') || ua.includes('macintosh') || ua.includes('mac os')) {
-    os = 'macos'
-  } else if (platform.includes('win') || ua.includes('windows')) {
-    os = 'windows'
-  } else if (platform.includes('linux') || ua.includes('linux')) {
-    os = 'linux'
-  }
-
-  // Detect architecture
-  let arch: DownloadInfo['arch'] = 'x64'
-  if (ua.includes('arm64') || ua.includes('aarch64') || platform.includes('arm')) {
-    arch = 'arm64'
-  }
-  // macOS never admits to being Apple Silicon in the UA string — every Mac
-  // still reports "Intel Mac OS X". Three sources, most reliable first.
-  if (os === 'macos') {
-    let decided = false
-
-    // 1. Client hints. `architecture` is high-entropy, so it only arrives via
-    //    getHighEntropyValues() — reading the property directly is always
-    //    undefined, which is how this used to fail for every Mac.
-    try {
-      const uaData = (navigator as unknown as {
-        userAgentData?: { getHighEntropyValues?: (h: string[]) => Promise<{ architecture?: string }> }
-      }).userAgentData
-      if (uaData?.getHighEntropyValues) {
-        const hints = await uaData.getHighEntropyValues(['architecture'])
-        if (hints.architecture === 'arm') { arch = 'arm64'; decided = true }
-        else if (hints.architecture === 'x86') { arch = 'x64'; decided = true }
-      }
-    } catch {
-      // Hints unavailable — fall through.
-    }
-
-    // 2. The GPU string names the chip on Apple Silicon. Prefer the plain
-    //    RENDERER parameter: WEBGL_debug_renderer_info is deprecated and warns
-    //    on every call in Firefox, which is noisy for a detail this minor.
-    if (!decided) {
-      try {
-        const gl = document.createElement('canvas').getContext('webgl')
-        if (gl) {
-          let renderer = String(gl.getParameter(gl.RENDERER) ?? '')
-          if (!/apple/i.test(renderer)) {
-            const dbg = gl.getExtension('WEBGL_debug_renderer_info')
-            if (dbg) renderer = String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) ?? '')
-          }
-          if (renderer.includes('Apple M') || renderer.includes('Apple GPU')) { arch = 'arm64'; decided = true }
-        }
-      } catch {
-        // Ignore — WebGL may be blocked.
-      }
-    }
-
-    // 3. Still unknown (Safari exposes neither). Assume Apple Silicon: every
-    //    Mac sold since 2020 is one, and the button says "Apple Silicon" on
-    //    it, so an Intel holdout sees the requirement before clicking.
-    if (!decided) arch = 'arm64'
-  }
-
-  return { platform: os, arch }
-}
-
 interface AssetMatch {
   url: string
   release: GitHubRelease
@@ -172,23 +99,6 @@ async function fetchReleases(): Promise<GitHubRelease[]> {
   if (!res.ok) return []
   const releases: GitHubRelease[] = await res.json()
   return Array.isArray(releases) ? releases.filter(r => !r.draft) : []
-}
-
-function getPlatformLabel(platform: DownloadInfo['platform'], arch: DownloadInfo['arch']): string {
-  switch (platform) {
-    case 'macos':
-      return arch === 'arm64' ? 'macOS (Apple Silicon)' : 'macOS (Intel)'
-    case 'windows':
-      return 'Windows'
-    case 'linux':
-      return 'Linux'
-    case 'ios':
-      return 'iOS'
-    case 'android':
-      return 'Android'
-    default:
-      return 'your platform'
-  }
 }
 
 /** Label once we know whether a file exists for this visitor. */
@@ -245,7 +155,7 @@ export function useDownload() {
 
   onMounted(async () => {
     const { platform, arch } = await detectPlatform()
-    const platformLabel = getPlatformLabel(platform, arch)
+    const platformLabel = sharedPlatformLabel(platform, arch)
 
     // Resolve straight away. This is the page's primary action, so it must not
     // sit on a stale destination while the request waits for idle — the

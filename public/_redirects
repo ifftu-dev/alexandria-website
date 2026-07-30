@@ -1,0 +1,21 @@
+# Deep-link app paths. When the OS does not hand an https link to the installed
+# app, the browser lands here and this interstitial reconstructs the
+# alexandria:// URL. Status 200 keeps the original URL visible.
+#
+# These live here rather than in netlify.toml because Nitro's netlify-static
+# preset appends its own catch-all to this file:
+#
+#   /* /404.html 404
+#
+# Netlify evaluates _redirects before netlify.toml, so rules kept only in the
+# toml lost to that catch-all and every one of these paths returned a 404.
+# Order within this file is what makes them work — they must precede it.
+/guardian/*   /app-open.html   200
+/course/*     /app-open.html   200
+/classroom/*  /app-open.html   200
+/open         /app-open.html   200
+
+# The old card was a 200 KB PNG carrying the previous site's design and copy
+# ("decentralized", "blockchain-verified credentials"). Anything that already
+# scraped that URL should land on the current card rather than a 404.
+/og-image.png  /og/home.jpg  301
