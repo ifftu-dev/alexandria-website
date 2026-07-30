@@ -4,7 +4,7 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'Alexandria for Institutions — Your LMS, Their Credentials',
   meta: [
-    { name: 'description', content: 'The open-source LMS that gives credentials back to students. Students own credentials they can prove anywhere (W3C Verifiable Credentials), curricula map to real skills, and there is no vendor lock-in. FERPA/GDPR support in progress.' },
+    { name: 'description', content: 'The open-source LMS that gives credentials back to students: W3C Verifiable Credentials they own and keep, skill-mapped curricula, and no vendor lock-in.' },
     { property: 'og:title', content: 'Alexandria for Institutions — Your LMS, Their Credentials' },
     { property: 'og:description', content: 'An open-source LMS where students own credentials they can prove anywhere, every skill is mapped, and students keep their achievements forever.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/institutions' },
@@ -214,6 +214,27 @@ const faqs = [
     tech: 'Student-controlled DIDs · only a hash anchored on-chain · selective disclosure of credential fields.',
   },
 ]
+
+// Structured data for the FAQ below. Built from the same array the page
+// renders, so the two cannot drift apart — a mismatch between visible text and
+// FAQ markup is the thing Google penalises here. Kept as its own useHead call
+// because `faqs` is declared after the one at the top of this file.
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        'mainEntity': faqs.map(faq => ({
+          '@type': 'Question',
+          'name': faq.q,
+          'acceptedAnswer': { '@type': 'Answer', 'text': faq.tech ? `${faq.a} ${faq.tech}` : faq.a },
+        })),
+      }),
+    },
+  ],
+})
 </script>
 
 <template>

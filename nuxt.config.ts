@@ -88,7 +88,10 @@ export default defineNuxtConfig({
         // Plausible is the only third-party origin left on the page. The script
         // is deferred, so the browser discovers it late; warming DNS, TCP and
         // TLS up front is worth ~80ms on desktop and ~300ms on mobile.
-        { rel: 'preconnect', href: 'https://plausible.io', crossorigin: '' },
+        // No `crossorigin` here on purpose: the Plausible tag is a classic
+        // script fetched in non-CORS mode, and a CORS-mode preconnect opens a
+        // separate connection that the script then cannot reuse.
+        { rel: 'preconnect', href: 'https://plausible.io' },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
         { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },

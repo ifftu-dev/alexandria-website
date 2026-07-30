@@ -4,7 +4,7 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'Alexandria — Free Learning, Credentials You Own',
   meta: [
-    { name: 'description', content: 'A free, open-source learning app for macOS, Windows, Linux, iOS, and Android. Study offline, earn credentials you truly own, and keep your learning and data on your own device — your account is created there and no company holds it.' },
+    { name: 'description', content: 'A free, open-source learning app for Mac, Windows, Linux, iOS and Android. Study offline, earn credentials you truly own, and keep your data on your own device.' },
     { property: 'og:title', content: 'Alexandria — Free Learning, Credentials You Own' },
     { property: 'og:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours, and keep your data on your own device.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/' },
