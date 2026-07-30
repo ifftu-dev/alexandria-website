@@ -8,7 +8,8 @@
  * Two calls, in order:
  *   1. POST /contacts   upsert the address with their role and platforms, in a
  *                       shape Plunk can filter on. Answers with `_meta.isNew`.
- *   2. POST /v1/send    a confirmation, but only when the contact is new — a
+ *   2. POST /v1/send    the designed confirmation in netlify/email/confirmation.ts,
+ *                       but only when the contact is new — a
  *                       second submission of the same address should not send
  *                       a second email.
  *
@@ -24,6 +25,8 @@
  *
  * Netlify v2 function: routed by `config.path`, so no redirect rule.
  */
+import { confirmationHtml } from '../email/confirmation.js'
+
 export const config = { path: '/api/early-access' }
 
 // The Netlify runtime provides `process.env`. Declared here rather than pulling
@@ -73,46 +76,6 @@ function json(body: Record<string, unknown>, status = 200) {
     status,
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
   })
-}
-
-/**
- * `{{unsubscribeUrl}}` is resolved by Plunk, not by us. Its email processor runs
- * every message through `EmailService.format()` with `unsubscribeUrl`,
- * `subscribeUrl` and `manageUrl` in scope before it classifies the send, so the
- * placeholder works on this transactional path and not only in campaigns.
- *
- * It also earns the message a one-click unsubscribe. Plunk emits the RFC 8058
- * `List-Unsubscribe` / `List-Unsubscribe-Post` pair when the send is marketing
- * *or* when the rendered body contains a link to `/unsubscribe/<contact>` —
- * which this now does. A confirmation is transactional and exempt from Gmail's
- * bulk-sender rules, so this is not compliance; it is that "reply to this email"
- * put the burden on a human reading replies, and the alternative to an easy exit
- * is people reporting the mail as spam, which costs far more than an
- * unsubscribe.
- *
- * Plunk's own footer is added to marketing sends only, so the link has to be in
- * our copy.
- */
-function confirmationBody(role: string, platformLabels: string[]) {
-  const waiting = platformLabels.length > 0
-    ? platformLabels.join(', ')
-    : 'your platform'
-
-  // One line per role, from what that role will actually meet first. Learner is
-  // the default, so its line has to read well for someone who never opened the
-  // controls at all.
-  const forRole: Record<string, string> = {
-    learner: 'Courses, tutorials and assessments — and the credentials you earn from them are signed under a key only you hold.',
-    instructor: 'You said you want to teach, so you will be among the people we ask about the authoring and review tools while they can still change.',
-    parent: 'You said you are here for a child\'s learning. Linking a guardian to a learner is part of what we will want tested early.',
-  }
-
-  return `<p>You're on the waiting list. That is what this confirms — not access yet.</p>
-<p>We are letting people in gradually, so the alpha does not fall over on its first day. When it is your turn we will email you what to do next, with a build for ${waiting}.</p>
-<p>${forRole[role] ?? forRole.learner}</p>
-<p>Nothing else will arrive in the meantime. Alexandria is free and open source, so if you would rather read the code than wait, it is at <a href="https://github.com/ifftu-dev/alexandria">github.com/ifftu-dev/alexandria</a>.</p>
-<p>Want off the list? <a href="{{unsubscribeUrl}}">Unsubscribe in one click</a> — no login, no reply needed. Or write to admin@ifftu.dev and we'll delete your address.</p>
-<p>— Alexandria</p>`
 }
 
 export default async function handler(request: Request): Promise<Response> {
@@ -254,8 +217,8 @@ export default async function handler(request: Request): Promise<Response> {
           to: email,
           from: process.env.PLUNK_FROM ?? DEFAULT_FROM,
           name: process.env.PLUNK_FROM_NAME ?? DEFAULT_FROM_NAME,
-          subject: "You're on the Alexandria waiting list",
-          body: confirmationBody(role, platformLabels),
+          subject: "You're on the Alexandria waitlist for early access",
+          body: confirmationHtml(role),
         }),
       })
       if (!res.ok) {
