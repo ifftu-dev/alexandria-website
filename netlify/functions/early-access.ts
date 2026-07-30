@@ -34,6 +34,9 @@ interface Payload {
   botField?: unknown
 }
 
+interface ContactMeta { isNew?: boolean, isUpdate?: boolean }
+interface PlunkContact { _meta?: ContactMeta, data?: { _meta?: ContactMeta } }
+
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const DEFAULT_BASE = 'https://next-api.useplunk.com'
 
@@ -117,10 +120,22 @@ export default async function handler(request: Request): Promise<Response> {
       return json({ ok: false, error: 'Could not add you just now. Try again in a moment.' }, 502)
     }
 
-    const body = await res.json().catch(() => null) as { data?: { _meta?: { isNew?: boolean } } } | null
-    // Absent metadata is treated as new: a missing confirmation is worse than
-    // an occasional duplicate one.
-    isNew = body?.data?._meta?.isNew ?? true
+    // Plunk's dashboard endpoints "return the resource directly — no
+    // success/data wrapper", so `_meta` sits at the top level. The wrapped
+    // shape is checked too, because the public endpoints do wrap and the base
+    // URL is a versioned host that may change.
+    const body = await res.json().catch(() => null) as PlunkContact | null
+    const meta = body?._meta ?? body?.data?._meta
+
+    if (meta?.isNew === undefined && meta?.isUpdate === undefined) {
+      // Never seen in testing, but if the shape moves again this is the branch
+      // that would email somebody on every submission. Log it and stay quiet.
+      console.error('early-access: no _meta on contact response, skipping confirmation; keys were', Object.keys(body ?? {}).join(','))
+      isNew = false
+    }
+    else {
+      isNew = meta?.isNew ?? meta?.isUpdate === false
+    }
   }
   catch (error) {
     console.error('early-access: request to Plunk failed', error)
