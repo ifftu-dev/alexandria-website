@@ -234,7 +234,7 @@ onUnmounted(() => {
               <span class="in">RK</span><span class="tt">Ravi K · System design</span><span class="sb-live" />
             </button>
             <button type="button" class="sb-row" @click="go('tutoring')">
-              <span class="in">AM</span><span class="tt">Aisha M · UPSC answers</span>
+              <span class="in">AM</span><span class="tt">Aisha M · 6G root pass</span>
             </button>
           </div>
 
@@ -247,7 +247,7 @@ onUnmounted(() => {
               <span class="in">SD</span><span class="tt">System Design · Cohort 4</span><span class="mt">24</span>
             </button>
             <button type="button" class="sb-row" @click="go('classroom')">
-              <span class="in">UP</span><span class="tt">UPSC 2027 study group</span><span class="mt">31</span>
+              <span class="in">W</span><span class="tt">Welding · Batch 12</span><span class="mt">24</span>
             </button>
           </div>
         </nav>
@@ -434,7 +434,7 @@ onUnmounted(() => {
           <div class="sec-h"><b>Upcoming</b><button type="button" @click="say('Mentors are ranked per skill by whether their learners actually progressed')">Find a mentor</button></div>
           <button type="button" class="card slot" @click="say('Thursday 18:00 · joins directly, no lobby')">
             <span class="live-av sm">AM</span>
-            <span><span class="goal-t">Aisha M · UPSC answer writing</span><span class="goal-m">Thursday 18:00 local · 45 min · Analyse in polity</span></span>
+            <span><span class="goal-t">Aisha M · 6G root pass review</span><span class="goal-m">Thursday 18:00 local · 45 min · screen-share from the booth camera</span></span>
             <span class="slot-when">Thu</span>
           </button>
           <button type="button" class="card slot" @click="say('Sunday 09:30 · mock interview, one to one')">
