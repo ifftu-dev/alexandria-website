@@ -100,21 +100,39 @@ type Cell = true | false | string
 interface Row { feature: string, alexandria: Cell, canvas: Cell, blackboard: Cell, moodle: Cell }
 
 const comparison: Row[] = [
-  { feature: 'Open source', alexandria: true, canvas: false, blackboard: false, moodle: true },
-  { feature: 'Self-hosted option', alexandria: true, canvas: true, blackboard: false, moodle: true },
-  { feature: 'Verifiable credentials (W3C)', alexandria: true, canvas: false, blackboard: false, moodle: false },
-  { feature: 'Skill-mapped curriculum', alexandria: true, canvas: false, blackboard: false, moodle: false },
-  { feature: 'Credential-backed portfolios', alexandria: true, canvas: false, blackboard: false, moodle: false },
-  { feature: 'Student-owned data', alexandria: true, canvas: false, blackboard: false, moodle: false },
+  // Licensing and hosting. Canvas is genuinely open source (AGPLv3) and saying
+  // otherwise was the single worst error in the old version of this table.
+  { feature: 'Open source', alexandria: 'MIT (core)', canvas: 'AGPLv3', blackboard: false, moodle: 'GPL' },
+  { feature: 'Self-hosted option', alexandria: true, canvas: true, blackboard: 'Extended support only', moodle: true },
+  { feature: 'Runs with no server at all †', alexandria: true, canvas: false, blackboard: false, moodle: false },
   { feature: 'Content shared device to device', alexandria: true, canvas: false, blackboard: false, moodle: false },
+
+  // Credentials. All three incumbents issue Open Badges — two of them on 3.0,
+  // which is the W3C VC data model. The difference is who holds the signing
+  // key, not whether the format is verifiable.
+  //
+  // There is deliberately no "still verifies if the issuer disappears" row.
+  // It is true of us, but whether it is false of them turns on their choice of
+  // DID method and where they host status lists — someone else's
+  // implementation detail, which can change without telling us. The
+  // learner-signed row makes the same point and stays true on its own terms;
+  // the offline consequence is in the footnote.
+  { feature: 'Open Badges 3.0 / W3C VC data model', alexandria: true, canvas: true, blackboard: true, moodle: 'Planned (2.0 today)' },
+  { feature: 'Credential signed by the learner, not the platform', alexandria: true, canvas: false, blackboard: false, moodle: false },
+
+  // Skills. Competency tagging is table stakes; a shared graph is not.
+  { feature: 'Competency mapping inside the platform', alexandria: true, canvas: true, blackboard: true, moodle: true },
+  { feature: 'Shared skill graph across institutions', alexandria: true, canvas: false, blackboard: false, moodle: false },
+  { feature: 'Prerequisites and Bloom levels on every skill', alexandria: true, canvas: false, blackboard: false, moodle: false },
+
+  // Where we are behind. These rows are the reason the table is worth showing.
   { feature: 'LTI 1.3 support', alexandria: 'Planned', canvas: true, blackboard: true, moodle: true },
-  { feature: 'SCORM / xAPI', alexandria: 'Planned', canvas: true, blackboard: true, moodle: true },
-  { feature: 'FERPA/GDPR ready', alexandria: 'In progress', canvas: true, blackboard: true, moodle: 'Varies' },
+  { feature: 'SCORM / xAPI', alexandria: 'Planned', canvas: 'Limited', blackboard: true, moodle: true },
   { feature: 'SSO (SAML/OIDC)', alexandria: 'Planned', canvas: true, blackboard: true, moodle: true },
+  { feature: 'FERPA/GDPR ready', alexandria: 'In progress', canvas: true, blackboard: true, moodle: 'Varies' },
+  { feature: 'Predictive analytics', alexandria: 'Planned', canvas: 'Add-on', blackboard: 'Add-on', moodle: 'Core' },
   { feature: 'Mobile app', alexandria: true, canvas: true, blackboard: true, moodle: true },
-  { feature: 'Predictive analytics', alexandria: 'Planned', canvas: 'Add-on', blackboard: 'Add-on', moodle: false },
-  { feature: 'Vendor lock-in', alexandria: 'None', canvas: 'High', blackboard: 'High', moodle: 'Low' },
-  { feature: 'Per-student cost, per year', alexandria: 'Free / $24', canvas: '$5–30', blackboard: '$17–26', moodle: 'Free + hosting' },
+  { feature: 'Per-student cost, per year', alexandria: 'Free / $24', canvas: '$5-30*', blackboard: '$17-26*', moodle: 'Free + hosting' },
 ]
 
 const onlyDifferences = ref(false)
@@ -337,7 +355,7 @@ useHead({
     <section class="section pad">
       <p class="eyebrow">Honest comparison</p>
       <h2 class="h-sec">How Alexandria compares.</h2>
-      <p class="p-sub">An utterly biased look at how we stack up against the incumbents — including the rows where we are behind.</p>
+      <p class="p-sub">Checked against vendor documentation in July 2026 — including the rows where we are behind.</p>
 
       <div class="tablewrap">
         <div class="tablescroll">
@@ -379,10 +397,21 @@ useHead({
           <p>{{ visibleRows.length }} of {{ comparison.length }} rows</p>
         </div>
         <p class="tablenote">
-          Canvas and Blackboard are quote-only; the ranges are published list and framework pricing as of July 2026, and
-          large institutions negotiate below them. Alexandria's $24 is the Academic tier at $2 per student per month —
-          under Blackboard's framework rate, inside Canvas's range, and above what the largest institutions negotiate on
-          Canvas. The Community tier stays free at any size.
+          * Neither vendor publishes list pricing on its own site; both quote per institution, and
+          large buyers negotiate below any published figure. The Blackboard range converts a
+          published UK G-Cloud framework rate for Learn SaaS (£13-£20 per user); the Canvas range is
+          a third-party estimate. Alexandria's $24 is the Academic tier at $2 per student per month
+          — inside Canvas's range, under Blackboard's framework rate, and above what the largest
+          institutions negotiate on Canvas. The Community tier stays free at any size. Every other
+          row here comes from vendor documentation, checked July 2026 — including the rows where an
+          incumbent is ahead of us.
+        </p>
+        <p class="tablenote">
+          † Relay servers do exist, for finding other people. Anyone can run one, they hold no
+          authority over what passes through them, and no course or credential depends on ours
+          staying up. Because a learner signs their own credentials under a key only they control,
+          verifying one needs nothing but the file itself — no lookup with us, no network, and it
+          keeps working if this project stops existing.
         </p>
       </div>
     </section>
