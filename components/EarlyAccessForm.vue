@@ -161,6 +161,11 @@ async function submit() {
   border-color: rgb(255 255 255 / 0.22);
   backdrop-filter: blur(6px);
 }
+/* Same trade as .btn-ghost: no backdrop blur on phones, slightly more opaque
+   fill in its place. */
+@media (max-width: 700px) {
+  .ea-hero .ea-input { backdrop-filter: none; background: rgb(255 255 255 / 0.24); }
+}
 .ea-hero .ea-input::placeholder { color: rgb(255 255 255 / 0.6); }
 .ea-hero .ea-input:focus { border-color: rgb(255 255 255 / 0.6); outline: none; background: rgb(255 255 255 / 0.24); }
 .ea-band .ea-input {

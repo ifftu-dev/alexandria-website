@@ -247,6 +247,12 @@ svg { flex-shrink: 0; }
   backdrop-filter: blur(6px);
   transition: background 150ms ease;
 }
+/* Phones drop the blur and take a slightly more opaque fill instead. Over a
+   gradient the difference is not visible; the compositing layer and the backdrop
+   blur are, on the devices with the least headroom for both. */
+@media (max-width: 700px) {
+  .btn-ghost { backdrop-filter: none; background: rgb(255 255 255 / 0.26); }
+}
 .btn-ghost:hover { background: rgb(255 255 255 / 0.3); }
 
 .btn-out {
@@ -443,6 +449,13 @@ svg { flex-shrink: 0; }
   z-index: -1;
 }
 .tile-accent:hover { border-color: rgb(var(--tint) / 0.45); }
+
+/* A 44px blur per tile that only ever appears on :hover — ten of them on the
+   landing page. A device without hover can never show it, so it should not be
+   paying to lay it out or rasterise it. */
+@media (hover: none) {
+  .tile-glow { display: none; }
+}
 .tile-accent:hover .tile-glow { opacity: 1; }
 .tile-accent .tile-ic {
   background: linear-gradient(135deg, rgb(var(--tint)), rgb(var(--tint) / 0.55));
