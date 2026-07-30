@@ -50,11 +50,14 @@ addresses before they reach the account.
 
 Two calls per signup:
 
-1. `POST /contacts` — upsert the address with `data.platform`, the platform their browser reported. Plunk answers with `_meta.isNew`.
-2. `POST /v1/send` — a confirmation email, **only when the contact is new**, so re-submitting an address does not send a second one.
+1. `POST /contacts` — upsert the address with `data.platform`, the platform their browser reported. Plunk answers with `_meta.isNew` at the **top level** of the response: the dashboard endpoints return the resource directly, with no `success`/`data` wrapper. (The public endpoints like `/v1/send` do wrap, which is why the function accepts both shapes.)
+2. `POST /v1/send` — a confirmation email, **only when the contact is new**, so re-submitting an address does not send a second one. The payload must carry `from`, or Plunk answers `422 VALIDATION_ERROR — "Sender email is required either in request or template"`.
 
 A failed confirmation does not fail the signup. They are on the list either way, and
-telling someone to retry would enter them twice.
+telling someone to retry would enter them twice. The trade-off is that a broken send
+path is invisible from the browser — the visitor is told to check an inbox that never
+receives anything — so send failures are logged and worth watching in the function log
+after any change here.
 
 Set these in **Netlify → Site settings → Environment variables**:
 
@@ -62,6 +65,8 @@ Set these in **Netlify → Site settings → Environment variables**:
 | :--- | :--- |
 | `PLUNK_API_KEY` | Secret key (`sk_…`). The public `pk_…` key only works for `/v1/track` and is not enough here |
 | `PLUNK_API_BASE` | Optional; defaults to `https://next-api.useplunk.com` |
+| `PLUNK_FROM` | Optional sender address; defaults to `admin@ifftu.dev`. Must be on a domain verified in the Plunk account |
+| `PLUNK_FROM_NAME` | Optional display name; defaults to `Alexandria` |
 
 Until the key is set the endpoint answers `503` with a message that blames the
 configuration rather than the visitor's address.
@@ -70,15 +75,21 @@ Addresses are trimmed and lower-cased before sending, so casing variants do not 
 separate contacts. `data.platform` takes arbitrary keys — no field needs declaring in
 Plunk first.
 
-**Before this sends anything real:** verify your sending domain in Plunk and set SPF,
+**Before this sends anything real:** verify the `PLUNK_FROM` domain in Plunk and set SPF,
 DKIM and DMARC on it. Deliverability is yours to own on a self-serve sender in a way it
 would not be on a managed marketing platform, and the launch announcement is the one
-email that must not land in spam. The confirmation copy lives in `confirmationBody()`
-in the function.
+email that must not land in spam. A `200` from `/v1/send` means accepted, not delivered —
+an unverified sender is the likeliest reason a `200` still produces nothing in the inbox.
+The confirmation copy lives in `confirmationBody()` in the function.
 
 **The function does not run under `npm run dev`.** Use `netlify dev` to exercise the
 whole path locally, or the form will report that it could not reach the list. Note that
 `netlify dev` proxies Vite and breaks its HMR websocket, so expect console noise there.
+
+Local runs read `PLUNK_API_KEY` from a `.env` at the repo root. That file is gitignored
+and must stay that way: Netlify's secrets scanner fails the build outright — exit code
+`2` at the "building site" stage — if it finds the value of one of its own environment
+variables committed to the repo, which is the friendlier of the two consequences.
 
 ## Analytics
 
