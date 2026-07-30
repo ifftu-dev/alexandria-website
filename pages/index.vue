@@ -149,11 +149,13 @@ const reputation = [
   { skill: 'inspection.ndt', low: 70, mid: 78, high: 85 },
 ]
 
-// Sized and re-encoded for the ~130x96 box they actually render in; the
-// source PNGs were 1800px wide and 464 KB between them.
+// Sized and re-encoded for the box they actually render in; the source PNGs
+// were 1800px wide and 464 KB between them. 512px wide covers the 256px
+// display box at 2x, and the intrinsic w/h below must keep matching the files
+// or the aspect-ratio reservation goes wrong and CLS returns.
 const pluginShots = [
-  { src: '/plugins/editor.webp', label: 'Code editor', w: 700, h: 784 },
-  { src: '/plugins/music.webp', label: 'Music trainer', w: 700, h: 436 },
+  { src: '/plugins/editor.webp', label: 'Code editor', w: 512, h: 574 },
+  { src: '/plugins/music.webp', label: 'Music trainer', w: 512, h: 319 },
 ]
 
 const steps = [

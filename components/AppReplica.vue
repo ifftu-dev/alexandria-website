@@ -257,7 +257,7 @@ onUnmounted(() => {
       <main class="main">
         <!-- HOME -->
         <section v-if="screen === 'home'" class="scr">
-          <h3 class="greet">Good evening, Priya</h3>
+          <p class="greet">Good evening, Priya</p>
           <p class="greet-sub">3 peers nearby are sharing courses you follow</p>
 
           <button type="button" class="card resume" @click="say('Opens the lesson player — full-bleed, works offline')">
@@ -308,7 +308,7 @@ onUnmounted(() => {
 
         <!-- OPINIONS -->
         <section v-else-if="screen === 'opinions'" class="scr">
-          <h3 class="greet">Opinions</h3>
+          <p class="greet">Opinions</p>
           <p class="greet-sub">Credentialed takes from practitioners who hold the skill</p>
           <div class="op">
             <div class="op-h"><span class="av">RK</span><span class="nm">Ravi Kulkarni</span><span class="cr">Welding · Create</span></div>
@@ -327,7 +327,7 @@ onUnmounted(() => {
 
         <!-- COMMUNITY -->
         <section v-else-if="screen === 'community'" class="scr">
-          <h3 class="greet">Community</h3>
+          <p class="greet">Community</p>
           <p class="greet-sub">Welding · governance</p>
           <div class="card">
             <div class="gov-t">Add 6G position to the pipe-welding prerequisite chain</div>
@@ -352,7 +352,7 @@ onUnmounted(() => {
 
         <!-- SKILLS -->
         <section v-else-if="screen === 'skills'" class="scr">
-          <h3 class="greet">Skills &amp; Credentials</h3>
+          <p class="greet">Skills &amp; Credentials</p>
           <p class="greet-sub">Signed under your identity — verify any of them offline</p>
           <div v-for="c in CREDENTIALS" :key="c.id" class="cred">
             <span class="seal">{{ c.glyph }}</span>
@@ -374,7 +374,7 @@ onUnmounted(() => {
 
         <!-- GOALS -->
         <section v-else-if="screen === 'goals'" class="scr">
-          <h3 class="greet">Goals</h3>
+          <p class="greet">Goals</p>
           <p class="greet-sub">Tracked against the public skill map, not a streak counter</p>
           <div class="card goal">
             <span class="ring" style="--p:68"><span>68%</span></span>
@@ -392,7 +392,7 @@ onUnmounted(() => {
 
         <!-- TUTORING -->
         <section v-else-if="screen === 'tutoring'" class="scr">
-          <h3 class="greet">Live tutoring</h3>
+          <p class="greet">Live tutoring</p>
           <p class="greet-sub">Peer to peer — no call runs through a company</p>
           <div class="card live">
             <span class="live-av">RK</span>
@@ -408,7 +408,7 @@ onUnmounted(() => {
 
         <!-- CLASSROOM -->
         <section v-else class="scr">
-          <h3 class="greet">Welding · Batch 12</h3>
+          <p class="greet">Welding · Batch 12</p>
           <p class="greet-sub">Invite-only · 24 members · you decide who's in</p>
           <div class="card chan">
             <span class="chan-row on"><b>#</b>announcements</span>

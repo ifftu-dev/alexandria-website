@@ -22,9 +22,11 @@ const botField = ref('')
 const state = ref<'idle' | 'sending' | 'done' | 'error'>('idle')
 const errorMessage = ref('')
 
-// Reuse the platform detection the download button used, so we learn which
-// builds people are actually waiting for without asking them.
-const { download } = useDownload()
+// Which build they're waiting for, so that's learnable without asking. This
+// deliberately uses usePlatform rather than useDownload: the label comes from
+// the user agent, and useDownload would fetch every GitHub release to answer a
+// question that needs no network at all.
+const { label: platformLabel } = usePlatform()
 
 async function submit() {
   if (state.value === 'sending') return
@@ -45,7 +47,7 @@ async function submit() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: value,
-        platform: download.value.platformLabel,
+        platform: platformLabel.value,
         botField: botField.value,
       }),
     })
@@ -108,7 +110,7 @@ async function submit() {
       <span class="ea-tick" aria-hidden="true">✓</span>
       <div>
         <p class="ea-done-t">You're on the list.</p>
-        <p class="ea-note">Check your inbox for a confirmation. We'll write again when the alpha opens up for {{ download.platformLabel }}.</p>
+        <p class="ea-note">Check your inbox for a confirmation. We'll write again when the alpha opens up for {{ platformLabel }}.</p>
       </div>
     </div>
   </div>

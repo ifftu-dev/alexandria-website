@@ -5,6 +5,11 @@ useHead({
   title: 'Privacy — Alexandria',
   meta: [
     { name: 'description', content: 'How Alexandria handles data on alexandria.ifftu.dev. Short version: we don’t track you.' },
+    { property: 'og:title', content: 'Privacy — Alexandria' },
+    { property: 'og:description', content: 'We don’t track you. The only thing we ever ask for is an email address, and only if you ask for early access.' },
+    { property: 'og:url', content: 'https://alexandria.ifftu.dev/privacy' },
+    { name: 'twitter:title', content: 'Privacy — Alexandria' },
+    { name: 'twitter:description', content: 'We don’t track you. The only thing we ever ask for is an email address, and only if you ask for early access.' },
   ],
   link: [
     { rel: 'canonical', href: 'https://alexandria.ifftu.dev/privacy' },

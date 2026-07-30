@@ -18,6 +18,16 @@ export default defineNuxtConfig({
   // published output for deep linking.
   nitro: {
     output: { publicDir: 'dist' },
+
+    prerender: {
+      // Emit `recruiter.html`, not `recruiter/index.html`. With the default,
+      // Netlify serves the page at `/recruiter/` and 301s `/recruiter` to it —
+      // while every canonical, sitemap entry and internal link says
+      // `/recruiter`. Canonicals pointing at a redirect is the kind of thing
+      // that quietly wastes crawl budget. Flat files make the served URL and
+      // the declared one the same string.
+      autoSubfolderIndex: false,
+    },
   },
 
   site: {
@@ -75,6 +85,10 @@ export default defineNuxtConfig({
         },
       ],
       link: [
+        // Plausible is the only third-party origin left on the page. The script
+        // is deferred, so the browser discovers it late; warming DNS, TCP and
+        // TLS up front is worth ~80ms on desktop and ~300ms on mobile.
+        { rel: 'preconnect', href: 'https://plausible.io', crossorigin: '' },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
         { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
