@@ -32,7 +32,6 @@ const ENDPOINT = '/api/early-access'
  * can switch into learner mode in the app, so the choice binds nobody.
  */
 const ROLES = [
-  { id: 'learner', label: 'Learner', hint: 'Take courses and earn credentials' },
   { id: 'instructor', label: 'Instructor', hint: 'Author courses, review work, mentor' },
   { id: 'parent', label: 'Parent / Guardian', hint: 'Follow a child’s learning' },
 ] as const
@@ -46,7 +45,7 @@ const PLATFORMS = [
   { id: 'android', label: 'Android' },
 ] as const
 
-type RoleId = typeof ROLES[number]['id']
+type RoleId = 'learner' | typeof ROLES[number]['id']
 type PlatformId = typeof PLATFORMS[number]['id']
 
 const email = ref('')
@@ -71,6 +70,19 @@ watch(detected, (value) => {
   if (touched.value || chosen.value.length > 0) return
   if (value !== 'unknown') chosen.value = [value as PlatformId]
 }, { immediate: true })
+
+/**
+ * Learner is not one of the options — it is the floor. Choosing Instructor or
+ * Parent adds to it, and choosing it again drops back to learner alone, which a
+ * radio group cannot express (a radio cannot be unchecked by clicking it). Hence
+ * buttons with `aria-pressed` rather than inputs.
+ *
+ * The stored value stays a single `role`, mirroring the app's `AccountRole`, so
+ * the Plunk segments keep working unchanged.
+ */
+function toggleRole(id: typeof ROLES[number]['id']) {
+  role.value = role.value === id ? 'learner' : id
+}
 
 function togglePlatform(id: PlatformId) {
   touched.value = true
@@ -168,19 +180,25 @@ async function submit() {
       <div v-if="expanded" id="ea-more" class="ea-more">
         <fieldset class="ea-set">
           <legend class="ea-legend">I'm joining as</legend>
-          <div class="ea-chips">
-            <label
+          <div class="ea-chips" role="group" aria-label="Role">
+            <span class="ea-chip on locked">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              Learner
+            </span>
+            <button
               v-for="r in ROLES"
               :key="r.id"
+              type="button"
               class="ea-chip"
               :class="{ on: role === r.id }"
+              :aria-pressed="role === r.id"
               :title="r.hint"
-            >
-              <input v-model="role" type="radio" name="ea-role" :value="r.id">
-              <span>{{ r.label }}</span>
-            </label>
+              @click="toggleRole(r.id)"
+            >{{ r.label }}</button>
           </div>
-          <p class="ea-hint">Every account is a learner — this is what else you'll do. Changeable in the app later.</p>
+          <p class="ea-hint">Everyone is a learner, so that one stays on. Add another if you'll also teach or follow a child's learning — changeable in the app later.</p>
         </fieldset>
 
         <fieldset class="ea-set">
@@ -365,8 +383,17 @@ async function submit() {
   border-color: rgb(var(--color-primary));
   color: rgb(var(--color-primary-foreground));
 }
-/* Focus must show on the chip, since the input painting it is hidden. */
-.ea-chip:has(input:focus-visible) { outline: 2px solid currentColor; outline-offset: 2px; }
+/* Focus must show on the chip, since the input painting it is hidden. The role
+   chips are buttons now and focus themselves, so both cases are covered. */
+.ea-chip:has(input:focus-visible),
+.ea-chip:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+/* Learner is a statement, not a choice: it reads as selected, carries a tick, and
+   does not invite a click. Not `disabled`, because it is not a control at all —
+   a <span> keeps it out of the tab order without announcing a dead button. */
+.ea-chip.locked { cursor: default; gap: 5px; }
+.ea-chip.locked svg { width: 11px; height: 11px; }
+button.ea-chip { font-family: inherit; }
 
 .ea-hint { margin: 7px 0 0; font-size: 12px; line-height: 1.45; }
 .ea-hero .ea-hint { color: rgb(255 255 255 / 0.62); }
