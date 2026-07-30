@@ -7,6 +7,8 @@ function closeMobileMenu() { mobileMenuOpen.value = false }
 // Announcement toast — bottom-right, dismissal persists per-browser.
 // It is fixed-position and mounts after hydration, so it cannot move the page;
 // the old full-width banner sat in the flow and pushed everything down.
+const waitlist = useWaitlist()
+
 const ANNOUNCEMENT_DISMISS_KEY = 'alexandria-announcement-dismissed'
 const showToast = ref(false)
 
@@ -43,13 +45,11 @@ const year = new Date().getFullYear()
         </nav>
 
         <div class="nav-right">
-          <NuxtLink
-            to="/#early-access"
-            active-class=""
-            exact-active-class=""
-            aria-current-value="false"
+          <button
+            type="button"
             class="plausible-event-name=EarlyAccess nav-cta"
-          >Waiting list</NuxtLink>
+            @click="waitlist.open()"
+          >Waiting list</button>
           <a
             href="https://github.com/ifftu-dev/alexandria"
             target="_blank"
@@ -88,14 +88,11 @@ const year = new Date().getFullYear()
             <div class="drawer-links">
               <NuxtLink to="/recruiter" class="plausible-event-name=Nav-Recruiter link-recruiter" @click="closeMobileMenu">For recruiters</NuxtLink>
               <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution" @click="closeMobileMenu">For institutions</NuxtLink>
-              <NuxtLink
-                to="/#early-access"
-                active-class=""
-                exact-active-class=""
-                aria-current-value="false"
-                class="plausible-event-name=EarlyAccess"
-                @click="closeMobileMenu"
-              >Join the waiting list</NuxtLink>
+              <button
+                type="button"
+                class="plausible-event-name=EarlyAccess drawer-cta"
+                @click="closeMobileMenu(); waitlist.open()"
+              >Join the waiting list</button>
               <a
                 href="https://github.com/ifftu-dev/alexandria"
                 target="_blank"
@@ -113,6 +110,8 @@ const year = new Date().getFullYear()
     <main class="shell-main">
       <slot />
     </main>
+
+    <WaitlistModal />
 
     <!-- Announcement toast -->
     <Teleport to="body">
@@ -178,7 +177,7 @@ const year = new Date().getFullYear()
           <div class="foot-col">
             <h2>Platform</h2>
             <ul>
-              <li><NuxtLink to="/#early-access" active-class="" exact-active-class="" aria-current-value="false" class="plausible-event-name=EarlyAccess">Waiting list</NuxtLink></li>
+              <li><button type="button" class="plausible-event-name=EarlyAccess foot-cta" @click="waitlist.open()">Waiting list</button></li>
               <li><a href="https://github.com/ifftu-dev/alexandria" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub">Source code</a></li>
             </ul>
           </div>
@@ -230,14 +229,15 @@ const year = new Date().getFullYear()
 }
 .nav-in { display: flex; align-items: center; justify-content: space-between; height: 62px; gap: 14px; }
 .brand {
-  display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 17px;
+  display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 17px; min-height: 40px;
   letter-spacing: -0.02em; text-decoration: none; color: rgb(var(--color-foreground)); flex: none;
 }
 .brand svg { color: rgb(var(--color-primary)); }
 .nav-links { display: none; gap: 8px; }
 @media (min-width: 760px) { .nav-links { display: flex; } }
 .nav-links a {
-  font-size: 14.5px; font-weight: 600; text-decoration: none; padding: 7px 12px; border-radius: 999px;
+  font-size: 14.5px; font-weight: 600; text-decoration: none; padding: 9px 12px; border-radius: 999px;
+  display: inline-flex; align-items: center; min-height: 40px;
   transition: background 150ms ease;
 }
 .link-recruiter { color: rgb(var(--color-recruiter)); }
@@ -281,17 +281,31 @@ const year = new Date().getFullYear()
   transition: background 150ms ease, border-color 150ms ease;
 }
 @media (min-width: 760px) { .nav-cta { display: inline-flex; } }
+.nav-cta { min-height: 40px; }
 .nav-cta:hover { background: rgb(var(--color-primary) / 0.1); border-color: rgb(var(--color-primary) / 0.6); }
 
+/* The drawer and footer triggers were links and are buttons now, so they need
+   the surrounding link styling restated rather than inherited. */
+.drawer-cta, .foot-cta {
+  font: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: start;
+  cursor: pointer;
+  color: inherit;
+}
+.drawer-cta:hover, .foot-cta:hover { color: rgb(var(--color-foreground)); }
+
 .nav-gh {
-  display: none; align-items: center; justify-content: center; width: 38px; height: 38px;
+  display: none; align-items: center; justify-content: center; width: 40px; height: 40px;
   border-radius: 10px; color: rgb(var(--color-muted-foreground)); transition: color 150ms ease, background 150ms ease;
 }
 @media (min-width: 760px) { .nav-gh { display: flex; } }
 .nav-gh:hover { color: rgb(var(--color-foreground)); background: rgb(var(--color-muted)); }
 .nav-gh svg { width: 19px; height: 19px; }
 .nav-burger {
-  display: flex; align-items: center; justify-content: center; width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
   border: none; border-radius: 10px; background: transparent; color: rgb(var(--color-muted-foreground)); cursor: pointer;
 }
 @media (min-width: 760px) { .nav-burger { display: none; } }
@@ -419,7 +433,7 @@ const year = new Date().getFullYear()
 .foot-brand p { margin: 14px 0 0; font-size: 14px; color: rgb(var(--color-muted-foreground)); max-width: 42ch; line-height: 1.6; }
 .foot-social { display: flex; gap: 8px; margin-top: 16px; }
 .foot-social a {
-  display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px;
   color: rgb(var(--color-muted-foreground)); transition: color 150ms ease, background 150ms ease;
 }
 .foot-social a:hover { color: rgb(var(--color-foreground)); background: rgb(var(--color-background)); }
@@ -437,7 +451,7 @@ const year = new Date().getFullYear()
 .ifftu {
   display: inline-flex; align-items: center; gap: 7px; text-decoration: none; flex: none;
   font-size: 14px; font-weight: 600; color: rgb(var(--color-primary));
-  padding: 7px 15px; border-radius: 999px;
+  padding: 9px 15px; border-radius: 999px; min-height: 40px;
   background: linear-gradient(100deg, rgb(var(--color-primary) / 0.12), rgb(var(--color-cyan) / 0.15));
   border: 1px solid rgb(var(--color-primary) / 0.26);
   transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 160ms ease, border-color 160ms ease;

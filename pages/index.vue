@@ -184,6 +184,9 @@ const stats = [
 ]
 
 const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
+
+// The form lives in a dialog now; every trigger opens the same one.
+const waitlist = useWaitlist()
 </script>
 
 <template>
@@ -199,8 +202,16 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
           Free, open-source learning for every device. Study offline, own what you earn,
           and keep your data on your own device.
         </p>
-        <div class="hero-cta hero-cta-form" id="early-access">
-          <EarlyAccessForm variant="hero" />
+        <div id="early-access" class="hero-cta">
+          <button type="button" class="btn btn-lg plausible-event-name=EarlyAccess" @click="waitlist.open()">
+            Join the waiting list
+          </button>
+          <a
+            href="https://github.com/ifftu-dev/alexandria"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="plausible-event-name=CTA-GitHub btn-ghost"
+          >View the source</a>
         </div>
       </div>
     </section>
@@ -489,8 +500,10 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
       <div class="pad cta-inner">
         <h2>Get in the queue.</h2>
         <p>We are letting people in a group at a time while the alpha settles. Join the waiting list and we will email you when it is your turn, with a build for the platforms you pick.</p>
-        <div class="cta-row cta-row-form">
-          <EarlyAccessForm variant="hero" />
+        <div class="cta-row">
+          <button type="button" class="btn btn-lg plausible-event-name=EarlyAccess" @click="waitlist.open()">
+            Join the waiting list
+          </button>
         </div>
         <p class="cta-alt">
           Prefer to read the code first?

@@ -1104,10 +1104,6 @@ svg { flex-shrink: 0; }
   .platforms { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* Early-access CTA blocks: the form replaces the button row, so it needs to
-   sit centred rather than as a flex row of buttons. */
-.hero-cta-form { display: block; margin-top: 36px; }
-.cta-row-form { display: block; margin-top: 28px; }
 .cta-alt { margin: 18px 0 0; font-size: 13.5px; color: rgb(255 255 255 / 0.72); }
 .cta-alt a { color: #fff; text-decoration: underline; text-underline-offset: 2px; }
 
