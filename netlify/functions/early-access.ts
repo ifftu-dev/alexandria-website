@@ -55,6 +55,24 @@ function json(body: Record<string, unknown>, status = 200) {
   })
 }
 
+/**
+ * `{{unsubscribeUrl}}` is resolved by Plunk, not by us. Its email processor runs
+ * every message through `EmailService.format()` with `unsubscribeUrl`,
+ * `subscribeUrl` and `manageUrl` in scope before it classifies the send, so the
+ * placeholder works on this transactional path and not only in campaigns.
+ *
+ * It also earns the message a one-click unsubscribe. Plunk emits the RFC 8058
+ * `List-Unsubscribe` / `List-Unsubscribe-Post` pair when the send is marketing
+ * *or* when the rendered body contains a link to `/unsubscribe/<contact>` —
+ * which this now does. A confirmation is transactional and exempt from Gmail's
+ * bulk-sender rules, so this is not compliance; it is that "reply to this email"
+ * put the burden on a human reading replies, and the alternative to an easy exit
+ * is people reporting the mail as spam, which costs far more than an
+ * unsubscribe.
+ *
+ * Plunk's own footer is added to marketing sends only, so the link has to be in
+ * our copy.
+ */
 function confirmationBody(platform: string) {
   const waiting = platform && platform !== 'unknown' && platform !== 'your platform'
     ? `for ${platform}`
@@ -63,7 +81,7 @@ function confirmationBody(platform: string) {
   return `<p>You're on the list.</p>
 <p>We'll write once there's an alpha build ready ${waiting}. That is the only reason we'll email you — no newsletter, no updates you didn't ask for.</p>
 <p>Alexandria is free and open source. If you'd rather read the code than wait, it's at <a href="https://github.com/ifftu-dev/alexandria">github.com/ifftu-dev/alexandria</a>.</p>
-<p>Want off the list? Reply to this email, or write to admin@ifftu.dev, and we'll delete your address.</p>
+<p>Want off the list? <a href="{{unsubscribeUrl}}">Unsubscribe in one click</a> — no login, no reply needed. Or write to admin@ifftu.dev and we'll delete your address.</p>
 <p>— Alexandria</p>`
 }
 
