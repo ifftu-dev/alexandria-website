@@ -1,5 +1,11 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
+
+  // Pinned explicitly. Pages, layouts and components live at the repo root,
+  // and Nuxt 4 will treat an `app/` directory as the source root if it finds
+  // one — which it now does, because router options must live at
+  // `<srcDir>/app/router.options.ts`.
+  srcDir: '.',
   devtools: { enabled: true },
 
   modules: [
@@ -35,7 +41,7 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
-        { name: 'description', content: 'Alexandria is a free, open-source learning app for macOS, Windows, Linux, iOS, and Android. Study offline, earn credentials you truly own, and keep your learning and data on your own device — no accounts, no servers.' },
+        { name: 'description', content: 'Alexandria is a free, open-source learning app for macOS, Windows, Linux, iOS, and Android. Study offline, earn credentials you truly own, and keep your learning and data on your own device — your account is created there and no company holds it.' },
         { name: 'theme-color', content: '#ffffff', media: '(prefers-color-scheme: light)' },
         { name: 'theme-color', content: '#0f172a', media: '(prefers-color-scheme: dark)' },
         { name: 'color-scheme', content: 'light dark' },
@@ -52,7 +58,10 @@ export default defineNuxtConfig({
       ],
       script: [
         {
-          innerHTML: `(function(){try{var t=localStorage.getItem('alexandria-theme')||'dark';var d=document.documentElement;if(t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme:dark)').matches))d.classList.add('dark')}catch(e){}})()`,
+          // Runs before first paint so the theme is right on the first frame.
+          // The announcement is a fixed-position toast now, so it no longer
+          // needs hiding here to avoid moving the page.
+          innerHTML: `(function(){try{var d=document.documentElement;var t=localStorage.getItem('alexandria-theme')||'dark';if(t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme:dark)').matches))d.classList.add('dark')}catch(e){}})()`,
           type: 'text/javascript',
         },
         {

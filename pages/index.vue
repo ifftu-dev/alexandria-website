@@ -1,896 +1,507 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: 'landing',
-})
+definePageMeta({ layout: 'landing' })
 
 useHead({
   title: 'Alexandria — Free Learning, Credentials You Own',
   meta: [
-    { name: 'description', content: 'A free, open-source learning app for macOS, Windows, Linux, iOS, and Android. Study offline, earn credentials you truly own, and keep your learning and data on your own device — no accounts, no tracking.' },
+    { name: 'description', content: 'A free, open-source learning app for macOS, Windows, Linux, iOS, and Android. Study offline, earn credentials you truly own, and keep your learning and data on your own device — your account is created there and no company holds it.' },
     { property: 'og:title', content: 'Alexandria — Free Learning, Credentials You Own' },
     { property: 'og:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours, and keep your data on your own device.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/' },
     { name: 'twitter:title', content: 'Alexandria — Free Learning, Credentials You Own' },
     { name: 'twitter:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours, and keep your data on your own device.' },
   ],
-  link: [
-    { rel: 'canonical', href: 'https://alexandria.ifftu.dev/' },
-  ],
+  link: [{ rel: 'canonical', href: 'https://alexandria.ifftu.dev/' }],
   script: [
     {
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
-        name: 'Alexandria',
-        applicationCategory: 'EducationalApplication',
-        operatingSystem: 'macOS, Windows, Linux, iOS, Android',
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-        description: 'A free, open-source learning app where you study offline and earn credentials you truly own.',
-        url: 'https://alexandria.ifftu.dev',
-        downloadUrl: 'https://github.com/ifftu-dev/alexandria/releases/latest',
-        author: {
-          '@type': 'Organization',
-          name: 'IFFTU',
-          url: 'https://ifftu.dev',
-        },
+        'name': 'Alexandria',
+        'applicationCategory': 'EducationalApplication',
+        'operatingSystem': 'macOS, Windows, Linux, iOS, Android',
+        'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
+        'description': 'A free, open-source learning app where you study offline and earn credentials you truly own.',
+        'url': 'https://alexandria.ifftu.dev',
+        'downloadUrl': 'https://github.com/ifftu-dev/alexandria/releases/latest',
+        'author': { '@type': 'Organization', 'name': 'Alexandria Pvt. Ltd.', 'url': 'https://alexandria.ifftu.dev' },
       }),
     },
   ],
 })
 
-
-// ─── Scroll-triggered reveal via IntersectionObserver ───
-function useScrollReveal() {
-  onMounted(() => {
-    const els = document.querySelectorAll('.landing-scroll-reveal, .landing-scroll-stagger')
-    if (!els.length) return
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible')
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' },
-    )
-    els.forEach((el) => observer.observe(el))
-
-    // Safety: force all content visible after 3s in case observer fails
-    setTimeout(() => {
-      els.forEach((el) => el.classList.add('is-visible'))
-    }, 3000)
-  })
-}
-
-useScrollReveal()
-
-// ─── Scroll indicator visibility ───
-const heroRef = ref<HTMLElement | null>(null)
-const { showIndicator } = useScrollIndicator(heroRef)
-
-// ─── Download button (temporary) — platform-detected + release tag ───
-const { download, allPlatformsUrl, releaseTag } = useDownload()
-
-// ─── Parallax scroll effect for hero background layers ───
-const layerBack = ref<HTMLElement | null>(null)
-const layerMid = ref<HTMLElement | null>(null)
-const layerFront = ref<HTMLElement | null>(null)
-
-function useHeroParallax() {
-  let ticking = false
-  let rafId: number | null = null
-
-  function applyParallax() {
-    const hero = heroRef.value
-    if (!hero) return
-
-    const rect = hero.getBoundingClientRect()
-    if (rect.bottom < 0 || rect.top > window.innerHeight) return
-
-    const scrollY = -rect.top
-    const backY = scrollY * 0.04
-    const midY = scrollY * 0.08
-    const frontY = scrollY * 0.14
-
-    if (layerBack.value) layerBack.value.style.transform = `translate3d(0, ${backY}px, 0)`
-    if (layerMid.value) layerMid.value.style.transform = `translate3d(0, ${midY}px, 0)`
-    if (layerFront.value) layerFront.value.style.transform = `translate3d(0, ${frontY}px, 0)`
-
-    ticking = false
-  }
-
-  function onScroll() {
-    if (!ticking) {
-      ticking = true
-      rafId = requestAnimationFrame(applyParallax)
-    }
-  }
-
-  onMounted(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    window.addEventListener('scroll', onScroll, { passive: true })
-    applyParallax()
-  })
-
-  onUnmounted(() => {
-    window.removeEventListener('scroll', onScroll)
-    if (rafId) cancelAnimationFrame(rafId)
-  })
-}
-
-useHeroParallax()
-
-// Accent palette (rgb triplets) — reused from the hero's cosmic accents.
-const accentRGB: Record<string, string> = {
-  primary: 'var(--color-primary)',
-  cyan: '34 211 238',
-  rose: '244 114 182',
-  amber: '251 191 36',
-}
-
-// Real plugin screenshots for the "Teach & Assess Anything" motif.
-const pluginShots = [
-  { src: '/plugins/editor.png', label: 'Code editor' },
-  { src: '/plugins/music.png', label: 'Music trainer' },
-]
-
-// Channel list for the Classrooms motif.
-const classChannels = ['announcements', 'questions', 'assignments', 'showcase']
-
 interface Feature {
+  span: string
+  accent: 'primary' | 'cyan' | 'rose' | 'amber'
   title: string
   icon: string
-  accent: string
-  description: string
-  motif?: 'channels' | 'plugins'
-  wide?: boolean
+  body: string
   bullets?: string[]
+  motif?: 'plugins' | 'channels' | 'sentinel' | 'graph' | 'credential' | 'reputation'
 }
 
+// Every capability the site has ever claimed, in the order the old page told
+// the story. Nothing here is aspirational — the two audience pages carry the
+// not-yet-built work behind their own notices.
 const features: Feature[] = [
   {
-    title: 'Learn Without Limits',
-    icon: 'video',
+    span: 'span-4',
     accent: 'primary',
-    description: 'Courses, video tutorials, and Opinions — takes from practitioners who hold the very skill they teach. Free, open-source, offline-first.',
+    title: 'Learn without limits',
+    icon: 'M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z',
+    body: 'Courses, video tutorials and Opinions — takes from practitioners who hold the very skill they teach. Free, open-source, offline-first.',
     bullets: [
       'Courses with real, hands-on assessments',
       'Works offline — no internet required',
-      'Available in 9 languages, including Hindi, Bengali & Telugu',
+      'Nine languages, including Hindi, Bengali and Telugu',
     ],
   },
   {
-    title: 'Opinions',
-    icon: 'opinion',
+    span: 'span-2',
     accent: 'cyan',
-    description: 'Real learning isn\'t only settled facts — it\'s weighing competing views and forming your own. Opinions are credentialed takes from practitioners who hold the skill.',
+    title: 'Opinions',
+    icon: 'M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z',
+    body: 'Real learning is not only settled facts — it is weighing competing views and forming your own.',
     bullets: [
       'Credentialed takes, not anonymous hot takes',
       'See where experts genuinely disagree',
-      'Learn the debates, then form your own view',
     ],
   },
   {
-    title: 'Teach & Assess Anything',
-    icon: 'plugin',
+    span: 'span-3',
     accent: 'amber',
+    title: 'Teach and assess anything',
+    icon: 'M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959a.64.64 0 01-.657.643 48.39 48.39 0 01-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 01-.658.663c-.355 0-.676-.186-.959-.401a1.647 1.647 0 00-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401.31 0 .555.26.532.57a48.039 48.039 0 01-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 00.657-.643c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.035 1.007-1.875 2.25-1.875s2.25.84 2.25 1.875c0 .369-.128.713-.349 1.003-.215.283-.401.604-.401.959 0 .333.277.599.61.58a48.1 48.1 0 005.427-.63 48.05 48.05 0 00.582-4.717.532.532 0 00-.533-.57c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.959.401a.656.656 0 00.659-.663 47.703 47.703 0 00-.31-4.82c-1.517.19-3.058.309-4.616.354a.64.64 0 01-.657-.643z',
+    body: 'Video, text and multiple choice are not enough — different skills need different ways to teach and test. Plugins let Alexandria assess welding, music, engineering, surgery, and beyond.',
     motif: 'plugins',
-    wide: true,
-    description: 'Videos, text, and multiple-choice aren\'t enough — different skills need different ways to teach and test. Plugins let Alexandria teach and assess almost anything: welding, music, engineering, surgery, and beyond.',
   },
   {
-    title: 'Learn Live, Together',
-    icon: 'live',
-    accent: 'rose',
-    description: 'Face-to-face tutoring is built in — video, audio, and screen-share connect learners and mentors directly, device to device.',
-    bullets: [
-      'Live one-on-one video tutoring',
-      'Share your screen and talk it through',
-      'Peer to peer — no call runs through a company',
-    ],
-  },
-  {
+    span: 'span-3',
+    accent: 'cyan',
     title: 'Classrooms',
-    icon: 'classroom',
-    accent: 'cyan',
+    icon: 'M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.636 50.636 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0112 13.489a50.702 50.702 0 017.74-3.342',
+    body: 'Teachers stay close to the students they invite, inside a safe, contained space — organised into channels.',
     motif: 'channels',
-    description: 'Teachers stay close to the students they invite, inside a safe, contained virtual space — organized into channels, with the tools a class actually needs to work together.',
   },
   {
-    title: 'A Shared Map of Knowledge',
-    icon: 'graph',
+    span: 'span-2',
     accent: 'rose',
-    description: 'Every lesson and credential is tied to a public map of skills, so a credential means the same thing everywhere.',
-    bullets: [
-      'Skills organized from basics to mastery',
-      'Clear prerequisites, so you always know what comes next',
-      'Kept accurate by the community, not one company',
-    ],
+    title: 'Learn live, together',
+    icon: 'M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z',
+    body: 'Face-to-face tutoring is built in — video, audio and screen-share connect learners and mentors directly, device to device.',
+    bullets: ['Live one-on-one video tutoring', 'Peer to peer — no call runs through a company'],
   },
   {
-    title: 'Earn Credentials You Own',
-    icon: 'shield',
+    span: 'span-4',
+    accent: 'rose',
+    title: 'A shared map of knowledge',
+    icon: 'M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6z',
+    body: 'Every lesson and credential ties to a public map of skills with clear prerequisites, so a credential means the same thing everywhere — and it is kept accurate by the community, not one company.',
+    motif: 'graph',
+  },
+  {
+    span: 'span-3',
     accent: 'cyan',
-    description: 'Every credential is signed under your own identity and made tamper-proof, so anyone can check it — even offline, even without Alexandria.',
-    bullets: [
-      'Six kinds of credential',
-      'Share only what you choose',
-      'Yours forever, even if Alexandria disappears',
-    ],
+    title: 'Your credentials, your data, your device',
+    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+    body: 'One identity, created on your device. It signs every credential you earn and encrypts everything you keep — syncing straight between your own devices, with relays that cannot read a thing.',
+    motif: 'credential',
   },
   {
-    title: 'Reputation Without the Star Rating',
-    icon: 'reputation',
-    accent: 'primary',
-    description: 'Instructors are scored on their impact on learners — a per-skill distribution with confidence bounds, not a single global number.',
-    bullets: [
-      'Grounded in learner outcomes, not popularity',
-      'Per-skill distributions with confidence bounds',
-      'No five-star averages, no global scores',
-    ],
-  },
-  {
-    title: 'Assessments You Can Trust',
-    icon: 'integrity',
+    span: 'span-3',
     accent: 'amber',
-    description: 'An optional integrity layer, Sentinel, keeps credentials honest — and it runs entirely on your device. Your camera feed, keystrokes, and behaviour are analysed locally and never leave your machine.',
-    bullets: [
-      'Runs 100% on your device',
-      'Camera and keystrokes are never uploaded',
-      'Only a final integrity score is ever shared',
-    ],
+    title: 'Assessments you can trust',
+    icon: 'M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178zM15 12a3 3 0 11-6 0 3 3 0 016 0z',
+    body: 'Sentinel, an optional integrity layer, keeps credentials honest — and runs entirely on your device.',
+    motif: 'sentinel',
   },
   {
-    title: 'Own Your Data',
-    icon: 'key',
+    span: 'span-3',
     accent: 'primary',
-    description: 'Your identity and your content live only on your device, encrypted. They sync directly between your own devices — no company holds them, and the relays that help you connect can\'t read a thing.',
-    bullets: [
-      'An identity only you control',
-      'Stored on your device, never collected',
-      'Family-safe: guardians can privately oversee a child\'s learning',
-    ],
+    title: 'Reputation without the star rating',
+    icon: 'M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z',
+    body: 'Instructors are scored on their impact on learners — a per-skill distribution with confidence bounds, not one global number.',
+    motif: 'reputation',
   },
   {
-    title: 'Community Governed',
-    icon: 'building',
+    span: 'span-3',
     accent: 'amber',
-    description: 'Communities are organized around the same map of skills. Only people who have proven expertise in a subject get a vote on how it is taught — not money, not seniority.',
-    bullets: [
-      'A vote is earned by what you can do, per subject',
-      'Draft → committee → public vote',
-      'Decisions are designed to be anchored on-chain, so the record stays public and hard to quietly change',
-    ],
+    title: 'Community governed',
+    icon: 'M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z',
+    body: 'Only people who have proven expertise in a subject get a vote on how it is taught — not money, not seniority.',
+    bullets: ['A vote is earned by what you can do, per subject', 'Draft → committee → public vote'],
   },
+]
+
+const channels = ['announcements', 'questions', 'assignments', 'showcase']
+
+// Signal names come from the app's own Sentinel panel (sentinel.engine.*).
+const sentinelSignals = [
+  { label: 'Typing', value: 96 },
+  { label: 'Mouse', value: 91 },
+  { label: 'Smart models', value: 88 },
+]
+
+const reputation = [
+  { skill: 'welding.pipe.6g', low: 62, mid: 74, high: 83 },
+  { skill: 'welding.tig', low: 38, mid: 57, high: 79 },
+  { skill: 'inspection.ndt', low: 70, mid: 78, high: 85 },
+]
+
+// Sized and re-encoded for the ~130x96 box they actually render in; the
+// source PNGs were 1800px wide and 464 KB between them.
+const pluginShots = [
+  { src: '/plugins/editor.webp', label: 'Code editor', w: 700, h: 784 },
+  { src: '/plugins/music.webp', label: 'Music trainer', w: 700, h: 436 },
 ]
 
 const steps = [
-  {
-    number: '01',
-    title: 'Download & Launch',
-    description: 'Install the app on any device. Your account is created right on your device — no sign-up, no email, no server.',
-  },
-  {
-    number: '02',
-    title: 'Learn & Earn Credentials',
-    description: 'Take free courses, tutorials, and assessments. Finish an assessment and you automatically earn a credential for it — no waiting, no paperwork.',
-  },
-  {
-    number: '03',
-    title: 'Own & Prove',
-    description: 'Each credential is signed under your own identity and made tamper-proof, so anyone can check it is genuine — anywhere, even without Alexandria.',
-  },
-  {
-    number: '04',
-    title: 'Share & Take Part',
-    description: 'Share credentials with employers, choosing exactly what to reveal. What you have proven you can do gives you a say in how your community is run, and connects you with other learners.',
-  },
+  { n: '01', title: 'Download & launch', body: 'Install on any device. Your account is created on the device itself — no email, no password to lose, and nothing registered with a company.' },
+  { n: '02', title: 'Learn & earn credentials', body: 'Take free courses, tutorials and assessments. Finish an assessment and you earn a credential for it — no waiting, no paperwork.' },
+  { n: '03', title: 'Own & prove', body: 'Each credential is signed under your own identity and made tamper-proof, so anyone can check it is genuine — anywhere, even without Alexandria.' },
+  { n: '04', title: 'Share & take part', body: 'Share credentials with employers, choosing exactly what to reveal. What you have proven gives you a say in how your community is run.' },
 ]
 
+const platforms = [
+  { name: 'macOS', d: 'M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z' },
+  { name: 'Windows', d: 'M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801' },
+  { name: 'Linux', d: 'M12.5 2c-2.5 0-3 2-3 4 0 1.2-.3 2-1 3-1 1.4-2 3-2 5 0 1 .3 2 1 3 .3.4.2 1-.2 1.4-.4.4-.8.6-.8 1.2 0 .8.8 1 1.8 1 1.2 0 2.4.4 3.4.4s2.2-.4 3.4-.4c1 0 1.8-.2 1.8-1 0-.6-.4-.8-.8-1.2-.4-.4-.5-1-.2-1.4.7-1 1-2 1-3 0-2-1-3.6-2-5-.7-1-1-1.8-1-3 0-2-.5-4-2.4-4zm-1.2 4.2c.4 0 .7.4.7.9s-.3.9-.7.9-.7-.4-.7-.9.3-.9.7-.9zm2.6 0c.4 0 .7.4.7.9s-.3.9-.7.9-.7-.4-.7-.9.3-.9.7-.9z' },
+  { name: 'iOS', d: 'M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z' },
+  { name: 'Android', d: 'M17.532 15.106a1.003 1.003 0 111.001-2.007 1.003 1.003 0 01-1 2.007m-11.044 0a1.003 1.003 0 111.001-2.007 1.003 1.003 0 01-1 2.007m11.4-6.018 2.006-3.459a.413.413 0 10-.721-.403l-2.03 3.5A12.26 12.26 0 0012.011 7.5a12.26 12.26 0 00-5.132 1.226l-2.03-3.5a.413.413 0 10-.72.403l2.005 3.46C2.593 11.066.003 14.812 0 19.2h24.022c-.003-4.388-2.593-8.134-6.134-10.112' },
+]
+
+const stats = [
+  { n: '5', label: 'Platforms', detail: 'One codebase, native on each' },
+  { n: '9', label: 'Languages', detail: 'Hindi, Bengali and Telugu at launch' },
+  { n: '6', label: 'Credential kinds', detail: 'Share only what you choose' },
+  { n: '0', label: 'Companies in the middle', detail: 'Your account is created and kept on your device' },
+  { n: '100%', label: 'On-device integrity', detail: 'Camera and keystrokes never uploaded' },
+]
+
+const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
 </script>
 
 <template>
   <div>
-    <!-- ═══ HERO SECTION ═══ -->
-    <section ref="heroRef" class="landing-hero relative flex h-[calc(100dvh-4rem)] items-center justify-center overflow-hidden">
-      <!-- Background layer: galaxy starfield — 3 parallax layers -->
-      <div class="absolute inset-0" aria-hidden="true">
-        <!-- Base gradient (static) -->
-        <div class="absolute inset-0 bg-gradient-to-b from-[rgb(var(--color-primary)/0.04)] via-transparent to-[rgb(var(--color-muted)/0.3)]" />
-
-        <!-- Shared SVG defs -->
-        <svg class="absolute" width="0" height="0" aria-hidden="true">
-          <defs>
-            <radialGradient id="hero-node-glow">
-              <stop offset="0%" stop-color="rgb(var(--color-primary))" stop-opacity="0.35" />
-              <stop offset="50%" stop-color="rgb(var(--color-primary))" stop-opacity="0.08" />
-              <stop offset="100%" stop-color="rgb(var(--color-primary))" stop-opacity="0" />
-            </radialGradient>
-            <radialGradient id="hero-node-glow-soft">
-              <stop offset="0%" stop-color="rgb(var(--color-primary))" stop-opacity="0.2" />
-              <stop offset="60%" stop-color="rgb(var(--color-primary))" stop-opacity="0.04" />
-              <stop offset="100%" stop-color="rgb(var(--color-primary))" stop-opacity="0" />
-            </radialGradient>
-            <radialGradient id="hero-glow-cyan">
-              <stop offset="0%" stop-color="rgb(34 211 238)" stop-opacity="0.25" />
-              <stop offset="50%" stop-color="rgb(34 211 238)" stop-opacity="0.06" />
-              <stop offset="100%" stop-color="rgb(34 211 238)" stop-opacity="0" />
-            </radialGradient>
-            <radialGradient id="hero-glow-cyan-soft">
-              <stop offset="0%" stop-color="rgb(34 211 238)" stop-opacity="0.12" />
-              <stop offset="60%" stop-color="rgb(34 211 238)" stop-opacity="0.02" />
-              <stop offset="100%" stop-color="rgb(34 211 238)" stop-opacity="0" />
-            </radialGradient>
-            <radialGradient id="hero-glow-rose">
-              <stop offset="0%" stop-color="rgb(244 114 182)" stop-opacity="0.2" />
-              <stop offset="50%" stop-color="rgb(244 114 182)" stop-opacity="0.05" />
-              <stop offset="100%" stop-color="rgb(244 114 182)" stop-opacity="0" />
-            </radialGradient>
-            <radialGradient id="hero-glow-rose-soft">
-              <stop offset="0%" stop-color="rgb(244 114 182)" stop-opacity="0.1" />
-              <stop offset="60%" stop-color="rgb(244 114 182)" stop-opacity="0.02" />
-              <stop offset="100%" stop-color="rgb(244 114 182)" stop-opacity="0" />
-            </radialGradient>
-            <radialGradient id="hero-glow-amber">
-              <stop offset="0%" stop-color="rgb(251 191 36)" stop-opacity="0.15" />
-              <stop offset="50%" stop-color="rgb(251 191 36)" stop-opacity="0.04" />
-              <stop offset="100%" stop-color="rgb(251 191 36)" stop-opacity="0" />
-            </radialGradient>
-            <linearGradient id="hero-fade-left" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="rgb(var(--color-background))" stop-opacity="1" />
-              <stop offset="100%" stop-color="rgb(var(--color-background))" stop-opacity="0" />
-            </linearGradient>
-            <linearGradient id="hero-fade-right" x1="1" y1="0" x2="0" y2="0">
-              <stop offset="0%" stop-color="rgb(var(--color-background))" stop-opacity="1" />
-              <stop offset="100%" stop-color="rgb(var(--color-background))" stop-opacity="0" />
-            </linearGradient>
-            <linearGradient id="hero-fade-top" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="rgb(var(--color-background))" stop-opacity="0.8" />
-              <stop offset="100%" stop-color="rgb(var(--color-background))" stop-opacity="0" />
-            </linearGradient>
-            <linearGradient id="hero-fade-bottom" x1="0" y1="1" x2="0" y2="0">
-              <stop offset="0%" stop-color="rgb(var(--color-background))" stop-opacity="1" />
-              <stop offset="40%" stop-color="rgb(var(--color-background))" stop-opacity="0.6" />
-              <stop offset="100%" stop-color="rgb(var(--color-background))" stop-opacity="0" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        <!-- BACK LAYER — slow drift for ambient movement -->
-        <div ref="layerBack" class="landing-parallax-layer absolute inset-0 will-change-transform">
-          <svg class="absolute inset-0 h-full w-full landing-drift-slow will-change-transform" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
-            <circle cx="160" cy="160" r="120" fill="url(#hero-node-glow)" />
-            <circle cx="1280" cy="140" r="110" fill="url(#hero-node-glow)" />
-            <circle cx="200" cy="640" r="115" fill="url(#hero-node-glow)" />
-            <circle cx="1250" cy="680" r="100" fill="url(#hero-node-glow)" />
-            <circle cx="1100" cy="80" r="90" fill="url(#hero-glow-cyan)" />
-            <circle cx="350" cy="700" r="80" fill="url(#hero-glow-cyan)" />
-            <circle cx="50" cy="300" r="70" fill="url(#hero-glow-cyan-soft)" />
-            <circle cx="1400" cy="500" r="65" fill="url(#hero-glow-cyan-soft)" />
-            <circle cx="400" cy="100" r="70" fill="url(#hero-glow-rose)" />
-            <circle cx="1050" cy="700" r="65" fill="url(#hero-glow-rose)" />
-            <circle cx="300" cy="350" r="50" fill="url(#hero-glow-amber)" />
-            <circle cx="1200" cy="400" r="45" fill="url(#hero-glow-amber)" />
-            <circle cx="600" cy="60" r="80" fill="url(#hero-node-glow-soft)" />
-            <circle cx="880" cy="40" r="70" fill="url(#hero-node-glow-soft)" />
-            <circle cx="540" cy="780" r="75" fill="url(#hero-node-glow-soft)" />
-            <circle cx="920" cy="800" r="65" fill="url(#hero-node-glow-soft)" />
-            <g opacity="0.05">
-              <path d="M300,200 Q500,320 720,280" stroke="rgb(var(--color-primary))" stroke-width="0.75" fill="none" />
-              <path d="M720,280 Q940,240 1140,170" stroke="rgb(var(--color-primary))" stroke-width="0.75" fill="none" />
-              <path d="M280,600 Q540,530 760,570" stroke="rgb(var(--color-primary))" stroke-width="0.75" fill="none" />
-            </g>
-          </svg>
+    <!-- ═══ HERO ═══ -->
+    <section class="hero">
+      <MeshGradient />
+      <div class="hero-scrim" />
+      <div class="pad hero-inner hero-centered">
+        <p class="eyebrow hero-eyebrow">Alpha · early access</p>
+        <h1>Knowledge belongs to everyone.</h1>
+        <p class="hero-lede">
+          Free, open-source learning for every device. Study offline, own what you earn,
+          and keep your data on your own device.
+        </p>
+        <div class="hero-cta hero-cta-form" id="early-access">
+          <EarlyAccessForm variant="hero" />
         </div>
-
-        <!-- MID LAYER -->
-        <div ref="layerMid" class="landing-parallax-layer absolute inset-0 will-change-transform">
-          <svg class="absolute inset-0 h-full w-full" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
-            <g class="landing-line-draw" opacity="0.1">
-              <path d="M40,120 Q130,80 220,140" stroke="rgb(var(--color-primary))" stroke-width="1" fill="none" />
-              <path d="M220,140 Q310,200 180,260" stroke="rgb(var(--color-primary))" stroke-width="0.75" fill="none" />
-              <path d="M1200,100 Q1300,60 1400,130" stroke="rgb(var(--color-primary))" stroke-width="1" fill="none" />
-              <path d="M1200,100 Q1140,170 1260,220" stroke="rgb(var(--color-primary))" stroke-width="0.75" fill="none" />
-              <path d="M520,50 Q600,90 680,60" stroke="rgb(var(--color-primary))" stroke-width="0.75" fill="none" />
-              <path d="M680,60 Q760,30 840,70" stroke="rgb(var(--color-primary))" stroke-width="0.75" fill="none" />
-              <path d="M80,540 Q200,480 280,570" stroke="rgb(var(--color-primary))" stroke-width="1" fill="none" />
-              <path d="M280,570 Q360,640 200,660" stroke="rgb(var(--color-primary))" stroke-width="0.75" fill="none" />
-              <path d="M1100,580 Q1200,520 1320,590" stroke="rgb(var(--color-primary))" stroke-width="1" fill="none" />
-              <path d="M1320,590 Q1400,640 1280,680" stroke="rgb(var(--color-primary))" stroke-width="0.75" fill="none" />
-              <path d="M560,680 Q640,650 720,690" stroke="rgb(var(--color-primary))" stroke-width="0.75" fill="none" />
-              <path d="M720,690 Q800,720 880,680" stroke="rgb(var(--color-primary))" stroke-width="0.75" fill="none" />
-            </g>
-            <g class="landing-line-draw" opacity="0.06">
-              <path d="M1100,100 Q1200,150 1300,120" stroke="rgb(34 211 238)" stroke-width="0.75" fill="none" />
-              <path d="M300,650 Q400,600 500,680" stroke="rgb(34 211 238)" stroke-width="0.75" fill="none" />
-            </g>
-            <g class="landing-line-draw" opacity="0.05">
-              <path d="M380,80 Q440,120 520,90" stroke="rgb(244 114 182)" stroke-width="0.6" fill="none" />
-              <path d="M1050,650 Q1150,620 1200,680" stroke="rgb(244 114 182)" stroke-width="0.6" fill="none" />
-            </g>
-            <circle cx="420" cy="650" r="50" fill="url(#hero-node-glow-soft)" />
-            <circle cx="1060" cy="590" r="55" fill="url(#hero-node-glow-soft)" />
-            <circle cx="300" cy="200" r="40" fill="url(#hero-glow-cyan-soft)" />
-            <circle cx="1160" cy="180" r="45" fill="url(#hero-glow-rose-soft)" />
-          </svg>
-        </div>
-
-        <!-- FRONT LAYER — Starfield -->
-        <div ref="layerFront" class="landing-parallax-layer absolute inset-0 will-change-transform">
-          <svg class="absolute inset-0 h-full w-full" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
-            <g fill="rgb(var(--color-primary))">
-              <circle cx="220" cy="140" r="4" opacity="0.6" />
-              <circle cx="1200" cy="100" r="4" opacity="0.55" />
-              <circle cx="280" cy="600" r="4" opacity="0.55" />
-              <circle cx="1320" cy="620" r="3.5" opacity="0.45" />
-              <circle cx="600" cy="90" r="3" opacity="0.35" />
-              <circle cx="840" cy="70" r="3" opacity="0.3" />
-              <circle cx="720" cy="730" r="3" opacity="0.3" />
-              <circle cx="40" cy="120" r="3" opacity="0.45" />
-              <circle cx="1400" cy="130" r="3" opacity="0.4" />
-              <circle cx="80" cy="560" r="3.5" opacity="0.5" />
-              <circle cx="1100" cy="610" r="3.5" opacity="0.5" />
-              <circle cx="60" cy="230" r="2.5" opacity="0.35" />
-              <circle cx="520" cy="50" r="2.5" opacity="0.3" />
-              <circle cx="560" cy="710" r="2.5" opacity="0.28" />
-              <circle cx="30" cy="370" r="2.5" opacity="0.3" />
-              <circle cx="1390" cy="350" r="2.5" opacity="0.3" />
-              <circle cx="130" cy="60" r="2" opacity="0.3" />
-              <circle cx="1320" cy="60" r="2" opacity="0.3" />
-              <circle cx="140" cy="500" r="2" opacity="0.25" />
-              <circle cx="1040" cy="560" r="2" opacity="0.25" />
-              <circle cx="160" cy="340" r="1.5" opacity="0.15" />
-              <circle cx="1300" cy="300" r="1.5" opacity="0.15" />
-              <circle cx="480" cy="30" r="1.5" opacity="0.15" />
-              <circle cx="880" cy="40" r="1.5" opacity="0.15" />
-            </g>
-            <g fill="rgb(34 211 238)">
-              <circle cx="1120" cy="90" r="3" opacity="0.35" />
-              <circle cx="330" cy="680" r="2.5" opacity="0.3" />
-              <circle cx="50" cy="310" r="2" opacity="0.25" />
-              <circle cx="1410" cy="480" r="2" opacity="0.22" />
-              <circle cx="400" cy="80" r="1.5" opacity="0.2" />
-              <circle cx="1040" cy="50" r="1.5" opacity="0.18" />
-              <circle cx="620" cy="780" r="1.5" opacity="0.15" />
-            </g>
-            <g fill="rgb(244 114 182)">
-              <circle cx="380" cy="100" r="2.5" opacity="0.28" />
-              <circle cx="1060" cy="680" r="2.5" opacity="0.25" />
-              <circle cx="1380" cy="210" r="2" opacity="0.2" />
-              <circle cx="80" cy="580" r="2" opacity="0.2" />
-              <circle cx="270" cy="120" r="1.5" opacity="0.18" />
-              <circle cx="1200" cy="680" r="1.5" opacity="0.16" />
-            </g>
-            <g fill="rgb(251 191 36)">
-              <circle cx="300" cy="370" r="2" opacity="0.18" />
-              <circle cx="1200" cy="420" r="2" opacity="0.15" />
-              <circle cx="860" cy="110" r="1.5" opacity="0.12" />
-            </g>
-            <g fill="white">
-              <circle cx="190" cy="150" r="1.5" opacity="0.3" />
-              <circle cx="1250" cy="120" r="1.5" opacity="0.28" />
-              <circle cx="310" cy="580" r="1.5" opacity="0.25" />
-              <circle cx="650" cy="70" r="1" opacity="0.2" />
-              <circle cx="100" cy="400" r="1" opacity="0.2" />
-              <circle cx="660" cy="760" r="1" opacity="0.15" />
-            </g>
-            <!-- Pulsing rings -->
-            <circle cx="220" cy="140" r="14" stroke="rgb(var(--color-primary))" stroke-width="0.5" fill="none" opacity="0.15" class="landing-pulse" />
-            <circle cx="1200" cy="100" r="12" stroke="rgb(var(--color-primary))" stroke-width="0.5" fill="none" opacity="0.12" class="landing-pulse" style="animation-delay: -2s" />
-            <circle cx="280" cy="600" r="12" stroke="rgb(var(--color-primary))" stroke-width="0.5" fill="none" opacity="0.1" class="landing-pulse" style="animation-delay: -3.5s" />
-            <circle cx="1120" cy="90" r="10" stroke="rgb(34 211 238)" stroke-width="0.5" fill="none" opacity="0.1" class="landing-pulse" style="animation-delay: -1s" />
-            <circle cx="380" cy="100" r="8" stroke="rgb(244 114 182)" stroke-width="0.5" fill="none" opacity="0.08" class="landing-pulse" style="animation-delay: -1.5s" />
-          </svg>
-        </div>
-
-        <!-- Edge fades -->
-        <svg class="absolute inset-0 h-full w-full pointer-events-none" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
-          <rect x="0" y="0" width="200" height="900" fill="url(#hero-fade-left)" />
-          <rect x="1240" y="0" width="200" height="900" fill="url(#hero-fade-right)" />
-          <rect x="0" y="0" width="1440" height="160" fill="url(#hero-fade-top)" />
-          <rect x="0" y="640" width="1440" height="260" fill="url(#hero-fade-bottom)" />
-        </svg>
       </div>
-
-      <!-- Gradient overlay for smooth transition -->
-      <div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-[rgb(var(--color-background))] pointer-events-none" aria-hidden="true" />
-
-      <div class="container relative flex flex-col items-center justify-center pt-14 pb-8 sm:py-12">
-        <div class="mx-auto max-w-5xl">
-          <!-- Headline -->
-          <h1 class="landing-serif text-center text-4xl font-bold leading-[1.2] tracking-tight text-[rgb(var(--color-foreground))] sm:text-5xl lg:text-6xl">
-            Knowledge belongs<br>
-            <span class="bg-gradient-to-r from-[rgb(var(--color-primary))] via-[rgb(34_211_238)] to-[rgb(244_114_182)] bg-clip-text text-transparent">to everyone.</span>
-          </h1>
-
-          <!-- Subheading -->
-          <p class="landing-reveal landing-reveal-delay-1 mx-auto mt-8 max-w-2xl text-center text-lg leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-xl">
-            Free, open-source learning for every device.
-            Study offline, own the credentials you earn, and keep your data on your own device.
-          </p>
-
-          <!-- CTA -->
-          <div class="landing-reveal landing-reveal-delay-2 mt-10 flex flex-col items-center gap-5">
-            <div class="flex items-center justify-center gap-3">
-              <!-- Temporary: platform-detected download button.
-                   Desktop platforms get a real download; mobile ships via the
-                   app stores (not yet live), so we show an honest label rather
-                   than a link that dead-ends. -->
-              <a
-                v-if="download.installable"
-                :href="download.downloadUrl"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="plausible-event-name=CTA-Download btn btn-primary btn-lg w-full sm:w-auto"
-              >
-                {{ download.ctaLabel }}
-              </a>
-              <span
-                v-else
-                class="btn btn-lg w-full cursor-default border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] text-[rgb(var(--color-muted-foreground))] sm:w-auto"
-              >
-                {{ download.ctaLabel }}
-              </span>
-              <a
-                href="https://github.com/ifftu-dev/alexandria"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="View Alexandria on GitHub"
-                class="plausible-event-name=CTA-GitHub flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] text-[rgb(var(--color-muted-foreground))] transition-colors hover:border-[rgb(var(--color-primary)/0.4)] hover:text-[rgb(var(--color-foreground))]"
-              >
-                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
-                </svg>
-              </a>
-            </div>
-
-            <!-- Temporary: release tag pill -->
-            <a
-              v-if="releaseTag"
-              :href="allPlatformsUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-1.5 rounded-full border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] px-3 py-1 text-xs font-medium text-[rgb(var(--color-muted-foreground))] transition hover:border-[rgb(var(--color-primary)/0.4)] hover:text-[rgb(var(--color-foreground))]"
-            >
-              <span class="h-1.5 w-1.5 rounded-full bg-[rgb(var(--color-primary))]" />
-              {{ releaseTag }}
-            </a>
-
-            <!-- Platforms -->
-            <p class="text-xs tracking-wide text-[rgb(var(--color-muted-foreground)/0.6)]">
-              macOS &middot; Windows &middot; Linux &middot; iOS &middot; Android
-            </p>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Scroll indicator — only visible when content below is off-screen -->
-      <Transition name="scroll-indicator">
-        <div v-show="showIndicator" class="scroll-indicator-wrapper landing-reveal landing-reveal-delay-5 absolute bottom-10 left-1/2 z-10 -translate-x-1/2">
-          <div class="flex flex-col items-center gap-1.5">
-            <span class="text-[10px] font-medium uppercase tracking-widest text-[rgb(var(--color-muted-foreground))]">Scroll</span>
-            <svg class="scroll-indicator-chevron h-5 w-5 text-[rgb(var(--color-primary)/0.7)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </div>
-      </Transition>
     </section>
 
-    <!-- ═══ FEATURES ═══ -->
-    <section class="relative overflow-hidden bg-[rgb(var(--color-background))] py-16 sm:py-24 lg:py-32">
-      <!-- Atmosphere: faint grid + drifting accent glows -->
-      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div class="absolute inset-0 bg-grid opacity-[0.04]" />
-        <div class="absolute -left-24 top-24 h-72 w-72 rounded-full bg-[rgb(var(--color-primary)/0.10)] blur-[100px]" />
-        <div class="absolute right-0 top-1/3 h-72 w-72 rounded-full bg-[rgb(34_211_238/0.07)] blur-[110px]" />
-        <div class="absolute bottom-10 left-1/3 h-64 w-64 rounded-full bg-[rgb(244_114_182/0.06)] blur-[110px]" />
+    <!-- ═══ APP WINDOW, straddling the fold ═══ -->
+    <div class="pad shelf">
+      <div class="shelf-window">
+        <LazyAppReplica hydrate-on-idle />
       </div>
+      <p class="shelf-cap">
+        The real shell — press <b>/</b> for search, open <b>Skills &amp; Credentials</b> and verify one
+      </p>
+    </div>
 
-      <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div class="landing-scroll-reveal mx-auto max-w-3xl text-center">
-          <span class="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card)/0.6)] px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-[rgb(var(--color-muted-foreground))] backdrop-blur">
-            <span class="h-1.5 w-1.5 rounded-full bg-[rgb(var(--color-primary))]" />
-            One app, the whole system
-          </span>
-          <h2 class="landing-serif mt-6 text-3xl font-bold leading-[1.1] tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-[3.25rem]">
-            Education without
-            <span class="bg-gradient-to-r from-[rgb(var(--color-primary))] via-[rgb(34_211_238)] to-[rgb(244_114_182)] bg-clip-text text-transparent">infrastructure.</span>
-          </h2>
-          <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
-            No subscriptions, no data collection. Just a free account on a native app on all major platforms that turns your device into a full participant in a global learning network — and everything below runs right on it.
-          </p>
-        </div>
+    <!-- ═══ FEATURES ═══ -->
+    <section class="section pad">
+      <p class="eyebrow">One app, the whole system</p>
+      <h2 class="h-sec">Everything education needs, with no infrastructure behind it.</h2>
+      <p class="p-sub">
+        No subscriptions, no data collection — a native app that turns your device into a full
+        participant in a global learning network.
+      </p>
 
-        <!-- Feature grid — uniform height, some cards span wider -->
-        <div class="mt-12 grid grid-cols-1 gap-5 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3 lg:[grid-auto-flow:dense]">
-          <div
-            v-for="feature in features"
-            :key="feature.title"
-            :style="{ '--ac': accentRGB[feature.accent] }"
-            :class="[
-              'landing-scroll-reveal group relative flex flex-col overflow-hidden rounded-2xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card)/0.7)] p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[rgb(var(--ac)/0.5)] hover:shadow-[0_24px_60px_-24px_rgb(var(--ac)/0.5)] sm:p-7',
-              feature.wide ? 'sm:col-span-2' : '',
-            ]"
-          >
-            <!-- accent top hairline -->
-            <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[rgb(var(--ac)/0.6)] to-transparent opacity-70" aria-hidden="true" />
-            <!-- corner glow on hover -->
-            <div class="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[rgb(var(--ac)/0.14)] blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden="true" />
-
-            <div class="relative flex items-center gap-4">
-              <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-[rgb(var(--ac)/0.12)] text-[rgb(var(--ac))] ring-1 ring-inset ring-[rgb(var(--ac)/0.25)] transition-transform duration-300 group-hover:scale-110">
-              <!-- video -->
-              <svg v-if="feature.icon === 'video'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
-              </svg>
-              <!-- graph -->
-              <svg v-else-if="feature.icon === 'graph'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
-              </svg>
-              <!-- shield -->
-              <svg v-else-if="feature.icon === 'shield'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-              <!-- key -->
-              <svg v-else-if="feature.icon === 'key'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
-              </svg>
-              <!-- reputation -->
-              <svg v-else-if="feature.icon === 'reputation'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-              </svg>
-              <!-- building -->
-              <svg v-else-if="feature.icon === 'building'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
-              </svg>
-              <!-- code -->
-              <svg v-else-if="feature.icon === 'code'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
-              </svg>
-              <!-- live -->
-              <svg v-else-if="feature.icon === 'live'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-              </svg>
-              <!-- integrity -->
-              <svg v-else-if="feature.icon === 'integrity'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-              </svg>
-              <!-- opinion -->
-              <svg v-else-if="feature.icon === 'opinion'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-              </svg>
-              <!-- plugin -->
-              <svg v-else-if="feature.icon === 'plugin'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 0 1-.657.643 48.39 48.39 0 0 1-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 0 1-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 0 0-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 0 1-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 0 0 .657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 0 1-.349-1.003c0-1.035 1.007-1.875 2.25-1.875s2.25.84 2.25 1.875c0 .369-.128.713-.349 1.003-.215.283-.401.604-.401.959v0c0 .333.277.599.61.58a48.1 48.1 0 0 0 5.427-.63 48.05 48.05 0 0 0 .582-4.717.532.532 0 0 0-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.959.401v0a.656.656 0 0 0 .659-.663 47.703 47.703 0 0 0-.31-4.82c-1.517.19-3.058.309-4.616.354a.64.64 0 0 1-.657-.643v0Z" />
-              </svg>
-              <!-- classroom -->
-              <svg v-else-if="feature.icon === 'classroom'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-              </svg>
-              </div>
-              <h3 class="text-lg font-semibold leading-tight text-[rgb(var(--color-foreground))]">{{ feature.title }}</h3>
-            </div>
-
-            <p class="relative mt-4 text-sm leading-relaxed text-[rgb(var(--color-muted-foreground))]">
-              {{ feature.description }}
-            </p>
-
-            <!-- ── Motif: plugin screenshots ── -->
-            <div v-if="feature.motif === 'plugins'" class="relative mt-5">
-              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <figure
-                  v-for="shot in pluginShots"
-                  :key="shot.src"
-                  class="group/shot overflow-hidden rounded-lg border border-[rgb(var(--color-border))] bg-[rgb(var(--color-background)/0.6)]"
-                >
-                  <div class="flex items-center gap-1 border-b border-[rgb(var(--color-border))] px-2.5 py-2">
-                    <span class="h-1.5 w-1.5 rounded-full bg-[rgb(var(--color-muted-foreground)/0.4)]" />
-                    <span class="h-1.5 w-1.5 rounded-full bg-[rgb(var(--color-muted-foreground)/0.4)]" />
-                    <span class="ml-1.5 truncate text-[11px] font-medium text-[rgb(var(--color-muted-foreground))]">{{ shot.label }}</span>
-                  </div>
-                  <img
-                    :src="shot.src"
-                    :alt="shot.label"
-                    loading="lazy"
-                    class="h-36 w-full object-cover object-top transition-transform duration-500 group-hover/shot:scale-[1.05] sm:h-40"
-                  />
-                </figure>
-              </div>
-            </div>
-
-            <!-- ── Motif: classroom channels ── -->
-            <div v-else-if="feature.motif === 'channels'" class="relative mt-5 overflow-hidden rounded-xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-background)/0.6)] p-3">
-              <ul class="space-y-1">
-                <li
-                  v-for="(ch, chi) in classChannels"
-                  :key="ch"
-                  :class="[
-                    'flex items-center gap-2 rounded-md px-2 py-1.5 text-sm',
-                    chi === 0 ? 'bg-[rgb(var(--ac)/0.12)] text-[rgb(var(--color-foreground))]' : 'text-[rgb(var(--color-muted-foreground))]',
-                  ]"
-                >
-                  <span class="font-mono text-[rgb(var(--ac))]">#</span>
-                  <span>{{ ch }}</span>
-                </li>
-              </ul>
-              <div class="mt-3 flex items-center gap-2 border-t border-[rgb(var(--color-border))] px-2 pt-3">
-                <div class="flex -space-x-2">
-                  <span v-for="n in 4" :key="n" class="h-6 w-6 rounded-full border-2 border-[rgb(var(--color-card))] bg-[rgb(var(--ac)/0.3)]" />
-                </div>
-                <span class="text-xs text-[rgb(var(--color-muted-foreground))]">invite-only · you decide who's in</span>
-              </div>
-            </div>
-
-            <!-- ── Default: bullet list ── -->
-            <ul
-              v-else
-              class="relative mt-5 flex flex-col gap-y-2"
-            >
-              <li
-                v-for="bullet in feature.bullets"
-                :key="bullet"
-                class="flex items-start gap-2 text-sm text-[rgb(var(--color-muted-foreground))]"
-              >
-                <svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-[rgb(var(--ac))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                {{ bullet }}
-              </li>
-            </ul>
+      <div class="bento">
+        <article
+          v-for="feature in features"
+          :key="feature.title"
+          class="tile tile-accent"
+          :class="[feature.span, `accent-${feature.accent}`]"
+        >
+          <div class="tile-glow" aria-hidden="true" />
+          <div class="tile-ic">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" :d="feature.icon" />
+            </svg>
           </div>
-        </div>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.body }}</p>
+
+          <!-- real plugin screenshots, as on the old page -->
+          <div v-if="feature.motif === 'plugins'" class="shots">
+            <figure v-for="shot in pluginShots" :key="shot.src">
+              <figcaption>{{ shot.label }}</figcaption>
+              <img
+                :src="shot.src"
+                :alt="shot.label"
+                :width="shot.w"
+                :height="shot.h"
+                loading="lazy"
+                decoding="async"
+              >
+            </figure>
+          </div>
+
+          <div v-else-if="feature.motif === 'channels'" class="channels">
+            <span v-for="(channel, i) in channels" :key="channel" :class="{ on: i === 0 }">
+              <b>#</b>{{ channel }}
+            </span>
+            <p>invite-only · you decide who's in</p>
+          </div>
+
+          <!-- Sentinel status, mirroring the panel in SentinelTrainingWizard.vue -->
+          <div v-else-if="feature.motif === 'sentinel'" class="shot">
+            <div class="shot-bar"><b>Sentinel status</b><span class="mono">3/3 ready</span></div>
+            <div class="shot-body">
+              <div class="sig" v-for="signal in sentinelSignals" :key="signal.label">
+                <span class="sig-name">{{ signal.label }}</span>
+                <span class="sig-track"><i :style="{ width: `${signal.value}%` }" /></span>
+                <span class="sig-val mono">{{ (signal.value / 100).toFixed(2) }}</span>
+              </div>
+              <div class="score">
+                <span class="score-n mono">0.94</span>
+                <span class="score-l">Integrity score · <b>High</b></span>
+              </div>
+              <p class="shot-foot">Quiet snapshots every 15–45s. Raw camera, typing and mouse data never leave this device.</p>
+            </div>
+          </div>
+
+          <!-- the app's own sidebar skill-graph widget -->
+          <div v-else-if="feature.motif === 'graph'" class="shot">
+            <div class="shot-bar"><b>Skill map</b><span class="mono">FROM THE APP SIDEBAR</span></div>
+            <div class="shot-body">
+              <LazySkillGraph hydrate-on-visible :height="196" />
+            </div>
+          </div>
+
+          <!-- a credential as the app renders it, plus device sync -->
+          <div v-else-if="feature.motif === 'credential'" class="shot">
+            <div class="shot-bar"><b>Credential</b><span class="mono">SIGNED BY YOU</span></div>
+            <div class="shot-body">
+              <div class="cred-row">
+                <span class="cred-seal">✦</span>
+                <span>
+                  <span class="cred-t">Root pass, 6G pipe</span>
+                  <span class="cred-m mono">did:key:z6Mkha…QYtP · ed25519</span>
+                </span>
+                <span class="cred-ok">Genuine</span>
+              </div>
+              <div class="sync">
+                <span>This Mac</span>
+                <span class="sync-line"><i /></span>
+                <span>Your phone</span>
+              </div>
+              <p class="shot-foot">Encrypted end to end. Six kinds of credential — yours forever, even if Alexandria disappears.</p>
+            </div>
+          </div>
+
+          <!-- per-skill distribution with confidence bounds -->
+          <div v-else-if="feature.motif === 'reputation'" class="shot">
+            <div class="shot-bar"><b>Instructor impact</b><span class="mono">PER SKILL</span></div>
+            <div class="shot-body">
+              <div v-for="row in reputation" :key="row.skill" class="dist">
+                <span class="dist-name mono">{{ row.skill }}</span>
+                <span class="dist-track">
+                  <i class="bound" :style="{ left: `${row.low}%`, width: `${row.high - row.low}%` }" />
+                  <i class="point" :style="{ left: `${row.mid}%` }" />
+                </span>
+              </div>
+              <p class="shot-foot">Bars show confidence bounds — wider means less evidence. No global score anywhere.</p>
+            </div>
+          </div>
+
+          <ul v-else-if="feature.bullets">
+            <li v-for="bullet in feature.bullets" :key="bullet">{{ bullet }}</li>
+          </ul>
+        </article>
       </div>
     </section>
 
     <!-- ═══ HOW IT WORKS ═══ -->
-    <section class="relative bg-[rgb(var(--color-muted))] py-16 sm:py-24 lg:py-32">
-      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div class="landing-scroll-reveal text-center">
-          <h2 class="landing-serif text-2xl font-bold tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-5xl">
-            <span class="bg-gradient-to-r from-[rgb(var(--color-primary))] via-[rgb(34_211_238)] to-[rgb(244_114_182)] bg-clip-text text-transparent">How</span> it works.
-          </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
-            From download to credentials you own, in four steps.
-          </p>
+    <section class="section section-wash">
+      <div class="pad">
+        <p class="eyebrow">How it works</p>
+        <h2 class="h-sec">From download to credentials you own, in four steps.</h2>
+        <p class="p-sub">Nothing in this sequence registers you with anyone — the first step creates your account on the device itself.</p>
+
+        <ol class="flow">
+          <li v-for="step in steps" :key="step.n">
+            <span class="flow-n">{{ step.n }}</span>
+            <h3>{{ step.title }}</h3>
+            <p>{{ step.body }}</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ═══ PLATFORMS ═══ -->
+    <section class="section pad">
+      <p class="eyebrow">Runs everywhere</p>
+      <h2 class="h-sec">One codebase. Every platform. Native performance.</h2>
+
+      <div class="platforms">
+        <div v-for="platform in platforms" :key="platform.name">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path :d="platform.d" /></svg>
+          <span>{{ platform.name }}</span>
         </div>
+      </div>
+      <p class="platform-note">
+        Runs on macOS 10.15+, Windows 10+, Linux, iOS 16.4+, and Android 9+.
+        For live video tutoring on Android we recommend a device with 6&nbsp;GB+ RAM.
+      </p>
+    </section>
 
-        <div class="relative mt-12 sm:mt-20">
-          <!-- Connecting line -->
-          <div class="absolute left-5 top-0 bottom-0 z-0 hidden w-px bg-gradient-to-b from-[rgb(var(--color-primary))] via-[rgb(var(--color-primary)/0.3)] to-transparent sm:block" />
-
-          <div class="space-y-12">
-            <div
-              v-for="(step, i) in steps"
-              :key="step.number"
-              class="landing-scroll-reveal relative z-10 flex gap-8"
-            >
-              <div class="hidden sm:flex">
-                <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-[rgb(var(--color-primary)/0.3)] text-sm font-mono font-semibold text-[rgb(var(--color-primary))]" :style="{ background: 'color-mix(in srgb, rgb(var(--color-primary)) 10%, rgb(var(--color-background)))' }">
-                  {{ step.number }}
-                </div>
-              </div>
-              <div class="flex-1 rounded-2xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] p-6 sm:p-8">
-                <div class="sm:hidden mb-3 flex h-8 w-8 items-center justify-center rounded-lg bg-[rgb(var(--color-primary))] text-xs font-mono font-semibold text-[rgb(var(--color-primary-foreground))]">
-                  {{ step.number }}
-                </div>
-                <h3 class="text-lg font-semibold text-[rgb(var(--color-foreground))]">{{ step.title }}</h3>
-                <p class="mt-2 text-[rgb(var(--color-muted-foreground))]">{{ step.description }}</p>
-              </div>
-            </div>
+    <!-- ═══ STATS ═══ -->
+    <section class="band">
+      <div class="pad">
+        <p class="eyebrow">Built to outlast us</p>
+        <h2 class="h-sec">The numbers that actually matter.</h2>
+        <div class="stats">
+          <div v-for="stat in stats" :key="stat.label">
+            <div class="stat-n">{{ stat.n }}</div>
+            <div class="stat-l"><b>{{ stat.label }}</b>{{ stat.detail }}</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══ PLATFORM SUPPORT ═══ -->
-    <section class="relative bg-[rgb(var(--color-background))] py-16 sm:py-24 lg:py-32">
-      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div class="landing-scroll-reveal text-center">
-          <h2 class="landing-serif text-2xl font-bold tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-5xl">
-            Runs <span class="bg-gradient-to-r from-[rgb(var(--color-primary))] via-[rgb(34_211_238)] to-[rgb(244_114_182)] bg-clip-text text-transparent">everywhere.</span>
-          </h2>
-          <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:text-lg">
-            One codebase. Every platform. Native performance.
+    <!-- ═══ AUDIENCES ═══ -->
+    <section class="section pad">
+      <p class="eyebrow">Beyond learners</p>
+      <h2 class="h-sec">Proof that travels to the people who need it.</h2>
+      <p class="p-sub">The same credential a learner earns is the one a recruiter checks and an institution issues.</p>
+
+      <div class="aud">
+        <article class="aud-card">
+          <div class="aud-rule aud-rule-r" />
+          <div class="aud-body">
+            <p class="aud-tag" style="color: rgb(var(--color-recruiter))">For recruiters</p>
+            <h3>Hire verified talent, not resumes.</h3>
+            <p>Discover candidates through credentials you can verify yourself and a transparent record of how they learned.</p>
+            <div class="aud-pills">
+              <span>Skill-based discovery</span>
+              <span>Full record behind each credential</span>
+              <span>Candidate consent required</span>
+            </div>
+            <NuxtLink to="/recruiter" class="plausible-event-name=Nav-Recruiter chev" style="color: rgb(var(--color-recruiter))">
+              Explore recruiting <i>›</i>
+            </NuxtLink>
+          </div>
+        </article>
+
+        <article class="aud-card">
+          <div class="aud-rule aud-rule-i" />
+          <div class="aud-body">
+            <p class="aud-tag" style="color: rgb(var(--color-institution))">For institutions</p>
+            <h3>Your LMS, their credentials.</h3>
+            <p>An open-source LMS where students own credentials they can prove anywhere, and institutions keep full control.</p>
+            <div class="aud-pills">
+              <span>Free self-hosted tier</span>
+              <span>Skill-mapped curriculum</span>
+              <span>Zero vendor lock-in</span>
+            </div>
+            <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions chev" style="color: rgb(var(--color-institution))">
+              Explore for institutions <i>›</i>
+            </NuxtLink>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══ PROOF ═══ -->
+    <section class="proof">
+      <div class="pad proof-grid">
+        <div>
+          <p class="eyebrow">Verify it yourself</p>
+          <h2>Don't trust us. Check the credential.</h2>
+          <p class="p-sub">
+            Every credential is a W3C Verifiable Credential, Ed25519-signed under the holder's own DID
+            and hash-anchored on-chain. Confirm it with our tooling, someone else's, or none at all.
+          </p>
+          <div class="proof-metrics">
+            <div><div class="n">Offline</div><div class="l">Verification needs no network</div></div>
+            <div><div class="n">0</div><div class="l">Calls to Alexandria required</div></div>
+            <div><div class="n">MIT</div><div class="l">Core licence, forever</div></div>
+          </div>
+          <p style="margin-top: 24px">
+            <a
+              href="https://github.com/ifftu-dev/alexandria"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="plausible-event-name=CTA-GitHub chev"
+            >Read the credential spec <i>›</i></a>
           </p>
         </div>
 
-        <div class="mt-10 grid grid-cols-3 gap-3 sm:mt-16 sm:grid-cols-3 sm:gap-6 lg:grid-cols-5">
-          <div
-            v-for="platform in ['macOS', 'Windows', 'Linux', 'iOS', 'Android']"
-            :key="platform"
-            class="landing-scroll-reveal flex flex-col items-center gap-2 rounded-xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-card))] p-4 text-center transition-all hover:border-[rgb(var(--color-primary)/0.3)] hover:shadow-md sm:gap-3 sm:rounded-2xl sm:p-6"
-          >
-            <!-- macOS -->
-            <svg v-if="platform === 'macOS'" class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-            </svg>
-            <!-- Windows -->
-            <svg v-else-if="platform === 'Windows'" class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" />
-            </svg>
-            <!-- Linux -->
-            <svg v-else-if="platform === 'Linux'" class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139zm.529 3.405h.013c.213 0 .396.062.584.198.19.135.33.332.438.533.105.259.158.459.166.724 0-.02.006-.04.006-.06v.105a.086.086 0 01-.004-.021l-.004-.024a1.807 1.807 0 01-.15.706.953.953 0 01-.213.335.71.71 0 00-.088-.042c-.104-.045-.198-.064-.284-.133a1.312 1.312 0 00-.22-.066c.05-.06.146-.133.183-.198.053-.128.082-.264.088-.402v-.02a1.21 1.21 0 00-.061-.4c-.045-.134-.101-.2-.183-.333-.084-.066-.167-.132-.267-.132h-.016c-.093 0-.176.03-.262.132a.8.8 0 00-.205.334 1.18 1.18 0 00-.09.4v.019c.002.089.008.179.02.267-.193-.067-.438-.135-.607-.202a1.635 1.635 0 01-.018-.2v-.02a1.772 1.772 0 01.15-.768c.082-.22.232-.406.43-.533a.985.985 0 01.594-.2zm-2.962.059h.036c.142 0 .27.048.399.135.146.129.264.288.344.465.09.199.14.4.153.667v.004c.007.134.006.2-.002.266v.08c-.03.007-.056.018-.083.024-.152.055-.274.135-.393.2.012-.09.013-.18.003-.267v-.015c-.012-.133-.04-.2-.082-.333a.613.613 0 00-.166-.267.248.248 0 00-.183-.064h-.021c-.071.006-.13.04-.186.132a.552.552 0 00-.12.27.944.944 0 00-.023.33v.015c.012.135.037.2.08.334.046.134.098.2.166.268.01.009.02.018.034.024-.07.057-.117.07-.176.136a.304.304 0 01-.131.068 2.62 2.62 0 01-.275-.402 1.772 1.772 0 01-.155-.667 1.759 1.759 0 01.08-.668 1.43 1.43 0 01.283-.535c.128-.133.26-.2.418-.2zm1.37 1.706c.332 0 .733.065 1.216.399.293.2.523.269 1.052.468h.003c.255.136.405.266.478.399v-.131a.571.571 0 01.016.47c-.123.31-.516.643-1.063.842v.002c-.268.135-.501.333-.775.465-.276.135-.588.292-1.012.267a1.139 1.139 0 01-.448-.067 3.566 3.566 0 01-.322-.198c-.195-.135-.363-.332-.612-.465v-.005h-.005c-.4-.246-.616-.512-.686-.71-.07-.268-.005-.47.193-.6.224-.135.38-.271.483-.336.104-.074.143-.102.176-.131h.002v-.003c.169-.202.436-.47.839-.601.139-.036.294-.065.466-.065zm2.8 2.142c.358 1.417 1.196 3.475 1.735 4.473.286.534.855 1.659 1.102 3.024.156-.005.33.018.513.064.646-1.671-.546-3.467-1.089-3.966-.22-.2-.232-.335-.123-.335.59.534 1.365 1.572 1.646 2.757.13.535.16 1.104.021 1.67.067.028.135.06.205.067 1.032.534 1.413.938 1.23 1.537v-.043c-.06-.003-.12 0-.18 0h-.016c.151-.467-.182-.825-1.065-1.224-.915-.4-1.646-.336-1.77.465-.008.043-.013.066-.018.135-.068.023-.139.053-.209.064-.43.268-.662.669-.793 1.187-.13.533-.17 1.156-.205 1.869v.003c-.02.334-.17.838-.319 1.35-1.5 1.072-3.58 1.538-5.348.334a2.645 2.645 0 00-.402-.533 1.45 1.45 0 00-.275-.333c.182 0 .338-.03.465-.067a.615.615 0 00.314-.334c.108-.267 0-.697-.345-1.163-.345-.467-.931-.995-1.788-1.521-.63-.4-.986-.87-1.15-1.396-.165-.534-.143-1.085-.015-1.645.245-1.07.873-2.11 1.274-2.763.107-.065.037.135-.408.974-.396.751-1.14 2.497-.122 3.854a8.123 8.123 0 01.647-2.876c.564-1.278 1.743-3.504 1.836-5.268.048.036.217.135.289.202.218.133.38.333.59.465.21.201.477.335.876.335.039.003.075.006.11.006.412 0 .73-.134.997-.268.29-.134.52-.334.74-.4h.005c.467-.135.835-.402 1.044-.7zm2.185 8.958c.037.6.343 1.245.882 1.377.588.134 1.434-.333 1.791-.765l.211-.01c.315-.007.577.01.847.268l.003.003c.208.199.305.53.391.876.085.4.154.78.409 1.066.486.527.645.906.636 1.14l.003-.007v.018l-.003-.012c-.015.262-.185.396-.498.595-.63.401-1.746.712-2.457 1.57-.618.737-1.37 1.14-2.036 1.191-.664.053-1.237-.2-1.574-.898l-.005-.003c-.21-.4-.12-1.025.056-1.69.176-.668.428-1.344.463-1.897.037-.714.076-1.335.195-1.814.12-.465.308-.797.641-.984l.045-.022zm-10.814.049h.01c.053 0 .105.005.157.014.376.055.706.333 1.023.752l.91 1.664.003.003c.243.533.754 1.064 1.189 1.637.434.598.77 1.131.729 1.57v.006c-.057.744-.48 1.148-1.125 1.294-.645.135-1.52.002-2.395-.464-.968-.536-2.118-.469-2.857-.602-.369-.066-.61-.2-.723-.4-.11-.2-.113-.602.123-1.23v-.004l.002-.003c.117-.334.03-.752-.027-1.118-.055-.401-.083-.71.043-.94.16-.334.396-.4.69-.533.294-.135.64-.202.915-.47h.002v-.002c.256-.268.445-.601.668-.838.19-.201.38-.336.663-.336zm7.159-9.074c-.435.201-.945.535-1.488.535-.542 0-.97-.267-1.28-.466-.154-.134-.28-.268-.373-.335-.164-.134-.144-.333-.074-.333.109.016.129.134.199.2.096.066.215.2.36.333.292.2.68.467 1.167.467.485 0 1.053-.267 1.398-.466.195-.135.445-.334.648-.467.156-.136.149-.267.279-.267.128.016.034.134-.147.332a8.097 8.097 0 01-.69.468zm-1.082-1.583V5.64c-.006-.02.013-.042.029-.05.074-.043.18-.027.26.004.063 0 .16.067.15.135-.006.049-.085.066-.135.066-.055 0-.092-.043-.141-.068-.052-.018-.146-.008-.163-.065zm-.551 0c-.02.058-.113.049-.166.066-.047.025-.086.068-.14.068-.05 0-.13-.02-.136-.068-.01-.066.088-.133.15-.133.08-.031.184-.047.259-.005.019.009.036.03.03.05v.02h.003z" />
-            </svg>
-            <!-- iOS -->
-            <svg v-else-if="platform === 'iOS'" class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-            </svg>
-            <!-- Android -->
-            <svg v-else class="h-6 w-6 sm:h-8 sm:w-8 text-[rgb(var(--color-foreground))]" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M17.532 15.106a1.003 1.003 0 1 1 .001-2.007 1.003 1.003 0 0 1 0 2.007m-11.044 0a1.003 1.003 0 1 1 .001-2.007 1.003 1.003 0 0 1 0 2.007m11.4-6.018 2.006-3.459a.413.413 0 1 0-.721-.403l-2.03 3.5A12.26 12.26 0 0 0 12.011 7.5a12.26 12.26 0 0 0-5.132 1.226l-2.03-3.5a.413.413 0 1 0-.72.403l2.005 3.46C2.593 11.066.003 14.812 0 19.2h24.022c-.003-4.388-2.593-8.134-6.134-10.112" />
-            </svg>
-            <span class="text-sm font-medium text-[rgb(var(--color-foreground))]">{{ platform }}</span>
+        <div class="code">
+          <div class="code-tabs" role="tablist">
+            <button role="tab" :aria-selected="codeTab === 'credential'" @click="codeTab = 'credential'">credential.json</button>
+            <button role="tab" :aria-selected="codeTab === 'verify'" @click="codeTab = 'verify'">verify.sh</button>
+            <button role="tab" :aria-selected="codeTab === 'output'" @click="codeTab = 'output'">output</button>
           </div>
+          <pre v-if="codeTab === 'credential'"><span class="c">// issued on device, no server involved</span>
+{
+  <span class="k">"@context"</span>: [<span class="s">"https://www.w3.org/ns/credentials/v2"</span>],
+  <span class="k">"type"</span>: [<span class="s">"VerifiableCredential"</span>, <span class="s">"SkillCredential"</span>],
+  <span class="k">"issuer"</span>: <span class="s">"did:key:z6MkhaXgBZD…QYtP"</span>,
+  <span class="k">"credentialSubject"</span>: {
+    <span class="k">"skill"</span>: <span class="s">"welding.pipe.6g"</span>,
+    <span class="k">"level"</span>: <span class="s">"apply"</span>,
+    <span class="k">"evidence"</span>: <span class="s">"blake3:9f2c…e17a"</span>
+  },
+  <span class="k">"proof"</span>: { <span class="k">"type"</span>: <span class="s">"Ed25519Signature2020"</span>,
+    <span class="k">"anchor"</span>: <span class="s">"cardano:tx/8a41…c92f"</span> }
+}</pre>
+          <pre v-else-if="codeTab === 'verify'"><span class="c"># works with the network unplugged</span>
+<span class="g">$</span> alexandria verify credential.json --offline
+
+<span class="c"># or without Alexandria at all</span>
+<span class="g">$</span> npm i -g @digitalbazaar/vc
+<span class="g">$</span> vc verify --input credential.json \
+     --did-resolver did-key</pre>
+          <pre v-else><span class="g">✓</span> signature valid        <span class="c">ed25519 · holder key</span>
+<span class="g">✓</span> contents unchanged     <span class="c">blake3 digest match</span>
+<span class="g">✓</span> anchor found           <span class="c">cardano tx 8a41…c92f</span>
+<span class="g">✓</span> checked offline        <span class="c">0 network calls</span>
+
+<span class="y">GENUINE</span> — issued by the holder, unaltered</pre>
         </div>
-        <p class="mt-6 text-center text-sm text-[rgb(var(--color-muted-foreground))]">
-          Runs on macOS 10.15+, Windows 10+, Linux, iOS 16.4+, and Android 9+.
-          For live video tutoring on Android we recommend a device with 6&nbsp;GB+ RAM.
-        </p>
       </div>
     </section>
 
     <!-- ═══ CTA ═══ -->
-    <section class="relative overflow-hidden py-16 sm:py-24 lg:py-32">
-      <div class="absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-primary)/0.06)] via-[rgb(var(--color-muted)/0.4)] to-[rgb(var(--color-primary)/0.03)]" />
-      <div class="absolute inset-0 bg-grid opacity-[0.03]" />
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-[rgb(var(--color-primary)/0.06)] blur-3xl" />
-
-      <div class="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-        <div class="landing-scroll-reveal">
-          <h2 class="landing-serif text-2xl font-bold tracking-tight text-[rgb(var(--color-foreground))] sm:text-4xl lg:text-5xl">
-            Start learning. Own your credentials.
-          </h2>
-          <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-[rgb(var(--color-muted-foreground))] sm:mt-6 sm:text-lg">
-            Alexandria runs on every platform. Free for learners, forever.
-          </p>
-          <div class="mt-6 flex flex-col items-center gap-5">
-            <span class="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--color-primary)/0.25)] bg-[rgb(var(--color-card)/0.6)] px-5 py-2 text-sm font-semibold text-[rgb(var(--color-primary))] backdrop-blur-sm">
-              <span class="relative flex h-2 w-2">
-                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[rgb(var(--color-primary))] opacity-75" />
-                <span class="relative inline-flex h-2 w-2 rounded-full bg-[rgb(var(--color-primary))]" />
-              </span>
-              Alpha out now
-            </span>
-            <div class="flex flex-col items-center gap-3 sm:flex-row">
-              <a
-                href="https://github.com/ifftu-dev/alexandria"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="plausible-event-name=CTA-GitHub btn btn-primary btn-lg w-full sm:w-auto"
-              >
-                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
-                </svg>
-                Star on GitHub
-              </a>
-              <a
-                href="https://x.com/Alexandria_FTU"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="plausible-event-name=CTA-Follow btn btn-outline btn-lg w-full sm:w-auto"
-              >
-                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-                Follow for updates
-              </a>
-            </div>
-            <p class="mt-1 text-sm text-[rgb(var(--color-muted-foreground))]">
-              Running a school or hiring team?
-              <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions font-semibold text-[rgb(var(--color-institution))] transition-colors hover:text-[rgb(var(--color-institution-dark))]">For Institutions</NuxtLink>
-              ·
-              <NuxtLink to="/recruiter" class="plausible-event-name=Nav-Recruiter font-semibold text-[rgb(var(--color-recruiter))] transition-colors hover:text-[rgb(var(--color-recruiter-dark))]">For Recruiters</NuxtLink>
-            </p>
-          </div>
+    <section class="cta">
+      <MeshGradient />
+      <div class="hero-scrim" />
+      <div class="pad cta-inner">
+        <h2>Be there when it opens.</h2>
+        <p>We are letting people in a group at a time while the alpha settles. Leave your address and we will send a build for your platform.</p>
+        <div class="cta-row cta-row-form">
+          <EarlyAccessForm variant="hero" />
         </div>
+        <p class="cta-alt">
+          Prefer to read the code first?
+          <a
+            href="https://github.com/ifftu-dev/alexandria"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="plausible-event-name=CTA-GitHub"
+          >It's all on GitHub</a>.
+        </p>
       </div>
     </section>
   </div>
 </template>
+
+<style scoped>
+.tag-link { color: rgb(255 255 255 / 0.9); text-decoration: underline; text-underline-offset: 2px; }
+</style>
