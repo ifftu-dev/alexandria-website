@@ -49,7 +49,7 @@ const year = new Date().getFullYear()
             exact-active-class=""
             aria-current-value="false"
             class="plausible-event-name=EarlyAccess nav-cta"
-          >Early access</NuxtLink>
+          >Waiting list</NuxtLink>
           <a
             href="https://github.com/ifftu-dev/alexandria"
             target="_blank"
@@ -95,7 +95,7 @@ const year = new Date().getFullYear()
                 aria-current-value="false"
                 class="plausible-event-name=EarlyAccess"
                 @click="closeMobileMenu"
-              >Get early access</NuxtLink>
+              >Join the waiting list</NuxtLink>
               <a
                 href="https://github.com/ifftu-dev/alexandria"
                 target="_blank"
@@ -178,7 +178,7 @@ const year = new Date().getFullYear()
           <div class="foot-col">
             <h2>Platform</h2>
             <ul>
-              <li><NuxtLink to="/#early-access" active-class="" exact-active-class="" aria-current-value="false" class="plausible-event-name=EarlyAccess">Early access</NuxtLink></li>
+              <li><NuxtLink to="/#early-access" active-class="" exact-active-class="" aria-current-value="false" class="plausible-event-name=EarlyAccess">Waiting list</NuxtLink></li>
               <li><a href="https://github.com/ifftu-dev/alexandria" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub">Source code</a></li>
             </ul>
           </div>

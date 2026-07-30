@@ -1,14 +1,20 @@
 <script setup lang="ts">
 /**
- * Early-access signup.
+ * Waiting-list signup.
  *
  * Posts to `/api/early-access`, a Netlify function that forwards to Plunk. The
- * secret key stays server-side, and the function drops honeypot hits and
- * malformed addresses before they reach the account.
+ * secret key stays server-side, and the function drops honeypot hits, malformed
+ * addresses and anything outside the role/platform allowlists before they reach
+ * the account.
+ *
+ * The role and platform controls stay collapsed until the visitor touches the
+ * email field. Both have defaults, so the fast path is still
+ * type-an-address-and-submit, and anyone who wants to correct the guess can. The
+ * expansion is caused by user input, so it does not count toward CLS.
  *
  * Swapping providers later means changing that function; this component only
- * knows it posts an email and a platform to an endpoint that answers
- * `{ ok: true }`.
+ * knows it posts an address, a role and some platform ids to an endpoint that
+ * answers `{ ok: true }`.
  */
 const props = withDefaults(defineProps<{
   /** `hero` sits on the gradient, `band` on a light section. */
@@ -17,16 +23,66 @@ const props = withDefaults(defineProps<{
 
 const ENDPOINT = '/api/early-access'
 
+/**
+ * Mirrors the app's own `AccountRole` — see `src/types/index.ts` and the role
+ * cards in `src/pages/Onboarding.vue`, from which these labels are taken
+ * verbatim and the hints shortened. The site should ask what onboarding asks.
+ *
+ * Learner is the default because every account is a learner, and an instructor
+ * can switch into learner mode in the app, so the choice binds nobody.
+ */
+const ROLES = [
+  { id: 'learner', label: 'Learner', hint: 'Take courses and earn credentials' },
+  { id: 'instructor', label: 'Instructor', hint: 'Author courses, review work, mentor' },
+  { id: 'parent', label: 'Parent / Guardian', hint: 'Follow a child’s learning' },
+] as const
+
+/** Ids match `usePlatform`, so the detected platform maps straight onto one. */
+const PLATFORMS = [
+  { id: 'macos', label: 'macOS' },
+  { id: 'windows', label: 'Windows' },
+  { id: 'linux', label: 'Linux' },
+  { id: 'ios', label: 'iOS' },
+  { id: 'android', label: 'Android' },
+] as const
+
+type RoleId = typeof ROLES[number]['id']
+type PlatformId = typeof PLATFORMS[number]['id']
+
 const email = ref('')
 const botField = ref('')
+const role = ref<RoleId>('learner')
+const chosen = ref<PlatformId[]>([])
+const expanded = ref(false)
 const state = ref<'idle' | 'sending' | 'done' | 'error'>('idle')
 const errorMessage = ref('')
 
-// Which build they're waiting for, so that's learnable without asking. This
-// deliberately uses usePlatform rather than useDownload: the label comes from
-// the user agent, and useDownload would fetch every GitHub release to answer a
-// question that needs no network at all.
-const { label: platformLabel } = usePlatform()
+// Detection reads the user agent and needs no network. `useDownload` would fetch
+// every GitHub release to answer the same question.
+const { platform: detected, label: detectedLabel } = usePlatform()
+
+/**
+ * Tick the detected platform once detection resolves. It settles in
+ * `onMounted`, i.e. after first render, so this cannot be an initial value — and
+ * it must not overwrite a choice already made, hence the `touched` guard.
+ */
+const touched = ref(false)
+watch(detected, (value) => {
+  if (touched.value || chosen.value.length > 0) return
+  if (value !== 'unknown') chosen.value = [value as PlatformId]
+}, { immediate: true })
+
+function togglePlatform(id: PlatformId) {
+  touched.value = true
+  chosen.value = chosen.value.includes(id)
+    ? chosen.value.filter(p => p !== id)
+    : [...chosen.value, id]
+}
+
+/** Their picks in the order the chips appear, for the success message. */
+const chosenLabels = computed(() =>
+  PLATFORMS.filter(p => chosen.value.includes(p.id)).map(p => p.label).join(', '),
+)
 
 async function submit() {
   if (state.value === 'sending') return
@@ -35,6 +91,13 @@ async function submit() {
   if (!value || !value.includes('@')) {
     state.value = 'error'
     errorMessage.value = 'That address does not look right — check and try again.'
+    return
+  }
+  if (chosen.value.length === 0) {
+    // Only reachable if detection failed and they submitted without choosing.
+    expanded.value = true
+    state.value = 'error'
+    errorMessage.value = 'Pick at least one platform, so we know what to tell you about.'
     return
   }
 
@@ -47,7 +110,9 @@ async function submit() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: value,
-        platform: platformLabel.value,
+        role: role.value,
+        platforms: chosen.value,
+        detected: detected.value,
         botField: botField.value,
       }),
     })
@@ -55,8 +120,8 @@ async function submit() {
 
     if (!res.ok || !body.ok) {
       state.value = 'error'
-      // The function explains itself when it can — a bad address and an
-      // outage are not the same problem and should not read the same.
+      // The function explains itself when it can — a bad address and an outage
+      // are not the same problem and should not read the same.
       errorMessage.value = body.error ?? 'Could not add you just now. Try again in a moment.'
       return
     }
@@ -67,7 +132,6 @@ async function submit() {
     errorMessage.value = 'Could not reach the list. Try again in a moment.'
   }
 }
-
 </script>
 
 <template>
@@ -95,22 +159,76 @@ async function submit() {
           placeholder="you@example.com"
           class="ea-input"
           :aria-invalid="state === 'error'"
+          :aria-expanded="expanded"
+          aria-controls="ea-more"
           :disabled="state === 'sending'"
+          @focus="expanded = true"
+          @input="expanded = true"
         >
         <button type="submit" class="btn plausible-event-name=EarlyAccess" :disabled="state === 'sending'">
-          {{ state === 'sending' ? 'Adding you…' : 'Get early access' }}
+          {{ state === 'sending' ? 'Adding you…' : 'Join the waiting list' }}
         </button>
       </div>
+
+      <div v-if="expanded" id="ea-more" class="ea-more">
+        <fieldset class="ea-set">
+          <legend class="ea-legend">I'm joining as</legend>
+          <div class="ea-chips">
+            <label
+              v-for="r in ROLES"
+              :key="r.id"
+              class="ea-chip"
+              :class="{ on: role === r.id }"
+              :title="r.hint"
+            >
+              <input v-model="role" type="radio" name="ea-role" :value="r.id">
+              <span>{{ r.label }}</span>
+            </label>
+          </div>
+          <p class="ea-hint">Every account is a learner — this is what else you'll do. Changeable in the app later.</p>
+        </fieldset>
+
+        <fieldset class="ea-set">
+          <legend class="ea-legend">Platforms I'd use</legend>
+          <div class="ea-chips">
+            <label
+              v-for="p in PLATFORMS"
+              :key="p.id"
+              class="ea-chip"
+              :class="{ on: chosen.includes(p.id) }"
+            >
+              <input
+                type="checkbox"
+                name="ea-platforms"
+                :value="p.id"
+                :checked="chosen.includes(p.id)"
+                @change="togglePlatform(p.id)"
+              >
+              <span>{{ p.label }}</span>
+            </label>
+          </div>
+          <p class="ea-hint">
+            {{ detected === 'unknown'
+              ? 'Pick as many as you like.'
+              : `We guessed ${detectedLabel} — change it if that's wrong, or add more.` }}
+          </p>
+        </fieldset>
+      </div>
+
       <p class="ea-note" :class="{ 'ea-err': state === 'error' }" role="status" aria-live="polite">
-        {{ state === 'error' ? errorMessage : 'One email when a build is ready for your platform. Nothing else.' }}
+        {{ state === 'error' ? errorMessage : 'This joins the waiting list, not the alpha — we email you when it’s your turn.' }}
       </p>
     </form>
 
     <div v-else class="ea-done" role="status" aria-live="polite">
       <span class="ea-tick" aria-hidden="true">✓</span>
       <div>
-        <p class="ea-done-t">You're on the list.</p>
-        <p class="ea-note">Check your inbox for a confirmation. We'll write again when the alpha opens up for {{ platformLabel }}.</p>
+        <p class="ea-done-t">You're on the waiting list.</p>
+        <p class="ea-note">
+          Check your inbox — we've sent a confirmation. This doesn't open the alpha yet: we'll
+          email you what to do next when there's a build ready for
+          {{ chosenLabels || 'your platform' }}.
+        </p>
       </div>
     </div>
   </div>
@@ -176,6 +294,88 @@ async function submit() {
 .ea-band .ea-input:focus { border-color: rgb(var(--color-primary)); outline: none; }
 .ea-input[aria-invalid="true"] { border-color: rgb(var(--color-no)); }
 .ea-input:disabled { opacity: 0.6; }
+
+/* Revealed once the visitor touches the email field. Faded in because it appears
+   directly under their cursor and an instant jump reads as a glitch. The height
+   is deliberately not reserved: shifts caused by input are excluded from CLS,
+   and reserving it would put the de-cluttered hero back where it started. */
+.ea-more {
+  margin-top: 16px;
+  display: grid;
+  gap: 14px;
+  text-align: start;
+  animation: ea-reveal 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes ea-reveal {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ea-more { animation: none; }
+}
+
+.ea-set { border: 0; padding: 0; margin: 0; min-width: 0; }
+.ea-legend {
+  padding: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.ea-hero .ea-legend { color: rgb(255 255 255 / 0.8); }
+.ea-band .ea-legend { color: rgb(var(--color-muted-foreground)); }
+
+.ea-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+
+/* The native control keeps its place in the accessibility tree and its keyboard
+   behaviour — arrow keys across the radio group, space on a checkbox. Only its
+   painting is replaced by the chip. */
+.ea-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 7px 13px;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+.ea-chip input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+}
+.ea-hero .ea-chip {
+  background: rgb(255 255 255 / 0.12);
+  border-color: rgb(255 255 255 / 0.2);
+  color: rgb(255 255 255 / 0.86);
+}
+.ea-hero .ea-chip.on {
+  background: rgb(255 255 255 / 0.92);
+  border-color: rgb(255 255 255 / 0.92);
+  color: rgb(var(--color-primary));
+}
+.ea-band .ea-chip {
+  background: rgb(var(--color-card));
+  border-color: rgb(var(--color-border));
+  color: rgb(var(--color-foreground));
+}
+.ea-band .ea-chip.on {
+  background: rgb(var(--color-primary));
+  border-color: rgb(var(--color-primary));
+  color: rgb(var(--color-primary-foreground));
+}
+/* Focus must show on the chip, since the input painting it is hidden. */
+.ea-chip:has(input:focus-visible) { outline: 2px solid currentColor; outline-offset: 2px; }
+
+.ea-hint { margin: 7px 0 0; font-size: 12px; line-height: 1.45; }
+.ea-hero .ea-hint { color: rgb(255 255 255 / 0.62); }
+.ea-band .ea-hint { color: rgb(var(--color-muted-foreground)); }
 
 .ea-note { margin: 10px 0 0; font-size: 12.5px; line-height: 1.5; text-align: start; }
 .ea-hero .ea-note { color: rgb(255 255 255 / 0.7); }

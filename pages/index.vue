@@ -193,7 +193,7 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
       <MeshGradient />
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-centered">
-        <p class="eyebrow hero-eyebrow">Alpha · early access</p>
+        <p class="eyebrow hero-eyebrow">Alpha · waiting list open</p>
         <h1>Knowledge belongs to everyone.</h1>
         <p class="hero-lede">
           Free, open-source learning for every device. Study offline, own what you earn,
@@ -487,8 +487,8 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
       <MeshGradient />
       <div class="hero-scrim" />
       <div class="pad cta-inner">
-        <h2>Be there when it opens.</h2>
-        <p>We are letting people in a group at a time while the alpha settles. Leave your address and we will send a build for your platform.</p>
+        <h2>Get in the queue.</h2>
+        <p>We are letting people in a group at a time while the alpha settles. Join the waiting list and we will email you when it is your turn, with a build for the platforms you pick.</p>
         <div class="cta-row cta-row-form">
           <EarlyAccessForm variant="hero" />
         </div>
