@@ -2,10 +2,9 @@
 /**
  * Early-access signup.
  *
- * Posts to `/api/early-access`, a Netlify function that forwards to Kit. The
- * API key stays server-side: Kit's form endpoint would accept a public key
- * straight from the browser, but that key can be used by anyone who reads the
- * bundle to add subscribers to the account.
+ * Posts to `/api/early-access`, a Netlify function that forwards to Plunk. The
+ * secret key stays server-side, and the function drops honeypot hits and
+ * malformed addresses before they reach the account.
  *
  * Swapping providers later means changing that function; this component only
  * knows it posts an email and a platform to an endpoint that answers
@@ -109,7 +108,7 @@ async function submit() {
       <span class="ea-tick" aria-hidden="true">✓</span>
       <div>
         <p class="ea-done-t">You're on the list.</p>
-        <p class="ea-note">We'll be in touch when the alpha opens up for {{ download.platformLabel }}.</p>
+        <p class="ea-note">Check your inbox for a confirmation. We'll write again when the alpha opens up for {{ download.platformLabel }}.</p>
       </div>
     </div>
   </div>

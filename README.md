@@ -43,23 +43,42 @@ Both audience pages carry a visible "not built yet" notice — those features ar
 
 ## Early-access signups
 
-The form posts JSON to `/api/early-access` — a Netlify function (`netlify/functions/early-access.ts`) that forwards to [Kit](https://kit.com). The API key stays server-side: Kit's v3 endpoint accepts a public key from the browser, but a key in the bundle is a key anyone can use to add subscribers.
+The form posts JSON to `/api/early-access` — a Netlify function
+(`netlify/functions/early-access.ts`) that forwards to [Plunk](https://www.useplunk.com).
+The secret key stays server-side, and the function drops honeypot hits and malformed
+addresses before they reach the account.
+
+Two calls per signup:
+
+1. `POST /contacts` — upsert the address with `data.platform`, the platform their browser reported. Plunk answers with `_meta.isNew`.
+2. `POST /v1/send` — a confirmation email, **only when the contact is new**, so re-submitting an address does not send a second one.
+
+A failed confirmation does not fail the signup. They are on the list either way, and
+telling someone to retry would enter them twice.
 
 Set these in **Netlify → Site settings → Environment variables**:
 
 | Variable | Purpose |
 | :--- | :--- |
-| `KIT_API_KEY` | Kit v3 API key |
-| `KIT_FORM_ID` | Numeric id of the Kit form subscribers are added to |
-| `KIT_API_BASE` | Optional; defaults to `https://api.convertkit.com/v3` |
+| `PLUNK_API_KEY` | Secret key (`sk_…`). The public `pk_…` key only works for `/v1/track` and is not enough here |
+| `PLUNK_API_BASE` | Optional; defaults to `https://next-api.useplunk.com` |
 
-Until both required variables are set the endpoint answers `503` with a message that blames the configuration rather than the visitor's address.
+Until the key is set the endpoint answers `503` with a message that blames the
+configuration rather than the visitor's address.
 
-The detected platform is sent as a Kit custom field named `platform`, so "how many people are waiting on Windows" is answerable — create that field in Kit or the value is discarded. Addresses are trimmed and lower-cased before sending, so casing variants don't become separate subscribers. An off-screen honeypot field is answered with a silent success rather than an error, so bots don't simply retry.
+Addresses are trimmed and lower-cased before sending, so casing variants do not become
+separate contacts. `data.platform` takes arbitrary keys — no field needs declaring in
+Plunk first.
 
-**Kit settings worth checking:** open and click tracking are on by default and sit badly beside what `/privacy` claims; decide separately whether you want double opt-in.
+**Before this sends anything real:** verify your sending domain in Plunk and set SPF,
+DKIM and DMARC on it. Deliverability is yours to own on a self-serve sender in a way it
+would not be on a managed marketing platform, and the launch announcement is the one
+email that must not land in spam. The confirmation copy lives in `confirmationBody()`
+in the function.
 
-**The function does not run under `npm run dev`.** Use `netlify dev` to exercise the whole path locally, or the form will report that it could not reach the list.
+**The function does not run under `npm run dev`.** Use `netlify dev` to exercise the
+whole path locally, or the form will report that it could not reach the list. Note that
+`netlify dev` proxies Vite and breaks its HMR websocket, so expect console noise there.
 
 ## Analytics
 

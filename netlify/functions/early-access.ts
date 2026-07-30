@@ -1,17 +1,25 @@
 /**
- * Early-access signup → Kit (formerly ConvertKit).
+ * Early-access signup → Plunk.
  *
- * The browser posts here rather than to Kit directly. Kit's v3 form endpoint
- * accepts a public API key, but shipping it in the bundle means anyone can
- * stuff the list; keeping the call server-side also lets us drop honeypot hits
- * and malformed addresses before they ever reach the account.
+ * The browser posts here rather than to Plunk directly, so the secret key stays
+ * server-side and honeypot hits and malformed addresses are dropped before they
+ * reach the account.
+ *
+ * Two calls, in order:
+ *   1. POST /contacts   upsert the address with the platform they are waiting
+ *                       on. Plunk answers with `_meta.isNew`.
+ *   2. POST /v1/send    a confirmation, but only when the contact is new — a
+ *                       second submission of the same address should not send
+ *                       a second email.
+ *
+ * A failed confirmation does not fail the signup: they are on the list either
+ * way, and telling someone to retry would create a duplicate.
  *
  * Configure in Netlify → Site settings → Environment variables:
- *   KIT_API_KEY   your Kit v3 API key
- *   KIT_FORM_ID   the numeric id of the form subscribers are added to
- *   KIT_API_BASE  optional, defaults to Kit's v3 host
+ *   PLUNK_API_KEY   secret key (sk_…)
+ *   PLUNK_API_BASE  optional, defaults to Plunk's hosted API
  *
- * Netlify v2 function: routed by the `config.path` below, so no redirect rule.
+ * Netlify v2 function: routed by `config.path`, so no redirect rule.
  */
 export const config = { path: '/api/early-access' }
 
@@ -27,12 +35,25 @@ interface Payload {
 }
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+const DEFAULT_BASE = 'https://next-api.useplunk.com'
 
 function json(body: Record<string, unknown>, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
   })
+}
+
+function confirmationBody(platform: string) {
+  const waiting = platform && platform !== 'unknown' && platform !== 'your platform'
+    ? `for ${platform}`
+    : 'for your platform'
+
+  return `<p>You're on the list.</p>
+<p>We'll write once there's an alpha build ready ${waiting}. That is the only reason we'll email you — no newsletter, no updates you didn't ask for.</p>
+<p>Alexandria is free and open source. If you'd rather read the code than wait, it's at <a href="https://github.com/ifftu-dev/alexandria">github.com/ifftu-dev/alexandria</a>.</p>
+<p>Want off the list? Reply to this email, or write to admin@ifftu.dev, and we'll delete your address.</p>
+<p>— Alexandria</p>`
 }
 
 export default async function handler(request: Request): Promise<Response> {
@@ -61,40 +82,73 @@ export default async function handler(request: Request): Promise<Response> {
 
   const platform = typeof payload.platform === 'string' ? payload.platform.slice(0, 60) : 'unknown'
 
-  const apiKey = process.env.KIT_API_KEY
-  const formId = process.env.KIT_FORM_ID
-  const base = process.env.KIT_API_BASE ?? 'https://api.convertkit.com/v3'
+  const apiKey = process.env.PLUNK_API_KEY
+  const base = (process.env.PLUNK_API_BASE ?? DEFAULT_BASE).replace(/\/$/, '')
 
-  if (!apiKey || !formId) {
+  if (!apiKey) {
     // Misconfiguration is ours, not the visitor's — say so plainly and leave a
     // trace in the function log rather than blaming their address.
-    console.error('early-access: KIT_API_KEY or KIT_FORM_ID is not set')
+    console.error('early-access: PLUNK_API_KEY is not set')
     return json({ ok: false, error: 'Signup is not configured yet. Try again shortly.' }, 503)
   }
 
+  const auth = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${apiKey}`,
+  }
+
+  let isNew = true
   try {
-    const res = await fetch(`${base}/forms/${formId}/subscribe`, {
+    const res = await fetch(`${base}/contacts`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: auth,
       body: JSON.stringify({
-        api_key: apiKey,
         email,
-        // Kit stores this against the subscriber, so "how many people are
-        // waiting on Windows" is answerable without a separate table.
-        fields: { platform },
+        subscribed: true,
+        // Arbitrary keys, so "how many are waiting on Windows" stays
+        // answerable without pre-declaring a field.
+        data: { platform },
       }),
     })
 
     if (!res.ok) {
       const detail = await res.text().catch(() => '')
-      console.error('early-access: Kit responded', res.status, detail.slice(0, 300))
+      console.error('early-access: Plunk /contacts responded', res.status, detail.slice(0, 300))
       return json({ ok: false, error: 'Could not add you just now. Try again in a moment.' }, 502)
     }
 
-    return json({ ok: true })
+    const body = await res.json().catch(() => null) as { data?: { _meta?: { isNew?: boolean } } } | null
+    // Absent metadata is treated as new: a missing confirmation is worse than
+    // an occasional duplicate one.
+    isNew = body?.data?._meta?.isNew ?? true
   }
   catch (error) {
-    console.error('early-access: request to Kit failed', error)
+    console.error('early-access: request to Plunk failed', error)
     return json({ ok: false, error: 'Could not reach the list. Try again in a moment.' }, 502)
   }
+
+  if (isNew) {
+    try {
+      const res = await fetch(`${base}/v1/send`, {
+        method: 'POST',
+        headers: auth,
+        body: JSON.stringify({
+          to: email,
+          subject: "You're on the Alexandria early-access list",
+          body: confirmationBody(platform),
+        }),
+      })
+      if (!res.ok) {
+        const detail = await res.text().catch(() => '')
+        console.error('early-access: confirmation send failed', res.status, detail.slice(0, 300))
+      }
+    }
+    catch (error) {
+      // They are subscribed; the courtesy email is not worth a retry that
+      // would enter them twice.
+      console.error('early-access: confirmation send threw', error)
+    }
+  }
+
+  return json({ ok: true, isNew })
 }
