@@ -82,16 +82,25 @@ def html(font_b64: str) -> str:
   .stars i {{ position: absolute; border-radius: 50%; background: #fff; }}
   .copy {{ position: absolute; inset: 0; padding: 0 70px; display: flex; flex-direction: column; justify-content: center; }}
   .eyebrow {{
+    display: flex; align-items: center; gap: 13px;
     font-size: 17px; font-weight: 700; letter-spacing: 0.34em;
     color: #b9c2f5; margin-bottom: 26px;
   }}
+  /* The nav's hexagon, drawn rather than linked — this becomes a flat JPEG, so
+     the mark has to be part of the artwork. */
+  .eyebrow svg {{ width: 30px; height: 30px; flex: none; }}
   h1 {{ font-size: 62px; font-weight: 800; letter-spacing: -0.02em; color: #fff; line-height: 1.05; }}
   .sub {{ margin-top: 18px; font-size: 20px; font-weight: 400; color: rgba(255,255,255,0.72); }}
 </style>
 <div class="wash"></div>
 <div class="stars">{stars_css()}</div>
 <div class="copy">
-  <div class="eyebrow">{EYEBROW}</div>
+  <div class="eyebrow">
+    <svg viewBox="0 0 32 32" fill="none" stroke="#b9c2f5" stroke-width="2">
+      <path d="M16 2L4 8v16l12 6 12-6V8L16 2z"/><path d="M16 8v16M8 12l8 4 8-4"/>
+    </svg>
+    <span>{EYEBROW}</span>
+  </div>
   <h1>{TITLE}</h1>
   <div class="sub">{SUBTITLE}</div>
 </div>

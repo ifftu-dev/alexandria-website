@@ -230,6 +230,24 @@ const TEMPLATE = `<!DOCTYPE html>
 
     <!-- FOOTER -->
     <tr><td style="height:22px;line-height:22px;font-size:0;">&nbsp;</td></tr>
+    <tr><td class="px" align="center" style="padding:0 40px 14px 40px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
+        <tr>
+          <td style="padding:0 9px 0 0;" valign="middle">
+            <img src="https://alexandria.ifftu.dev/email/email-mark-alexandria.png" width="22" height="22" alt="Alexandria" style="display:block;width:22px;height:22px;border:0;">
+          </td>
+          <td style="padding:0 18px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:20px;color:#93A3BC;letter-spacing:0.06em;" valign="middle">
+            ALEXANDRIA
+          </td>
+          <td style="padding:0 8px 0 0;" valign="middle">
+            <img src="https://alexandria.ifftu.dev/email/email-mark-ifftu.png" width="20" height="20" alt="IFFTU" style="display:block;width:20px;height:20px;border:0;">
+          </td>
+          <td style="font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:20px;color:#93A3BC;letter-spacing:0.06em;" valign="middle">
+            AN IFFTU PROJECT
+          </td>
+        </tr>
+      </table>
+    </td></tr>
     <tr><td class="px" align="center" style="padding:0 40px;">
       <p style="margin:0 0 10px 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:20px;color:#93A3BC;">
         <a href="https://alexandria.ifftu.dev" style="color:#93A3BC;text-decoration:underline;">alexandria.ifftu.dev</a>
