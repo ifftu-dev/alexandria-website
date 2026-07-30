@@ -75,15 +75,46 @@ Addresses are trimmed and lower-cased before sending, so casing variants do not 
 separate contacts. `data.platform` takes arbitrary keys — no field needs declaring in
 Plunk first.
 
-**Before this sends anything real:** verify `alexandria.ifftu.dev` as a sending domain in
-Plunk and set SPF, DKIM and DMARC on it. DNS lives in Netlify DNS (NS1). One trap: that
-subdomain already carries `MX → smtp.google.com`, so its SPF record has to authorise
-Google Workspace *and* Plunk — a single TXT record with both includes, since a domain
-with two SPF records has none that validate. Deliverability is yours to own on a self-serve sender in a way it
-would not be on a managed marketing platform, and the launch announcement is the one
-email that must not land in spam. A `200` from `/v1/send` means accepted, not delivered —
-an unverified sender is the likeliest reason a `200` still produces nothing in the inbox.
-The confirmation copy lives in `confirmationBody()` in the function.
+### Mail authentication
+
+Set up and verified — `alexandria.ifftu.dev` is a verified SES identity in Plunk (Plunk
+sends through Amazon SES), and DNS in Netlify DNS carries:
+
+| Name | Type | Value |
+| :--- | :--- | :--- |
+| `ifftu.dev` | TXT | `v=spf1 include:_spf.google.com ~all` |
+| `alexandria.ifftu.dev` | TXT | `v=spf1 include:_spf.google.com ~all` |
+| `_dmarc.ifftu.dev` | TXT | `v=DMARC1; p=none; rua=mailto:admin@ifftu.dev; fo=1` |
+| `_dmarc.alexandria.ifftu.dev` | TXT | same as above |
+
+Alongside pre-existing `google._domainkey` TXT records and three `*.dkim.amazonses.com`
+DKIM CNAMEs per domain. Confirmed against Gmail: `spf=pass`, `dkim=pass
+d=alexandria.ifftu.dev`, `dmarc=pass`.
+
+Four decisions worth keeping:
+
+- **No `include:amazonses.com` in SPF.** It would authorise every SES customer to send as
+  the domain. Unnecessary: SES signs with our own DKIM key, so DMARC passes on DKIM
+  alignment and SPF alignment is redundant. SES uses its own envelope sender, so SPF is
+  evaluated against `eu-north-1.amazonses.com` regardless.
+- **One SPF record per name, `~all` not `-all`.** Both names also send Workspace mail
+  (`MX → smtp.google.com`), so Google's include has to live in the *same* record — a
+  domain publishing two `v=spf1` records has none that validate. Tighten to `-all` only
+  after DMARC reports come back clean.
+- **DMARC published on the subdomain too, not just the parent.** Org-domain fallback is
+  correct per RFC 7489 but depends on the receiver resolving the parent, and a cached
+  negative answer means no policy is found at all — which is a DMARC failure on mail that
+  is otherwise perfectly signed. An explicit record removes the dependency.
+- **`p=none` is monitoring only.** Reports land at `admin@ifftu.dev` daily. Move to
+  `p=quarantine` on the evidence in those reports, not on a schedule.
+
+A `200` from `/v1/send` means accepted, not delivered. The confirmation copy lives in
+`confirmationBody()` in the function.
+
+One gap for later: the confirmation carries no `List-Unsubscribe` header. Fine for a
+one-per-signup transactional message, but the launch announcement to the whole list is
+bulk mail, and Gmail and Yahoo expect one-click unsubscribe on that. "Reply to this
+email" does not satisfy it.
 
 **The function does not run under `npm run dev`.** Use `netlify dev` to exercise the
 whole path locally, or the form will report that it could not reach the list. Note that
