@@ -206,12 +206,7 @@ const waitlist = useWaitlist()
           <button type="button" class="btn btn-lg plausible-event-name=EarlyAccess" @click="waitlist.open()">
             Join the waiting list
           </button>
-          <a
-            href="https://github.com/ifftu-dev/alexandria"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="plausible-event-name=CTA-GitHub btn-ghost"
-          >View the source</a>
+          <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify btn-ghost">Verify a credential</NuxtLink>
         </div>
       </div>
     </section>
@@ -225,6 +220,67 @@ const waitlist = useWaitlist()
         The real shell — press <b>/</b> for search, open <b>Skills &amp; Credentials</b> and verify one
       </p>
     </div>
+
+    <!-- ═══ PROOF ═══ -->
+    <section class="proof">
+      <div class="pad proof-grid">
+        <div>
+          <p class="eyebrow">Verify it yourself</p>
+          <h2>Don't trust us. Check the credential.</h2>
+          <p class="p-sub">
+            Every credential is a W3C Verifiable Credential, Ed25519-signed under the holder's own DID
+            and hash-anchored on-chain. Confirm it with our tooling, someone else's, or none at all.
+          </p>
+          <div class="proof-metrics">
+            <div><div class="n">Offline</div><div class="l">Verification needs no network</div></div>
+            <div><div class="n">0</div><div class="l">Calls to Alexandria required</div></div>
+            <div><div class="n">MIT</div><div class="l">Core licence, forever</div></div>
+          </div>
+          <p style="margin-top: 24px">
+            <a
+              href="https://github.com/ifftu-dev/alexandria"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="plausible-event-name=CTA-GitHub chev"
+            >Read the credential spec <i>›</i></a>
+          </p>
+        </div>
+
+        <div class="code">
+          <div class="code-tabs" role="tablist">
+            <button role="tab" :aria-selected="codeTab === 'credential'" @click="codeTab = 'credential'">credential.json</button>
+            <button role="tab" :aria-selected="codeTab === 'verify'" @click="codeTab = 'verify'">verify.sh</button>
+            <button role="tab" :aria-selected="codeTab === 'output'" @click="codeTab = 'output'">output</button>
+          </div>
+          <pre v-if="codeTab === 'credential'"><span class="c">// issued on device, no server involved</span>
+{
+  <span class="k">"@context"</span>: [<span class="s">"https://www.w3.org/ns/credentials/v2"</span>],
+  <span class="k">"type"</span>: [<span class="s">"VerifiableCredential"</span>, <span class="s">"SkillCredential"</span>],
+  <span class="k">"issuer"</span>: <span class="s">"did:key:z6MkhaXgBZD…QYtP"</span>,
+  <span class="k">"credentialSubject"</span>: {
+    <span class="k">"skill"</span>: <span class="s">"welding.pipe.6g"</span>,
+    <span class="k">"level"</span>: <span class="s">"apply"</span>,
+    <span class="k">"evidence"</span>: <span class="s">"blake3:9f2c…e17a"</span>
+  },
+  <span class="k">"proof"</span>: { <span class="k">"type"</span>: <span class="s">"Ed25519Signature2020"</span>,
+    <span class="k">"anchor"</span>: <span class="s">"cardano:tx/8a41…c92f"</span> }
+}</pre>
+          <pre v-else-if="codeTab === 'verify'"><span class="c"># works with the network unplugged</span>
+<span class="g">$</span> alexandria verify credential.json --offline
+
+<span class="c"># or without Alexandria at all</span>
+<span class="g">$</span> npm i -g @digitalbazaar/vc
+<span class="g">$</span> vc verify --input credential.json \
+     --did-resolver did-key</pre>
+          <pre v-else><span class="g">✓</span> signature valid        <span class="c">ed25519 · holder key</span>
+<span class="g">✓</span> contents unchanged     <span class="c">blake3 digest match</span>
+<span class="g">✓</span> anchor found           <span class="c">cardano tx 8a41…c92f</span>
+<span class="g">✓</span> checked offline        <span class="c">0 network calls</span>
+
+<span class="y">GENUINE</span> — issued by the holder, unaltered</pre>
+        </div>
+      </div>
+    </section>
 
     <!-- ═══ FEATURES ═══ -->
     <section class="section pad">
@@ -432,64 +488,57 @@ const waitlist = useWaitlist()
       </div>
     </section>
 
-    <!-- ═══ PROOF ═══ -->
-    <section class="proof">
-      <div class="pad proof-grid">
-        <div>
-          <p class="eyebrow">Verify it yourself</p>
-          <h2>Don't trust us. Check the credential.</h2>
-          <p class="p-sub">
-            Every credential is a W3C Verifiable Credential, Ed25519-signed under the holder's own DID
-            and hash-anchored on-chain. Confirm it with our tooling, someone else's, or none at all.
-          </p>
-          <div class="proof-metrics">
-            <div><div class="n">Offline</div><div class="l">Verification needs no network</div></div>
-            <div><div class="n">0</div><div class="l">Calls to Alexandria required</div></div>
-            <div><div class="n">MIT</div><div class="l">Core licence, forever</div></div>
-          </div>
-          <p style="margin-top: 24px">
-            <a
-              href="https://github.com/ifftu-dev/alexandria"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="plausible-event-name=CTA-GitHub chev"
-            >Read the credential spec <i>›</i></a>
-          </p>
-        </div>
 
-        <div class="code">
-          <div class="code-tabs" role="tablist">
-            <button role="tab" :aria-selected="codeTab === 'credential'" @click="codeTab = 'credential'">credential.json</button>
-            <button role="tab" :aria-selected="codeTab === 'verify'" @click="codeTab = 'verify'">verify.sh</button>
-            <button role="tab" :aria-selected="codeTab === 'output'" @click="codeTab = 'output'">output</button>
-          </div>
-          <pre v-if="codeTab === 'credential'"><span class="c">// issued on device, no server involved</span>
-{
-  <span class="k">"@context"</span>: [<span class="s">"https://www.w3.org/ns/credentials/v2"</span>],
-  <span class="k">"type"</span>: [<span class="s">"VerifiableCredential"</span>, <span class="s">"SkillCredential"</span>],
-  <span class="k">"issuer"</span>: <span class="s">"did:key:z6MkhaXgBZD…QYtP"</span>,
-  <span class="k">"credentialSubject"</span>: {
-    <span class="k">"skill"</span>: <span class="s">"welding.pipe.6g"</span>,
-    <span class="k">"level"</span>: <span class="s">"apply"</span>,
-    <span class="k">"evidence"</span>: <span class="s">"blake3:9f2c…e17a"</span>
-  },
-  <span class="k">"proof"</span>: { <span class="k">"type"</span>: <span class="s">"Ed25519Signature2020"</span>,
-    <span class="k">"anchor"</span>: <span class="s">"cardano:tx/8a41…c92f"</span> }
-}</pre>
-          <pre v-else-if="codeTab === 'verify'"><span class="c"># works with the network unplugged</span>
-<span class="g">$</span> alexandria verify credential.json --offline
+    <!-- ═══ WHO PAYS ═══ -->
+    <section class="section pad">
+      <p class="eyebrow">Who pays</p>
+      <h2 class="h-sec">Free for learners. Paid for organisations.</h2>
+      <p class="p-sub">
+        The split is deliberate, and it is the whole business model. Learning, owning a credential and
+        proving it are free permanently. Organisations pay for running this at scale — never for a
+        learner's right to their own proof.
+      </p>
+      <div class="who">
+        <article class="who-card">
+          <h3>Always free</h3>
+          <ul>
+            <li>Taking courses and assessments</li>
+            <li>Earning and holding credentials</li>
+            <li>Proving one to anybody, forever</li>
+            <li>Running the app, self-hosting the core</li>
+          </ul>
+          <StatusChip state="alpha" label="True in the alpha today" />
+        </article>
+        <article class="who-card">
+          <h3>What organisations pay for</h3>
+          <ul>
+            <li>Managed hosting and operations</li>
+            <li>SSO, SIS and ATS integrations</li>
+            <li>Team workflows and shared review</li>
+            <li>Support, migration and deployment</li>
+          </ul>
+          <StatusChip state="planned" label="Planned · nothing purchasable yet" />
+        </article>
+      </div>
+    </section>
 
-<span class="c"># or without Alexandria at all</span>
-<span class="g">$</span> npm i -g @digitalbazaar/vc
-<span class="g">$</span> vc verify --input credential.json \
-     --did-resolver did-key</pre>
-          <pre v-else><span class="g">✓</span> signature valid        <span class="c">ed25519 · holder key</span>
-<span class="g">✓</span> contents unchanged     <span class="c">blake3 digest match</span>
-<span class="g">✓</span> anchor found           <span class="c">cardano tx 8a41…c92f</span>
-<span class="g">✓</span> checked offline        <span class="c">0 network calls</span>
-
-<span class="y">GENUINE</span> — issued by the holder, unaltered</pre>
-        </div>
+    <!-- ═══ TRUST ═══ -->
+    <section class="section pad">
+      <p class="eyebrow">Check for yourself</p>
+      <h2 class="h-sec">Nothing here asks to be taken on faith.</h2>
+      <div class="trust-strip">
+        <NuxtLink to="/verify" class="trust-item plausible-event-name=Nav-Verify">
+          <b>Verify a credential</b><span>Checked in your browser, no account</span>
+        </NuxtLink>
+        <NuxtLink to="/developers" class="trust-item">
+          <b>Read the format</b><span>The stack and credential scheme, named</span>
+        </NuxtLink>
+        <NuxtLink to="/trust" class="trust-item">
+          <b>What we can claim</b><span>Security and compliance, dated</span>
+        </NuxtLink>
+        <a href="https://github.com/ifftu-dev/alexandria" target="_blank" rel="noopener noreferrer" class="trust-item plausible-event-name=CTA-GitHub">
+          <b>Read the source</b><span>MIT core, enterprise modules separate</span>
+        </a>
       </div>
     </section>
 
@@ -499,11 +548,12 @@ const waitlist = useWaitlist()
       <div class="hero-scrim" />
       <div class="pad cta-inner">
         <h2>Get in the queue.</h2>
-        <p>We are letting people in a group at a time while the alpha settles. Join the waiting list and we will email you when it is your turn, with a build for the platforms you pick.</p>
+        <p>Individuals join the waiting list and we write when it is their turn. Organisations run a pilot: one programme or one role family, with success measures agreed before anyone starts.</p>
         <div class="cta-row">
           <button type="button" class="btn btn-lg plausible-event-name=EarlyAccess" @click="waitlist.open()">
             Join the waiting list
           </button>
+          <NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots btn-ghost">Run a pilot</NuxtLink>
         </div>
         <p class="cta-alt">
           Prefer to read the code first?
@@ -521,4 +571,23 @@ const waitlist = useWaitlist()
 
 <style scoped>
 .tag-link { color: rgb(255 255 255 / 0.9); text-decoration: underline; text-underline-offset: 2px; }
+.who { display: grid; gap: 16px; margin-top: 26px; }
+@media (min-width: 780px) { .who { grid-template-columns: 1fr 1fr; } }
+.who-card { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }
+.who-card h3 { margin: 0 0 12px; font-size: 15.5px; letter-spacing: -0.01em; }
+.who-card ul { margin: 0 0 14px; padding-inline-start: 18px; display: grid; gap: 7px; }
+.who-card li { font-size: 14px; line-height: 1.5; color: rgb(var(--color-muted-foreground)); }
+
+.trust-strip { display: grid; gap: 12px; margin-top: 22px; }
+@media (min-width: 700px) { .trust-strip { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1040px) { .trust-strip { grid-template-columns: repeat(4, 1fr); } }
+.trust-item {
+  display: block; padding: 16px 18px; border-radius: 12px; text-decoration: none;
+  border: 1px solid rgb(var(--color-border)); background: rgb(var(--color-card));
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+.trust-item:hover { border-color: rgb(var(--color-primary) / 0.5); transform: translateY(-2px); }
+.trust-item b { display: block; font-size: 14px; color: rgb(var(--color-foreground)); }
+.trust-item span { display: block; margin-top: 4px; font-size: 12.5px; line-height: 1.5; color: rgb(var(--color-muted-foreground)); }
+
 </style>
