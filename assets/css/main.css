@@ -371,6 +371,11 @@ svg { flex-shrink: 0; }
   margin: 0;
   text-wrap: balance;
 }
+/* The hero is dark in both themes, so the emphasis takes the on-dark accent for
+   the same reason the eyebrow does — the light-theme accent is a deep indigo
+   chosen to sit on white and disappears against the gradient. */
+.hero h1 em { font-style: italic; color: rgb(var(--page-accent-dark, 139 133 255)); }
+
 .hero-lede {
   font-size: 17.5px;
   line-height: 1.55;
@@ -800,6 +805,47 @@ svg { flex-shrink: 0; }
 .gap-foot { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: baseline; justify-content: space-between; margin-top: 26px; }
 .gap-src { margin: 0; font-size: 11.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); max-width: 80ch; }
 .gap-foot a { font-size: 13.5px; font-weight: 600; color: rgb(var(--color-primary)); white-space: nowrap; }
+
+/* ─── The problem ──────────────────────────────────────── */
+.prob { display: grid; gap: 16px; margin-top: 30px; }
+@media (min-width: 820px) { .prob { grid-template-columns: repeat(3, 1fr); } }
+.prob-card { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }
+.prob-n { margin: 0 0 10px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(var(--color-primary)); }
+.prob-card h3 { margin: 0 0 8px; font-size: 16px; letter-spacing: -0.01em; }
+.prob-card p { margin: 0; font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
+.prob-more { margin: 24px 0 0; }
+.prob-more a { font-size: 14px; font-weight: 600; color: rgb(var(--color-primary)); }
+
+/* ─── Free forever ─────────────────────────────────────── */
+.free-grid { display: grid; gap: 16px; margin-top: 30px; }
+@media (min-width: 900px) { .free-grid { grid-template-columns: repeat(3, 1fr); } }
+.free-card { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.free-card h3 { margin: 4px 0 0; font-size: 16.5px; letter-spacing: -0.01em; }
+.free-card p { margin: 0; font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
+.free-card > a { margin-top: auto; padding-top: 6px; font-size: 13.5px; font-weight: 600; color: rgb(var(--color-primary)); }
+/* The gap between intention and instrument is the honest part of this section,
+   so it is set apart rather than folded into the paragraph above it. */
+.free-gap { border-inline-start: 2px solid rgb(var(--color-border)); padding-inline-start: 12px; font-size: 13px !important; }
+
+.who-share { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 22px; margin-top: 26px; padding-top: 22px; border-top: 1px solid rgb(var(--color-border)); }
+.who-share-n { margin: 0; font-size: clamp(34px, 4.4vw, 46px); font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: rgb(var(--color-primary)); }
+.who-share-t { margin: 0; flex: 1 1 340px; font-size: 14.5px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
+.who-share-t b { color: rgb(var(--color-foreground)); }
+
+/* ─── Where we actually are ────────────────────────────
+   The two columns are weighted the same on purpose. Shrinking the second one
+   would be the exact hedge the section exists to avoid. */
+.state { display: grid; gap: 16px; margin-top: 30px; }
+@media (min-width: 820px) { .state { grid-template-columns: 1fr 1fr; } }
+.state-card { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }
+.state-card h3 { margin: 0 0 12px; font-size: 15.5px; letter-spacing: -0.01em; }
+.state-card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.state-card li { position: relative; padding-inline-start: 24px; font-size: 14px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); }
+.state-card li::before { position: absolute; inset-inline-start: 0; font-weight: 700; }
+.state-yes li::before { content: "✓"; color: rgb(var(--color-ok)); }
+.state-no li::before { content: "—"; color: rgb(var(--color-muted-foreground)); }
+.state-close { margin: 26px 0 0; font-size: 14.5px; line-height: 1.7; color: rgb(var(--color-muted-foreground)); max-width: 74ch; }
+.state-close a { color: rgb(var(--color-primary)); }
 
 .proof { position: relative; color: #e7ecfa; padding: clamp(80px, 10vw, 108px) 0; margin-top: 30px; overflow: hidden; }
 .proof::before {
