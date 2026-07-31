@@ -1043,12 +1043,24 @@ blockquote a {
    Sits directly under the app window so the first thing after the product is
    the reason it exists. Hairlines top and bottom rather than a tint: this is a
    statement of evidence, and it should read as a plain band of fact. */
-.gap { border-block: 1px solid rgb(var(--color-border)); padding-block: clamp(34px, 4.5vw, 46px); }
-.gap-figs { display: grid; gap: 22px 26px; grid-template-columns: repeat(2, 1fr); }
-@media (min-width: 860px) { .gap-figs { grid-template-columns: repeat(4, 1fr); } }
-.gap-n { margin: 0; font-family: var(--font-display); font-size: clamp(30px, 3.8vw, 44px); font-weight: 300; letter-spacing: -0.01em; line-height: 1.05; }
-.gap-l { margin: 7px 0 0; font-size: 13px; line-height: 1.5; color: rgb(var(--color-muted-foreground)); }
-.gap-foot { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: baseline; justify-content: space-between; margin-top: 26px; }
+.gap { border-block: 1px solid rgb(var(--color-border)); padding-block: clamp(44px, 6vw, 64px); }
+/* Two explicit rows, and each cell spans both as a subgrid, so every figure sits
+   on one line and every label starts on another. Without it the one value that
+   wraps to two lines — "Fewer than 1 in 700" — pushed its own label 46px below
+   the other three, which is what made the row look broken rather than dense. */
+.gap-figs {
+  display: grid;
+  gap: 30px 36px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto auto;
+}
+.gap-fig { display: grid; grid-row: span 2; grid-template-rows: subgrid; gap: 10px; }
+@media (min-width: 860px) { .gap-figs { grid-template-columns: repeat(4, 1fr); gap: 0 40px; } }
+/* Bottom of the row, so a figure that wraps to two lines shares its last
+   baseline with the ones that do not. */
+.gap-n { margin: 0; font-family: var(--font-display); font-size: clamp(30px, 3.8vw, 44px); font-weight: 300; letter-spacing: -0.01em; line-height: 1.05; align-self: end; }
+.gap-l { margin: 0; font-size: 13.5px; line-height: 1.55; color: rgb(var(--color-muted-foreground)); align-self: start; }
+.gap-foot { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: baseline; justify-content: space-between; margin-top: 34px; padding-top: 22px; border-top: 1px solid rgb(var(--color-border)); }
 .gap-src { margin: 0; font-size: 11.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); max-width: 80ch; }
 /* A standalone link, so WCAG's inline exception does not apply — it measured
    22px tall against the 24px minimum. */
