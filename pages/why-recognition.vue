@@ -353,7 +353,7 @@ const method = [
 @media (min-width: 720px) { .w-stats { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 720px) { .w-stats-proj { grid-template-columns: repeat(4, 1fr); } }
 .w-stat { border-top: 2px solid rgb(var(--color-primary)); padding-top: 14px; }
-.w-fig { margin: 0; font-size: clamp(30px, 4vw, 42px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
+.w-fig { margin: 0; font-family: var(--font-display); font-size: clamp(34px, 4.4vw, 50px); font-weight: 300; letter-spacing: -0.01em; line-height: 1.02; }
 .w-figlabel { margin: 8px 0 0; font-size: 13.5px; line-height: 1.55; color: rgb(var(--color-muted-foreground)); }
 .w-basis { margin: 6px 0 0; font-size: 12px; line-height: 1.5; color: rgb(var(--color-muted-foreground)); opacity: 0.85; }
 /* Projections must not borrow the visual authority of the sourced figures. */
