@@ -471,7 +471,7 @@ useHead({
         <p>Join the institutions building an open, verifiable future for education. Free to start. Open-source forever.</p>
         <div class="cta-row">
           <a :href="GITHUB_URL" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub btn">Request a demo</a>
-          <NuxtLink to="/recruiter" class="plausible-event-name=Nav-Recruiter btn-ghost">For recruiters</NuxtLink>
+          <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter btn-ghost">For employers</NuxtLink>
         </div>
       </div>
     </section>

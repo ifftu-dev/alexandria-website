@@ -407,8 +407,8 @@ const waitlist = useWaitlist()
               <span>Full record behind each credential</span>
               <span>Candidate consent required</span>
             </div>
-            <NuxtLink to="/recruiter" class="plausible-event-name=Nav-Recruiter chev" style="color: rgb(var(--color-recruiter))">
-              Explore recruiting <i>›</i>
+            <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter chev" style="color: rgb(var(--color-recruiter))">
+              Explore for employers <i>›</i>
             </NuxtLink>
           </div>
         </article>

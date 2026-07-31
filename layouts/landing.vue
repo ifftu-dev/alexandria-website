@@ -40,8 +40,10 @@ const year = new Date().getFullYear()
         </NuxtLink>
 
         <nav class="nav-links">
-          <NuxtLink to="/recruiter" class="plausible-event-name=Nav-Recruiter link-recruiter">For recruiters</NuxtLink>
+          <NuxtLink to="/learners" class="plausible-event-name=Nav-Learners">For learners</NuxtLink>
+          <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter link-recruiter">For employers</NuxtLink>
           <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution">For institutions</NuxtLink>
+          <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify">Verify</NuxtLink>
         </nav>
 
         <div class="nav-right">
@@ -86,8 +88,11 @@ const year = new Date().getFullYear()
               </button>
             </div>
             <div class="drawer-links">
-              <NuxtLink to="/recruiter" class="plausible-event-name=Nav-Recruiter link-recruiter" @click="closeMobileMenu">For recruiters</NuxtLink>
+              <NuxtLink to="/learners" class="plausible-event-name=Nav-Learners" @click="closeMobileMenu">For learners</NuxtLink>
+              <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter link-recruiter" @click="closeMobileMenu">For employers</NuxtLink>
               <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution" @click="closeMobileMenu">For institutions</NuxtLink>
+              <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify" @click="closeMobileMenu">Verify a credential</NuxtLink>
+              <NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots" @click="closeMobileMenu">Run a pilot</NuxtLink>
               <button
                 type="button"
                 class="plausible-event-name=EarlyAccess drawer-cta"
@@ -185,7 +190,13 @@ const year = new Date().getFullYear()
           <div class="foot-col">
             <h2>For</h2>
             <ul>
-              <li><NuxtLink to="/recruiter" class="plausible-event-name=Nav-Recruiter">Recruiters</NuxtLink></li>
+              <li><NuxtLink to="/learners" class="plausible-event-name=Nav-Learners">Learners</NuxtLink></li>
+              <li><NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter">Employers</NuxtLink></li>
+              <li><NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots">Run a pilot</NuxtLink></li>
+              <li><NuxtLink to="/partners">Partners</NuxtLink></li>
+              <li><NuxtLink to="/verify" class="plausible-event-name=Nav-Verify">Verify a credential</NuxtLink></li>
+              <li><NuxtLink to="/developers">Developers</NuxtLink></li>
+              <li><NuxtLink to="/trust">Trust</NuxtLink></li>
               <li><NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions">Institutions</NuxtLink></li>
             </ul>
           </div>
