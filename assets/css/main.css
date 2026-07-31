@@ -929,6 +929,116 @@ blockquote a {
   .e-cand-k, .i-fig-s, .pv-keep, .pv-c-k, .t-panel-n, .w-src, .gap-src { font-size: 11.5px; }
 }
 
+/* ─── Skill graph ──────────────────────────────────────
+   Also lifted out of a scoped block. It was the last per-component stylesheet
+   still blocking a first paint — 1.5 KB costing a full round trip on the one
+   page that uses it. Carried in the shared sheet it costs the other pages
+   nothing they were not already downloading. */
+.graph-canvas {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, rgb(var(--app-foreground, var(--color-foreground))) 3%, transparent);
+}
+.graph-canvas canvas { display: block; width: 100%; height: 100%; }
+
+.graph-expand {
+  position: absolute;
+  inset-inline-end: 0.375rem;
+  top: 0.375rem;
+  display: grid;
+  place-items: center;
+  padding: 0.25rem;
+  border-radius: 0.375rem;
+  color: rgb(var(--app-muted-foreground, var(--color-muted-foreground)));
+  background: color-mix(in srgb, rgb(var(--app-muted, var(--color-muted))) 88%, transparent);
+  backdrop-filter: blur(2px);
+}
+.graph-expand svg { width: 0.875rem; height: 0.875rem; }
+
+.graph-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 10px;
+  color: rgb(var(--app-muted-foreground, var(--color-muted-foreground)));
+}
+.graph-legend span { display: inline-flex; align-items: center; gap: 0.25rem; }
+.graph-legend i { width: 8px; height: 8px; border-radius: 50%; display: block; }
+.graph-legend i.is-earned { background: #22c55e; }
+.graph-legend i.is-available { background: #eab308; }
+.graph-legend i.is-locked { width: 6px; height: 6px; background: rgba(100, 116, 139, 0.4); }
+
+.graph-progress {
+  margin: 0.25rem 0 0;
+  text-align: center;
+  font-size: 10px;
+  color: rgb(var(--app-muted-foreground, var(--color-muted-foreground)));
+}
+
+@media (max-width: 600px) {
+  /* The replica copies the app's type scale, which is calibrated for a native
+     window rather than a phone browser. This one caption is meant to be read. */
+  .graph-progress { font-size: 11.5px; }
+}
+
+/* ─── Status chip ──────────────────────────────────────
+   Lifted out of StatusChip.vue's scoped block. The component appears on 10 of
+   the 14 built pages, so Vite emitted its CSS as a separate chunk that every one
+   of those pages had to fetch before it could paint — a full round trip for
+   about a kilobyte. As part of the design system it belongs here anyway. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  /* Declared so a page's label styling cannot capitalise it. This chip appears
+     inside other components' headers, and `.pa-head span` was shouting it. */
+  text-transform: none;
+  line-height: 1;
+  padding: 5px 10px 5px 8px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+
+/* Colour carries a hint, but never the meaning on its own — the words do that,
+   which is what keeps this legible to anyone who cannot separate the hues. */
+.chip-alpha {
+  color: rgb(var(--color-ok));
+  background: rgb(var(--color-ok) / 0.12);
+  border-color: rgb(var(--color-ok) / 0.28);
+}
+.chip-building {
+  color: rgb(var(--color-primary));
+  background: rgb(var(--color-primary) / 0.12);
+  border-color: rgb(var(--color-primary) / 0.28);
+}
+.chip-planned {
+  color: rgb(var(--color-muted-foreground));
+  background: rgb(var(--color-muted));
+  border-color: rgb(var(--color-border));
+}
+.chip-sample {
+  color: rgb(var(--color-warning, 202 138 4));
+  background: rgb(var(--color-warning, 202 138 4) / 0.12);
+  border-color: rgb(var(--color-warning, 202 138 4) / 0.3);
+}
+
 /* ─── The recognition gap ──────────────────────────────
    Sits directly under the app window so the first thing after the product is
    the reason it exists. Hairlines top and bottom rather than a tint: this is a
