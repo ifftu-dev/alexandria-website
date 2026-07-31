@@ -148,16 +148,21 @@ function castVote(choice: 'for' | 'against' | 'abstain') {
   vote.value = choice
 }
 
-/** "/" or ⌘K opens search, matching the app's own shortcut. */
+/**
+ * "/" or ⌘K opens search, matching the app's own shortcut — but only while the
+ * pointer or focus is actually inside this window. The site has its own `/`
+ * palette now, and a decorative replica should not take a global key away from
+ * it just for being on screen.
+ */
 function onKeydown(e: KeyboardEvent) {
   const el = document.activeElement
   const typing = el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement
   const isK = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'
   if (!isK && (typing || e.key !== '/')) return
-  const rect = root.value?.getBoundingClientRect()
-  if (!rect) return
-  const visible = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0)
-  if (visible < 60) return
+  const node = root.value
+  if (!node) return
+  const engaged = node.matches(':hover') || node.contains(el)
+  if (!engaged) return
   e.preventDefault()
   openOmni()
 }
@@ -693,7 +698,15 @@ button { font-family: inherit; }
 
 .sec-h { display: flex; align-items: center; justify-content: space-between; margin: 1.3rem 0 0.6rem; }
 .sec-h b { font-size: 0.875rem; font-weight: 600; }
-.sec-h button { font-size: 0.75rem; color: rgb(var(--app-primary)); background: none; border: none; cursor: pointer; }
+/* The replica copies the app's type scale, so these read at 18px tall — under the
+   24px touch minimum. The hit area is extended with a pseudo-element instead of
+   padding, so the button grows for a thumb without the mock's layout shifting
+   away from the interface it is imitating. */
+.sec-h button {
+  font-size: 0.75rem; color: rgb(var(--app-primary)); background: none; border: none; cursor: pointer;
+  position: relative;
+}
+.sec-h button::after { content: ""; position: absolute; inset: -6px -4px; }
 
 .goal { display: flex; align-items: center; gap: 0.8rem; }
 .goal-t { display: block; font-size: 0.8375rem; font-weight: 600; }

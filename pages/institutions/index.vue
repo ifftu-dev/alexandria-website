@@ -25,6 +25,10 @@ useHead({
     { property: 'og:title', content: 'For institutions — Alexandria' },
     { property: 'og:description', content: 'Your LMS. Their credentials. Free self-hosted tier, MIT core, no vendor lock-in.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/institutions' },
+    { property: 'og:image', content: 'https://alexandria.ifftu.dev/og/institutions.jpg' },
+    { property: 'og:image:alt', content: 'For institutions — your LMS, their credentials.' },
+    { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og/institutions.jpg' },
+    { name: 'twitter:image:alt', content: 'For institutions — your LMS, their credentials.' },
     { name: 'twitter:title', content: 'For institutions — Alexandria' },
     { name: 'twitter:description', content: 'Your LMS. Their credentials.' },
   ],
@@ -233,4 +237,8 @@ const tiers = [
 .i-tier-p { font-family: var(--font-mono); font-size: 11.5px; color: rgb(var(--page-accent, var(--color-primary))); }
 .i-tier p { margin: 0; font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
 .i-form { max-width: 620px; }
+
+@media (max-width: 600px) {
+  .i-fig-s { font-size: 11.5px; }
+}
 </style>

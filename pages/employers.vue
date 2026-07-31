@@ -24,6 +24,10 @@ useHead({
     { property: 'og:title', content: 'For employers — Alexandria' },
     { property: 'og:description', content: 'Hire verified talent, not resumes. Verify credentials independently, with candidate consent.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/employers' },
+    { property: 'og:image', content: 'https://alexandria.ifftu.dev/og/employers.jpg' },
+    { property: 'og:image:alt', content: 'For employers — hire verified talent, not resumes.' },
+    { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og/employers.jpg' },
+    { name: 'twitter:image:alt', content: 'For employers — hire verified talent, not resumes.' },
     { name: 'twitter:title', content: 'For employers — Alexandria' },
     { name: 'twitter:description', content: 'Hire verified talent, not resumes.' },
   ],
@@ -243,4 +247,10 @@ const packages = [
 .t-prose a { color: rgb(var(--page-accent, var(--color-primary))); }
 .e-form { max-width: 620px; }
 .mono { font-family: var(--font-mono); font-size: 0.92em; }
+
+@media (max-width: 600px) {
+  /* 10.5px mono is fine at desk distance and tight on a phone. */
+  .e-cand-k { font-size: 11.5px; }
+  .e-cand-s { font-size: 12.5px; }
+}
 </style>

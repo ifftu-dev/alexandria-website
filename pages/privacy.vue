@@ -205,4 +205,9 @@ const practice = [
 .pv-c-k { font-family: var(--font-mono); font-size: 10.5px !important; text-transform: uppercase; letter-spacing: 0.12em; color: rgb(var(--color-muted-foreground)); margin-bottom: 7px !important; }
 .pv-c-s { margin-top: 5px !important; font-size: 12.5px !important; color: rgb(var(--color-muted-foreground)); }
 .pv-contact a { color: rgb(var(--color-primary)); overflow-wrap: anywhere; }
+
+@media (max-width: 600px) {
+  .pv-keep { font-size: 11.5px; }
+  .pv-c-k { font-size: 11.5px !important; }
+}
 </style>

@@ -6,8 +6,7 @@
    Latin subsets only. The site has no non-Latin copy, and the full imports
    shipped cyrillic, greek and vietnamese @font-face blocks — 21 KB of
    render-blocking CSS describing files no visitor would ever fetch. */
-@import '@fontsource/ibm-plex-mono/latin-400.css';
-@import '@fontsource/ibm-plex-mono/latin-500.css';
+
 
 @import "tailwindcss";
 @source "../components/**/*.vue";
@@ -37,7 +36,7 @@
   font-style: normal;
   font-display: swap;
   font-weight: 100 900;
-  src: url('@fontsource-variable/public-sans/files/public-sans-latin-wght-normal.woff2') format('woff2-variations');
+  src: url('../fonts/public-sans.woff2') format('woff2-variations');
   unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
 
@@ -57,7 +56,7 @@
   font-style: normal;
   font-display: swap;
   font-weight: 200 800;
-  src: url('@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2') format('woff2-variations');
+  src: url('../fonts/newsreader-normal.woff2') format('woff2-variations');
   unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
 
@@ -68,8 +67,24 @@
   font-style: italic;
   font-display: swap;
   font-weight: 200 800;
-  src: url('@fontsource-variable/newsreader/files/newsreader-latin-wght-italic.woff2') format('woff2-variations');
+  src: url('../fonts/newsreader-italic.woff2') format('woff2-variations');
   unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('../fonts/plex-mono-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url('../fonts/plex-mono-500.woff2') format('woff2');
 }
 
 /* ============================================================
@@ -344,6 +359,20 @@ svg { flex-shrink: 0; }
    a paragraph — the platform list, tier prices. Documented so it stays the only
    exception instead of becoming the fourth padding nobody chose. */
 .card-compact { padding: 16px; }
+
+/* WCAG 1.4.1 — a link sitting inside running text has to be distinguishable by
+   more than colour, since a reader who cannot separate the hues has nothing else
+   to go on. Lighthouse caught the /why-recognition link in the homepage closing
+   paragraph. Standalone links are exempt: a nav item, a chevron CTA or a card
+   link is identifiable by position, and underlining those would only add noise. */
+p a:not(.btn):not(.btn-lg):not(.btn-ghost):not(.chev),
+li a:not(.btn):not(.btn-lg):not(.btn-ghost):not(.chev),
+dd a:not(.btn):not(.btn-lg):not(.btn-ghost):not(.chev),
+blockquote a {
+  text-decoration: underline;
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.18em;
+}
 
 .mono { font-family: var(--font-mono); }
 
@@ -892,6 +921,124 @@ svg { flex-shrink: 0; }
 }
 
 /* ─── Dark proof section ───────────────────────────────── */
+/* Mono micro-labels sit at 10.5px on the desktop grid, which is fine at reading
+   distance and tight on a phone. One step up below 600px — measured across the
+   audit, these were the only type on the site under 11px that a reader is
+   actually meant to read. */
+@media (max-width: 600px) {
+  .e-cand-k, .i-fig-s, .pv-keep, .pv-c-k, .t-panel-n, .w-src, .gap-src { font-size: 11.5px; }
+}
+
+/* ─── Skill graph ──────────────────────────────────────
+   Also lifted out of a scoped block. It was the last per-component stylesheet
+   still blocking a first paint — 1.5 KB costing a full round trip on the one
+   page that uses it. Carried in the shared sheet it costs the other pages
+   nothing they were not already downloading. */
+.graph-canvas {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, rgb(var(--app-foreground, var(--color-foreground))) 3%, transparent);
+}
+.graph-canvas canvas { display: block; width: 100%; height: 100%; }
+
+.graph-expand {
+  position: absolute;
+  inset-inline-end: 0.375rem;
+  top: 0.375rem;
+  display: grid;
+  place-items: center;
+  padding: 0.25rem;
+  border-radius: 0.375rem;
+  color: rgb(var(--app-muted-foreground, var(--color-muted-foreground)));
+  background: color-mix(in srgb, rgb(var(--app-muted, var(--color-muted))) 88%, transparent);
+  backdrop-filter: blur(2px);
+}
+.graph-expand svg { width: 0.875rem; height: 0.875rem; }
+
+.graph-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 10px;
+  color: rgb(var(--app-muted-foreground, var(--color-muted-foreground)));
+}
+.graph-legend span { display: inline-flex; align-items: center; gap: 0.25rem; }
+.graph-legend i { width: 8px; height: 8px; border-radius: 50%; display: block; }
+.graph-legend i.is-earned { background: #22c55e; }
+.graph-legend i.is-available { background: #eab308; }
+.graph-legend i.is-locked { width: 6px; height: 6px; background: rgba(100, 116, 139, 0.4); }
+
+.graph-progress {
+  margin: 0.25rem 0 0;
+  text-align: center;
+  font-size: 10px;
+  color: rgb(var(--app-muted-foreground, var(--color-muted-foreground)));
+}
+
+@media (max-width: 600px) {
+  /* The replica copies the app's type scale, which is calibrated for a native
+     window rather than a phone browser. This one caption is meant to be read. */
+  .graph-progress { font-size: 11.5px; }
+}
+
+/* ─── Status chip ──────────────────────────────────────
+   Lifted out of StatusChip.vue's scoped block. The component appears on 10 of
+   the 14 built pages, so Vite emitted its CSS as a separate chunk that every one
+   of those pages had to fetch before it could paint — a full round trip for
+   about a kilobyte. As part of the design system it belongs here anyway. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  /* Declared so a page's label styling cannot capitalise it. This chip appears
+     inside other components' headers, and `.pa-head span` was shouting it. */
+  text-transform: none;
+  line-height: 1;
+  padding: 5px 10px 5px 8px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+
+/* Colour carries a hint, but never the meaning on its own — the words do that,
+   which is what keeps this legible to anyone who cannot separate the hues. */
+.chip-alpha {
+  color: rgb(var(--color-ok));
+  background: rgb(var(--color-ok) / 0.12);
+  border-color: rgb(var(--color-ok) / 0.28);
+}
+.chip-building {
+  color: rgb(var(--color-primary));
+  background: rgb(var(--color-primary) / 0.12);
+  border-color: rgb(var(--color-primary) / 0.28);
+}
+.chip-planned {
+  color: rgb(var(--color-muted-foreground));
+  background: rgb(var(--color-muted));
+  border-color: rgb(var(--color-border));
+}
+.chip-sample {
+  color: rgb(var(--color-warning, 202 138 4));
+  background: rgb(var(--color-warning, 202 138 4) / 0.12);
+  border-color: rgb(var(--color-warning, 202 138 4) / 0.3);
+}
+
 /* ─── The recognition gap ──────────────────────────────
    Sits directly under the app window so the first thing after the product is
    the reason it exists. Hairlines top and bottom rather than a tint: this is a
@@ -903,7 +1050,12 @@ svg { flex-shrink: 0; }
 .gap-l { margin: 7px 0 0; font-size: 13px; line-height: 1.5; color: rgb(var(--color-muted-foreground)); }
 .gap-foot { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: baseline; justify-content: space-between; margin-top: 26px; }
 .gap-src { margin: 0; font-size: 11.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); max-width: 80ch; }
-.gap-foot a { font-size: 13.5px; font-weight: 600; color: rgb(var(--color-primary)); white-space: nowrap; }
+/* A standalone link, so WCAG's inline exception does not apply — it measured
+   22px tall against the 24px minimum. */
+.gap-foot a {
+  font-size: 13.5px; font-weight: 600; color: rgb(var(--color-primary)); white-space: nowrap;
+  display: inline-flex; align-items: center; min-height: 24px;
+}
 
 /* ─── The problem ──────────────────────────────────────── */
 .prob { display: grid; gap: 16px; margin-top: 30px; }
