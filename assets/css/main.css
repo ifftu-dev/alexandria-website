@@ -527,7 +527,9 @@ blockquote a {
 .shelf-window { border-radius: 14px; box-shadow: var(--shadow-hero); overflow: hidden; }
 @media (max-width: 600px) { .shelf-window { border-radius: 11px; } }
 .shelf-cap {
-  margin: 16px 0 0;
+  /* The evidence band's top border was landing 0px under this line — the caption
+     read as belonging to the band rather than to the window above it. */
+  margin: 16px 0 clamp(44px, 6vw, 68px);
   text-align: center;
   font-family: var(--font-mono);
   font-size: 11px;
