@@ -91,13 +91,16 @@ useHead({
   margin: 0;
   max-width: 20ch;
 }
+/* The standfirst is the post's argument in one line, so it takes the brand
+   colour rather than the muted grey the rest of the metadata uses — it is the
+   thing a reader should carry away if they read nothing else. */
 .art-stand {
   font-family: var(--font-display);
   font-size: clamp(19px, 2.4vw, 24px);
   font-style: italic;
   font-weight: 300;
   line-height: 1.45;
-  color: rgb(var(--color-muted-foreground));
+  color: rgb(var(--color-primary));
   margin: 20px 0 0;
   max-width: 44ch;
 }
