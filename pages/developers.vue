@@ -97,7 +97,7 @@ const facts = [
       </p>
       <div class="hero-cta" style="margin-top: 22px">
         <a :href="`${GITHUB}/issues`" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub btn">Open issues</a>
-        <NuxtLink to="/trust" class="btn-ghost dark">Security and privacy</NuxtLink>
+        <NuxtLink to="/trust" class="btn-ghost btn-solid">Security and privacy</NuxtLink>
       </div>
     </section>
   </div>
@@ -118,6 +118,4 @@ const facts = [
 .d-facts dt { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(var(--color-muted-foreground)); }
 .d-facts dd { margin: 0; font-size: 14px; line-height: 1.6; }
 
-.btn-ghost.dark { border: 1px solid rgb(var(--color-border)); color: rgb(var(--color-foreground)); background: rgb(var(--color-card)); backdrop-filter: none; }
-.btn-ghost.dark:hover { background: rgb(var(--color-muted)); }
 </style>

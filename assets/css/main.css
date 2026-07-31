@@ -216,6 +216,18 @@ svg { flex-shrink: 0; }
 }
 @media (max-width: 600px) { .section-wash.pad { padding-inline: 16px; } }
 
+/* A ghost button needs an opaque counterpart once it leaves the hero, where the
+   translucent treatment has no gradient to sit on. Deliberately not called
+   `dark`: that class carries the whole dark palette, so an element wearing it
+   renders in dark tokens no matter which theme is active. */
+.btn-ghost.btn-solid {
+  border: 1px solid rgb(var(--color-border));
+  color: rgb(var(--color-foreground));
+  background: rgb(var(--color-card));
+  backdrop-filter: none;
+}
+.btn-ghost.btn-solid:hover { background: rgb(var(--color-muted)); }
+
 /* A scope-setting note reads as an introduction to what follows, so it takes the
    top half of a section's rhythm and none of the bottom — a full band around one
    short paragraph looks like a section that lost its content. */

@@ -120,8 +120,8 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
             <button type="button" class="btn" :disabled="busy || !input.trim()" @click="run">
               {{ busy ? 'Checking…' : 'Verify' }}
             </button>
-            <button type="button" class="btn-ghost dark" @click="loadSample">Load a sample</button>
-            <button v-if="input.trim()" type="button" class="btn-ghost dark" @click="tamper">
+            <button type="button" class="btn-ghost btn-solid" @click="loadSample">Load a sample</button>
+            <button v-if="input.trim()" type="button" class="btn-ghost btn-solid" @click="tamper">
               Alter it
             </button>
           </div>
@@ -238,13 +238,6 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
 }
 
 .v-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-.btn-ghost.dark {
-  border: 1px solid rgb(var(--color-border));
-  color: rgb(var(--color-foreground));
-  background: rgb(var(--color-card));
-  backdrop-filter: none;
-}
-.btn-ghost.dark:hover { background: rgb(var(--color-muted)); }
 
 .v-note { margin: 10px 0 0; font-size: 12.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); }
 .v-note a { color: rgb(var(--color-primary)); }

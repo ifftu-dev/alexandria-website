@@ -44,6 +44,9 @@ const text = computed(() => props.label ?? DEFAULTS[props.state])
   font-size: 11.5px;
   font-weight: 600;
   letter-spacing: 0.04em;
+  /* Declared so a page's label styling cannot capitalise it. This chip appears
+     inside other components' headers, and `.pa-head span` was shouting it. */
+  text-transform: none;
   line-height: 1;
   padding: 5px 10px 5px 8px;
   border-radius: 999px;
