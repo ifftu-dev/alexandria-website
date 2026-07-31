@@ -71,8 +71,11 @@ test.describe('Plausible goals', () => {
     { goal: 'Nav-Blog', from: '/', click: '.nav-links a[href="/blog"]' },
     { goal: 'Nav-Recruiter', from: '/', click: '.nav-links a[href="/employers"]' },
     { goal: 'Nav-Institutions', from: '/', click: '.nav-links a[href="/institutions"]' },
-    { goal: 'Nav-Learners', from: '/learners', click: '.foot-col a[href="/learners"]' },
-    { goal: 'Nav-Pilots', from: '/pilots', click: '.foot-col a[href="/pilots"]' },
+    // Clicked from a different page on purpose. A footer link to the page you are
+    // already on is a router no-op, and the click races the event in a way that
+    // made these two intermittently fail for no product reason.
+    { goal: 'Nav-Learners', from: '/', click: '.foot-col a[href="/learners"]' },
+    { goal: 'Nav-Pilots', from: '/', click: '.foot-col a[href="/pilots"]' },
   ]
 
   for (const { goal, from, click } of navGoals) {
