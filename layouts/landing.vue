@@ -132,11 +132,6 @@ const year = new Date().getFullYear()
           >
             <span class="toast-eyebrow">New</span>
             <span class="toast-text">Read the announcement post</span>
-            <!-- A chevron, not the corner arrow: that glyph promises a new tab,
-                 and this no longer leaves the site. -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
           </NuxtLink>
           <button type="button" class="toast-x" aria-label="Dismiss announcement" @click="dismissToast">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -416,7 +411,10 @@ const year = new Date().getFullYear()
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 13px 6px 13px 15px;
+  /* Right padding clears the close button, which is positioned over this rather
+     than sitting beside it — so the whole toast is the link except that one
+     target. */
+  padding: 14px 48px 14px 16px;
   text-decoration: none;
   color: #fff;
   font-size: 14px;
@@ -442,13 +440,17 @@ const year = new Date().getFullYear()
   color: #fff;
 }
 .toast-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.toast-link svg { width: 13px; height: 13px; flex: none; color: rgb(255 255 255 / 0.75); }
-.toast-link:hover svg { color: #fff; }
 .toast-x {
-  flex: none;
-  width: 38px;
+  position: absolute;
+  inset-inline-end: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
   border: none;
-  border-inline-start: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 9px;
   background: transparent;
   color: rgb(255 255 255 / 0.75);
   cursor: pointer;
