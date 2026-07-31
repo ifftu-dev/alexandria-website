@@ -325,8 +325,8 @@ const method = [
 </template>
 
 <style scoped>
-.h-sec { font-size: clamp(22px, 3.2vw, 30px); letter-spacing: -0.02em; margin: 0 0 14px; max-width: 24ch; line-height: 1.15; }
-.p-sub { margin: 0 0 24px; font-size: 15px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); max-width: 62ch; }
+.h-sec { margin-bottom: 14px; }
+.p-sub { max-width: 62ch; }
 
 .w-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .w-prose { max-width: 64ch; display: grid; gap: 14px; margin-bottom: 30px; }
@@ -354,7 +354,7 @@ const method = [
 @media (min-width: 720px) { .w-stats-proj { grid-template-columns: repeat(4, 1fr); } }
 .w-stat { border-top: 2px solid rgb(var(--color-primary)); padding-top: 14px; }
 .w-fig { margin: 0; font-family: var(--font-display); font-size: clamp(34px, 4.4vw, 50px); font-weight: 300; letter-spacing: -0.01em; line-height: 1.02; }
-.w-figlabel { margin: 8px 0 0; font-size: 13.5px; line-height: 1.55; color: rgb(var(--color-muted-foreground)); }
+.w-figlabel { margin: 8px 0 0; font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
 .w-basis { margin: 6px 0 0; font-size: 12px; line-height: 1.5; color: rgb(var(--color-muted-foreground)); opacity: 0.85; }
 /* Projections must not borrow the visual authority of the sourced figures. */
 .w-stats-proj .w-stat { border-top-color: rgb(var(--color-border)); border-top-width: 1px; }
@@ -367,15 +367,15 @@ const method = [
 
 .w-chain { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: rgb(var(--color-border)); border: 1px solid rgb(var(--color-border)); border-radius: 14px; overflow: hidden; }
 @media (min-width: 940px) { .w-chain { grid-template-columns: repeat(5, 1fr); } }
-.w-chain li { background: rgb(var(--color-card)); padding: 18px; display: grid; gap: 5px; align-content: start; }
+.w-chain li { background: rgb(var(--color-card)); padding: 20px; display: grid; gap: 5px; align-content: start; }
 .w-n { font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; color: rgb(var(--color-primary)); }
 .w-chain b { font-size: 15px; }
-.w-v { font-size: 13.5px; line-height: 1.55; color: rgb(var(--color-muted-foreground)); }
+.w-v { font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
 
 .w-unknowns { display: grid; gap: 16px; margin-bottom: 30px; }
 @media (min-width: 820px) { .w-unknowns { grid-template-columns: 1fr 1fr; } }
 .w-unknown { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }
-.w-unknown h3 { margin: 12px 0 8px; font-size: 16px; letter-spacing: -0.01em; }
+.w-unknown h3 { margin: 12px 0 8px; font-size: 15.5px; letter-spacing: -0.01em; }
 .w-unknown p { margin: 0; font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
 
 .w-acc, .w-method { display: grid; gap: 12px; margin: 0; }

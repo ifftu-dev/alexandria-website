@@ -96,7 +96,7 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
       <div class="v-grid">
         <div>
           <div class="v-head">
-            <h2 class="h-sec">The credential</h2>
+            <h2 class="v-col-h">The credential</h2>
             <StatusChip state="alpha" label="Working now" />
           </div>
 
@@ -133,7 +133,7 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
 
         <div>
           <div class="v-head">
-            <h2 class="h-sec">Result</h2>
+            <h2 class="v-col-h">Result</h2>
           </div>
 
           <div v-if="!outcome" class="v-empty">
@@ -201,7 +201,7 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
           either way — that is what makes a credential portable.
         </p>
         <p class="v-note">
-          <NuxtLink to="/developers">The credential format and source</NuxtLink> if you would rather
+          <NuxtLink to="/technology">The credential format and how it is signed</NuxtLink> if you would rather
           read the implementation than trust this page.
         </p>
       </div>
@@ -214,11 +214,13 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
 @media (min-width: 900px) { .v-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
 
 .v-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-.h-sec { font-size: 15px; font-weight: 700; margin: 0; }
+/* Column labels, not section headings — "What just happened" below is the
+   real heading on this page and takes the site-wide .h-sec. */
+.v-col-h { font-size: 15px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
 
 .v-drop {
   border: 1px dashed rgb(var(--color-border));
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 4px;
   transition: border-color 150ms ease, background 150ms ease;
 }
@@ -244,8 +246,8 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
 
 .v-empty, .v-result {
   border: 1px solid rgb(var(--color-border));
-  border-radius: 12px;
-  padding: 18px;
+  border-radius: 14px;
+  padding: 20px;
   background: rgb(var(--color-card));
 }
 .v-empty p { margin: 0; font-size: 14px; color: rgb(var(--color-muted-foreground)); }

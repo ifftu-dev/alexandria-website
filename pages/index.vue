@@ -239,9 +239,12 @@ const waitlist = useWaitlist()
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-centered">
         <p class="eyebrow hero-eyebrow">Alpha · waiting list open</p>
-        <!-- The closing dash is bound to the phrase it introduces; left loose it
-             wraps alone onto the final line. -->
-        <h1>An honest attempt at making education — and its recognition —&nbsp;<em>free, forever.</em></h1>
+        <!-- Both dashes are bound: the first to the word before it, the second to
+             the phrase after it. Left loose, either can wrap alone onto a line,
+             and an em dash starting a line reads as a typo. The second is not
+             also bound backwards — "recognition — free, forever." as one
+             unbreakable run is wider than a 390px viewport. -->
+        <h1>An honest attempt at making education&nbsp;— and its recognition —&nbsp;<em>free, forever.</em></h1>
         <p class="hero-lede">
           Learning became free. Recognition did not. Alexandria is a free, open-source learning app
           for every device — and a credential you own outright, that anyone can verify, anywhere,
@@ -711,7 +714,7 @@ const waitlist = useWaitlist()
         <NuxtLink to="/verify" class="trust-item plausible-event-name=Nav-Verify">
           <b>Verify a credential</b><span>Checked in your browser, no account</span>
         </NuxtLink>
-        <NuxtLink to="/developers" class="trust-item">
+        <NuxtLink to="/technology" class="trust-item">
           <b>Read the format</b><span>The stack and credential scheme, named</span>
         </NuxtLink>
         <NuxtLink to="/trust" class="trust-item">
@@ -763,7 +766,7 @@ const waitlist = useWaitlist()
 @media (min-width: 700px) { .trust-strip { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1040px) { .trust-strip { grid-template-columns: repeat(4, 1fr); } }
 .trust-item {
-  display: block; padding: 16px 18px; border-radius: 12px; text-decoration: none;
+  display: block; padding: 16px 18px; border-radius: 14px; text-decoration: none;
   border: 1px solid rgb(var(--color-border)); background: rgb(var(--color-card));
   transition: border-color 150ms ease, transform 150ms ease;
 }

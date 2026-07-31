@@ -82,8 +82,8 @@ const fits = [
 </template>
 
 <style scoped>
-.h-sec { font-size: clamp(21px, 3vw, 26px); letter-spacing: -0.02em; margin: 0 0 8px; }
-.p-sub { margin: 0 0 22px; font-size: 14.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); max-width: 68ch; }
+.h-sec { margin-bottom: 14px; }
+
 .pa-grid { display: grid; gap: 16px; }
 @media (min-width: 800px) { .pa-grid { grid-template-columns: 1fr 1fr; } }
 .pa-card { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }

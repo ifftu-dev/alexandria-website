@@ -25,3 +25,9 @@
 # follow rather than break.
 /recruiter     /employers   301
 /recruiter/*   /employers   301
+
+# /developers became /technology. The old page was a short stack summary aimed at
+# contributors; the new one explains how every part works and absorbs it, so the
+# old path would otherwise be a thinner version of a page that already exists.
+/developers    /technology   301
+/developers/*  /technology   301

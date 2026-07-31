@@ -1,485 +1,236 @@
 <script setup lang="ts">
+/**
+ * The institution case, rebuilt to the mockup's flow.
+ *
+ * The previous version of this page led with an amber "mostly not built yet"
+ * warning above the headline, then ran a feature-tab interface and a competitor
+ * comparison table. This one makes the same admission — it is the closing
+ * section, "No institution has deployed this yet" — but earns it by first saying
+ * what the platform is for, which is the order the reader needs.
+ *
+ * The examination figure carries its base. 3.8M is NEET-UG plus JEE Main, not
+ * the full NTA slate, and without saying which it is an ambiguous number on a
+ * page aimed at the people who would know.
+ */
+import { NTA_2025, SOURCES } from '~/content/evidence'
+
 definePageMeta({ layout: 'landing' })
 
+const GITHUB_URL = 'https://github.com/ifftu-dev/alexandria'
+
 useHead({
-  title: 'Alexandria for Institutions — Your LMS, Their Credentials',
+  title: 'For institutions — Alexandria',
   meta: [
-    { name: 'description', content: 'The open-source LMS that gives credentials back to students: W3C Verifiable Credentials they own and keep, skill-mapped curricula, and no vendor lock-in.' },
-    { property: 'og:title', content: 'Alexandria for Institutions — Your LMS, Their Credentials' },
-    { property: 'og:description', content: 'An open-source LMS where students own credentials they can prove anywhere, every skill is mapped, and students keep their achievements forever.' },
+    { name: 'description', content: 'An open-source learning platform you can host yourself, mapped to a public skill graph, issuing credentials your students own outright and can prove anywhere — long after they have left you.' },
+    { property: 'og:title', content: 'For institutions — Alexandria' },
+    { property: 'og:description', content: 'Your LMS. Their credentials. Free self-hosted tier, MIT core, no vendor lock-in.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/institutions' },
-    { property: 'og:image', content: 'https://alexandria.ifftu.dev/og/institutions.jpg' },
-    { property: 'og:image:alt', content: 'Alexandria for institutions — your LMS, their credentials.' },
-    { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og/institutions.jpg' },
-    { name: 'twitter:image:alt', content: 'Alexandria for institutions — your LMS, their credentials.' },
-    { name: 'twitter:title', content: 'Alexandria for Institutions — Your LMS, Their Credentials' },
-    { name: 'twitter:description', content: 'An open-source LMS where students own credentials they can prove anywhere and keep their achievements forever.' },
+    { name: 'twitter:title', content: 'For institutions — Alexandria' },
+    { name: 'twitter:description', content: 'Your LMS. Their credentials.' },
   ],
   link: [{ rel: 'canonical', href: 'https://alexandria.ifftu.dev/institutions' }],
-  script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'WebPage',
-        'name': 'Alexandria for Institutions',
-        'description': 'The open-source LMS that gives credentials back to students. Credentials students can prove anywhere, skill-mapped curricula, FERPA/GDPR support in progress.',
-        'url': 'https://alexandria.ifftu.dev/institutions',
-        'isPartOf': { '@type': 'WebSite', 'name': 'Alexandria', 'url': 'https://alexandria.ifftu.dev' },
-      }),
-    },
-  ],
 })
 
-const GITHUB_URL = 'https://github.com/ifftu-dev/alexandria'
-const INSTITUTION_BLOBS = ['37,99,235', '129,140,248', '96,165,250', '34,211,238', '79,70,229']
-
-const promises = [
-  {
-    title: 'Credentials students truly own',
-    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
-    body: "Signed under the student's own identity and made tamper-proof, so employers can check them independently — even offline, with no middleman. Students keep them permanently.",
-    tech: 'W3C Verifiable Credentials · student DID · hash-anchored to Cardano',
-  },
-  {
-    title: 'Skill-mapped curriculum',
-    icon: 'M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6z',
-    body: "Map every course, module and assessment to a skill taxonomy with Bloom's levels. See exactly which skills your programs actually develop.",
-  },
-  {
-    title: 'No single point of failure',
-    icon: 'M12 21a9 9 0 100-18 9 9 0 000 18zm0 0c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9M3 12h18',
-    body: 'Course content is shared directly between devices, so it stays available even if the platform goes down — no central server to take it offline.',
-    tech: 'Content-addressed with BLAKE3 · distributed peer-to-peer via iroh',
-  },
+const fourPoints = [
+  { t: 'Free self-hosted tier', b: 'Run the whole platform on your own infrastructure at no cost, forever.' },
+  { t: 'Skill-mapped curriculum', b: 'Your modules tie to public skill nodes with explicit prerequisites and levels.' },
+  { t: 'Zero lock-in', b: 'MIT-licensed core. Your data is yours; fork it if we ever disappoint you.' },
+  { t: 'Students own the proof', b: 'Credentials issued under your authority, held by the student, verifiable anywhere.' },
 ]
 
-const categories = [
-  { key: 'core', label: 'Core LMS' },
-  { key: 'diff', label: 'Unfair advantages' },
-  { key: 'admin', label: 'Administration' },
-  { key: 'analytics', label: 'Analytics & outcomes' },
-] as const
-
-type CategoryKey = typeof categories[number]['key']
-const activeCategory = ref<CategoryKey>('core')
-
-const featuresByCategory: Record<CategoryKey, { title: string, body: string, planned?: boolean }[]> = {
-  core: [
-    { title: 'Course authoring & delivery', body: 'Multimedia content, structured modules, release conditions, prerequisite chains and adaptive pathways.' },
-    { title: 'Assignments, quizzes & gradebook', body: 'Rubrics, auto-grading, peer review, and a unified gradebook with weighted categories, late policies and bulk actions.', planned: true },
-    { title: 'Discussion forums', body: 'Threaded discussions with rich text, inline media, mentions and instructor endorsement. Graded participation supported.', planned: true },
-    { title: 'Video lectures', body: 'Chaptering, speed controls, in-video quizzes and automatic transcription. No third-party streaming fees.', planned: true },
-    { title: 'Mobile-responsive with offline', body: 'Native app across desktop and mobile. Students download content for offline access and sync progress when reconnected.' },
-  ],
-  diff: [
-    { title: 'Credentials students truly own', body: "Signed under the student's identity, tamper-proof, checkable by employers with no middleman. Kept permanently." },
-    { title: 'Skill-mapped curriculum', body: "Every course, module and assessment mapped to a taxonomy with Bloom's proficiency levels." },
-    { title: 'Credential-backed portfolios', body: 'Students build credentials for graded work, peer reviews and projects — every skill claim backed by proof anyone can check.' },
-    { title: 'Outcome-derived instructor reputation', body: 'Instructor quality measured through student outcomes and earned credentials, not popularity surveys. Scoped to skills.' },
-    { title: 'No single point of failure', body: 'Content shared device to device, so it survives the platform going down.' },
-  ],
-  admin: [
-    { title: 'Multi-department management', body: 'Colleges, departments and programs in a hierarchy. Delegate administration while keeping institutional oversight.', planned: true },
-    { title: 'SIS integration', body: 'Bi-directional sync via REST APIs. Automate enrolments, grade passback and student records.', planned: true },
-    { title: 'SSO via SAML/OIDC', body: 'SAML 2.0 and OpenID Connect against Active Directory, Okta, Auth0 or a custom provider.', planned: true },
-    { title: 'Custom branding', body: 'White-label with your logo, colours, typography and domain.', planned: true },
-    { title: 'FERPA/GDPR compliance', body: 'Self-hosted deployment, student-controlled keys, no personal data recorded publicly. Role-based access, retention policies and audit logging are on the roadmap.' },
-    { title: 'LTI 1.3 & SCORM/xAPI import', body: 'Bring existing content: LTI 1.3 tools, SCORM 1.2/2004 packages, xAPI statement tracking.', planned: true },
-  ],
-  analytics: [
-    { title: 'Real-time learning analytics', body: 'Live dashboards for engagement, completion and performance. Drill from institutional overview to individual activity.', planned: true },
-    { title: 'Skill gap analysis', body: 'See which skills your curriculum develops well and where gaps are. Compare intended outcomes against measured proficiency.' },
-    { title: 'Instructor effectiveness', body: 'Outcome-based analytics tied to student results. Identify effective teaching patterns — without popularity contests.' },
-    { title: 'Predictive at-risk identification', body: 'Models flag students showing early warning signals, with data-driven intervention recommendations.', planned: true },
-    { title: 'Accreditation-ready reports', body: 'Reports mapped to accreditation standards — evidence-backed documentation of learning outcomes.', planned: true },
-  ],
-}
-
-type Cell = true | false | string
-interface Row { feature: string, alexandria: Cell, canvas: Cell, blackboard: Cell, moodle: Cell }
-
-const comparison: Row[] = [
-  // Licensing and hosting. Canvas is genuinely open source (AGPLv3) and saying
-  // otherwise was the single worst error in the old version of this table.
-  { feature: 'Open source', alexandria: 'MIT (core)', canvas: 'AGPLv3', blackboard: false, moodle: 'GPL' },
-  { feature: 'Self-hosted option', alexandria: true, canvas: true, blackboard: 'Extended support only', moodle: true },
-  { feature: 'Runs with no server at all †', alexandria: true, canvas: false, blackboard: false, moodle: false },
-  { feature: 'Content shared device to device', alexandria: true, canvas: false, blackboard: false, moodle: false },
-
-  // Credentials. All three incumbents issue Open Badges — two of them on 3.0,
-  // which is the W3C VC data model. The difference is who holds the signing
-  // key, not whether the format is verifiable.
-  //
-  // There is deliberately no "still verifies if the issuer disappears" row.
-  // It is true of us, but whether it is false of them turns on their choice of
-  // DID method and where they host status lists — someone else's
-  // implementation detail, which can change without telling us. The
-  // learner-signed row makes the same point and stays true on its own terms;
-  // the offline consequence is in the footnote.
-  { feature: 'Open Badges 3.0 / W3C VC data model', alexandria: true, canvas: true, blackboard: true, moodle: 'Planned (2.0 today)' },
-  { feature: 'Credential signed by the learner, not the platform', alexandria: true, canvas: false, blackboard: false, moodle: false },
-
-  // Skills. Competency tagging is table stakes; a shared graph is not.
-  { feature: 'Competency mapping inside the platform', alexandria: true, canvas: true, blackboard: true, moodle: true },
-  { feature: 'Shared skill graph across institutions', alexandria: true, canvas: false, blackboard: false, moodle: false },
-  { feature: 'Prerequisites and Bloom levels on every skill', alexandria: true, canvas: false, blackboard: false, moodle: false },
-
-  // Where we are behind. These rows are the reason the table is worth showing.
-  { feature: 'LTI 1.3 support', alexandria: 'Planned', canvas: true, blackboard: true, moodle: true },
-  { feature: 'SCORM / xAPI', alexandria: 'Planned', canvas: 'Limited', blackboard: true, moodle: true },
-  { feature: 'SSO (SAML/OIDC)', alexandria: 'Planned', canvas: true, blackboard: true, moodle: true },
-  { feature: 'FERPA/GDPR ready', alexandria: 'In progress', canvas: true, blackboard: true, moodle: 'Varies' },
-  { feature: 'Predictive analytics', alexandria: 'Planned', canvas: 'Add-on', blackboard: 'Add-on', moodle: 'Core' },
-  { feature: 'Mobile app', alexandria: true, canvas: true, blackboard: true, moodle: true },
-  { feature: 'Per-student cost, per year', alexandria: 'Free / $24', canvas: '$5-30*', blackboard: '$17-26*', moodle: 'Free + hosting' },
+const features = [
+  { t: 'Classrooms', b: 'Invite-only cohorts organised into channels — announcements, questions, assignments, showcase. Teachers decide who is in.', state: 'alpha' as const },
+  { t: 'Practical assessment', b: 'Plugins assess what multiple choice cannot — welding, music, code, inspection — with structured evidence capture and assessor attestation.', state: 'alpha' as const },
+  { t: 'Auditable integrity', b: 'Optional on-device integrity scoring with the reasoning attached to each result. No third-party proctoring vendor, no recordings leaving the student’s machine.', state: 'alpha' as const },
+  { t: 'Live tutoring', b: 'Video, audio and screen-share peer to peer, so remote cohorts do not depend on a third-party conferencing contract.', state: 'alpha' as const },
+  { t: 'Works where bandwidth doesn’t', b: 'Offline-first by design. Rural campuses and field programmes keep teaching through an outage and sync afterwards.', state: 'alpha' as const },
+  { t: 'Nine languages', b: 'Including Hindi, Bengali, Telugu, Marathi and Urdu at launch, on macOS, Windows, Linux, iOS and Android from one codebase.', state: 'alpha' as const },
 ]
 
-const onlyDifferences = ref(false)
-
-// "Where we differ" means no incumbent matches us — the rows that actually
-// distinguish Alexandria, in both directions. It keeps the rows where we are
-// behind (LTI, SCORM, SSO are all "Planned"), which is the point of the table.
-const visibleRows = computed(() => {
-  if (!onlyDifferences.value) return comparison
-  return comparison.filter(row =>
-    row.canvas !== row.alexandria
-    && row.blackboard !== row.alexandria
-    && row.moodle !== row.alexandria,
-  )
-})
+const fits = [
+  { t: 'Universities', b: 'Issue verifiable credentials alongside the degree, so graduates can prove specific capabilities, not just attendance.' },
+  { t: 'Trade & vocational schools', b: 'Assess practical skill properly and give graduates proof that travels to any employer, in any country.' },
+  { t: 'NGOs & training programmes', b: 'Reach learners with no reliable connectivity and leave them with recognition that outlasts the grant cycle.' },
+  { t: 'Examination bodies', b: 'Open, auditable integrity at national scale — where the method that produced a score can be inspected by anyone.' },
+]
 
 const tiers = [
-  {
-    name: 'Community',
-    price: 'Free',
-    period: 'self-hosted, forever',
-    desc: 'The open-source core, self-hosted, with no student cap. What exists today is what is in the alpha.',
-    features: [
-      'Unlimited students & courses',
-      'All core LMS features',
-      'Live code editors & interactive assessments',
-      'Custom assessment types as sandboxed plugins',
-      'Student-owned credentials + anchoring',
-      'Skill-mapped curriculum',
-      'Community support via GitHub',
-    ],
-    cta: 'View on GitHub',
-    highlighted: false,
-  },
-  {
-    name: 'Academic',
-    price: '$2',
-    planned: true,
-    period: 'per student / month',
-    desc: 'Managed hosting with premium support for universities and colleges.',
-    features: [
-      'Everything in Community',
-      'Managed cloud hosting',
-      'SIS integration & SSO',
-      'Custom branding & domain',
-      'Predictive analytics',
-      'Priority email & chat support',
-      '99.9% uptime SLA',
-    ],
-    cta: 'Run a pilot',
-    highlighted: true,
-  },
-  {
-    name: 'Enterprise',
-    price: 'Custom',
-    period: 'tailored to your needs',
-    desc: 'Dedicated infrastructure, white-glove migration, strategic partnership.',
-    features: [
-      'Everything in Academic',
-      'Dedicated infrastructure',
-      'White-glove migration',
-      'Custom integrations',
-      'On-premise deployment option',
-      'Dedicated success manager',
-      'Custom SLA & compliance',
-    ],
-    cta: 'Start a conversation',
-    highlighted: false,
-  },
+  { name: 'Self-hosted', price: 'Free, permanently', b: 'Full platform, unlimited students, community support. You run the infrastructure.', state: 'alpha' as const },
+  { name: 'Managed', price: 'Priced per institution', b: 'We host, update and support it. Integration with your student records and identity systems.', state: 'planned' as const },
+  { name: 'Examination scale', price: 'By arrangement', b: 'High-volume integrity, published audit method, and independent validity work commissioned jointly.', state: 'planned' as const },
 ]
-
-const faqs = [
-  {
-    q: 'Do students really own their credentials?',
-    a: "Yes. Each credential is signed under the student's own identity and made tamper-proof, and students can export self-contained copies that anyone can check offline — independent of Alexandria. If the platform disappears, the credentials remain provable forever.",
-    tech: "W3C Verifiable Credential signed under the student's DID (did:key / Ed25519), hash anchored to Cardano in a metadata-only transaction.",
-  },
-  {
-    q: 'What happens to credentials if we leave Alexandria?',
-    a: 'Nothing changes for the students. Credentials are already signed under their own identity and tamper-proof, so anyone can still check them with or without Alexandria. Course content is shared directly between devices, so any device holding a copy can keep serving it. There is no vendor lock-in by design.',
-    tech: 'Content-addressed with BLAKE3, distributed peer-to-peer.',
-  },
-  {
-    q: 'How does the skill-mapped curriculum work?',
-    a: "You map each course, module and assessment to skills in a taxonomy with Bloom's proficiency levels (Remember through Create). The system tracks how each student progresses across skills based on actual assessment evidence, giving a real-time view of what your curriculum actually teaches.",
-  },
-  {
-    q: 'Can we migrate from Canvas, Blackboard or Moodle?',
-    a: 'LTI 1.3 tool integration, SCORM 1.2/2004 package import and xAPI statement ingestion are on the roadmap. Once available, these will enable bulk content transfer from major LMS platforms.',
-  },
-  {
-    q: 'How is instructor reputation different from student evaluations?',
-    a: 'Traditional student evaluations measure popularity and are well-documented to be biased. Alexandria derives instructor reputation from student outcomes — actual skill progression and the credentials learners earn — as a per-skill distribution with confidence bounds. Reputation is scoped to specific skills, never a single global score.',
-  },
-  {
-    q: 'Is the Community tier actually free?',
-    a: 'Yes. Alexandria is open-core: the core app is MIT-licensed open-source, with enterprise modules under a separate IFFTU Enterprise License. The Community tier is self-hosted and completely free — no feature restrictions, no student caps, no hidden costs. You run it on your own infrastructure.',
-  },
-  {
-    q: 'What about FERPA compliance?',
-    a: 'Alexandria is designed with FERPA compliance in mind. The self-hosted deployment model keeps data in your jurisdiction, and credentials are signed under identities the student controls — only a tamper-proof fingerprint is recorded publicly, so no personal data is ever exposed. Students can share just the level they reached, not the full credential. Role-based access controls, audit logging, data retention policies and consent management tooling are on the roadmap.',
-    tech: 'Student-controlled DIDs · only a hash anchored on-chain · selective disclosure of credential fields.',
-  },
-]
-
-// Structured data for the FAQ below. Built from the same array the page
-// renders, so the two cannot drift apart — a mismatch between visible text and
-// FAQ markup is the thing Google penalises here. Kept as its own useHead call
-// because `faqs` is declared after the one at the top of this file.
-useHead({
-  script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        'mainEntity': faqs.map(faq => ({
-          '@type': 'Question',
-          'name': faq.q,
-          'acceptedAnswer': { '@type': 'Answer', 'text': faq.tech ? `${faq.a} ${faq.tech}` : faq.a },
-        })),
-      }),
-    },
-  ],
-})
 </script>
 
 <template>
   <div class="accent-institution page-institution">
-    <!-- ═══ HERO ═══ -->
-    <section class="hero">
-      <MeshGradient :blobs="INSTITUTION_BLOBS" base="#08132e" />
+    <section class="hero hero-page">
+      <MeshGradient :blobs="['37,99,235', '129,140,248', '96,165,250', '34,211,238', '79,70,229']" base="#08132e" />
       <div class="hero-scrim" />
-      <div class="pad hero-inner hero-split">
-        <div>
-          <p class="eyebrow hero-eyebrow">For institutions</p>
-          <h1>Your LMS, their credentials.</h1>
-          <p class="hero-lede">
-            An open-source learning management system where students own credentials they can prove
-            anywhere, curricula map to real skills, and institutions keep full control.
-          </p>
-          <div class="hero-cta">
-            <NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots btn btn-lg">Run an institution pilot</NuxtLink>
-            <a href="#features" class="btn-ghost">Explore features</a>
-          </div>
-          <div class="trust">
-            <span><i />Student-owned credentials</span>
-            <span><i />Open-core (MIT)</span>
-            <span><i />FERPA/GDPR in progress</span>
-            <span><i />Zero vendor lock-in</span>
-          </div>
+      <div class="pad hero-inner hero-centered">
+        <p class="eyebrow hero-eyebrow">For institutions</p>
+        <h1>Your LMS. Their credentials.</h1>
+        <p class="hero-lede">
+          An open-source learning platform you can host yourself, mapped to a public skill graph,
+          issuing credentials your students own outright and can prove anywhere — long after they
+          have left you.
+        </p>
+        <div class="hero-cta">
+          <a href="#talk" class="plausible-event-name=Nav-Pilots btn btn-lg">Talk to us</a>
+          <a :href="GITHUB_URL" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub btn-ghost">Self-host it</a>
         </div>
-
-        <LazyCurriculumMap hydrate-on-idle />
+        <p class="i-prenote">
+          Free self-hosted tier, permanently. MIT core, no vendor lock-in, no per-student licence.
+        </p>
       </div>
     </section>
 
+    <!-- ═══ FOUR POINTS ═══ -->
     <section class="section-note pad">
-      <div class="page-note">
-        <b>Mostly not built yet.</b> The learner side — courses, assessment, credentials and
-        verification — runs in the alpha today. The institution layer described on this page is
-        largely ahead of us, and every capability below says which it is. The
-        <a :href="GITHUB_URL" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub">source</a>
-        is the shortest way to check that for yourself.
+      <div class="i-four">
+        <div v-for="p in fourPoints" :key="p.t">
+          <b>{{ p.t }}</b>
+          <span>{{ p.b }}</span>
+        </div>
       </div>
     </section>
 
-    <!-- ═══ PROMISE ═══ -->
+    <!-- ═══ WHAT YOU GET ═══ -->
     <section class="section pad">
-      <p class="eyebrow">The promise</p>
-      <h2 class="h-sec">The LMS that gives credentials back to students.</h2>
-      <p class="p-sub">
-        Most learning platforms lock credentials inside their walls. Alexandria makes them portable,
-        verifiable and permanently student-owned.
-      </p>
-
-      <div class="tiles">
-        <article v-for="item in promises" :key="item.title" class="tile">
-          <div class="tile-ic">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" :d="item.icon" />
-            </svg>
-          </div>
-          <h3>{{ item.title }}</h3>
-          <p>{{ item.body }}</p>
-          <p v-if="item.tech" class="tile-tech">{{ item.tech }}</p>
+      <p class="eyebrow">What you get</p>
+      <h2 class="h-sec">A full teaching platform, not a credential bolt-on.</h2>
+      <div class="i-cards">
+        <article v-for="f in features" :key="f.t" class="i-card">
+          <div class="i-card-h"><h3>{{ f.t }}</h3><StatusChip :state="f.state" /></div>
+          <p>{{ f.b }}</p>
         </article>
       </div>
     </section>
 
-    <!-- ═══ FEATURE TABS ═══ -->
-    <section id="features" class="section section-wash">
-      <div class="pad">
-        <p class="eyebrow">Capabilities</p>
-        <h2 class="h-sec">Everything you need. Nothing you don't.</h2>
-        <p class="p-sub">
-          A complete LMS with capabilities no other platform offers — open-source, and built for
-          institutions that care what credentials actually mean.
-        </p>
+    <!-- ═══ WHO THIS FITS ═══ -->
+    <section class="section pad section-wash">
+      <p class="eyebrow">Who this fits</p>
+      <h2 class="h-sec">Four kinds of institution, one platform.</h2>
+      <div class="i-cards i-cards-4">
+        <article v-for="f in fits" :key="f.t" class="i-card">
+          <h3>{{ f.t }}</h3>
+          <p>{{ f.b }}</p>
+        </article>
+      </div>
 
-        <div class="tabs" role="tablist">
-          <button
-            v-for="category in categories"
-            :key="category.key"
-            type="button"
-            role="tab"
-            :aria-selected="activeCategory === category.key"
-            @click="activeCategory = category.key"
-          >
-            {{ category.label }}
-          </button>
+      <div class="i-exam">
+        <div class="t-prose">
+          <h3 class="i-exam-h">For public examinations, the audit is the product.</h3>
+          <p>
+            High-stakes exams live and die on public confidence in their integrity. Closed proctoring
+            vendors ask everyone to take that on trust. An open, inspectable integrity layer that
+            runs on the candidate’s own device — and never uploads their camera feed — is a different
+            proposition entirely.
+          </p>
+          <p>
+            We are early in these conversations, and public procurement is slow. We would rather
+            start them honestly now than oversell later.
+          </p>
         </div>
-
-        <div :key="activeCategory" class="tabpanel">
-          <article v-for="feature in featuresByCategory[activeCategory]" :key="feature.title" class="tile">
-            <h3>
-              {{ feature.title }}
-              <StatusChip v-if="feature.planned" state="planned" /><StatusChip v-else state="alpha" />
-            </h3>
-            <p>{{ feature.body }}</p>
-          </article>
+        <div class="i-figcard">
+          <p class="i-fig">{{ NTA_2025.value }}</p>
+          <p class="i-fig-l">{{ NTA_2025.label }}</p>
+          <p class="i-fig-s">{{ NTA_2025.basis }} {{ SOURCES.nta2025!.line }}</p>
         </div>
       </div>
     </section>
 
-    <!-- ═══ COMPARISON ═══ -->
+    <!-- ═══ HOW YOU RUN IT ═══ -->
     <section class="section pad">
-      <p class="eyebrow">Honest comparison</p>
-      <h2 class="h-sec">How Alexandria compares.</h2>
-      <p class="p-sub">Checked against vendor documentation in July 2026 — including the rows where we are behind.</p>
-
-      <div class="tablewrap">
-        <div class="tablescroll">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Capability</th>
-                <th scope="col" class="us">Alexandria</th>
-                <th scope="col">Canvas</th>
-                <th scope="col">Blackboard</th>
-                <th scope="col">Moodle</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="row in visibleRows" :key="row.feature">
-                <td>{{ row.feature }}</td>
-                <td class="us" :class="{ 'mark-yes': row.alexandria === true, 'mark-no': row.alexandria === false }">
-                  {{ typeof row.alexandria === 'string' ? row.alexandria : '' }}
-                </td>
-                <td :class="{ 'mark-yes': row.canvas === true, 'mark-no': row.canvas === false }">
-                  {{ typeof row.canvas === 'string' ? row.canvas : '' }}
-                </td>
-                <td :class="{ 'mark-yes': row.blackboard === true, 'mark-no': row.blackboard === false }">
-                  {{ typeof row.blackboard === 'string' ? row.blackboard : '' }}
-                </td>
-                <td :class="{ 'mark-yes': row.moodle === true, 'mark-no': row.moodle === false }">
-                  {{ typeof row.moodle === 'string' ? row.moodle : '' }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <p class="eyebrow">How you run it</p>
+      <h2 class="h-sec">Self-host it for nothing, or pay us to run it.</h2>
+      <div class="i-split">
+        <div class="t-prose">
+          <p>
+            The core is MIT-licensed and the free tier is not a trial — it is the whole platform, on
+            your servers, with no student cap. Paid tiers exist for institutions that want us to
+            operate it, integrate it, or support it under contract. Enterprise modules sit under a
+            separate licence; nothing you rely on to teach does.
+          </p>
+          <p>
+            Whichever you choose, the credential your students walk away with is identical — and it
+            does not depend on your subscription, or ours.
+          </p>
         </div>
-        <div class="tablebar">
-          <label class="switch">
-            <input v-model="onlyDifferences" type="checkbox">
-            <span class="track" />
-            Only show where we differ
-          </label>
-          <p>{{ visibleRows.length }} of {{ comparison.length }} rows</p>
-        </div>
-        <p class="tablenote">
-          * Neither vendor publishes list pricing on its own site; both quote per institution, and
-          large buyers negotiate below any published figure. The Blackboard range converts a
-          published UK G-Cloud framework rate for Learn SaaS (£13-£20 per user); the Canvas range is
-          a third-party estimate. Alexandria's $24 is the Academic tier at $2 per student per month
-          — inside Canvas's range, under Blackboard's framework rate, and above what the largest
-          institutions negotiate on Canvas. The Community tier stays free at any size. Every other
-          row here comes from vendor documentation, checked July 2026 — including the rows where an
-          incumbent is ahead of us.
-        </p>
-        <p class="tablenote">
-          † Relay servers do exist, for finding other people. Anyone can run one, they hold no
-          authority over what passes through them, and no course or credential depends on ours
-          staying up. Because a learner signs their own credentials under a key only they control,
-          verifying one needs nothing but the file itself — no lookup with us, no network, and it
-          keeps working if this project stops existing.
-        </p>
-      </div>
-    </section>
-
-    <!-- ═══ PRICING ═══ -->
-    <section id="pricing" class="section section-wash">
-      <div class="pad">
-        <p class="eyebrow">Pricing</p>
-        <h2 class="h-sec">Simple, transparent pricing.</h2>
-        <p class="p-sub">Start free. Scale when you're ready. No surprises.</p>
-
-        <div class="prices">
-          <article v-for="tier in tiers" :key="tier.name" class="price" :class="{ 'price-hot': tier.highlighted }">
-            <h3>{{ tier.name }}</h3>
-            <div class="amt">{{ tier.price }}</div>
-            <div class="per">{{ tier.period }}</div>
-            <StatusChip v-if="tier.planned" state="planned" label="Planned price · not purchasable yet" />
-            <p class="desc">{{ tier.desc }}</p>
-            <ul>
-              <li v-for="item in tier.features" :key="item">{{ item }}</li>
-            </ul>
-            <NuxtLink
-              to="/pilots"
-              class="plausible-event-name=Nav-Pilots"
-              :class="tier.highlighted ? 'btn' : 'btn-out'"
-            >{{ tier.cta }}</NuxtLink>
-          </article>
-        </div>
-        <p class="p-sub" style="font-size: 12.5px; margin-top: 16px">Nothing here is purchasable yet. The Academic figure is published so you can plan against something rather than nothing, and it will be confirmed — or corrected — before anyone is asked to pay it.</p>
-      </div>
-    </section>
-
-    <!-- ═══ FAQ ═══ -->
-    <section class="section pad">
-      <p class="eyebrow">Questions</p>
-      <h2 class="h-sec">Frequently asked questions.</h2>
-      <p class="p-sub">Everything you need to know about deploying Alexandria at your institution.</p>
-
-      <div class="faq">
-        <details v-for="(faq, i) in faqs" :key="faq.q" :open="i === 0">
-          <summary>{{ faq.q }}</summary>
-          <div class="ans">
-            {{ faq.a }}
-            <p v-if="faq.tech" class="tech">{{ faq.tech }}</p>
+        <div class="i-tiers">
+          <div v-for="t in tiers" :key="t.name" class="i-tier">
+            <div class="i-tier-h">
+              <b>{{ t.name }}</b>
+              <span class="i-tier-p">{{ t.price }}</span>
+            </div>
+            <p>{{ t.b }}</p>
+            <StatusChip :state="t.state" />
           </div>
-        </details>
+        </div>
       </div>
     </section>
 
-    <!-- ═══ CTA ═══ -->
-    <section class="cta">
-      <MeshGradient :blobs="INSTITUTION_BLOBS" base="#08132e" />
-      <div class="hero-scrim" />
-      <div class="pad cta-inner">
-        <h2>Give your students credentials they actually own.</h2>
-        <p>Join the institutions building an open, verifiable future for education. Free to start. Open-source forever.</p>
-        <div class="cta-row">
-          <NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots btn">Run an institution pilot</NuxtLink>
-          <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter btn-ghost">For employers</NuxtLink>
+    <!-- ═══ STRAIGHT WITH YOU ═══ -->
+    <section id="talk" class="section pad section-wash">
+      <p class="eyebrow">Straight with you</p>
+      <h2 class="h-sec">No institution has deployed this yet.</h2>
+      <div class="i-close">
+        <div class="t-prose">
+          <p>
+            The platform is built and shipping in alpha, but it has not been run by a real
+            institution with real students, and no independent validity study has been completed. If
+            you need a proven system today, this is not yet it.
+          </p>
+          <p>
+            If you would rather help shape one — and are willing to be honest with us about what
+            breaks — we would like to hear from you. Everything is open source, so you can
+            <a :href="GITHUB_URL" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub">read the whole thing</a>
+            before you reply.
+          </p>
         </div>
+        <div class="i-form"><EnquiryForm audience="institution" /></div>
       </div>
     </section>
   </div>
 </template>
+
+<style scoped>
+.h-sec { margin-bottom: 14px; }
+.i-prenote { margin: 20px 0 0; font-size: 13px; color: rgb(255 255 255 / 0.72); }
+
+.i-four { display: grid; gap: 18px; }
+@media (min-width: 780px) { .i-four { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
+.i-four > div { display: grid; gap: 5px; align-content: start; border-top: 2px solid rgb(var(--page-accent, var(--color-primary))); padding-top: 13px; }
+.i-four b { font-size: 14.5px; }
+.i-four span { font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
+
+.i-cards { display: grid; gap: 16px; }
+@media (min-width: 820px) { .i-cards { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 820px) { .i-cards-4 { grid-template-columns: repeat(4, 1fr); } }
+.i-card { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }
+.i-card-h { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; margin-bottom: 8px; }
+.i-card h3 { margin: 0 0 8px; font-size: 15.5px; letter-spacing: -0.01em; }
+.i-card-h h3 { margin: 0; }
+.i-card p { margin: 0; font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
+
+.i-exam { display: grid; gap: 26px; align-items: center; margin-top: 34px; padding-top: 30px; border-top: 1px solid rgb(var(--color-border)); }
+@media (min-width: 900px) { .i-exam { grid-template-columns: 1.25fr 0.75fr; gap: 44px; } }
+.i-exam-h { margin: 0 0 4px; font-size: 18px; letter-spacing: -0.01em; }
+.i-figcard { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }
+.i-fig { margin: 0; font-family: var(--font-display); font-size: clamp(40px, 5vw, 56px); font-weight: 300; line-height: 1; color: rgb(var(--page-accent, var(--color-primary))); }
+.i-fig-l { margin: 10px 0 0; font-size: 14px; line-height: 1.55; }
+.i-fig-s { margin: 12px 0 0; font-family: var(--font-mono); font-size: 10.5px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
+
+.i-split, .i-close { display: grid; gap: 28px; align-items: start; }
+@media (min-width: 940px) { .i-split, .i-close { grid-template-columns: 1fr 1fr; gap: 44px; } }
+.t-prose { display: grid; gap: 14px; max-width: 60ch; }
+.t-prose p { margin: 0; font-size: 15px; line-height: 1.75; color: rgb(var(--color-muted-foreground)); }
+.t-prose a { color: rgb(var(--page-accent, var(--color-primary))); }
+
+.i-tiers { display: grid; gap: 14px; }
+.i-tier { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); display: flex; flex-direction: column; align-items: flex-start; gap: 9px; }
+.i-tier-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; width: 100%; }
+.i-tier-h b { font-size: 15.5px; }
+.i-tier-p { font-family: var(--font-mono); font-size: 11.5px; color: rgb(var(--page-accent, var(--color-primary))); }
+.i-tier p { margin: 0; font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
+.i-form { max-width: 620px; }
+</style>

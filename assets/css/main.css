@@ -233,17 +233,20 @@ svg { flex-shrink: 0; }
 
 /* One accent per page, so a section heading, an eyebrow and a link agree with
    the hero they sit under rather than each reaching for the brand indigo. */
-.page-learner { --page-accent: var(--color-primary); --page-accent-dark: 139 133 255; }
-.page-employer { --page-accent: var(--color-recruiter); --page-accent-dark: 52 211 153; }
-.page-institution { --page-accent: var(--color-institution); --page-accent-dark: 96 165 250; }
-.page-accent { --page-accent-dark: 139 133 255; }
+.page-learner { --page-accent: var(--color-primary); --page-accent-dark: 139 133 255; --page-accent-hero: 186 182 255; }
+.page-employer { --page-accent: var(--color-recruiter); --page-accent-dark: 52 211 153; --page-accent-hero: 148 244 208; }
+.page-institution { --page-accent: var(--color-institution); --page-accent-dark: 96 165 250; --page-accent-hero: 170 206 255; }
+.page-accent { --page-accent-dark: 139 133 255; --page-accent-hero: 186 182 255; }
 .page-accent .eyebrow, .page-learner .eyebrow, .page-employer .eyebrow, .page-institution .eyebrow {
   color: rgb(var(--page-accent, var(--color-primary)));
 }
 /* The hero is dark in both themes, so it cannot take the theme-following accent:
    in light mode those are the deep variants chosen to sit on white, and they drop
    to ~3:1 against the gradient. Pin the hero to the on-dark pair. */
-.hero .eyebrow { color: rgb(var(--page-accent-dark, 139 133 255)); }
+/* Lighter than the on-dark accent used elsewhere. At 11.5px the eyebrow is small
+   text, so it needs 4.5:1 rather than the 3:1 the headline gets, and the mesh is
+   at its brightest directly behind it. */
+.hero .eyebrow { color: rgb(var(--page-accent-hero, 186 182 255)); }
 /* A tinted band has to reach both edges of the window or it reads as a stray grey
    rectangle. Where the tint sits on the same element as `.pad`, the width cap is
    traded for a matching inline padding, so the copy still lands on the 1160 grid. */
@@ -311,12 +314,36 @@ svg { flex-shrink: 0; }
   text-wrap: balance;
 }
 
+/* The standing sub-heading. Nine variants of this had accumulated across the
+   pages — 14.5/15/15.5px, line-heights from 1.6 to 1.7, measures from 56ch to
+   70ch — which is invisible on any one page and obvious when you move between
+   them. One definition, and pages override only the measure when the column
+   genuinely differs. */
 .p-sub {
-  font-size: 16.5px;
+  font-size: 15px;
+  line-height: 1.7;
   color: rgb(var(--color-muted-foreground));
-  margin: 13px 0 0;
-  max-width: 54ch;
+  margin: 0 0 24px;
+  max-width: 68ch;
 }
+
+/* ─── Card surface ─────────────────────────────────────
+   A dozen differently-named cards across the site were drifting apart on radius,
+   padding and type size. The values live here; the page classes name the thing,
+   they do not redefine what a card looks like. */
+.card-surface {
+  border: 1px solid rgb(var(--color-border));
+  border-radius: 14px;
+  padding: 20px;
+  background: rgb(var(--color-card));
+}
+.card-surface > h3 { margin: 0 0 8px; font-size: 15.5px; letter-spacing: -0.01em; }
+.card-surface > p { margin: 0; font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
+
+/* One deliberate second size, for cards carrying a label and a value rather than
+   a paragraph — the platform list, tier prices. Documented so it stays the only
+   exception instead of becoming the fourth padding nobody chose. */
+.card-compact { padding: 16px; }
 
 .mono { font-family: var(--font-mono); }
 
@@ -403,10 +430,18 @@ svg { flex-shrink: 0; }
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - clamp(30px, 4vw, 54px)), 0 100%);
 }
 .hero-inner { position: relative; z-index: 2; }
+/* Two layers, because the single diagonal wash was thinnest — 0.08 alpha — at
+   its 46% stop, which is exactly the band the headline sits in. That is why the
+   accent-coloured emphasis kept losing against the mesh: the orbs are brightest
+   where the scrim had all but stopped covering them.
+   The radial darkens the centre where the type is and fades out well before the
+   edges, so the gradient keeps its colour everywhere the reader is not reading. */
 .hero-scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, rgb(6 10 28 / 0.44) 0%, rgb(6 10 28 / 0.08) 46%, rgb(6 10 28 / 0.34) 100%);
+  background:
+    radial-gradient(ellipse 84% 76% at 50% 44%, rgb(6 10 28 / 0.58) 0%, rgb(6 10 28 / 0.3) 52%, rgb(6 10 28 / 0) 80%),
+    linear-gradient(160deg, rgb(6 10 28 / 0.44) 0%, rgb(6 10 28 / 0.12) 46%, rgb(6 10 28 / 0.34) 100%);
 }
 .hero-eyebrow { color: rgb(255 255 255 / 0.84); }
 .hero h1 {
@@ -420,8 +455,21 @@ svg { flex-shrink: 0; }
 }
 /* The hero is dark in both themes, so the emphasis takes the on-dark accent for
    the same reason the eyebrow does — the light-theme accent is a deep indigo
-   chosen to sit on white and disappears against the gradient. */
-.hero h1 em { font-style: italic; color: rgb(var(--page-accent-dark, 139 133 255)); }
+   chosen to sit on white and disappears against the gradient.
+   The mesh drifts, and one of its orbs is the same indigo as this text, so the
+   accent alone is not enough: an opaque block guarantees the contrast whatever
+   happens to be behind it at the time. `box-decoration-break` keeps the block
+   intact if the phrase ever wraps. */
+/* The hero is dark in both themes, so the emphasis takes the on-dark accent for
+   the same reason the eyebrow does — the light-theme accent is a deep indigo
+   chosen to sit on white and disappears against the gradient.
+   Legibility over the drifting mesh is handled by the scrim above, not by a
+   background on the phrase itself: a box around three words fixes those three
+   words and leaves the rest of the headline sitting on the same moving colour. */
+.hero h1 em {
+  font-style: italic;
+  color: rgb(var(--page-accent-hero, 186 182 255));
+}
 
 .hero-lede {
   font-size: 17.5px;
@@ -438,10 +486,10 @@ svg { flex-shrink: 0; }
 
 /* Hero B — centred copy, window straddling the fold */
 .hero-centered { text-align: center; padding-bottom: clamp(118px, 17vw, 190px); }
-/* 20ch, not 16: `ch` measures the digit zero, and Newsreader's is narrower than
-   the sans this cap was tuned against — so the same number bought a visibly
-   tighter line once the headings became serif. 20 is where every hero drops a
-   line; past it the measure just gets longer without setting any more type. */
+/* `ch` measures the digit zero, and Newsreader's is narrower than the sans this
+   cap was originally tuned against. 20ch dropped every hero a line when the
+   headings became serif. Past it the measure only gets longer without setting
+   any more type. */
 .hero-centered h1 { max-width: 20ch; margin: 0 auto; }
 .hero-centered .hero-lede { max-width: 50ch; margin-left: auto; margin-right: auto; margin-top: 24px; }
 .hero-centered .hero-cta { justify-content: center; }

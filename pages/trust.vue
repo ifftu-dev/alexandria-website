@@ -70,7 +70,7 @@ const dataFacts = [
       </dl>
       <p class="p-sub" style="margin-top: 20px">
         The full policy for this website is on the <NuxtLink to="/privacy">privacy page</NuxtLink>.
-        The implementation is in <NuxtLink to="/developers">the source</NuxtLink>.
+        The implementation is in <NuxtLink to="/technology">the technology page</NuxtLink>.
       </p>
     </section>
 
@@ -85,13 +85,13 @@ const dataFacts = [
 </template>
 
 <style scoped>
-.h-sec { font-size: clamp(21px, 3vw, 26px); letter-spacing: -0.02em; margin: 0 0 8px; }
-.p-sub { margin: 0 0 22px; font-size: 14.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); max-width: 68ch; }
+.h-sec { margin-bottom: 14px; }
+
 .p-sub a { color: rgb(var(--color-primary)); }
-.t-rows { display: grid; gap: 1px; background: rgb(var(--color-border)); border: 1px solid rgb(var(--color-border)); border-radius: 12px; overflow: hidden; }
+.t-rows { display: grid; gap: 1px; background: rgb(var(--color-border)); border: 1px solid rgb(var(--color-border)); border-radius: 14px; overflow: hidden; }
 .t-row { background: rgb(var(--color-card)); padding: 16px 18px; }
 .t-area { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13.5px; font-weight: 700; }
-.t-row p { margin: 6px 0 0; font-size: 13.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); }
+.t-row p { margin: 6px 0 0; font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
 .t-facts { display: grid; gap: 14px; margin: 0; }
 @media (min-width: 760px) { .t-facts { grid-template-columns: max-content 1fr; gap: 12px 24px; } }
 .t-facts dt { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(var(--color-muted-foreground)); }

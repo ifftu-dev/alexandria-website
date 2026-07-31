@@ -11,11 +11,19 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# Cache hashed assets aggressively
-[[headers]]
-  for = "/_nuxt/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+# Asset caching is deliberately NOT set here. Nitro writes dist/_headers with
+# three rules that this one blanket rule was overriding:
+#
+#   /_nuxt/builds/meta/*  1 year, immutable   (path carries the build id)
+#   /_nuxt/builds/*       max-age=1           (latest.json is a FIXED path)
+#   /_nuxt/*              1 year, immutable   (filenames carry a content hash)
+#
+# The middle rule is the one that matters. `_nuxt/builds/latest.json` is how the
+# app detects that a new version has been deployed, and its URL never changes —
+# so caching it for a year strands a client on whatever build it first saw.
+# Setting Cache-Control for /_nuxt/* here matched that file too and emitted a
+# second, conflicting header (Netlify warned about it on every build: "the same
+# header is set twice with different cases").
 
 # Security headers
 [[headers]]

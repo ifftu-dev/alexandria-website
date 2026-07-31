@@ -113,9 +113,9 @@ const shape = computed(() => SHAPES[audience.value])
 </template>
 
 <style scoped>
-.h-sec { font-size: clamp(20px, 2.8vw, 24px); letter-spacing: -0.02em; margin: 0 0 8px; }
+.h-sec { margin-bottom: 14px; }
 .pi-h3 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(var(--color-muted-foreground)); margin: 20px 0 8px; }
-.p-sub { margin: 0 0 18px; font-size: 14.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); max-width: 56ch; }
+.p-sub { max-width: 56ch; }
 
 .pi-toggle { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid rgb(var(--color-border)); border-radius: 999px; margin-bottom: 26px; }
 .pi-toggle button {
@@ -127,7 +127,7 @@ const shape = computed(() => SHAPES[audience.value])
 .pi-grid { display: grid; gap: 28px; }
 @media (min-width: 940px) { .pi-grid { grid-template-columns: 1fr 1fr; gap: 40px; } }
 
-.pi-card { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 22px; background: rgb(var(--color-card)); }
+.pi-card { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }
 .pi-facts { display: grid; gap: 10px; margin: 14px 0 0; }
 @media (min-width: 560px) { .pi-facts { grid-template-columns: max-content 1fr; gap: 10px 20px; } }
 .pi-facts dt { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(var(--color-muted-foreground)); }

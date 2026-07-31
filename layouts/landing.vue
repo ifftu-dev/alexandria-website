@@ -39,7 +39,9 @@ const year = new Date().getFullYear()
           <span>Alexandria</span>
         </NuxtLink>
 
-        <nav class="nav-links" aria-label="Audiences">
+        <nav class="nav-links" aria-label="Main">
+          <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence">Why recognition</NuxtLink>
+          <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology">Technology</NuxtLink>
           <NuxtLink to="/learners" class="plausible-event-name=Nav-Learners">Learners</NuxtLink>
           <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter link-recruiter">Employers</NuxtLink>
           <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution">Institutions</NuxtLink>
@@ -88,6 +90,7 @@ const year = new Date().getFullYear()
               <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution" @click="closeMobileMenu">For institutions</NuxtLink>
               <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify" @click="closeMobileMenu">Verify a credential</NuxtLink>
               <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence" @click="closeMobileMenu">Why recognition</NuxtLink>
+              <NuxtLink to="/technology" @click="closeMobileMenu">Technology</NuxtLink>
               <NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots" @click="closeMobileMenu">Run a pilot</NuxtLink>
               <button
                 type="button"
@@ -192,7 +195,7 @@ const year = new Date().getFullYear()
               <li><NuxtLink to="/partners">Partners</NuxtLink></li>
               <li><NuxtLink to="/verify" class="plausible-event-name=Nav-Verify">Verify a credential</NuxtLink></li>
               <li><NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence">Why recognition</NuxtLink></li>
-              <li><NuxtLink to="/developers">Developers</NuxtLink></li>
+              <li><NuxtLink to="/technology">Technology</NuxtLink></li>
               <li><NuxtLink to="/trust">Trust</NuxtLink></li>
               <li><NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions">Institutions</NuxtLink></li>
             </ul>
@@ -242,7 +245,9 @@ const year = new Date().getFullYear()
 }
 .brand svg { color: rgb(var(--color-primary)); }
 .nav-links { display: none; gap: 2px; }
-@media (min-width: 760px) { .nav-links { display: flex; } }
+/* 880, not 760: the bar carries five destinations now, and below this width
+   they crowd the wordmark and the CTA. The drawer holds the same set. */
+@media (min-width: 880px) { .nav-links { display: flex; } }
 .nav-links a {
   font-size: 14.5px; font-weight: 600; text-decoration: none; padding: 9px 12px; border-radius: 999px;
   display: inline-flex; align-items: center; min-height: 40px;
@@ -296,7 +301,7 @@ const year = new Date().getFullYear()
   padding: 7px 15px;
   transition: background 150ms ease, border-color 150ms ease;
 }
-@media (min-width: 760px) { .nav-cta { display: inline-flex; } }
+@media (min-width: 880px) { .nav-cta { display: inline-flex; } }
 .nav-cta { min-height: 40px; }
 
 /* A utility, not a destination: quieter than the audience links and separated
@@ -338,13 +343,13 @@ const year = new Date().getFullYear()
   display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
   border: none; border-radius: 10px; background: transparent; color: rgb(var(--color-muted-foreground)); cursor: pointer;
 }
-@media (min-width: 760px) { .nav-burger { display: none; } }
+@media (min-width: 880px) { .nav-burger { display: none; } }
 .nav-burger:hover { background: rgb(var(--color-muted)); color: rgb(var(--color-foreground)); }
 .nav-burger svg { width: 20px; height: 20px; }
 
 /* drawer */
 .drawer-root { position: fixed; inset: 0; z-index: 100; }
-@media (min-width: 760px) { .drawer-root { display: none; } }
+@media (min-width: 880px) { .drawer-root { display: none; } }
 .drawer-backdrop { position: absolute; inset: 0; background: rgb(0 0 0 / 0.45); backdrop-filter: blur(2px); }
 .drawer {
   position: absolute; inset-block: 0; inset-inline-end: 0; width: 17rem;
