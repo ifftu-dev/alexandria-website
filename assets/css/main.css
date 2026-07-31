@@ -1132,6 +1132,33 @@ svg { flex-shrink: 0; }
   border-color: rgb(var(--color-warning, 202 138 4) / 0.3);
 }
 
+/* ─── Feature grid, capped ─────────────────────────────
+   Ten tiles is an honest inventory and a wall at the same time. Collapsed, the
+   reader sees the shape of it and chooses; the tiles below the cap stay in the
+   DOM so they are still indexed and still findable by in-page search. */
+.bento-wrap { position: relative; max-height: 780px; overflow: hidden; transition: max-height 420ms cubic-bezier(0.4, 0, 0.2, 1); }
+.bento-wrap.open { max-height: 8000px; }
+@media (max-width: 700px) { .bento-wrap { max-height: 620px; } }
+
+/* Fades the cut rather than slicing a tile in half — a hard edge reads as a
+   rendering fault, a fade reads as "there is more". */
+.bento-veil {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 220px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgb(var(--color-background) / 0) 0%, rgb(var(--color-background) / 0.86) 62%, rgb(var(--color-background)) 100%);
+}
+
+.bento-more { display: grid; justify-items: center; gap: 12px; margin-top: 26px; text-align: center; }
+.bento-more button { cursor: pointer; font-family: inherit; }
+.bento-joke { margin: 0; font-size: 13.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); max-width: 56ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bento-wrap { transition: none; }
+}
+
 /* ─── The recognition gap ──────────────────────────────
    Sits directly under the app window so the first thing after the product is
    the reason it exists. Hairlines top and bottom rather than a tint: this is a
