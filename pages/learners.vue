@@ -60,7 +60,7 @@ const promises = [
           <button type="button" class="btn btn-lg plausible-event-name=EarlyAccess" @click="waitlist.open()">
             Join the waiting list
           </button>
-          <NuxtLink to="/verify" class="btn-ghost">See a credential verified</NuxtLink>
+          <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify btn-ghost">See a credential verified</NuxtLink>
         </div>
       </div>
     </section>

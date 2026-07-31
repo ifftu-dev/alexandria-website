@@ -92,7 +92,7 @@ const year = new Date().getFullYear()
               <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution" @click="closeMobileMenu">For institutions</NuxtLink>
               <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify" @click="closeMobileMenu">Verify a credential</NuxtLink>
               <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence" @click="closeMobileMenu">Why recognition</NuxtLink>
-              <NuxtLink to="/technology" @click="closeMobileMenu">Technology</NuxtLink>
+              <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology" @click="closeMobileMenu">Technology</NuxtLink>
               <NuxtLink to="/blog" class="plausible-event-name=Nav-Blog" @click="closeMobileMenu">Blog</NuxtLink>
               <NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots" @click="closeMobileMenu">Run a pilot</NuxtLink>
               <button
@@ -196,7 +196,7 @@ const year = new Date().getFullYear()
               <li><NuxtLink to="/verify" class="plausible-event-name=Nav-Verify">Verify a credential</NuxtLink></li>
               <li><NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence">Why recognition</NuxtLink></li>
               <li><NuxtLink to="/blog" class="plausible-event-name=Nav-Blog">Blog</NuxtLink></li>
-              <li><NuxtLink to="/technology">Technology</NuxtLink></li>
+              <li><NuxtLink to="/technology" class="plausible-event-name=Nav-Technology">Technology</NuxtLink></li>
               <li><NuxtLink to="/trust">Trust</NuxtLink></li>
               <li><NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions">Institutions</NuxtLink></li>
             </ul>
