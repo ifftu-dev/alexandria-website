@@ -382,6 +382,10 @@ const year = new Date().getFullYear()
 .drawer-enter-from .drawer, .drawer-leave-to .drawer { transform: translateX(100%); }
 
 /* announcement toast */
+/* Deliberately not a card. On a page made of cards, another bordered surface in
+   --color-card is the one thing guaranteed not to be noticed. The gradient is
+   fixed rather than themed, for the same reason the hero is: it carries its own
+   contrast, so the ink stays white in light mode and dark mode alike. */
 .toast {
   position: fixed;
   z-index: 90;
@@ -389,12 +393,14 @@ const year = new Date().getFullYear()
   inset-block-end: 20px;
   display: flex;
   align-items: stretch;
-  max-width: min(22rem, calc(100vw - 32px));
-  border: 1px solid rgb(var(--color-border));
+  max-width: min(23rem, calc(100vw - 32px));
+  border: 1px solid rgb(255 255 255 / 0.16);
   border-radius: 14px;
-  background: color-mix(in srgb, rgb(var(--color-card)) 92%, transparent);
-  backdrop-filter: blur(10px);
-  box-shadow: var(--shadow-lift);
+  background:
+    linear-gradient(125deg, rgb(79 70 229) 0%, rgb(109 40 217) 52%, rgb(67 56 202) 100%);
+  box-shadow:
+    0 18px 40px -12px rgb(79 70 229 / 0.55),
+    0 6px 14px -6px rgb(10 12 30 / 0.4);
   overflow: hidden;
 }
 @media (max-width: 560px) {
@@ -406,14 +412,14 @@ const year = new Date().getFullYear()
   gap: 10px;
   padding: 13px 6px 13px 15px;
   text-decoration: none;
-  color: rgb(var(--color-foreground));
+  color: #fff;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: -0.01em;
   flex: 1;
   min-width: 0;
 }
-.toast-link:hover { background: rgb(var(--color-primary) / 0.06); }
+.toast-link:hover { background: rgb(255 255 255 / 0.1); }
 .toast-eyebrow {
   flex: none;
   font-size: 10px;
@@ -422,23 +428,27 @@ const year = new Date().getFullYear()
   text-transform: uppercase;
   padding: 3px 7px;
   border-radius: 999px;
-  background: rgb(var(--color-primary) / 0.14);
-  color: rgb(var(--color-primary));
+  /* 0.14, not 0.22: the chip sits at the lightest end of the gradient, and a
+     heavier scrim lifted its background until 10px white text fell to 4.02:1
+     against the 4.5 small text needs. This leaves 4.74:1. */
+  background: rgb(255 255 255 / 0.14);
+  border: 1px solid rgb(255 255 255 / 0.3);
+  color: #fff;
 }
 .toast-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.toast-link svg { width: 13px; height: 13px; flex: none; color: rgb(var(--color-muted-foreground)); }
-.toast-link:hover svg { color: rgb(var(--color-primary)); }
+.toast-link svg { width: 13px; height: 13px; flex: none; color: rgb(255 255 255 / 0.75); }
+.toast-link:hover svg { color: #fff; }
 .toast-x {
   flex: none;
   width: 38px;
   border: none;
-  border-inline-start: 1px solid rgb(var(--color-border));
+  border-inline-start: 1px solid rgb(255 255 255 / 0.16);
   background: transparent;
-  color: rgb(var(--color-muted-foreground));
+  color: rgb(255 255 255 / 0.75);
   cursor: pointer;
   transition: background 150ms ease, color 150ms ease;
 }
-.toast-x:hover { background: rgb(var(--color-muted)); color: rgb(var(--color-foreground)); }
+.toast-x:hover { background: rgb(255 255 255 / 0.14); color: #fff; }
 .toast-x svg { width: 14px; height: 14px; }
 
 .toast-enter-active { transition: opacity 320ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1); }

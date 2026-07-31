@@ -217,14 +217,6 @@ const problems = [
   },
 ]
 
-const stats = [
-  { n: '5', label: 'Platforms', detail: 'One codebase, native on each' },
-  { n: '9', label: 'Languages', detail: 'Hindi, Bengali and Telugu at launch' },
-  { n: '6', label: 'Credential kinds', detail: 'Share only what you choose' },
-  { n: '0', label: 'Companies in the middle', detail: 'Your account is created and kept on your device' },
-  { n: '100%', label: 'On-device integrity', detail: 'Camera and keystrokes never uploaded' },
-]
-
 const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
 
 // The form lives in a dialog now; every trigger opens the same one.
@@ -522,20 +514,6 @@ const waitlist = useWaitlist()
         Runs on macOS 10.15+, Windows 10+, Linux, iOS 16.4+, and Android 9+.
         For live video tutoring on Android we recommend a device with 6&nbsp;GB+ RAM.
       </p>
-    </section>
-
-    <!-- ═══ STATS ═══ -->
-    <section class="band">
-      <div class="pad">
-        <p class="eyebrow">Built to outlast us</p>
-        <h2 class="h-sec">The numbers that actually matter.</h2>
-        <div class="stats">
-          <div v-for="stat in stats" :key="stat.label">
-            <div class="stat-n">{{ stat.n }}</div>
-            <div class="stat-l"><b>{{ stat.label }}</b>{{ stat.detail }}</div>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- ═══ AUDIENCES ═══ -->
