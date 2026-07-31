@@ -420,8 +420,42 @@ svg { flex-shrink: 0; }
 }
 /* The hero is dark in both themes, so the emphasis takes the on-dark accent for
    the same reason the eyebrow does — the light-theme accent is a deep indigo
-   chosen to sit on white and disappears against the gradient. */
-.hero h1 em { font-style: italic; color: rgb(var(--page-accent-dark, 139 133 255)); }
+   chosen to sit on white and disappears against the gradient.
+   The mesh drifts, and one of its orbs is the same indigo as this text, so the
+   accent alone is not enough: an opaque block guarantees the contrast whatever
+   happens to be behind it at the time. `box-decoration-break` keeps the block
+   intact if the phrase ever wraps. */
+.hero h1 em {
+  font-style: italic;
+  color: rgb(var(--page-accent-dark, 139 133 255));
+  background: rgb(8 11 24 / 0.82);
+  padding: 0.02em 0.22em 0.06em 0.18em;
+  border-radius: 6px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* A block cursor, because the sentence is a statement of intent rather than a
+   finished fact — and because it moves, which is the one thing on this hero
+   that earns a second look. */
+.hero h1 em::after {
+  content: "";
+  display: inline-block;
+  width: 0.46em;
+  height: 0.78em;
+  margin-inline-start: 0.1em;
+  vertical-align: -0.06em;
+  background: currentColor;
+  animation: caret 1.06s step-end infinite;
+}
+
+/* Ends on opacity 1, so the global reduced-motion override — which collapses the
+   duration and stops after one iteration — leaves the cursor visible rather than
+   deleting it. */
+@keyframes caret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
 
 .hero-lede {
   font-size: 17.5px;
