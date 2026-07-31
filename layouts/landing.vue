@@ -397,11 +397,8 @@ const year = new Date().getFullYear()
   max-width: min(23rem, calc(100vw - 32px));
   border: 1px solid rgb(255 255 255 / 0.16);
   border-radius: 14px;
-  background:
-    linear-gradient(125deg, rgb(79 70 229) 0%, rgb(109 40 217) 52%, rgb(67 56 202) 100%);
-  box-shadow:
-    0 18px 40px -12px rgb(79 70 229 / 0.55),
-    0 6px 14px -6px rgb(10 12 30 / 0.4);
+  background: var(--grad-surface);
+  box-shadow: var(--grad-surface-shadow);
   overflow: hidden;
 }
 @media (max-width: 560px) {
