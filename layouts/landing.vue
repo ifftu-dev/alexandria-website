@@ -14,8 +14,14 @@ const ANNOUNCEMENT_DISMISS_KEY = 'alexandria-announcement-dismissed'
 const showToast = ref(false)
 
 onMounted(() => {
-  if (localStorage.getItem(ANNOUNCEMENT_DISMISS_KEY) === '1') return
-  // Let the page land before asking for attention.
+  // The dismissal flag is deliberately NOT consulted. The announcement is the
+  // project's one standing invitation to read what it is actually for, and a
+  // visitor who closed it three weeks ago on a different page is not someone we
+  // want to keep it from. Closing it still hides it for the rest of the visit —
+  // it just does not follow anyone across sessions.
+  //
+  // The write below is kept so the preference is there to honour the day we
+  // decide to, and so the key does not have to be reintroduced from scratch.
   setTimeout(() => { showToast.value = true }, 1400)
 })
 
@@ -43,6 +49,7 @@ const year = new Date().getFullYear()
         <nav class="nav-links" aria-label="Main">
           <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence">Why recognition</NuxtLink>
           <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology">Technology</NuxtLink>
+          <NuxtLink to="/blog" class="plausible-event-name=Nav-Blog">Blog</NuxtLink>
           <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter link-recruiter">Employers</NuxtLink>
           <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution">Institutions</NuxtLink>
         </nav>
@@ -55,18 +62,6 @@ const year = new Date().getFullYear()
             <span>Search</span>
             <kbd>/</kbd>
           </button>
-          <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify nav-verify">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Verify
-          </NuxtLink>
-          <span class="nav-sep" aria-hidden="true" />
-          <button
-            type="button"
-            class="plausible-event-name=EarlyAccess nav-cta"
-            @click="waitlist.open()"
-          >Join the waiting list</button>
           <UiThemeToggle />
           <button type="button" class="nav-burger" aria-label="Open menu" @click="mobileMenuOpen = true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -98,6 +93,7 @@ const year = new Date().getFullYear()
               <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify" @click="closeMobileMenu">Verify a credential</NuxtLink>
               <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence" @click="closeMobileMenu">Why recognition</NuxtLink>
               <NuxtLink to="/technology" @click="closeMobileMenu">Technology</NuxtLink>
+              <NuxtLink to="/blog" class="plausible-event-name=Nav-Blog" @click="closeMobileMenu">Blog</NuxtLink>
               <NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots" @click="closeMobileMenu">Run a pilot</NuxtLink>
               <button
                 type="button"
@@ -129,18 +125,14 @@ const year = new Date().getFullYear()
     <Teleport to="body">
       <Transition name="toast">
         <aside v-if="showToast" class="toast" aria-label="Announcement">
-          <a
-            href="https://www.ifftu.dev/blog/introducing-alexandria/"
-            target="_blank"
-            rel="noopener noreferrer"
+          <NuxtLink
+            to="/blog/introducing-alexandria"
             class="plausible-event-name=Announcement toast-link"
+            @click="dismissToast"
           >
             <span class="toast-eyebrow">New</span>
             <span class="toast-text">Read the announcement post</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M9 7h8v8" />
-            </svg>
-          </a>
+          </NuxtLink>
           <button type="button" class="toast-x" aria-label="Dismiss announcement" @click="dismissToast">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -203,6 +195,7 @@ const year = new Date().getFullYear()
               <li><NuxtLink to="/partners">Partners</NuxtLink></li>
               <li><NuxtLink to="/verify" class="plausible-event-name=Nav-Verify">Verify a credential</NuxtLink></li>
               <li><NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence">Why recognition</NuxtLink></li>
+              <li><NuxtLink to="/blog" class="plausible-event-name=Nav-Blog">Blog</NuxtLink></li>
               <li><NuxtLink to="/technology">Technology</NuxtLink></li>
               <li><NuxtLink to="/trust">Trust</NuxtLink></li>
               <li><NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions">Institutions</NuxtLink></li>
@@ -298,19 +291,6 @@ const year = new Date().getFullYear()
    would mark it current on all four pages. */
 .brand.router-link-exact-active { color: rgb(var(--color-primary)); }
 .nav-right { display: flex; align-items: center; gap: 6px; }
-.nav-cta {
-  display: none;
-  font-size: 14.5px;
-  font-weight: 600;
-  text-decoration: none;
-  color: rgb(var(--color-primary));
-  border: 1px solid rgb(var(--color-primary) / 0.35);
-  border-radius: 999px;
-  padding: 7px 15px;
-  transition: background 150ms ease, border-color 150ms ease;
-}
-@media (min-width: 880px) { .nav-cta { display: inline-flex; } }
-.nav-cta { min-height: 40px; }
 
 /* The palette's only discoverability affordance — the brief is explicit that it
    has to exist, since a bare `/` shortcut is invisible. */
@@ -330,27 +310,6 @@ const year = new Date().getFullYear()
 .nav-search:hover { color: rgb(var(--color-foreground)); background: rgb(var(--color-muted)); }
 @media (min-width: 1080px) { .nav-search { display: inline-flex; } }
 
-/* A utility, not a destination: quieter than the audience links and separated
-   from the CTA by a hairline, so the bar reads as three groups rather than a
-   row of seven equal things. */
-.nav-verify {
-  display: none; align-items: center; gap: 6px; min-height: 40px;
-  padding: 9px 12px; border-radius: 999px;
-  font-size: 14px; font-weight: 600; text-decoration: none;
-  color: rgb(var(--color-muted-foreground));
-  transition: color 150ms ease, background 150ms ease;
-}
-.nav-verify svg { width: 15px; height: 15px; }
-.nav-verify:hover { color: rgb(var(--color-foreground)); background: rgb(var(--color-muted)); }
-/* Same pill as the audience links, so "current page" looks like one thing across
-   the bar even though this link is styled quieter than they are. */
-.nav-verify.router-link-active {
-  color: rgb(var(--color-primary));
-  background: rgb(var(--color-primary) / 0.14);
-}
-.nav-sep { display: none; width: 1px; height: 20px; margin: 0 4px; background: rgb(var(--color-border)); }
-@media (min-width: 900px) { .nav-verify { display: inline-flex; } .nav-sep { display: block; } }
-.nav-cta:hover { background: rgb(var(--color-primary) / 0.1); border-color: rgb(var(--color-primary) / 0.6); }
 
 /* The drawer and footer triggers were links and are buttons now, so they need
    the surrounding link styling restated rather than inherited. */
@@ -438,11 +397,8 @@ const year = new Date().getFullYear()
   max-width: min(23rem, calc(100vw - 32px));
   border: 1px solid rgb(255 255 255 / 0.16);
   border-radius: 14px;
-  background:
-    linear-gradient(125deg, rgb(79 70 229) 0%, rgb(109 40 217) 52%, rgb(67 56 202) 100%);
-  box-shadow:
-    0 18px 40px -12px rgb(79 70 229 / 0.55),
-    0 6px 14px -6px rgb(10 12 30 / 0.4);
+  background: var(--grad-surface);
+  box-shadow: var(--grad-surface-shadow);
   overflow: hidden;
 }
 @media (max-width: 560px) {
@@ -452,7 +408,10 @@ const year = new Date().getFullYear()
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 13px 6px 13px 15px;
+  /* Right padding clears the close button, which is positioned over this rather
+     than sitting beside it — so the whole toast is the link except that one
+     target. */
+  padding: 14px 48px 14px 16px;
   text-decoration: none;
   color: #fff;
   font-size: 14px;
@@ -478,13 +437,17 @@ const year = new Date().getFullYear()
   color: #fff;
 }
 .toast-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.toast-link svg { width: 13px; height: 13px; flex: none; color: rgb(255 255 255 / 0.75); }
-.toast-link:hover svg { color: #fff; }
 .toast-x {
-  flex: none;
-  width: 38px;
+  position: absolute;
+  inset-inline-end: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
   border: none;
-  border-inline-start: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 9px;
   background: transparent;
   color: rgb(255 255 255 / 0.75);
   cursor: pointer;

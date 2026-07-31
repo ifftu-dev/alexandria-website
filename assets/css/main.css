@@ -134,6 +134,11 @@
   --font-display: 'Newsreader Variable', 'Newsreader Fallback', Georgia, 'Times New Roman', serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
 
+  /* The announcement toast's surface, named so anything else that needs to sit
+     apart from the page can use the same one rather than approximating it. */
+  --grad-surface: linear-gradient(125deg, rgb(79 70 229) 0%, rgb(109 40 217) 52%, rgb(67 56 202) 100%);
+  --grad-surface-shadow: 0 18px 40px -12px rgb(79 70 229 / 0.55), 0 6px 14px -6px rgb(10 12 30 / 0.4);
+
   --radius: 0.75rem;
   --shadow-card: 0 2px 5px -1px rgb(30 35 60 / 0.10), 0 1px 3px -1px rgb(0 0 0 / 0.06);
   --shadow-lift: 0 13px 27px -5px rgb(30 35 60 / 0.20), 0 8px 16px -8px rgb(0 0 0 / 0.20);
@@ -365,14 +370,23 @@ svg { flex-shrink: 0; }
    to go on. Lighthouse caught the /why-recognition link in the homepage closing
    paragraph. Standalone links are exempt: a nav item, a chevron CTA or a card
    link is identifiable by position, and underlining those would only add noise. */
-p a:not(.btn):not(.btn-lg):not(.btn-ghost):not(.chev),
-li a:not(.btn):not(.btn-lg):not(.btn-ghost):not(.chev),
-dd a:not(.btn):not(.btn-lg):not(.btn-ghost):not(.chev),
-blockquote a {
+/* `:where()` on both sides so this weighs almost nothing — a chain of `:not()`
+   pushed the old version to a specificity no context rule could override, which
+   is how the footer ended up underlined. */
+:where(p, li, dd, blockquote) a:not(:where(.btn, .btn-lg, .btn-ghost, .chev)) {
   text-decoration: underline;
   text-decoration-thickness: from-font;
   text-underline-offset: 0.18em;
 }
+
+/* Navigation lists are markup-shaped like prose lists and are nothing like them:
+   the links are the entire content, so position identifies them and the rule
+   above only adds noise. Caught in the footer, where every column had picked up
+   an underline it did not want. */
+.foot-col a,
+.drawer-links a,
+.nav-links a,
+.bl-list a { text-decoration: none; }
 
 .mono { font-family: var(--font-mono); }
 
@@ -964,6 +978,112 @@ blockquote a {
   .graph-progress { font-size: 11.5px; }
 }
 
+/* ─── Long-form article ────────────────────────────────
+   Body copy in the display serif rather than the UI sans. That is what
+   Newsreader is for, the site already carries it, and an essay set in the face
+   the page is titled in reads as one piece of writing rather than a UI with
+   text in it. The sans stays for metadata, the mono for labels and code.
+
+   Measure is 68ch at 19px — long enough to stop the eye returning constantly,
+   short enough that it finds the next line without hunting. */
+.article {
+  max-width: 80ch;
+  margin-inline: auto;
+  padding-block: clamp(34px, 5vw, 52px);
+}
+.article > * { max-width: 68ch; }
+
+.article p,
+.article li {
+  font-family: var(--font-display);
+  font-size: 19px;
+  line-height: 1.7;
+  letter-spacing: -0.003em;
+  color: rgb(var(--color-text, var(--color-foreground)) / 0.92);
+  margin: 0 0 22px;
+  text-wrap: pretty;
+}
+
+.article h2 {
+  font-family: var(--font-display);
+  font-size: clamp(25px, 3.2vw, 32px);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin: 52px 0 16px;
+  max-width: 24ch;
+}
+.article h3 {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 36px 0 12px;
+}
+.article > :first-child { margin-top: 0; }
+
+/* A paragraph that opens with a bolded lead-in — the six capability blocks in
+   the announcement — reads as a definition, so the lead-in takes the sans to
+   separate it from the serif prose around it. */
+.article p > strong:first-child {
+  font-family: var(--font-sans);
+  font-size: 0.86em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.article ul, .article ol { margin: 0 0 22px; padding-inline-start: 26px; list-style: revert; }
+.article li { margin-bottom: 10px; }
+.article li::marker { color: rgb(var(--color-muted-foreground)); }
+
+.article a { color: rgb(var(--color-primary)); text-decoration: underline; text-decoration-thickness: from-font; text-underline-offset: 0.16em; }
+
+.article code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  background: rgb(var(--color-muted));
+  border: 1px solid rgb(var(--color-border));
+  padding: 1px 5px;
+  border-radius: 5px;
+}
+
+/* Matching the original post on ifftu.dev, whose stylesheet sets:
+     border-left: 2px solid var(--accent); font-family: var(--font-serif);
+     font-size: 1.3em; font-style: italic; letter-spacing: .03em;
+   The body here is already serif, so the size, the tracking and the full-strength
+   ink are what actually distinguish a pulled quote from the prose around it. */
+.article blockquote {
+  margin: 34px 0;
+  padding-inline-start: 24px;
+  border-inline-start: 2px solid rgb(var(--color-primary));
+  font-size: 1.3em;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  line-height: 1.45;
+  color: rgb(var(--color-foreground));
+}
+.article blockquote p {
+  font-size: inherit;
+  font-style: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin: 0;
+}
+.article blockquote p + p { margin-top: 14px; }
+
+/* Tables carry data, so they take the sans and the full measure. */
+.article table { max-width: none; width: 100%; border-collapse: collapse; margin: 0 0 26px; font-family: var(--font-sans); font-size: 14px; }
+.article thead th { text-align: start; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(var(--color-muted-foreground)); background: rgb(var(--color-muted)); padding: 12px 14px; }
+.article tbody td { padding: 13px 14px; line-height: 1.55; color: rgb(var(--color-muted-foreground)); border-top: 1px solid rgb(var(--color-border)); vertical-align: top; }
+.article tbody td:first-child { color: rgb(var(--color-foreground)); font-weight: 600; }
+.article .art-tablewrap { overflow-x: auto; }
+
+.article hr { border: 0; border-top: 1px solid rgb(var(--color-border)); margin: 44px 0; }
+
+@media (max-width: 600px) {
+  .article p, .article li { font-size: 17.5px; line-height: 1.65; }
+}
+
 /* ─── Status chip ──────────────────────────────────────
    Lifted out of StatusChip.vue's scoped block. The component appears on 10 of
    the 14 built pages, so Vite emitted its CSS as a separate chunk that every one
@@ -1015,6 +1135,58 @@ blockquote a {
   color: rgb(var(--color-warning, 202 138 4));
   background: rgb(var(--color-warning, 202 138 4) / 0.12);
   border-color: rgb(var(--color-warning, 202 138 4) / 0.3);
+}
+
+/* Same surface as the announcement toast — see --grad-surface. Fixed rather
+   than themed, so the white ink holds in light and dark alike. */
+.btn-gradient {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 12px 22px;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 999px;
+  background: var(--grad-surface);
+  box-shadow: var(--grad-surface-shadow);
+  color: #fff;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
+}
+.btn-gradient:hover { filter: brightness(1.08); box-shadow: 0 22px 46px -12px rgb(79 70 229 / 0.62), 0 6px 14px -6px rgb(10 12 30 / 0.45); }
+.btn-gradient:active { transform: translateY(1px); }
+@media (prefers-reduced-motion: reduce) { .btn-gradient { transition: none; } }
+
+/* ─── Feature grid, capped ─────────────────────────────
+   Ten tiles is an honest inventory and a wall at the same time. Collapsed, the
+   reader sees the shape of it and chooses; the tiles below the cap stay in the
+   DOM so they are still indexed and still findable by in-page search. */
+.bento-wrap { position: relative; max-height: 780px; overflow: hidden; transition: max-height 420ms cubic-bezier(0.4, 0, 0.2, 1); }
+.bento-wrap.open { max-height: 8000px; }
+@media (max-width: 700px) { .bento-wrap { max-height: 620px; } }
+
+/* Fades the cut rather than slicing a tile in half — a hard edge reads as a
+   rendering fault, a fade reads as "there is more". */
+.bento-veil {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 220px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgb(var(--color-background) / 0) 0%, rgb(var(--color-background) / 0.86) 62%, rgb(var(--color-background)) 100%);
+}
+
+.bento-more { display: grid; justify-items: center; gap: 12px; margin-top: 26px; text-align: center; }
+.bento-more button { cursor: pointer; font-family: inherit; }
+.bento-joke { margin: 0; font-size: 13.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); max-width: 56ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bento-wrap { transition: none; }
 }
 
 /* ─── The recognition gap ──────────────────────────────

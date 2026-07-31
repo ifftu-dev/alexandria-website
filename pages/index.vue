@@ -221,6 +221,14 @@ const codeTab = ref<'credential' | 'verify' | 'output'>('credential')
 
 // The form lives in a dialog now; every trigger opens the same one.
 const waitlist = useWaitlist()
+
+/**
+ * The feature grid is capped until asked. Ten tiles is an honest inventory and a
+ * wall of text at the same time — collapsed, a reader can see the shape of it and
+ * decide, rather than scrolling past the lot to reach what comes next.
+ */
+const featuresOpen = ref(false)
+
 </script>
 
 <template>
@@ -370,115 +378,129 @@ const waitlist = useWaitlist()
     <!-- ═══ FEATURES ═══ -->
     <section class="section pad">
       <p class="eyebrow">One app, the whole system</p>
-      <h2 class="h-sec">Everything education needs, with no infrastructure behind it.</h2>
+      <h2 class="h-sec">Everything you expect from an education app, and then a whole lot more.</h2>
       <p class="p-sub">
         No subscriptions, no data collection — a native app that turns your device into a full
         participant in a global learning network.
       </p>
 
-      <div class="bento">
-        <article
-          v-for="feature in features"
-          :key="feature.title"
-          class="tile tile-accent"
-          :class="[feature.span, `accent-${feature.accent}`]"
+      <div class="bento-wrap" :class="{ open: featuresOpen }">
+        <div class="bento">
+          <article
+              v-for="feature in features"
+            :key="feature.title"
+            class="tile tile-accent"
+            :class="[feature.span, `accent-${feature.accent}`]"
         >
-          <div class="tile-glow" aria-hidden="true" />
-          <div class="tile-ic">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" :d="feature.icon" />
-            </svg>
-          </div>
-          <h3>{{ feature.title }}</h3>
-          <p>{{ feature.body }}</p>
-
-          <!-- real plugin screenshots, as on the old page -->
-          <div v-if="feature.motif === 'plugins'" class="shots">
-            <figure v-for="shot in pluginShots" :key="shot.src">
-              <figcaption>{{ shot.label }}</figcaption>
-              <img
-                :src="shot.src"
-                :alt="shot.label"
-                :width="shot.w"
-                :height="shot.h"
-                loading="lazy"
-                decoding="async"
-              >
-            </figure>
-          </div>
-
-          <div v-else-if="feature.motif === 'channels'" class="channels">
-            <span v-for="(channel, i) in channels" :key="channel" :class="{ on: i === 0 }">
-              <b>#</b>{{ channel }}
-            </span>
-            <p>invite-only · you decide who's in</p>
-          </div>
-
-          <!-- Sentinel status, mirroring the panel in SentinelTrainingWizard.vue -->
-          <div v-else-if="feature.motif === 'sentinel'" class="shot">
-            <div class="shot-bar"><b>Sentinel status</b><span class="mono">3/3 ready</span></div>
-            <div class="shot-body">
-              <div class="sig" v-for="signal in sentinelSignals" :key="signal.label">
-                <span class="sig-name">{{ signal.label }}</span>
-                <span class="sig-track"><i :style="{ width: `${signal.value}%` }" /></span>
-                <span class="sig-val mono">{{ (signal.value / 100).toFixed(2) }}</span>
-              </div>
-              <div class="score">
-                <span class="score-n mono">0.94</span>
-                <span class="score-l">Integrity score · <b>High</b></span>
-              </div>
-              <p class="shot-foot">Quiet snapshots every 15–45s. Raw camera, typing and mouse data never leave this device.</p>
+            <div class="tile-glow" aria-hidden="true" />
+            <div class="tile-ic">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" :d="feature.icon" />
+              </svg>
             </div>
-          </div>
+            <h3>{{ feature.title }}</h3>
+            <p>{{ feature.body }}</p>
 
-          <!-- the app's own sidebar skill-graph widget -->
-          <div v-else-if="feature.motif === 'graph'" class="shot">
-            <div class="shot-bar"><b>Skill map</b><span class="mono">FROM THE APP SIDEBAR</span></div>
-            <div class="shot-body">
-              <LazySkillGraph hydrate-on-visible :height="196" />
+            <!-- real plugin screenshots, as on the old page -->
+            <div v-if="feature.motif === 'plugins'" class="shots">
+              <figure v-for="shot in pluginShots" :key="shot.src">
+                <figcaption>{{ shot.label }}</figcaption>
+                <img
+                  :src="shot.src"
+                  :alt="shot.label"
+                  :width="shot.w"
+                  :height="shot.h"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </figure>
             </div>
-          </div>
 
-          <!-- a credential as the app renders it, plus device sync -->
-          <div v-else-if="feature.motif === 'credential'" class="shot">
-            <div class="shot-bar"><b>Credential</b><span class="mono">SIGNED BY YOU</span></div>
-            <div class="shot-body">
-              <div class="cred-row">
-                <span class="cred-seal">✦</span>
-                <span>
-                  <span class="cred-t">Root pass, 6G pipe</span>
-                  <span class="cred-m mono">did:key:z6Mkha…QYtP · ed25519</span>
-                </span>
-                <span class="cred-ok">Genuine</span>
-              </div>
-              <div class="sync">
-                <span>This Mac</span>
-                <span class="sync-line"><i /></span>
-                <span>Your phone</span>
-              </div>
-              <p class="shot-foot">Encrypted end to end. Six kinds of credential — yours forever, even if Alexandria disappears.</p>
+            <div v-else-if="feature.motif === 'channels'" class="channels">
+              <span v-for="(channel, i) in channels" :key="channel" :class="{ on: i === 0 }">
+                <b>#</b>{{ channel }}
+              </span>
+              <p>invite-only · you decide who's in</p>
             </div>
-          </div>
 
-          <!-- per-skill distribution with confidence bounds -->
-          <div v-else-if="feature.motif === 'reputation'" class="shot">
-            <div class="shot-bar"><b>Instructor impact</b><span class="mono">PER SKILL</span></div>
-            <div class="shot-body">
-              <div v-for="row in reputation" :key="row.skill" class="dist">
-                <span class="dist-name mono">{{ row.skill }}</span>
-                <span class="dist-track">
-                  <i class="bound" :style="{ left: `${row.low}%`, width: `${row.high - row.low}%` }" />
-                  <i class="point" :style="{ left: `${row.mid}%` }" />
-                </span>
+            <!-- Sentinel status, mirroring the panel in SentinelTrainingWizard.vue -->
+            <div v-else-if="feature.motif === 'sentinel'" class="shot">
+              <div class="shot-bar"><b>Sentinel status</b><span class="mono">3/3 ready</span></div>
+              <div class="shot-body">
+                <div class="sig" v-for="signal in sentinelSignals" :key="signal.label">
+                  <span class="sig-name">{{ signal.label }}</span>
+                  <span class="sig-track"><i :style="{ width: `${signal.value}%` }" /></span>
+                  <span class="sig-val mono">{{ (signal.value / 100).toFixed(2) }}</span>
+                </div>
+                <div class="score">
+                  <span class="score-n mono">0.94</span>
+                  <span class="score-l">Integrity score · <b>High</b></span>
+                </div>
+                <p class="shot-foot">Quiet snapshots every 15–45s. Raw camera, typing and mouse data never leave this device.</p>
               </div>
-              <p class="shot-foot">Bars show confidence bounds — wider means less evidence. No global score anywhere.</p>
             </div>
-          </div>
 
-          <ul v-else-if="feature.bullets">
-            <li v-for="bullet in feature.bullets" :key="bullet">{{ bullet }}</li>
-          </ul>
-        </article>
+            <!-- the app's own sidebar skill-graph widget -->
+            <div v-else-if="feature.motif === 'graph'" class="shot">
+              <div class="shot-bar"><b>Skill map</b><span class="mono">FROM THE APP SIDEBAR</span></div>
+              <div class="shot-body">
+                <LazySkillGraph hydrate-on-visible :height="196" />
+              </div>
+            </div>
+
+            <!-- a credential as the app renders it, plus device sync -->
+            <div v-else-if="feature.motif === 'credential'" class="shot">
+              <div class="shot-bar"><b>Credential</b><span class="mono">SIGNED BY YOU</span></div>
+              <div class="shot-body">
+                <div class="cred-row">
+                  <span class="cred-seal">✦</span>
+                  <span>
+                    <span class="cred-t">Root pass, 6G pipe</span>
+                    <span class="cred-m mono">did:key:z6Mkha…QYtP · ed25519</span>
+                  </span>
+                  <span class="cred-ok">Genuine</span>
+                </div>
+                <div class="sync">
+                  <span>This Mac</span>
+                  <span class="sync-line"><i /></span>
+                  <span>Your phone</span>
+                </div>
+                <p class="shot-foot">Encrypted end to end. Six kinds of credential — yours forever, even if Alexandria disappears.</p>
+              </div>
+            </div>
+
+            <!-- per-skill distribution with confidence bounds -->
+            <div v-else-if="feature.motif === 'reputation'" class="shot">
+              <div class="shot-bar"><b>Instructor impact</b><span class="mono">PER SKILL</span></div>
+              <div class="shot-body">
+                <div v-for="row in reputation" :key="row.skill" class="dist">
+                  <span class="dist-name mono">{{ row.skill }}</span>
+                  <span class="dist-track">
+                    <i class="bound" :style="{ left: `${row.low}%`, width: `${row.high - row.low}%` }" />
+                    <i class="point" :style="{ left: `${row.mid}%` }" />
+                  </span>
+                </div>
+                <p class="shot-foot">Bars show confidence bounds — wider means less evidence. No global score anywhere.</p>
+              </div>
+            </div>
+
+              <ul v-else-if="feature.bullets">
+                <li v-for="bullet in feature.bullets" :key="bullet">{{ bullet }}</li>
+              </ul>
+            </article>
+        </div>
+        <div v-if="!featuresOpen" class="bento-veil" aria-hidden="true" />
+      </div>
+
+      <div class="bento-more">
+        <button type="button" class="btn-gradient" :aria-expanded="featuresOpen" @click="featuresOpen = !featuresOpen">
+          {{ featuresOpen ? 'Fold that back up' : 'Show the rest' }}
+        </button>
+        <p class="bento-joke">
+          {{ featuresOpen
+            ? 'That is all of them. A shorter list would probably make a better introduction — we are working on that.'
+            : 'It is a long list. We keep meaning to trim it and have not managed yet.' }}
+        </p>
       </div>
     </section>
 
