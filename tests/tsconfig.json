@@ -1,0 +1,11 @@
+{
+  // The e2e suite runs in Node against a deployed site, so it needs Node globals
+  // that the app's browser-targeted config deliberately does not provide. Kept
+  // separate rather than widening the app config, which would let `process` slip
+  // into client code and only fail at runtime.
+  "extends": "../.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "@playwright/test"]
+  },
+  "include": ["./**/*.ts", "../playwright.config.ts"]
+}

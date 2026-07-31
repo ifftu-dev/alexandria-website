@@ -280,7 +280,7 @@ const featuresOpen = ref(false)
         </div>
         <div class="gap-foot">
           <p class="gap-src">{{ SOURCES.bgi2024!.line }} {{ SOURCES.census2022!.line }}</p>
-          <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence chev">
+          <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Recognition chev">
             Read the evidence in full <i>›</i>
           </NuxtLink>
         </div>
@@ -308,7 +308,7 @@ const featuresOpen = ref(false)
         </article>
       </div>
       <p class="prob-more">
-        <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence chev">
+        <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Recognition chev">
           The research behind this, and what we cannot prove <i>›</i>
         </NuxtLink>
       </p>
@@ -702,7 +702,7 @@ const featuresOpen = ref(false)
       <p class="state-close">
         Two claims underpin the whole project and neither has evidence behind it: that employers
         will pay for verified skill, and that a credential like this earns real recognition.
-        <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence">Both are written down, with what would change our minds</NuxtLink>.
+        <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Recognition">Both are written down, with what would change our minds</NuxtLink>.
       </p>
     </section>
 

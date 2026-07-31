@@ -96,7 +96,7 @@ const packages = [
         </div>
         <div class="gap-foot">
           <p class="gap-src">{{ SOURCES.bgi2024!.line }}</p>
-          <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence chev">
+          <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Recognition chev">
             Read the evidence in full <i>›</i>
           </NuxtLink>
         </div>

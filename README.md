@@ -333,7 +333,7 @@ targets in the 40px sense and bury the standalone controls that are. It also use
 | :--- | :--- |
 | `EarlyAccess` | Every trigger that opens the waiting-list dialog: the hero and CTA-band buttons, and the nav, drawer and footer entries |
 | `Nav-Recruiter` / `Nav-Institutions` / `Nav-Learners` | Audience links in the nav, drawer, footer and cross-page links |
-| `Nav-Evidence` / `Nav-Technology` | `/why-recognition` and `/technology` |
+| `Nav-Recognition` / `Nav-Technology` | `/why-recognition` and `/technology` |
 | `Nav-Verify` / `Nav-Pilots` | `/verify` and `/pilots` |
 | `Enquiry` | `EnquiryForm` submit, on `/pilots`, `/employers`, `/institutions` and `/partners` |
 | `CTA-GitHub` | Every "view the source" / "request a demo" / GitHub link |

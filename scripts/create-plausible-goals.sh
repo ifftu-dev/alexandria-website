@@ -35,7 +35,7 @@ GOALS=(
   Nav-Learners
   Nav-Recruiter
   Nav-Institutions
-  Nav-Evidence
+  Nav-Recognition
   Nav-Technology
   Nav-Verify
   Nav-Pilots
