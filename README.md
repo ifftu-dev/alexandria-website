@@ -15,19 +15,77 @@ Marketing website for [Alexandria](https://github.com/ifftu-dev/alexandria) — 
 - [Nuxt 4.5](https://nuxt.com) (Vue 3) — prerendered to static HTML, no server at runtime
 - [Tailwind CSS v4](https://tailwindcss.com) alongside a hand-written token system in `assets/css/main.css`
 - TypeScript, strict; `vue-tsc -b --noEmit` must pass
-- Self-hosted Inter and JetBrains Mono, Latin subsets only
+- Self-hosted Newsreader, Public Sans and IBM Plex Mono, Latin subsets only
 - Node 22 (see `.nvmrc`)
 - Deployed on [Netlify](https://www.netlify.com) — `npm run generate` to `dist/`
 
+## Typography
+
+Three families, all vendored through `@fontsource` and declared by hand at the Latin
+subset in `assets/css/main.css`. They are **not** loaded from Google Fonts: the site tells
+visitors it embeds nothing from another origin, and a font CDN is a third-party request on
+every page load.
+
+| Role | Face | Notes |
+| :--- | :--- | :--- |
+| Display — h1, section headings, stat figures | Newsreader, weight 300 | At 700 a display-size serif reads as a masthead rather than an argument |
+| Body, UI | Public Sans | 21 KB lighter than the Inter it replaced |
+| Eyebrows, footnotes, code, data values | IBM Plex Mono | The eyebrow is the one place the mono carries meaning: it marks a label so it stops competing with the serif heading under it |
+
+Both new faces have metric-matched local fallbacks (Georgia for Newsreader, Arial for
+Public Sans) so the swap does not reflow. Measured CLS is 0.008, against the 0.024 that
+prompted the original fallback when the site used one face.
+
+`app.vue` preloads only the display face — it is what the LCP element is set in. The other
+two have fallbacks good enough that preloading them would take bandwidth from the one that
+matters.
+
+The italic is a separate 63 KB file serving the hero emphasis and the pull quote on
+`/why-recognition`. That is the obvious thing to cut if the font budget ever matters.
+
+### The design values live in one place
+
+Section headings, sub-headings and cards are defined once in `assets/css/main.css`. Pages
+had drifted to nine `.p-sub` variants and section headings ranging from 24px to 46px, which
+is invisible on any single page and obvious the moment you move between two.
+
+```
+section heading   clamp(30px, 4vw, 46px), weight 300, display serif
+sub-heading       15px / 1.7 / 68ch
+card              14px radius, 20px padding   (.card-compact for label-and-value cards)
+card heading      15.5px
+card body         14px / 1.65
+```
+
+Override the measure when a column genuinely differs. Do not re-declare the rest.
+
 ## Pages
 
-- **/** — Landing page: mesh-gradient hero, an interactive replica of the real app shell, the full feature grid, how it works, platform support, and the credential-verification section
-- **/recruiter** — For recruiters: an interactive composite skill query, problem/answer split, features, hiring pipeline
-- **/institutions** — For institutions: interactive curriculum mapper, tabbed capabilities, competitor comparison, pricing, FAQ
-- **/privacy** — Privacy policy: the waiting list, analytics, third parties
-- **error.vue** — Root-level error page; fires a `404` goal on 404 responses
+The site is built around one thesis — **learning became free, recognition did not** — and
+every page is a facet of it. It used to lead with mechanism (offline, on-device, own your
+credentials), which answers a question the reader has not been asked yet.
 
-Both audience pages carry a visible "not built yet" notice — those features are described, not shipped.
+| Route | What it is |
+| :--- | :--- |
+| **/** | The thesis, the app replica, the evidence band, the problem, how it works, the free-forever structure, who pays, and what is *not* built yet |
+| **/why-recognition** | The evidence page. Sections `01`–`06` plus a sources appendix. Section 06, "What we do not know", names the two claims that could sink the project |
+| **/technology** | How identity, sync, integrity, plugins, the skill map and platforms work — named precisely enough to argue with |
+| **/learners** | Free, portable, offline; what it costs and what it does not |
+| **/employers** | Evidence, the problem they already have, the four-step mechanism, packaging, then "nobody has hired through this yet" |
+| **/institutions** | Self-host tier, what you get, who it fits, how you run it, then "no institution has deployed this yet" |
+| **/verify** | A **working** verifier. Paste or drop a credential and it checks the Ed25519 signature in your browser — no upload, no account |
+| **/pilots** | Pilot shapes for an institution or an employer, with the enquiry form |
+| **/partners** | Deployment partnerships — governments, NGOs, funders |
+| **/trust** | Security and compliance posture, dated |
+| **/privacy** | Plain-language policy. **Not reviewed by a lawyer** |
+| **error.vue** | Root-level error page; fires a `404` goal on 404 responses |
+
+`/recruiter` 301s to `/employers` and `/developers` 301s to `/technology`; both redirects
+live in `public/_redirects`, which must stay ahead of the catch-all Nitro appends to it.
+
+Every page states what is not built. That is a positioning choice, not placeholder copy —
+"Built, shipped, and unproven", "Nobody has hired through this yet" and "No institution has
+deployed this yet" are meant to be there.
 
 ## Components
 
@@ -36,8 +94,10 @@ Both audience pages carry a visible "not built yet" notice — those features ar
 | `AppReplica.vue` | Interactive recreation of the Alexandria desktop shell, built from the app's own tokens and component CSS. Navigates, searches (`/` or `⌘K`), verifies a credential, casts a vote. Collapses to the app's four-tab mobile layout via a container query on the window itself |
 | `SkillGraph.vue` | The app's sidebar skill graph — force-directed canvas, same status colours and Bloom-scaled radii as `SidebarSkillGraph.vue` |
 | `MeshGradient.vue` | Animated gradient behind every hero and CTA band. Time-based, so drift is identical at 60 Hz and 120 Hz; pauses off-screen; static under `prefers-reduced-motion` |
-| `SkillQuery.vue` | Recruiter hero: composite skill query with Bloom levels and confidence thresholds |
-| `CurriculumMap.vue` | Institutions hero: which skills a module develops, at which level |
+| `StatusChip.vue` | One label for how real a thing is — `alpha` / `building` / `planned` / `sample`. Used wherever a capability, price or demo is described, because mixing shipped features with roadmap items makes the credible parts inherit the doubt of the speculative ones |
+| `EnquiryForm.vue` | Pilot and partnership enquiries. Posts to `/api/pilot` or `/api/partner` — deliberately *not* the learner waitlist, so a hiring lead never lands in a campaign written for someone waiting on a build |
+| `SkillQuery.vue` | Composite skill query with Bloom levels and confidence thresholds. **Currently unused** — the employers rewrite replaced it with the candidate-view credential panel |
+| `CurriculumMap.vue` | Which skills a module develops, at which level. **Currently unused** — dropped in the institutions rewrite |
 | `EarlyAccessForm.vue` | Waiting-list form — address, role, platforms. Role and platform controls stay collapsed until the email field is touched, so the fast path is unchanged |
 | `WaitlistModal.vue` | The form in a native `<dialog>`. Rendered once from the layout; the nav, drawer, footer, hero and CTA band all open this one instance through `useWaitlist` |
 | `ui/ThemeToggle.vue` | Light / dark / system |
@@ -251,12 +311,52 @@ targets in the 40px sense and bury the standalone controls that are. It also use
 | Goal | Fired by |
 | :--- | :--- |
 | `EarlyAccess` | Every trigger that opens the waiting-list dialog: the hero and CTA-band buttons, and the nav, drawer and footer entries |
-| `Nav-Recruiter` / `Nav-Institutions` | Nav, drawer, footer and cross-page links |
+| `Nav-Recruiter` / `Nav-Institutions` / `Nav-Learners` | Audience links in the nav, drawer, footer and cross-page links |
+| `Nav-Evidence` / `Nav-Technology` | `/why-recognition` and `/technology` |
+| `Nav-Verify` / `Nav-Pilots` | `/verify` and `/pilots` |
+| `Enquiry` | `EnquiryForm` submit, on `/pilots`, `/employers`, `/institutions` and `/partners` |
 | `CTA-GitHub` | Every "view the source" / "request a demo" / GitHub link |
 | `Announcement` | The dismissible banner link |
 | `404` | `error.vue`, when `error.statusCode === 404` |
 
+> **A goal records nothing until it exists in Plausible.** The class only tags the
+> event; an unregistered goal is received and discarded, so the funnel looks empty
+> rather than broken. `scripts/create-plausible-goals.sh` registers the whole list:
+>
+> ```sh
+> PLAUSIBLE_API_KEY=... ./scripts/create-plausible-goals.sh
+> ```
+>
+> It reads the key from the environment and never prints it. If the Goals API is not
+> on your plan it returns 402 — create them under Site Settings → Goals instead.
+
 Goal names are load-bearing — renaming a class silently breaks a funnel that has already collected history.
+
+## Claims, sources and projections
+
+Every figure on the site resolves through `content/evidence.ts`. Pages import from it
+rather than typing a number next to the prose that uses it, because a number and its
+attribution drift apart the moment they live in different places.
+
+Each figure carries a `status`, which is a **different axis** from `StatusChip`. That
+component says how finished a capability is; this says how much weight a number can carry:
+
+| Status | Meaning |
+| :--- | :--- |
+| `sourced` | Published research, named and dated in `SOURCES` |
+| `projection` | Our own model. Never rendered in the same visual register as a sourced figure |
+| `internal` | A fact about our own system, checkable in the app repo |
+
+Three corrections were applied to the figures as they arrived in the design brief, all
+found by reading the primary sources. They are documented in the `NOTES` block at the
+bottom of that file: the Harvard/Burning Glass study is dated February **2024** and
+analysed 11,300 **firms** (not 11,000 job postings — which inverts its own finding), and
+"two-thirds of Americans hold no four-year degree" overstates a Census figure of 62.3%.
+
+Modelled educator earnings are deliberately absent. A projection shaped like an income
+claim, published by a pre-launch company with nobody earning on the platform, is not
+something to put in front of people deciding how to spend their time. The 40% revenue
+share makes the same argument and is a policy rather than a forecast.
 
 ## Deployment
 
