@@ -711,7 +711,7 @@ const waitlist = useWaitlist()
         <NuxtLink to="/verify" class="trust-item plausible-event-name=Nav-Verify">
           <b>Verify a credential</b><span>Checked in your browser, no account</span>
         </NuxtLink>
-        <NuxtLink to="/developers" class="trust-item">
+        <NuxtLink to="/technology" class="trust-item">
           <b>Read the format</b><span>The stack and credential scheme, named</span>
         </NuxtLink>
         <NuxtLink to="/trust" class="trust-item">
