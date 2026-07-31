@@ -104,8 +104,8 @@ const promises = [
 </template>
 
 <style scoped>
-.h-sec { font-size: clamp(21px, 3vw, 26px); letter-spacing: -0.02em; margin: 0 0 8px; }
-.p-sub { margin: 0 0 22px; font-size: 14.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); }
+.h-sec { margin-bottom: 14px; }
+
 .l-grid { display: grid; gap: 16px; }
 @media (min-width: 800px) { .l-grid { grid-template-columns: 1fr 1fr; } }
 .l-card { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }
@@ -118,7 +118,7 @@ const promises = [
 .l-honest p { margin: 0; font-size: 15px; line-height: 1.7; color: rgb(var(--color-muted-foreground)); }
 
 .l-join { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }
-.l-join h3 { margin: 0 0 12px; font-size: 15px; letter-spacing: -0.01em; }
+.l-join h3 { margin: 0 0 12px; font-size: 15.5px; letter-spacing: -0.01em; }
 .l-join ol { list-style: revert; margin: 0 0 18px; padding-inline-start: 20px; display: grid; gap: 8px; }
 .l-join li { font-size: 14px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); }
 .l-join .btn { width: 100%; }

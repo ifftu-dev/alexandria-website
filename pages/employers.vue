@@ -210,14 +210,14 @@ const packages = [
 
 <style scoped>
 .h-sec { margin-bottom: 14px; }
-.p-sub { margin: 0 0 26px; font-size: 15px; line-height: 1.7; color: rgb(var(--color-muted-foreground)); max-width: 70ch; }
+.p-sub { max-width: 70ch; }
 .e-prenote { margin: 20px 0 0; font-size: 13px; color: rgb(255 255 255 / 0.72); }
 
 .e-steps { display: grid; gap: 16px; margin-bottom: 30px; }
 @media (min-width: 900px) { .e-steps { grid-template-columns: repeat(4, 1fr); } }
-.e-step { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 18px; background: rgb(var(--color-card)); display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
-.e-step h3 { margin: 0; font-size: 15px; letter-spacing: -0.01em; }
-.e-step p:last-of-type { margin: 0; font-size: 13.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); flex: 1; }
+.e-step { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.e-step h3 { margin: 0; font-size: 15.5px; letter-spacing: -0.01em; }
+.e-step p:last-of-type { margin: 0; font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); flex: 1; }
 
 .e-cand { border: 1px solid rgb(var(--color-border)); border-radius: 14px; background: rgb(var(--color-card)); overflow: hidden; }
 .e-cand-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 14px 18px; border-bottom: 1px solid rgb(var(--color-border)); font-size: 13.5px; }
@@ -230,7 +230,7 @@ const packages = [
 
 .e-packs { display: grid; gap: 14px; }
 @media (min-width: 860px) { .e-packs { grid-template-columns: repeat(3, 1fr); } }
-.e-pack { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 18px; background: rgb(var(--color-card)); }
+.e-pack { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }
 .e-pack-h { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
 .e-pack-h h3 { margin: 0; font-size: 15.5px; }
 .e-pack p { margin: 0; font-size: 14px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); }

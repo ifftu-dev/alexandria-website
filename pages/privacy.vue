@@ -174,13 +174,13 @@ const practice = [
 .p-narrow :deep(.pad) { max-width: 980px; }
 
 .h-sec { margin-bottom: 14px; }
-.p-sub { margin: 0 0 24px; font-size: 15px; line-height: 1.7; color: rgb(var(--color-muted-foreground)); max-width: 66ch; }
+.p-sub { max-width: 66ch; }
 
-.pv-short { display: grid; gap: 18px; border: 1px solid rgb(var(--color-border)); border-radius: 16px; padding: 22px; background: rgb(var(--color-card)); }
+.pv-short { display: grid; gap: 18px; border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }
 @media (min-width: 760px) { .pv-short { grid-template-columns: 1fr 1fr; gap: 22px 34px; } }
 .pv-short > div { display: grid; gap: 4px; align-content: start; }
 .pv-short b { font-size: 14.5px; }
-.pv-short span { font-size: 13.5px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
+.pv-short span { font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
 
 .pv-rows { border-top: 1px solid rgb(var(--color-border)); }
 .pv-row { display: grid; gap: 6px 30px; padding: 18px 0; border-bottom: 1px solid rgb(var(--color-border)); }

@@ -766,7 +766,7 @@ const waitlist = useWaitlist()
 @media (min-width: 700px) { .trust-strip { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1040px) { .trust-strip { grid-template-columns: repeat(4, 1fr); } }
 .trust-item {
-  display: block; padding: 16px 18px; border-radius: 12px; text-decoration: none;
+  display: block; padding: 16px 18px; border-radius: 14px; text-decoration: none;
   border: 1px solid rgb(var(--color-border)); background: rgb(var(--color-card));
   transition: border-color 150ms ease, transform 150ms ease;
 }

@@ -305,7 +305,7 @@ const platforms = [
 
 <style scoped>
 .h-sec { margin-bottom: 14px; }
-.p-sub { margin: 0 0 24px; font-size: 15px; line-height: 1.7; color: rgb(var(--color-muted-foreground)); max-width: 68ch; }
+
 
 .t-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 26px; }
 
@@ -338,7 +338,7 @@ const platforms = [
 .t-card h3 { margin: 0 0 8px; font-size: 15.5px; letter-spacing: -0.01em; }
 .t-card p { margin: 0; font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
 
-.t-panel { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 18px; background: rgb(var(--color-card)); }
+.t-panel { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }
 .t-panel-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; font-size: 14px; }
 .t-panel-c { font-family: var(--font-mono); font-size: 11.5px; color: rgb(var(--color-muted-foreground)); }
 .t-sig { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; margin-bottom: 12px; }
@@ -364,7 +364,7 @@ const platforms = [
 
 .t-plats { display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
 @media (min-width: 860px) { .t-plats { grid-template-columns: repeat(5, 1fr); } }
-.t-plat { border: 1px solid rgb(var(--color-border)); border-radius: 12px; padding: 16px; background: rgb(var(--color-card)); display: grid; gap: 4px; }
+.t-plat { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 16px; background: rgb(var(--color-card)); display: grid; gap: 4px; }
 .t-plat b { font-size: 15px; }
 .t-plat span { font-family: var(--font-mono); font-size: 11.5px; color: rgb(var(--color-muted-foreground)); }
 

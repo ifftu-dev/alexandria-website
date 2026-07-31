@@ -314,12 +314,36 @@ svg { flex-shrink: 0; }
   text-wrap: balance;
 }
 
+/* The standing sub-heading. Nine variants of this had accumulated across the
+   pages — 14.5/15/15.5px, line-heights from 1.6 to 1.7, measures from 56ch to
+   70ch — which is invisible on any one page and obvious when you move between
+   them. One definition, and pages override only the measure when the column
+   genuinely differs. */
 .p-sub {
-  font-size: 16.5px;
+  font-size: 15px;
+  line-height: 1.7;
   color: rgb(var(--color-muted-foreground));
-  margin: 13px 0 0;
-  max-width: 54ch;
+  margin: 0 0 24px;
+  max-width: 68ch;
 }
+
+/* ─── Card surface ─────────────────────────────────────
+   A dozen differently-named cards across the site were drifting apart on radius,
+   padding and type size. The values live here; the page classes name the thing,
+   they do not redefine what a card looks like. */
+.card-surface {
+  border: 1px solid rgb(var(--color-border));
+  border-radius: 14px;
+  padding: 20px;
+  background: rgb(var(--color-card));
+}
+.card-surface > h3 { margin: 0 0 8px; font-size: 15.5px; letter-spacing: -0.01em; }
+.card-surface > p { margin: 0; font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
+
+/* One deliberate second size, for cards carrying a label and a value rather than
+   a paragraph — the platform list, tier prices. Documented so it stays the only
+   exception instead of becoming the fourth padding nobody chose. */
+.card-compact { padding: 16px; }
 
 .mono { font-family: var(--font-mono); }
 

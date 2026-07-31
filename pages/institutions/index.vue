@@ -201,7 +201,7 @@ const tiers = [
 @media (min-width: 780px) { .i-four { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
 .i-four > div { display: grid; gap: 5px; align-content: start; border-top: 2px solid rgb(var(--page-accent, var(--color-primary))); padding-top: 13px; }
 .i-four b { font-size: 14.5px; }
-.i-four span { font-size: 13.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); }
+.i-four span { font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
 
 .i-cards { display: grid; gap: 16px; }
 @media (min-width: 820px) { .i-cards { grid-template-columns: repeat(3, 1fr); } }
@@ -215,7 +215,7 @@ const tiers = [
 .i-exam { display: grid; gap: 26px; align-items: center; margin-top: 34px; padding-top: 30px; border-top: 1px solid rgb(var(--color-border)); }
 @media (min-width: 900px) { .i-exam { grid-template-columns: 1.25fr 0.75fr; gap: 44px; } }
 .i-exam-h { margin: 0 0 4px; font-size: 18px; letter-spacing: -0.01em; }
-.i-figcard { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 22px; background: rgb(var(--color-card)); }
+.i-figcard { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }
 .i-fig { margin: 0; font-family: var(--font-display); font-size: clamp(40px, 5vw, 56px); font-weight: 300; line-height: 1; color: rgb(var(--page-accent, var(--color-primary))); }
 .i-fig-l { margin: 10px 0 0; font-size: 14px; line-height: 1.55; }
 .i-fig-s { margin: 12px 0 0; font-family: var(--font-mono); font-size: 10.5px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
@@ -227,10 +227,10 @@ const tiers = [
 .t-prose a { color: rgb(var(--page-accent, var(--color-primary))); }
 
 .i-tiers { display: grid; gap: 14px; }
-.i-tier { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 18px; background: rgb(var(--color-card)); display: flex; flex-direction: column; align-items: flex-start; gap: 9px; }
+.i-tier { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); display: flex; flex-direction: column; align-items: flex-start; gap: 9px; }
 .i-tier-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; width: 100%; }
 .i-tier-h b { font-size: 15.5px; }
 .i-tier-p { font-family: var(--font-mono); font-size: 11.5px; color: rgb(var(--page-accent, var(--color-primary))); }
-.i-tier p { margin: 0; font-size: 13.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); }
+.i-tier p { margin: 0; font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
 .i-form { max-width: 620px; }
 </style>
