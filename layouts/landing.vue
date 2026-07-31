@@ -261,23 +261,24 @@ const year = new Date().getFullYear()
 }
 
 /* Current page. NuxtLink sets router-link-active plus aria-current="page", so
-   the state is announced as well as shown — colour alone would not carry it. */
+   the state is announced as well as shown. The pill is a shape, not just a
+   colour, which is what lets it carry the state without an underline as well. */
 .nav-links a.router-link-active {
   font-weight: 700;
-  background: rgb(var(--color-primary) / 0.1);
+  color: rgb(var(--color-primary));
+  background: rgb(var(--color-primary) / 0.14);
 }
-.nav-links a.router-link-active::after {
-  content: "";
-  position: absolute;
-  inset-inline: 12px;
-  bottom: -1px;
-  height: 2px;
-  border-radius: 2px;
-  background: currentColor;
+/* Qualified with `.nav-links a` to outrank the generic active rule above. Without
+   it the audience pill rendered in the brand indigo on the very page whose colour
+   it exists to show. */
+.nav-links a.link-recruiter.router-link-active {
+  color: rgb(var(--color-recruiter));
+  background: rgb(var(--color-recruiter) / 0.16);
 }
-.nav-links a { position: relative; }
-.link-recruiter.router-link-active { background: rgb(var(--color-recruiter) / 0.14); }
-.link-institution.router-link-active { background: rgb(var(--color-institution) / 0.14); }
+.nav-links a.link-institution.router-link-active {
+  color: rgb(var(--color-institution));
+  background: rgb(var(--color-institution) / 0.16);
+}
 
 /* Home has no nav item of its own, so the wordmark carries the state.
    Must be exact-active: "/" is a prefix of every route, so router-link-active
@@ -310,7 +311,12 @@ const year = new Date().getFullYear()
 }
 .nav-verify svg { width: 15px; height: 15px; }
 .nav-verify:hover { color: rgb(var(--color-foreground)); background: rgb(var(--color-muted)); }
-.nav-verify.router-link-active { color: rgb(var(--color-primary)); }
+/* Same pill as the audience links, so "current page" looks like one thing across
+   the bar even though this link is styled quieter than they are. */
+.nav-verify.router-link-active {
+  color: rgb(var(--color-primary));
+  background: rgb(var(--color-primary) / 0.14);
+}
 .nav-sep { display: none; width: 1px; height: 20px; margin: 0 4px; background: rgb(var(--color-border)); }
 @media (min-width: 900px) { .nav-verify { display: inline-flex; } .nav-sep { display: block; } }
 .nav-cta:hover { background: rgb(var(--color-primary) / 0.1); border-color: rgb(var(--color-primary) / 0.6); }
