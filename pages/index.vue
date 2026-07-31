@@ -177,6 +177,46 @@ const platforms = [
   { name: 'Android', d: 'M17.532 15.106a1.003 1.003 0 111.001-2.007 1.003 1.003 0 01-1 2.007m-11.044 0a1.003 1.003 0 111.001-2.007 1.003 1.003 0 01-1 2.007m11.4-6.018 2.006-3.459a.413.413 0 10-.721-.403l-2.03 3.5A12.26 12.26 0 0012.011 7.5a12.26 12.26 0 00-5.132 1.226l-2.03-3.5a.413.413 0 10-.72.403l2.005 3.46C2.593 11.066.003 14.812 0 19.2h24.022c-.003-4.388-2.593-8.134-6.134-10.112' },
 ]
 
+/**
+ * Both lists are checkable rather than rhetorical: the platform and language
+ * counts match the app repo, and every item in `notYet` is a thing a reader
+ * could otherwise assume from the rest of the page.
+ */
+const worksToday = [
+  'Learning, assessment and credentials, in the alpha, on five platforms',
+  'Credentials that verify with no account and no network — including on this site',
+  'Nine languages, among them Hindi, Bengali, Telugu, Marathi and Urdu',
+  'An MIT-licensed core, public and forkable today',
+]
+
+const notYet = [
+  'No institution has deployed this',
+  'Nobody has been hired through a credential issued by it',
+  'No independent validity study has been completed',
+  'No content moderation, and the interface needs real design work',
+]
+
+const problems = [
+  {
+    n: '01',
+    k: 'Locked',
+    title: 'It lives on someone else’s server',
+    body: 'A certificate belongs to the platform that issued it. When the platform pivots, prices up or shuts down, your proof goes with it.',
+  },
+  {
+    n: '02',
+    k: 'Not portable',
+    title: 'It rarely crosses a border',
+    body: 'Recognition stops at the edge of the institution that granted it, and at the edge of the country that recognises that institution.',
+  },
+  {
+    n: '03',
+    k: 'Unequal',
+    title: 'The price of proof is the barrier',
+    body: 'Free courses reach everyone and leave no proof behind. Paid certificates carry weight and cost money the learner does not have.',
+  },
+]
+
 const stats = [
   { n: '5', label: 'Platforms', detail: 'One codebase, native on each' },
   { n: '9', label: 'Languages', detail: 'Hindi, Bengali and Telugu at launch' },
@@ -199,10 +239,13 @@ const waitlist = useWaitlist()
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-centered">
         <p class="eyebrow hero-eyebrow">Alpha · waiting list open</p>
-        <h1>Knowledge belongs to everyone.</h1>
+        <!-- The closing dash is bound to the phrase it introduces; left loose it
+             wraps alone onto the final line. -->
+        <h1>An honest attempt at making education — and its recognition —&nbsp;<em>free, forever.</em></h1>
         <p class="hero-lede">
-          Free, open-source learning for every device. Study offline, own what you earn,
-          and keep your data on your own device.
+          Learning became free. Recognition did not. Alexandria is a free, open-source learning app
+          for every device — and a credential you own outright, that anyone can verify, anywhere,
+          without us.
         </p>
         <div id="early-access" class="hero-cta">
           <button type="button" class="btn btn-lg plausible-event-name=EarlyAccess" @click="waitlist.open()">
@@ -239,6 +282,33 @@ const waitlist = useWaitlist()
           </NuxtLink>
         </div>
       </div>
+    </section>
+
+    <!-- ═══ THE PROBLEM ═══ -->
+    <section class="section pad">
+      <p class="eyebrow">The problem</p>
+      <h2 class="h-sec">
+        The knowledge is identical. The recognition is not — and it is the recognition that changes
+        the life.
+      </h2>
+      <p class="p-sub">
+        A teenager in a Mumbai slum can take the same course as one at MIT — the same lectures, the
+        same problems, the same hours. Only one of them ends up with a credential anyone will accept.
+        Employers have tried to fix this from their side and largely failed, because nothing replaced
+        the degree as a signal they could trust.
+      </p>
+      <div class="prob">
+        <article v-for="p in problems" :key="p.k" class="prob-card">
+          <p class="prob-n">{{ p.n }} / {{ p.k }}</p>
+          <h3>{{ p.title }}</h3>
+          <p>{{ p.body }}</p>
+        </article>
+      </div>
+      <p class="prob-more">
+        <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence chev">
+          The research behind this, and what we cannot prove <i>›</i>
+        </NuxtLink>
+      </p>
     </section>
 
     <!-- ═══ PROOF ═══ -->
@@ -509,6 +579,59 @@ const waitlist = useWaitlist()
     </section>
 
 
+    <!-- ═══ FREE FOREVER ═══ -->
+    <section id="free" class="section pad section-wash">
+      <p class="eyebrow">Free forever</p>
+      <h2 class="h-sec">Free cannot be a promise. It has to be a structure.</h2>
+      <p class="p-sub">
+        Right now, it is still a promise — and we should say that plainly, because every platform
+        that started free and ended paywalled was telling the truth at the time too. Here is what
+        actually holds today, and what we are putting in place so it stops depending on us.
+      </p>
+
+      <div class="free-grid">
+        <article class="free-card">
+          <StatusChip state="alpha" label="Real today" />
+          <h3>A fork always exists</h3>
+          <p>
+            The core is MIT-licensed. If we ever betrayed this, the work could be taken and run by
+            anyone, without our permission and without our cooperation. That is a floor, not a
+            ceiling — but it is a real one, and you can check it.
+          </p>
+          <a
+            href="https://github.com/ifftu-dev/alexandria/blob/main/LICENSE.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="plausible-event-name=CTA-GitHub"
+          >Read the licence</a>
+        </article>
+
+        <article class="free-card">
+          <StatusChip state="planned" label="Not drafted yet" />
+          <h3>A non-profit veto over free access</h3>
+          <p>
+            The intended structure: a permanent, dilution-proof veto over free learner access, held
+            by IFFTU as a Section 8 non-profit — so that nobody, including us and including a future
+            investor, can charge a learner for their own proof.
+          </p>
+          <p class="free-gap">
+            The instrument does not exist yet. When it is executed we will publish the clause here,
+            and you can hold us to the distance between this paragraph and that one.
+          </p>
+        </article>
+
+        <article class="free-card">
+          <h3>Why not simply promise?</h3>
+          <p>
+            Because a promise is exactly what every paywalled platform once made. A guarantee that
+            depends on the continued good intentions of the people who benefit from breaking it is
+            not a guarantee. The point of the structure is to remove our own ability to change our
+            minds.
+          </p>
+        </article>
+      </div>
+    </section>
+
     <!-- ═══ WHO PAYS ═══ -->
     <section class="section pad">
       <p class="eyebrow">Who pays</p>
@@ -540,6 +663,44 @@ const waitlist = useWaitlist()
           <StatusChip state="planned" label="Planned · nothing purchasable yet" />
         </article>
       </div>
+
+      <div class="who-share">
+        <p class="who-share-n">40%</p>
+        <p class="who-share-t">
+          <b>of everything earned goes to the educators who create the skills.</b>
+          Not as a revenue-share experiment — as the point. Charity that runs out is not permanence;
+          the commons stays open because the people getting commercial value from it pay for it.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══ WHERE WE ACTUALLY ARE ═══ -->
+    <section class="section pad section-wash">
+      <p class="eyebrow">Where we actually are</p>
+      <h2 class="h-sec">Built, shipped, and unproven.</h2>
+      <p class="p-sub">
+        Two lists, because a page that only tells you what works has told you what it wants to be
+        true.
+      </p>
+      <div class="state">
+        <article class="state-card state-yes">
+          <h3>Works today</h3>
+          <ul>
+            <li v-for="item in worksToday" :key="item">{{ item }}</li>
+          </ul>
+        </article>
+        <article class="state-card state-no">
+          <h3>Does not yet</h3>
+          <ul>
+            <li v-for="item in notYet" :key="item">{{ item }}</li>
+          </ul>
+        </article>
+      </div>
+      <p class="state-close">
+        Two claims underpin the whole project and neither has evidence behind it: that employers
+        will pay for verified skill, and that a credential like this earns real recognition.
+        <NuxtLink to="/why-recognition">Both are written down, with what would change our minds</NuxtLink>.
+      </p>
     </section>
 
     <!-- ═══ TRUST ═══ -->
