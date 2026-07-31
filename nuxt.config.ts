@@ -70,13 +70,13 @@ export default defineNuxtConfig({
         { property: 'og:image:type', content: 'image/jpeg' },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
-        { property: 'og:image:alt', content: 'Alexandria — knowledge belongs to everyone. A free, open-source learning app.' },
+        { property: 'og:image:alt', content: 'Alexandria — education, and its recognition, free forever. A free, open-source learning app.' },
         { property: 'og:locale', content: 'en' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:site', content: '@Alexandria_FTU' },
         { name: 'twitter:creator', content: '@Alexandria_FTU' },
         { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og/home.jpg' },
-        { name: 'twitter:image:alt', content: 'Alexandria — knowledge belongs to everyone. A free, open-source learning app.' },
+        { name: 'twitter:image:alt', content: 'Alexandria — education, and its recognition, free forever. A free, open-source learning app.' },
       ],
       script: [
         {
@@ -104,6 +104,10 @@ export default defineNuxtConfig({
         // script fetched in non-CORS mode, and a CORS-mode preconnect opens a
         // separate connection that the script then cannot reuse.
         { rel: 'preconnect', href: 'https://plausible.io' },
+        // Declared before the raster icons on purpose: a browser that supports
+        // SVG favicons takes the first one it understands, and only this file
+        // follows the reader's colour scheme.
+        { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
         { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <title>Alexandria</title>
+  <!--
+    The one brand asset that can actually follow the reader's colour scheme.
+    Open Graph cards cannot: an unfurler fetches them server-side with no browser
+    and no prefers-color-scheme to consult. A favicon is rendered by the browser,
+    so the media query below is honoured — dark ink on a light tab strip, light
+    ink on a dark one, with no second file to keep in step.
+  -->
+  <style>
+    .mark { stroke: #0f1428; }
+    @media (prefers-color-scheme: dark) { .mark { stroke: #eef1ff; } }
+  </style>
+  <g class="mark" fill="none" stroke-width="2" stroke-linejoin="round">
+    <path d="M16 2L4 8v16l12 6 12-6V8L16 2z" />
+    <path d="M16 8v16M8 12l8 4 8-4" />
+  </g>
+</svg>
