@@ -69,7 +69,10 @@ export const RECOGNITION_GAP: Figure[] = [
   },
   {
     id: 'one-in-700',
-    value: 'Fewer than 1 in 700',
+    // "<" rather than the words: at 44px the spelled-out version wrapped to two
+    // lines and every other figure in the row had to sit in the empty space it
+    // created. The meaning is unchanged and the basis below spells it out.
+    value: '<1 in 700',
     label: 'new hires actually benefited when employers dropped degree requirements',
     status: 'sourced',
     source: 'bgi2024',
