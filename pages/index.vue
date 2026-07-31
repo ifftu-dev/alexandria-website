@@ -228,6 +228,7 @@ const waitlist = useWaitlist()
  * decide, rather than scrolling past the lot to reach what comes next.
  */
 const featuresOpen = ref(false)
+const featureCount = computed(() => features.length)
 const hiddenFeatureCount = computed(() => Math.max(features.length - 4, 0))
 </script>
 
@@ -494,12 +495,12 @@ const hiddenFeatureCount = computed(() => Math.max(features.length - 4, 0))
 
       <div class="bento-more">
         <button type="button" class="btn-ghost btn-solid" :aria-expanded="featuresOpen" @click="featuresOpen = !featuresOpen">
-          {{ featuresOpen ? 'Right, that is enough. Fold it away.' : `Show the other ${hiddenFeatureCount}. There are, regrettably, more.` }}
+          {{ featuresOpen ? 'Fold that back up' : `Show the other ${hiddenFeatureCount}` }}
         </button>
         <p class="bento-joke">
           {{ featuresOpen
-            ? 'Ten. We counted twice and it is still ten. Nobody set out to build ten of anything.'
-            : 'We tried to cut this list. Every one of them turned out to be load-bearing.' }}
+            ? `${featureCount} of them. A shorter list would probably make a better introduction — we are working on that.`
+            : 'It is a long list. We keep meaning to trim it and have not managed yet.' }}
         </p>
       </div>
     </section>
