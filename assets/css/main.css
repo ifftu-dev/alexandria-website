@@ -6,8 +6,7 @@
    Latin subsets only. The site has no non-Latin copy, and the full imports
    shipped cyrillic, greek and vietnamese @font-face blocks — 21 KB of
    render-blocking CSS describing files no visitor would ever fetch. */
-@import '@fontsource/ibm-plex-mono/latin-400.css';
-@import '@fontsource/ibm-plex-mono/latin-500.css';
+
 
 @import "tailwindcss";
 @source "../components/**/*.vue";
@@ -37,7 +36,7 @@
   font-style: normal;
   font-display: swap;
   font-weight: 100 900;
-  src: url('@fontsource-variable/public-sans/files/public-sans-latin-wght-normal.woff2') format('woff2-variations');
+  src: url('../fonts/public-sans.woff2') format('woff2-variations');
   unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
 
@@ -57,7 +56,7 @@
   font-style: normal;
   font-display: swap;
   font-weight: 200 800;
-  src: url('@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2') format('woff2-variations');
+  src: url('../fonts/newsreader-normal.woff2') format('woff2-variations');
   unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
 
@@ -68,8 +67,24 @@
   font-style: italic;
   font-display: swap;
   font-weight: 200 800;
-  src: url('@fontsource-variable/newsreader/files/newsreader-latin-wght-italic.woff2') format('woff2-variations');
+  src: url('../fonts/newsreader-italic.woff2') format('woff2-variations');
   unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('../fonts/plex-mono-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url('../fonts/plex-mono-500.woff2') format('woff2');
 }
 
 /* ============================================================
@@ -344,6 +359,20 @@ svg { flex-shrink: 0; }
    a paragraph — the platform list, tier prices. Documented so it stays the only
    exception instead of becoming the fourth padding nobody chose. */
 .card-compact { padding: 16px; }
+
+/* WCAG 1.4.1 — a link sitting inside running text has to be distinguishable by
+   more than colour, since a reader who cannot separate the hues has nothing else
+   to go on. Lighthouse caught the /why-recognition link in the homepage closing
+   paragraph. Standalone links are exempt: a nav item, a chevron CTA or a card
+   link is identifiable by position, and underlining those would only add noise. */
+p a:not(.btn):not(.btn-lg):not(.btn-ghost):not(.chev),
+li a:not(.btn):not(.btn-lg):not(.btn-ghost):not(.chev),
+dd a:not(.btn):not(.btn-lg):not(.btn-ghost):not(.chev),
+blockquote a {
+  text-decoration: underline;
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.18em;
+}
 
 .mono { font-family: var(--font-mono); }
 

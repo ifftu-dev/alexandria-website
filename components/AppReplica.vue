@@ -148,16 +148,21 @@ function castVote(choice: 'for' | 'against' | 'abstain') {
   vote.value = choice
 }
 
-/** "/" or ⌘K opens search, matching the app's own shortcut. */
+/**
+ * "/" or ⌘K opens search, matching the app's own shortcut — but only while the
+ * pointer or focus is actually inside this window. The site has its own `/`
+ * palette now, and a decorative replica should not take a global key away from
+ * it just for being on screen.
+ */
 function onKeydown(e: KeyboardEvent) {
   const el = document.activeElement
   const typing = el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement
   const isK = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'
   if (!isK && (typing || e.key !== '/')) return
-  const rect = root.value?.getBoundingClientRect()
-  if (!rect) return
-  const visible = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0)
-  if (visible < 60) return
+  const node = root.value
+  if (!node) return
+  const engaged = node.matches(':hover') || node.contains(el)
+  if (!engaged) return
   e.preventDefault()
   openOmni()
 }

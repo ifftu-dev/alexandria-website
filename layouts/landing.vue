@@ -8,6 +8,7 @@ function closeMobileMenu() { mobileMenuOpen.value = false }
 // It is fixed-position and mounts after hydration, so it cannot move the page;
 // the old full-width banner sat in the flow and pushed everything down.
 const waitlist = useWaitlist()
+const palette = ref<{ openPalette: () => void } | null>(null)
 
 const ANNOUNCEMENT_DISMISS_KEY = 'alexandria-announcement-dismissed'
 const showToast = ref(false)
@@ -42,12 +43,18 @@ const year = new Date().getFullYear()
         <nav class="nav-links" aria-label="Main">
           <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence">Why recognition</NuxtLink>
           <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology">Technology</NuxtLink>
-          <NuxtLink to="/learners" class="plausible-event-name=Nav-Learners">Learners</NuxtLink>
           <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter link-recruiter">Employers</NuxtLink>
           <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution">Institutions</NuxtLink>
         </nav>
 
         <div class="nav-right">
+          <button type="button" class="nav-search" aria-label="Search this site" @click="palette?.openPalette()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" />
+            </svg>
+            <span>Search</span>
+            <kbd>/</kbd>
+          </button>
           <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify nav-verify">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -116,6 +123,7 @@ const year = new Date().getFullYear()
     </main>
 
     <WaitlistModal />
+    <CommandPalette ref="palette" />
 
     <!-- Announcement toast -->
     <Teleport to="body">
@@ -303,6 +311,24 @@ const year = new Date().getFullYear()
 }
 @media (min-width: 880px) { .nav-cta { display: inline-flex; } }
 .nav-cta { min-height: 40px; }
+
+/* The palette's only discoverability affordance — the brief is explicit that it
+   has to exist, since a bare `/` shortcut is invisible. */
+.nav-search {
+  display: none; align-items: center; gap: 7px; min-height: 40px;
+  padding: 9px 12px; border-radius: 999px; border: 0; cursor: pointer;
+  font-family: inherit; font-size: 14px; font-weight: 600;
+  background: transparent; color: rgb(var(--color-muted-foreground));
+  transition: color 150ms ease, background 150ms ease;
+}
+.nav-search svg { width: 15px; height: 15px; }
+.nav-search kbd {
+  font-family: var(--font-mono); font-size: 10.5px; line-height: 1;
+  padding: 3px 6px; border-radius: 5px;
+  border: 1px solid rgb(var(--color-border));
+}
+.nav-search:hover { color: rgb(var(--color-foreground)); background: rgb(var(--color-muted)); }
+@media (min-width: 1080px) { .nav-search { display: inline-flex; } }
 
 /* A utility, not a destination: quieter than the audience links and separated
    from the CTA by a hairline, so the bar reads as three groups rather than a

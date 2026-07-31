@@ -96,8 +96,6 @@ deployed this yet" are meant to be there.
 | `MeshGradient.vue` | Animated gradient behind every hero and CTA band. Time-based, so drift is identical at 60 Hz and 120 Hz; pauses off-screen; static under `prefers-reduced-motion` |
 | `StatusChip.vue` | One label for how real a thing is — `alpha` / `building` / `planned` / `sample`. Used wherever a capability, price or demo is described, because mixing shipped features with roadmap items makes the credible parts inherit the doubt of the speculative ones |
 | `EnquiryForm.vue` | Pilot and partnership enquiries. Posts to `/api/pilot` or `/api/partner` — deliberately *not* the learner waitlist, so a hiring lead never lands in a campaign written for someone waiting on a build |
-| `SkillQuery.vue` | Composite skill query with Bloom levels and confidence thresholds. **Currently unused** — the employers rewrite replaced it with the candidate-view credential panel |
-| `CurriculumMap.vue` | Which skills a module develops, at which level. **Currently unused** — dropped in the institutions rewrite |
 | `EarlyAccessForm.vue` | Waiting-list form — address, role, platforms. Role and platform controls stay collapsed until the email field is touched, so the fast path is unchanged |
 | `WaitlistModal.vue` | The form in a native `<dialog>`. Rendered once from the layout; the nav, drawer, footer, hero and CTA band all open this one instance through `useWaitlist` |
 | `ui/ThemeToggle.vue` | Light / dark / system |

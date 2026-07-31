@@ -7,7 +7,7 @@
 // CSS. The body and mono faces both have metric-matched local fallbacks, which
 // makes their swap invisible and their preload not worth the bandwidth it takes
 // from this one.
-import displayUrl from '@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2?url'
+import displayUrl from '~/assets/fonts/newsreader-normal.woff2?url'
 
 useHead({
   link: [
