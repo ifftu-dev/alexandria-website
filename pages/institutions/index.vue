@@ -261,26 +261,21 @@ useHead({
 </script>
 
 <template>
-  <div class="accent-institution">
+  <div class="accent-institution page-institution">
     <!-- ═══ HERO ═══ -->
     <section class="hero">
       <MeshGradient :blobs="INSTITUTION_BLOBS" base="#08132e" />
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-split">
         <div>
-          <p class="eyebrow hero-eyebrow">Alexandria for Institutions</p>
-          <p class="notice">
-            <span aria-hidden="true">⚠</span>
-            <span><b>Mostly not built yet.</b> The learner side — courses, assessment, credentials, verification — runs in the alpha today. The institution layer described on this page is largely ahead of us, and every capability below says which it is.</span>
-          </p>
+          <p class="eyebrow hero-eyebrow">For institutions</p>
           <h1>Your LMS, their credentials.</h1>
           <p class="hero-lede">
             An open-source learning management system where students own credentials they can prove
             anywhere, curricula map to real skills, and institutions keep full control.
           </p>
           <div class="hero-cta">
-            <NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots btn">Run an institution pilot</NuxtLink>
-            <a :href="GITHUB_URL" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub btn-ghost">Read the source</a>
+            <NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots btn btn-lg">Run an institution pilot</NuxtLink>
             <a href="#features" class="btn-ghost">Explore features</a>
           </div>
           <div class="trust">
@@ -292,6 +287,16 @@ useHead({
         </div>
 
         <LazyCurriculumMap hydrate-on-idle />
+      </div>
+    </section>
+
+    <section class="section-note pad">
+      <div class="page-note">
+        <b>Mostly not built yet.</b> The learner side — courses, assessment, credentials and
+        verification — runs in the alpha today. The institution layer described on this page is
+        largely ahead of us, and every capability below says which it is. The
+        <a :href="GITHUB_URL" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub">source</a>
+        is the shortest way to check that for yourself.
       </div>
     </section>
 

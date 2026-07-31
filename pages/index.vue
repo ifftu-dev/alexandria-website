@@ -575,7 +575,7 @@ const waitlist = useWaitlist()
 @media (min-width: 780px) { .who { grid-template-columns: 1fr 1fr; } }
 .who-card { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }
 .who-card h3 { margin: 0 0 12px; font-size: 15.5px; letter-spacing: -0.01em; }
-.who-card ul { margin: 0 0 14px; padding-inline-start: 18px; display: grid; gap: 7px; }
+.who-card ul { list-style: revert; margin: 0 0 14px; padding-inline-start: 18px; display: grid; gap: 7px; }
 .who-card li { font-size: 14px; line-height: 1.5; color: rgb(var(--color-muted-foreground)); }
 
 .trust-strip { display: grid; gap: 12px; margin-top: 22px; }

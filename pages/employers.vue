@@ -35,8 +35,8 @@ const flow = [
 </script>
 
 <template>
-  <div>
-    <section class="hero hero-short">
+  <div class="page-employer">
+    <section class="hero hero-page">
       <MeshGradient :blobs="['14,159,110', '34,211,238', '16,185,129', '45,212,191', '59,130,246']" />
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-centered">
@@ -53,15 +53,15 @@ const flow = [
       </div>
     </section>
 
-    <section class="pad section">
-      <div class="notice">
+    <section class="section-note pad">
+      <div class="page-note">
         <b>What works today:</b> independent verification of any Alexandria credential, by anyone, with
         no account — <NuxtLink to="/verify">including on this site</NuxtLink>. Team tools, ATS
         integrations and candidate discovery are not built yet and are labelled accordingly below.
       </div>
     </section>
 
-    <section class="pad section">
+    <section class="section pad section-wash">
       <h2 class="h-sec">Consent comes first, then discovery</h2>
       <p class="p-sub">
         A searchable pool of candidates is a promise about other people's data, so it is worth being
@@ -77,7 +77,7 @@ const flow = [
       </ol>
     </section>
 
-    <section class="pad section">
+    <section class="section pad">
       <div class="e-demo-h">
         <h2 class="h-sec">What a verified requirement looks like</h2>
         <StatusChip state="sample" />
@@ -90,7 +90,7 @@ const flow = [
       <SkillQuery />
     </section>
 
-    <section class="pad section">
+    <section class="section pad section-wash">
       <h2 class="h-sec">Packaging</h2>
       <p class="p-sub">
         Named so you can tell what would be paid for. Prices are not published because they are not
@@ -110,7 +110,7 @@ const flow = [
       </p>
     </section>
 
-    <section class="pad section">
+    <section class="section pad">
       <h2 class="h-sec">Start an employer pilot</h2>
       <p class="p-sub">One role family, a real requisition, and measures agreed up front.</p>
       <div class="e-form"><EnquiryForm audience="employer" /></div>
@@ -119,12 +119,10 @@ const flow = [
 </template>
 
 <style scoped>
-.hero-short { padding-bottom: clamp(46px, 7vw, 74px); }
 .h-sec { font-size: clamp(21px, 3vw, 26px); letter-spacing: -0.02em; margin: 0 0 8px; }
 .p-sub { margin: 0 0 22px; font-size: 14.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); max-width: 68ch; }
-.p-sub a, .notice a { color: rgb(var(--color-primary)); }
-.notice { border: 1px solid rgb(var(--color-border)); border-inline-start: 3px solid rgb(var(--color-primary)); border-radius: 10px; padding: 14px 16px; font-size: 14px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); background: rgb(var(--color-card)); }
-.e-flow { margin: 0; padding-inline-start: 20px; display: grid; gap: 14px; max-width: 72ch; }
+.p-sub a { color: rgb(var(--page-accent, var(--color-primary))); }
+.e-flow { list-style: revert; margin: 0; padding-inline-start: 20px; display: grid; gap: 14px; max-width: 72ch; }
 .e-flow li { font-size: 14.5px; line-height: 1.6; }
 .e-flow b { display: block; }
 .e-flow span { color: rgb(var(--color-muted-foreground)); }

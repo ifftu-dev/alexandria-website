@@ -78,8 +78,8 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
 </script>
 
 <template>
-  <div>
-    <section class="hero hero-short">
+  <div class="page-accent">
+    <section class="hero hero-page">
       <MeshGradient />
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-centered">
@@ -92,7 +92,7 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
       </div>
     </section>
 
-    <section class="pad section">
+    <section class="section pad">
       <div class="v-grid">
         <div>
           <div class="v-head">
@@ -210,7 +210,6 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
 </template>
 
 <style scoped>
-.hero-short { padding-bottom: clamp(46px, 7vw, 74px); }
 .v-grid { display: grid; gap: 26px; }
 @media (min-width: 900px) { .v-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
 
@@ -279,7 +278,7 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
 .v-detail { display: block; color: rgb(var(--color-muted-foreground)); margin-top: 1px; }
 
 .v-explain { margin-top: 42px; max-width: 74ch; }
-.v-steps { margin: 12px 0 0; padding-inline-start: 20px; display: grid; gap: 12px; }
+.v-steps { list-style: revert; margin: 12px 0 0; padding-inline-start: 20px; display: grid; gap: 12px; }
 .v-steps li { font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
 .v-steps b { color: rgb(var(--color-foreground)); font-weight: 600; }
 

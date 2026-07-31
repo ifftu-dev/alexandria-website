@@ -36,8 +36,8 @@ const dataFacts = [
 </script>
 
 <template>
-  <div>
-    <section class="hero hero-short">
+  <div class="page-accent">
+    <section class="hero hero-page">
       <MeshGradient :blobs="['79,70,229', '99,102,241', '34,211,238', '129,140,248', '79,70,229']" />
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-centered">
@@ -50,7 +50,7 @@ const dataFacts = [
       </div>
     </section>
 
-    <section class="pad section">
+    <section class="section pad">
       <h2 class="h-sec">Security and compliance posture</h2>
       <p class="p-sub">Last reviewed 31 July 2026.</p>
       <div class="t-rows">
@@ -61,7 +61,7 @@ const dataFacts = [
       </div>
     </section>
 
-    <section class="pad section">
+    <section class="section pad section-wash">
       <h2 class="h-sec">Where the data is</h2>
       <dl class="t-facts">
         <template v-for="f in dataFacts" :key="f.k">
@@ -74,7 +74,7 @@ const dataFacts = [
       </p>
     </section>
 
-    <section class="pad section">
+    <section class="section pad">
       <h2 class="h-sec">Reporting something</h2>
       <p class="p-sub">
         Security findings go to <a href="mailto:admin@ifftu.dev">admin@ifftu.dev</a>. We would rather
@@ -85,7 +85,6 @@ const dataFacts = [
 </template>
 
 <style scoped>
-.hero-short { padding-bottom: clamp(46px, 7vw, 74px); }
 .h-sec { font-size: clamp(21px, 3vw, 26px); letter-spacing: -0.02em; margin: 0 0 8px; }
 .p-sub { margin: 0 0 22px; font-size: 14.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); max-width: 68ch; }
 .p-sub a { color: rgb(var(--color-primary)); }

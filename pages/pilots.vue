@@ -38,8 +38,8 @@ const shape = computed(() => SHAPES[audience.value])
 </script>
 
 <template>
-  <div>
-    <section class="hero hero-short">
+  <div class="page-institution">
+    <section class="hero hero-page">
       <MeshGradient :blobs="['37,99,235', '129,140,248', '96,165,250', '34,211,238', '79,70,229']" />
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-centered">
@@ -52,7 +52,7 @@ const shape = computed(() => SHAPES[audience.value])
       </div>
     </section>
 
-    <section class="pad section">
+    <section class="section pad">
       <div class="pi-toggle" role="group" aria-label="Pilot type">
         <button type="button" :class="{ on: audience === 'institution' }" :aria-pressed="audience === 'institution'" @click="audience = 'institution'">
           For an institution
@@ -92,7 +92,7 @@ const shape = computed(() => SHAPES[audience.value])
       </div>
     </section>
 
-    <section class="pad section">
+    <section class="section pad section-wash">
       <h2 class="h-sec">Before you ask</h2>
       <div class="pi-honest">
         <p>
@@ -113,7 +113,6 @@ const shape = computed(() => SHAPES[audience.value])
 </template>
 
 <style scoped>
-.hero-short { padding-bottom: clamp(46px, 7vw, 74px); }
 .h-sec { font-size: clamp(20px, 2.8vw, 24px); letter-spacing: -0.02em; margin: 0 0 8px; }
 .pi-h3 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(var(--color-muted-foreground)); margin: 20px 0 8px; }
 .p-sub { margin: 0 0 18px; font-size: 14.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); max-width: 56ch; }
@@ -133,7 +132,7 @@ const shape = computed(() => SHAPES[audience.value])
 @media (min-width: 560px) { .pi-facts { grid-template-columns: max-content 1fr; gap: 10px 20px; } }
 .pi-facts dt { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgb(var(--color-muted-foreground)); }
 .pi-facts dd { margin: 0; font-size: 14px; line-height: 1.6; }
-.pi-list { margin: 0; padding-inline-start: 18px; display: grid; gap: 6px; font-size: 14px; line-height: 1.55; color: rgb(var(--color-muted-foreground)); }
+.pi-list { list-style: revert; margin: 0; padding-inline-start: 18px; display: grid; gap: 6px; font-size: 14px; line-height: 1.55; color: rgb(var(--color-muted-foreground)); }
 .pi-note { margin: 18px 0 0; font-size: 12.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 
 .pi-honest { max-width: 70ch; display: grid; gap: 14px; }

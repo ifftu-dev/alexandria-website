@@ -23,8 +23,8 @@ const fits = [
 </script>
 
 <template>
-  <div>
-    <section class="hero hero-short">
+  <div class="page-accent">
+    <section class="hero hero-page">
       <MeshGradient :blobs="['251,191,36', '244,114,182', '79,70,229', '34,211,238', '16,185,129']" />
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-centered">
@@ -41,7 +41,7 @@ const fits = [
       </div>
     </section>
 
-    <section class="pad section">
+    <section class="section pad">
       <h2 class="h-sec">Who this is for</h2>
       <p class="p-sub">
         Governments and public education bodies, workforce-development programmes, NGOs and
@@ -56,7 +56,7 @@ const fits = [
       </div>
     </section>
 
-    <section class="pad section">
+    <section class="section pad section-wash">
       <h2 class="h-sec">How we would work</h2>
       <div class="pa-honest">
         <p>
@@ -82,7 +82,6 @@ const fits = [
 </template>
 
 <style scoped>
-.hero-short { padding-bottom: clamp(46px, 7vw, 74px); }
 .h-sec { font-size: clamp(21px, 3vw, 26px); letter-spacing: -0.02em; margin: 0 0 8px; }
 .p-sub { margin: 0 0 22px; font-size: 14.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); max-width: 68ch; }
 .pa-grid { display: grid; gap: 16px; }

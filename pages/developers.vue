@@ -39,8 +39,8 @@ const facts = [
 </script>
 
 <template>
-  <div>
-    <section class="hero hero-short">
+  <div class="page-accent">
+    <section class="hero hero-page">
       <MeshGradient :blobs="['79,70,229', '34,211,238', '99,102,241', '129,140,248', '79,70,229']" />
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-centered">
@@ -57,7 +57,7 @@ const facts = [
       </div>
     </section>
 
-    <section class="pad section">
+    <section class="section pad">
       <h2 class="h-sec">What it is built on</h2>
       <p class="p-sub">Named so you can argue with the choices.</p>
       <div class="d-rows">
@@ -68,7 +68,7 @@ const facts = [
       </div>
     </section>
 
-    <section class="pad section">
+    <section class="section pad section-wash">
       <h2 class="h-sec">Credential format</h2>
       <p class="p-sub">
         Enough to write a conforming verifier — <NuxtLink to="/verify">ours runs in the browser</NuxtLink>
@@ -87,7 +87,7 @@ const facts = [
       </p>
     </section>
 
-    <section class="pad section">
+    <section class="section pad">
       <h2 class="h-sec">Contributing</h2>
       <p class="p-sub" style="max-width: 70ch">
         The peer-to-peer protocol is implementation-complete and would benefit from adversarial
@@ -104,7 +104,6 @@ const facts = [
 </template>
 
 <style scoped>
-.hero-short { padding-bottom: clamp(46px, 7vw, 74px); }
 .h-sec { font-size: clamp(21px, 3vw, 26px); letter-spacing: -0.02em; margin: 0 0 8px; }
 .p-sub { margin: 0 0 22px; font-size: 14.5px; line-height: 1.6; color: rgb(var(--color-muted-foreground)); max-width: 62ch; }
 .p-sub a { color: rgb(var(--color-primary)); }
