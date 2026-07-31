@@ -154,7 +154,7 @@ const tiers = [
     name: 'Community',
     price: 'Free',
     period: 'self-hosted, forever',
-    desc: 'Full-featured LMS for institutions that want complete control.',
+    desc: 'The open-source core, self-hosted, with no student cap. What exists today is what is in the alpha.',
     features: [
       'Unlimited students & courses',
       'All core LMS features',
@@ -170,6 +170,7 @@ const tiers = [
   {
     name: 'Academic',
     price: '$2',
+    planned: true,
     period: 'per student / month',
     desc: 'Managed hosting with premium support for universities and colleges.',
     features: [
@@ -181,7 +182,7 @@ const tiers = [
       'Priority email & chat support',
       '99.9% uptime SLA',
     ],
-    cta: 'Request a demo',
+    cta: 'Run a pilot',
     highlighted: true,
   },
   {
@@ -198,7 +199,7 @@ const tiers = [
       'Dedicated success manager',
       'Custom SLA & compliance',
     ],
-    cta: 'Talk to us',
+    cta: 'Start a conversation',
     highlighted: false,
   },
 ]
@@ -260,25 +261,21 @@ useHead({
 </script>
 
 <template>
-  <div class="accent-institution">
+  <div class="accent-institution page-institution">
     <!-- ═══ HERO ═══ -->
     <section class="hero">
       <MeshGradient :blobs="INSTITUTION_BLOBS" base="#08132e" />
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-split">
         <div>
-          <p class="eyebrow hero-eyebrow">Alexandria for Institutions</p>
-          <p class="notice">
-            <span aria-hidden="true">⚠</span>
-            <span><b>Not built yet.</b> This page describes what we're building — institution features are not implemented.</span>
-          </p>
+          <p class="eyebrow hero-eyebrow">For institutions</p>
           <h1>Your LMS, their credentials.</h1>
           <p class="hero-lede">
             An open-source learning management system where students own credentials they can prove
             anywhere, curricula map to real skills, and institutions keep full control.
           </p>
           <div class="hero-cta">
-            <a :href="GITHUB_URL" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub btn">Request a demo</a>
+            <NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots btn btn-lg">Run an institution pilot</NuxtLink>
             <a href="#features" class="btn-ghost">Explore features</a>
           </div>
           <div class="trust">
@@ -290,6 +287,16 @@ useHead({
         </div>
 
         <LazyCurriculumMap hydrate-on-idle />
+      </div>
+    </section>
+
+    <section class="section-note pad">
+      <div class="page-note">
+        <b>Mostly not built yet.</b> The learner side — courses, assessment, credentials and
+        verification — runs in the alpha today. The institution layer described on this page is
+        largely ahead of us, and every capability below says which it is. The
+        <a :href="GITHUB_URL" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub">source</a>
+        is the shortest way to check that for yourself.
       </div>
     </section>
 
@@ -343,7 +350,7 @@ useHead({
           <article v-for="feature in featuresByCategory[activeCategory]" :key="feature.title" class="tile">
             <h3>
               {{ feature.title }}
-              <span v-if="feature.planned" class="planned">Planned</span>
+              <StatusChip v-if="feature.planned" state="planned" /><StatusChip v-else state="alpha" />
             </h3>
             <p>{{ feature.body }}</p>
           </article>
@@ -428,20 +435,19 @@ useHead({
             <h3>{{ tier.name }}</h3>
             <div class="amt">{{ tier.price }}</div>
             <div class="per">{{ tier.period }}</div>
+            <StatusChip v-if="tier.planned" state="planned" label="Planned price · not purchasable yet" />
             <p class="desc">{{ tier.desc }}</p>
             <ul>
               <li v-for="item in tier.features" :key="item">{{ item }}</li>
             </ul>
-            <a
-              :href="GITHUB_URL"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="plausible-event-name=CTA-GitHub"
+            <NuxtLink
+              to="/pilots"
+              class="plausible-event-name=Nav-Pilots"
               :class="tier.highlighted ? 'btn' : 'btn-out'"
-            >{{ tier.cta }}</a>
+            >{{ tier.cta }}</NuxtLink>
           </article>
         </div>
-        <p class="p-sub" style="font-size: 12.5px; margin-top: 16px">Final pricing will be confirmed at launch.</p>
+        <p class="p-sub" style="font-size: 12.5px; margin-top: 16px">Nothing here is purchasable yet. The Academic figure is published so you can plan against something rather than nothing, and it will be confirmed — or corrected — before anyone is asked to pay it.</p>
       </div>
     </section>
 
@@ -470,8 +476,8 @@ useHead({
         <h2>Give your students credentials they actually own.</h2>
         <p>Join the institutions building an open, verifiable future for education. Free to start. Open-source forever.</p>
         <div class="cta-row">
-          <a :href="GITHUB_URL" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub btn">Request a demo</a>
-          <NuxtLink to="/recruiter" class="plausible-event-name=Nav-Recruiter btn-ghost">For recruiters</NuxtLink>
+          <NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots btn">Run an institution pilot</NuxtLink>
+          <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter btn-ghost">For employers</NuxtLink>
         </div>
       </div>
     </section>

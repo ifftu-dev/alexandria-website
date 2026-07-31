@@ -39,28 +39,25 @@ const year = new Date().getFullYear()
           <span>Alexandria</span>
         </NuxtLink>
 
-        <nav class="nav-links">
-          <NuxtLink to="/recruiter" class="plausible-event-name=Nav-Recruiter link-recruiter">For recruiters</NuxtLink>
-          <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution">For institutions</NuxtLink>
+        <nav class="nav-links" aria-label="Audiences">
+          <NuxtLink to="/learners" class="plausible-event-name=Nav-Learners">Learners</NuxtLink>
+          <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter link-recruiter">Employers</NuxtLink>
+          <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution">Institutions</NuxtLink>
         </nav>
 
         <div class="nav-right">
+          <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify nav-verify">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Verify
+          </NuxtLink>
+          <span class="nav-sep" aria-hidden="true" />
           <button
             type="button"
             class="plausible-event-name=EarlyAccess nav-cta"
             @click="waitlist.open()"
-          >Waiting list</button>
-          <a
-            href="https://github.com/ifftu-dev/alexandria"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="plausible-event-name=CTA-GitHub nav-gh"
-            aria-label="Alexandria on GitHub"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
-            </svg>
-          </a>
+          >Join the waiting list</button>
           <UiThemeToggle />
           <button type="button" class="nav-burger" aria-label="Open menu" @click="mobileMenuOpen = true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -86,8 +83,11 @@ const year = new Date().getFullYear()
               </button>
             </div>
             <div class="drawer-links">
-              <NuxtLink to="/recruiter" class="plausible-event-name=Nav-Recruiter link-recruiter" @click="closeMobileMenu">For recruiters</NuxtLink>
+              <NuxtLink to="/learners" class="plausible-event-name=Nav-Learners" @click="closeMobileMenu">For learners</NuxtLink>
+              <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter link-recruiter" @click="closeMobileMenu">For employers</NuxtLink>
               <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution" @click="closeMobileMenu">For institutions</NuxtLink>
+              <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify" @click="closeMobileMenu">Verify a credential</NuxtLink>
+              <NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots" @click="closeMobileMenu">Run a pilot</NuxtLink>
               <button
                 type="button"
                 class="plausible-event-name=EarlyAccess drawer-cta"
@@ -185,7 +185,13 @@ const year = new Date().getFullYear()
           <div class="foot-col">
             <h2>For</h2>
             <ul>
-              <li><NuxtLink to="/recruiter" class="plausible-event-name=Nav-Recruiter">Recruiters</NuxtLink></li>
+              <li><NuxtLink to="/learners" class="plausible-event-name=Nav-Learners">Learners</NuxtLink></li>
+              <li><NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter">Employers</NuxtLink></li>
+              <li><NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots">Run a pilot</NuxtLink></li>
+              <li><NuxtLink to="/partners">Partners</NuxtLink></li>
+              <li><NuxtLink to="/verify" class="plausible-event-name=Nav-Verify">Verify a credential</NuxtLink></li>
+              <li><NuxtLink to="/developers">Developers</NuxtLink></li>
+              <li><NuxtLink to="/trust">Trust</NuxtLink></li>
               <li><NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions">Institutions</NuxtLink></li>
             </ul>
           </div>
@@ -233,17 +239,24 @@ const year = new Date().getFullYear()
   letter-spacing: -0.02em; text-decoration: none; color: rgb(var(--color-foreground)); flex: none;
 }
 .brand svg { color: rgb(var(--color-primary)); }
-.nav-links { display: none; gap: 8px; }
+.nav-links { display: none; gap: 2px; }
 @media (min-width: 760px) { .nav-links { display: flex; } }
 .nav-links a {
   font-size: 14.5px; font-weight: 600; text-decoration: none; padding: 9px 12px; border-radius: 999px;
   display: inline-flex; align-items: center; min-height: 40px;
   transition: background 150ms ease;
 }
-.link-recruiter { color: rgb(var(--color-recruiter)); }
-.link-recruiter:hover { background: rgb(var(--color-recruiter) / 0.12); }
-.link-institution { color: rgb(var(--color-institution)); }
-.link-institution:hover { background: rgb(var(--color-institution) / 0.12); }
+/* The audience tints belong to the pages, not to the bar. Three links in three
+   colours reads as decoration and makes the nav look busier than it is; the
+   colour still appears, on hover and on the page you are actually on. */
+.link-recruiter:hover, .link-recruiter.router-link-active {
+  color: rgb(var(--color-recruiter));
+  background: rgb(var(--color-recruiter) / 0.12);
+}
+.link-institution:hover, .link-institution.router-link-active {
+  color: rgb(var(--color-institution));
+  background: rgb(var(--color-institution) / 0.12);
+}
 
 /* Current page. NuxtLink sets router-link-active plus aria-current="page", so
    the state is announced as well as shown — colour alone would not carry it. */
@@ -282,6 +295,22 @@ const year = new Date().getFullYear()
 }
 @media (min-width: 760px) { .nav-cta { display: inline-flex; } }
 .nav-cta { min-height: 40px; }
+
+/* A utility, not a destination: quieter than the audience links and separated
+   from the CTA by a hairline, so the bar reads as three groups rather than a
+   row of seven equal things. */
+.nav-verify {
+  display: none; align-items: center; gap: 6px; min-height: 40px;
+  padding: 9px 12px; border-radius: 999px;
+  font-size: 14px; font-weight: 600; text-decoration: none;
+  color: rgb(var(--color-muted-foreground));
+  transition: color 150ms ease, background 150ms ease;
+}
+.nav-verify svg { width: 15px; height: 15px; }
+.nav-verify:hover { color: rgb(var(--color-foreground)); background: rgb(var(--color-muted)); }
+.nav-verify.router-link-active { color: rgb(var(--color-primary)); }
+.nav-sep { display: none; width: 1px; height: 20px; margin: 0 4px; background: rgb(var(--color-border)); }
+@media (min-width: 900px) { .nav-verify { display: inline-flex; } .nav-sep { display: block; } }
 .nav-cta:hover { background: rgb(var(--color-primary) / 0.1); border-color: rgb(var(--color-primary) / 0.6); }
 
 /* The drawer and footer triggers were links and are buttons now, so they need
@@ -297,13 +326,6 @@ const year = new Date().getFullYear()
 }
 .drawer-cta:hover, .foot-cta:hover { color: rgb(var(--color-foreground)); }
 
-.nav-gh {
-  display: none; align-items: center; justify-content: center; width: 40px; height: 40px;
-  border-radius: 10px; color: rgb(var(--color-muted-foreground)); transition: color 150ms ease, background 150ms ease;
-}
-@media (min-width: 760px) { .nav-gh { display: flex; } }
-.nav-gh:hover { color: rgb(var(--color-foreground)); background: rgb(var(--color-muted)); }
-.nav-gh svg { width: 19px; height: 19px; }
 .nav-burger {
   display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
   border: none; border-radius: 10px; background: transparent; color: rgb(var(--color-muted-foreground)); cursor: pointer;

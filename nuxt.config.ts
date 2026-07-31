@@ -7,6 +7,11 @@ export default defineNuxtConfig({
   // `<srcDir>/app/router.options.ts`.
   srcDir: '.',
 
+  // With srcDir at the repo root, the build output sits *inside* the watched
+  // tree — so `nuxt dev` reloads on its own artefacts and, worse, can end up
+  // serving them instead of the source it just recompiled.
+  ignore: ['dist/**', '.netlify/**'],
+
   devtools: { enabled: true },
 
   modules: [

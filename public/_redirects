@@ -19,3 +19,9 @@
 # ("decentralized", "blockchain-verified credentials"). Anything that already
 # scraped that URL should land on the current card rather than a 404.
 /og-image.png  /og/home.jpg  301
+
+# /recruiter became /employers: the buyer is often a hiring manager or workforce
+# programme, not a recruiter. Permanent, so existing links and any search equity
+# follow rather than break.
+/recruiter     /employers   301
+/recruiter/*   /employers   301
