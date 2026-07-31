@@ -243,4 +243,10 @@ const packages = [
 .t-prose a { color: rgb(var(--page-accent, var(--color-primary))); }
 .e-form { max-width: 620px; }
 .mono { font-family: var(--font-mono); font-size: 0.92em; }
+
+@media (max-width: 600px) {
+  /* 10.5px mono is fine at desk distance and tight on a phone. */
+  .e-cand-k { font-size: 11.5px; }
+  .e-cand-s { font-size: 12.5px; }
+}
 </style>

@@ -500,8 +500,19 @@ const year = new Date().getFullYear()
 .foot-social a:hover { color: rgb(var(--color-foreground)); background: rgb(var(--color-background)); }
 .foot-social svg { width: 18px; height: 18px; }
 .foot-col h2 { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(var(--color-muted-foreground)); margin: 0 0 14px; }
-.foot-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-.foot-col a { font-size: 14px; color: rgb(var(--color-muted-foreground)); text-decoration: none; }
+.foot-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+/* WCAG 2.2 target size: these are navigation links in a list, not links inside a
+   sentence, so the inline exception does not cover them. At 14px they were 16px
+   tall — the padding brings the touch area to 24px without moving the type. */
+.foot-col a {
+  font-size: 14px;
+  color: rgb(var(--color-muted-foreground));
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding-block: 3px;
+}
 .foot-col a:hover { color: rgb(var(--color-primary)); }
 .foot-col a.router-link-exact-active { color: rgb(var(--color-primary)); font-weight: 600; }
 .foot-base {

@@ -354,4 +354,10 @@ onMounted(() => {
   font-size: 10px;
   color: rgb(var(--app-muted-foreground, var(--color-muted-foreground)));
 }
+
+@media (max-width: 600px) {
+  /* The replica copies the app's type scale, which is calibrated for a native
+     window rather than a phone browser. This one caption is meant to be read. */
+  .graph-progress { font-size: 11.5px; }
+}
 </style>

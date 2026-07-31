@@ -233,4 +233,8 @@ const tiers = [
 .i-tier-p { font-family: var(--font-mono); font-size: 11.5px; color: rgb(var(--page-accent, var(--color-primary))); }
 .i-tier p { margin: 0; font-size: 14px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
 .i-form { max-width: 620px; }
+
+@media (max-width: 600px) {
+  .i-fig-s { font-size: 11.5px; }
+}
 </style>

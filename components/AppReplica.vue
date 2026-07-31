@@ -698,7 +698,15 @@ button { font-family: inherit; }
 
 .sec-h { display: flex; align-items: center; justify-content: space-between; margin: 1.3rem 0 0.6rem; }
 .sec-h b { font-size: 0.875rem; font-weight: 600; }
-.sec-h button { font-size: 0.75rem; color: rgb(var(--app-primary)); background: none; border: none; cursor: pointer; }
+/* The replica copies the app's type scale, so these read at 18px tall — under the
+   24px touch minimum. The hit area is extended with a pseudo-element instead of
+   padding, so the button grows for a thumb without the mock's layout shifting
+   away from the interface it is imitating. */
+.sec-h button {
+  font-size: 0.75rem; color: rgb(var(--app-primary)); background: none; border: none; cursor: pointer;
+  position: relative;
+}
+.sec-h button::after { content: ""; position: absolute; inset: -6px -4px; }
 
 .goal { display: flex; align-items: center; gap: 0.8rem; }
 .goal-t { display: block; font-size: 0.8375rem; font-weight: 600; }
