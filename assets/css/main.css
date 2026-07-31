@@ -438,8 +438,12 @@ svg { flex-shrink: 0; }
 
 /* Hero B — centred copy, window straddling the fold */
 .hero-centered { text-align: center; padding-bottom: clamp(118px, 17vw, 190px); }
-.hero-centered h1 { max-width: 16ch; margin: 0 auto; }
-.hero-centered .hero-lede { max-width: 46ch; margin-left: auto; margin-right: auto; margin-top: 24px; }
+/* 20ch, not 16: `ch` measures the digit zero, and Newsreader's is narrower than
+   the sans this cap was tuned against — so the same number bought a visibly
+   tighter line once the headings became serif. 20 is where every hero drops a
+   line; past it the measure just gets longer without setting any more type. */
+.hero-centered h1 { max-width: 20ch; margin: 0 auto; }
+.hero-centered .hero-lede { max-width: 50ch; margin-left: auto; margin-right: auto; margin-top: 24px; }
 .hero-centered .hero-cta { justify-content: center; }
 
 .shelf { margin-top: calc(-1 * clamp(96px, 14vw, 168px)); position: relative; z-index: 5; }
