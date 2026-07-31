@@ -119,18 +119,19 @@ const year = new Date().getFullYear()
     <Teleport to="body">
       <Transition name="toast">
         <aside v-if="showToast" class="toast" aria-label="Announcement">
-          <a
-            href="https://www.ifftu.dev/blog/introducing-alexandria/"
-            target="_blank"
-            rel="noopener noreferrer"
+          <NuxtLink
+            to="/blog/introducing-alexandria"
             class="plausible-event-name=Announcement toast-link"
+            @click="dismissToast"
           >
             <span class="toast-eyebrow">New</span>
             <span class="toast-text">Read the announcement post</span>
+            <!-- A chevron, not the corner arrow: that glyph promises a new tab,
+                 and this no longer leaves the site. -->
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M9 7h8v8" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
-          </a>
+          </NuxtLink>
           <button type="button" class="toast-x" aria-label="Dismiss announcement" @click="dismissToast">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
