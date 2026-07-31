@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { RECOGNITION_GAP, SOURCES } from '~/content/evidence'
+
 definePageMeta({ layout: 'landing' })
 
 useHead({
@@ -220,6 +222,24 @@ const waitlist = useWaitlist()
         The real shell — press <b>/</b> for search, open <b>Skills &amp; Credentials</b> and verify one
       </p>
     </div>
+
+    <!-- ═══ THE GAP — the thesis, with its evidence attached ═══ -->
+    <section class="gap">
+      <div class="pad">
+        <div class="gap-figs">
+          <div v-for="f in RECOGNITION_GAP" :key="f.id" class="gap-fig">
+            <p class="gap-n">{{ f.value }}</p>
+            <p class="gap-l">{{ f.label }}</p>
+          </div>
+        </div>
+        <div class="gap-foot">
+          <p class="gap-src">{{ SOURCES.bgi2024!.line }} {{ SOURCES.census2022!.line }}</p>
+          <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence chev">
+            Read the evidence in full <i>›</i>
+          </NuxtLink>
+        </div>
+      </div>
+    </section>
 
     <!-- ═══ PROOF ═══ -->
     <section class="proof">

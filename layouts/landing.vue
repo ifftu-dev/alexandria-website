@@ -87,6 +87,7 @@ const year = new Date().getFullYear()
               <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter link-recruiter" @click="closeMobileMenu">For employers</NuxtLink>
               <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution" @click="closeMobileMenu">For institutions</NuxtLink>
               <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify" @click="closeMobileMenu">Verify a credential</NuxtLink>
+              <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence" @click="closeMobileMenu">Why recognition</NuxtLink>
               <NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots" @click="closeMobileMenu">Run a pilot</NuxtLink>
               <button
                 type="button"
@@ -190,6 +191,7 @@ const year = new Date().getFullYear()
               <li><NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots">Run a pilot</NuxtLink></li>
               <li><NuxtLink to="/partners">Partners</NuxtLink></li>
               <li><NuxtLink to="/verify" class="plausible-event-name=Nav-Verify">Verify a credential</NuxtLink></li>
+              <li><NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence">Why recognition</NuxtLink></li>
               <li><NuxtLink to="/developers">Developers</NuxtLink></li>
               <li><NuxtLink to="/trust">Trust</NuxtLink></li>
               <li><NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions">Institutions</NuxtLink></li>
