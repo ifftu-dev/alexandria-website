@@ -428,24 +428,34 @@ svg { flex-shrink: 0; }
 .hero h1 em {
   font-style: italic;
   color: rgb(var(--page-accent-dark, 139 133 255));
-  background: rgb(8 11 24 / 0.82);
-  padding: 0.02em 0.22em 0.06em 0.18em;
-  border-radius: 6px;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
+  /* inline-block with its own line-height, so the band is sized by the type
+     rather than by the h1's 1.05 leading — an inline background inherits the
+     line box, which on a 68px serif is far taller than the words in it. */
+  display: inline-block;
+  line-height: 1;
+  /* Measured, not guessed. Newsreader italic 300 inks 0.715em above the baseline
+     and 0.26em below it, and a line-height of 1 puts the box edge at exactly
+     baseline + 0.26em — flush with the descenders, which is why the f-tails and
+     the comma were touching the edge. These two values give an equal 0.075em of
+     clearance top and bottom. */
+  /* The right padding also absorbs the caret's lean: skewing 0.676em by 12°
+     throws its top corner 0.144em to the right of its foot. */
+  padding: 0.05em 0.32em 0.075em 0.18em;
+  background: rgb(8 11 24 / 0.88);
+  border-radius: 2px;
 }
 
-/* A block cursor, because the sentence is a statement of intent rather than a
-   finished fact — and because it moves, which is the one thing on this hero
-   that earns a second look. */
+/* Block caret, on the baseline at cap height (0.676em for this face), skewed to
+   sit parallel with the italic rather than cutting across it. */
 .hero h1 em::after {
   content: "";
   display: inline-block;
-  width: 0.46em;
-  height: 0.78em;
+  width: 0.38em;
+  height: 0.676em;
   margin-inline-start: 0.1em;
-  vertical-align: -0.06em;
   background: currentColor;
+  transform: skewX(-12deg);
+  transform-origin: bottom;
   animation: caret 1.06s step-end infinite;
 }
 
