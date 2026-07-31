@@ -14,8 +14,14 @@ const ANNOUNCEMENT_DISMISS_KEY = 'alexandria-announcement-dismissed'
 const showToast = ref(false)
 
 onMounted(() => {
-  if (localStorage.getItem(ANNOUNCEMENT_DISMISS_KEY) === '1') return
-  // Let the page land before asking for attention.
+  // The dismissal flag is deliberately NOT consulted. The announcement is the
+  // project's one standing invitation to read what it is actually for, and a
+  // visitor who closed it three weeks ago on a different page is not someone we
+  // want to keep it from. Closing it still hides it for the rest of the visit —
+  // it just does not follow anyone across sessions.
+  //
+  // The write below is kept so the preference is there to honour the day we
+  // decide to, and so the key does not have to be reintroduced from scratch.
   setTimeout(() => { showToast.value = true }, 1400)
 })
 

@@ -6,12 +6,12 @@ const posts = usePosts()
 useHead({
   title: 'Blog — Alexandria',
   meta: [
-    { name: 'description', content: 'Announcements and essays from the people building Alexandria — what we are making, what we have got wrong, and what we still cannot prove.' },
+    { name: 'description', content: 'Announcements, progress and essays from the people building Alexandria — what we are doing, what has changed, and what we got wrong.' },
     { property: 'og:title', content: 'Blog — Alexandria' },
-    { property: 'og:description', content: 'Announcements and essays from the people building Alexandria.' },
+    { property: 'og:description', content: 'Announcements, progress and essays from the people building Alexandria.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/blog' },
     { name: 'twitter:title', content: 'Blog — Alexandria' },
-    { name: 'twitter:description', content: 'Announcements and essays from the people building Alexandria.' },
+    { name: 'twitter:description', content: 'Announcements, progress and essays from the people building Alexandria.' },
   ],
   link: [{ rel: 'canonical', href: 'https://alexandria.ifftu.dev/blog' }],
 })
@@ -24,11 +24,11 @@ useHead({
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-centered">
         <p class="eyebrow hero-eyebrow">Blog</p>
-        <h1>What we are making, and what we have got wrong.</h1>
+        <h1>Building in the open.</h1>
         <p class="hero-lede">
-          Announcements and essays from the people building this. Where something is
-          unproven or unfinished, it says so — that is the only kind of writing worth
-          publishing about work in progress.
+          Announcements, progress and essays from the people making Alexandria. This is
+          where we say what we are doing, what has changed, and what we got wrong —
+          before anyone has to ask.
         </p>
       </div>
     </section>
