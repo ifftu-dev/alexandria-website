@@ -387,7 +387,15 @@ const method = [
 
 .w-quote { display: grid; gap: 26px; align-items: center; }
 @media (min-width: 900px) { .w-quote { grid-template-columns: 1.1fr 0.9fr; gap: 44px; } }
-.w-quote blockquote { margin: 0; font-size: clamp(21px, 3vw, 30px); line-height: 1.3; letter-spacing: -0.02em; font-weight: 600; }
+.w-quote blockquote {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(24px, 3.4vw, 34px);
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  font-weight: 300;
+}
 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 </style>
