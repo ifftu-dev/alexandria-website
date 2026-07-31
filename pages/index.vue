@@ -378,7 +378,7 @@ const featuresOpen = ref(false)
     <!-- ═══ FEATURES ═══ -->
     <section class="section pad">
       <p class="eyebrow">One app, the whole system</p>
-      <h2 class="h-sec">Everything education needs, with no infrastructure behind it.</h2>
+      <h2 class="h-sec">Everything you expect from an education app, and then a whole lot more.</h2>
       <p class="p-sub">
         No subscriptions, no data collection — a native app that turns your device into a full
         participant in a global learning network.
