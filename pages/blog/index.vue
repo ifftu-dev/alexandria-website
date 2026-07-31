@@ -64,7 +64,9 @@ useHead({
 .bl-list a:hover { background: rgb(var(--color-muted)); }
 .bl-meta { margin: 0 0 10px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(var(--color-muted-foreground)); }
 .bl-list h2 { font-family: var(--font-display); font-size: clamp(23px, 3vw, 30px); font-weight: 300; letter-spacing: -0.015em; line-height: 1.15; margin: 0; max-width: 24ch; }
-.bl-stand { margin: 12px 0 0; font-size: 15px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); max-width: 62ch; }
+/* Same line as the article standfirst, so it takes the same colour — a reader
+   arriving from the index should recognise it. */
+.bl-stand { margin: 12px 0 0; font-family: var(--font-display); font-style: italic; font-size: 16.5px; line-height: 1.6; color: rgb(var(--color-primary)); max-width: 62ch; }
 .bl-more { display: inline-block; margin-top: 16px; font-size: 13.5px; font-weight: 600; color: rgb(var(--color-primary)); }
 .bl-more i { font-style: normal; }
 </style>
