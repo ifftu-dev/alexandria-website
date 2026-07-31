@@ -1063,12 +1063,30 @@ svg { flex-shrink: 0; }
   border-radius: 5px;
 }
 
+/* Matching the original post on ifftu.dev, whose stylesheet sets:
+     border-left: 2px solid var(--accent); font-family: var(--font-serif);
+     font-size: 1.3em; font-style: italic; letter-spacing: .03em;
+   The body here is already serif, so the size, the tracking and the full-strength
+   ink are what actually distinguish a pulled quote from the prose around it. */
 .article blockquote {
-  margin: 0 0 22px;
-  padding-inline-start: 22px;
-  border-inline-start: 2px solid rgb(var(--color-primary) / 0.5);
+  margin: 34px 0;
+  padding-inline-start: 24px;
+  border-inline-start: 2px solid rgb(var(--color-primary));
+  font-size: 1.3em;
   font-style: italic;
+  letter-spacing: 0.03em;
+  line-height: 1.45;
+  color: rgb(var(--color-foreground));
 }
+.article blockquote p {
+  font-size: inherit;
+  font-style: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin: 0;
+}
+.article blockquote p + p { margin-top: 14px; }
 
 /* Tables carry data, so they take the sans and the full measure. */
 .article table { max-width: none; width: 100%; border-collapse: collapse; margin: 0 0 26px; font-family: var(--font-sans); font-size: 14px; }
