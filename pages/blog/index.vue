@@ -4,13 +4,13 @@ definePageMeta({ layout: 'landing' })
 const posts = usePosts()
 
 useHead({
-  title: 'Writing — Alexandria',
+  title: 'Blog — Alexandria',
   meta: [
     { name: 'description', content: 'Announcements and essays from the people building Alexandria — what we are making, what we have got wrong, and what we still cannot prove.' },
-    { property: 'og:title', content: 'Writing — Alexandria' },
+    { property: 'og:title', content: 'Blog — Alexandria' },
     { property: 'og:description', content: 'Announcements and essays from the people building Alexandria.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/blog' },
-    { name: 'twitter:title', content: 'Writing — Alexandria' },
+    { name: 'twitter:title', content: 'Blog — Alexandria' },
     { name: 'twitter:description', content: 'Announcements and essays from the people building Alexandria.' },
   ],
   link: [{ rel: 'canonical', href: 'https://alexandria.ifftu.dev/blog' }],
@@ -23,7 +23,7 @@ useHead({
       <MeshGradient :blobs="['79,70,229', '99,102,241', '129,140,248', '34,211,238', '79,70,229']" />
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-centered">
-        <p class="eyebrow hero-eyebrow">Writing</p>
+        <p class="eyebrow hero-eyebrow">Blog</p>
         <h1>What we are making, and what we have got wrong.</h1>
         <p class="hero-lede">
           Announcements and essays from the people building this. Where something is
