@@ -154,10 +154,10 @@ test.describe('the forms that call them', () => {
 
     // The enquiry form's own submit — /pilots also carries the waiting-list
     // dialog, so an unqualified button[type=submit] matches both.
-    const enquiry = page.locator('form').filter({ has: page.locator('button.plausible-event-name\\=Enquiry') })
+    const enquiry = page.locator('form.plausible-event-name\\=Enquiry')
     await enquiry.locator('input[type="email"]').fill('e2e@example.com')
     await enquiry.locator('input[autocomplete="organization"]').fill('E2E Org')
-    await enquiry.locator('button.plausible-event-name\\=Enquiry').click()
+    await enquiry.locator('button[type="submit"]').click()
 
     await expect.poll(() => posted).toBeTruthy()
     const sent = JSON.parse(posted!)

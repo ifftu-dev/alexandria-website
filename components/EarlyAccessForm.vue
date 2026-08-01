@@ -143,9 +143,30 @@ async function submit() {
 
 <template>
   <div class="ea" :class="`ea-${props.variant}`">
+    <!--
+      The goal is tagged on the FORM, not on the submit button, and that is not a
+      style choice. Plausible's click handler walks up from whatever was clicked
+      and returns the moment it meets a `form` element:
+
+          for (i = e.target, a = 0; a <= 3 && i; a++) {
+            if (i.tagName && "form" === i.tagName.toLowerCase()) return
+            ...
+          }
+
+      so a tagged control inside a form fires nothing, silently. Form conversions
+      are read by a separate `submit` listener that looks at the form's own
+      classes. `@submit.prevent` does not interfere: preventDefault stops the
+      navigation, not the event, which still bubbles to Plausible's listener on
+      document.
+
+      Deliberately NOT `EarlyAccess` either. Every CTA on the site fires that one
+      to open this dialog, so naming the completion the same thing counted each
+      signup twice. Split, `EarlyAccess` is the top of the funnel and this is the
+      bottom, and the ratio between them is a real conversion rate.
+    -->
     <form
       v-if="state !== 'done'"
-      class="ea-form"
+      class="ea-form plausible-event-name=EarlyAccess-Submit"
       @submit.prevent="submit"
     >
       <!-- Off-screen rather than hidden, so bots still fill it in. -->
@@ -172,14 +193,7 @@ async function submit() {
           @focus="expanded = true"
           @input="expanded = true"
         >
-        <!--
-          Deliberately NOT `EarlyAccess`. Every CTA on the site fires that one to
-          open this dialog, so tagging the submit with it too counted each signup
-          twice and made the goal unreadable — it was neither opens nor
-          completions. Split, `EarlyAccess` is the top of the funnel and this is
-          the bottom, and the ratio between them is a real conversion rate.
-        -->
-        <button type="submit" class="btn plausible-event-name=EarlyAccess-Submit" :disabled="state === 'sending'">
+        <button type="submit" class="btn" :disabled="state === 'sending'">
           {{ state === 'sending' ? 'Adding you…' : 'Join the waiting list' }}
         </button>
       </div>
