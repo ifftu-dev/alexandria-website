@@ -1031,6 +1031,53 @@ svg { flex-shrink: 0; }
   letter-spacing: -0.01em;
 }
 
+/* The opening paragraph of a post carries a drop cap and a slightly larger
+   setting. It marks where the essay actually begins — the header above it is
+   metadata — and it is the one flourish the serif is asking for.
+
+   `initial-letter` is the correct property and Firefox still does not support
+   it, so the float is the implementation and the modern property is layered on
+   top for the browsers that have it. The cap is hidden below 600px, where a
+   three-line letter eats most of the column. */
+.article-lead > p:first-of-type {
+  font-size: 20.5px;
+  line-height: 1.62;
+}
+@media (min-width: 601px) {
+  .article-lead > p:first-of-type::first-letter {
+    float: inline-start;
+    font-size: 3.35em;
+    line-height: 0.84;
+    padding-inline-end: 0.09em;
+    margin-block-start: 0.06em;
+    font-weight: 300;
+    color: rgb(var(--color-primary));
+  }
+  @supports (initial-letter: 3) {
+    .article-lead > p:first-of-type::first-letter {
+      float: none;
+      font-size: inherit;
+      line-height: inherit;
+      margin-block-start: 0;
+      initial-letter: 3;
+      padding-inline-end: 0.12em;
+    }
+  }
+}
+
+/* A section heading gets a short rule above it rather than only whitespace, so
+   the scroll gives some sense of structure at a glance. */
+.article h2::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2px;
+  margin-bottom: 18px;
+  border-radius: 2px;
+  background: var(--grad-surface);
+}
+.article > :first-child::before { content: none; }
+
 .article ul, .article ol { margin: 0 0 22px; padding-inline-start: 26px; list-style: revert; }
 .article li { margin-bottom: 10px; }
 .article li::marker { color: rgb(var(--color-muted-foreground)); }

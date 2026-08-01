@@ -12,6 +12,11 @@ import MarkdownIt from 'markdown-it'
  * lot of machinery to carry.
  */
 
+export interface Heading {
+  id: string
+  text: string
+}
+
 export interface Post {
   slug: string
   title: string
@@ -22,6 +27,11 @@ export interface Post {
   kind: string
   description: string
   html: string
+  /** Section headings, for the contents rail on a long post. */
+  headings: Heading[]
+  /** Rough minutes, from the body — a stated figure that can drift is worse
+   *  than none, so this is computed rather than typed into frontmatter. */
+  minutes: number
 }
 
 const md = new MarkdownIt({
@@ -29,6 +39,10 @@ const md = new MarkdownIt({
   linkify: true,
   typographer: true,
 })
+
+function slugify(text: string): string {
+  return text.toLowerCase().replace(/[^\w\s-]/g, '').trim().replace(/\s+/g, '-')
+}
 
 // External links open away from the site and must not hand it the opener.
 const defaultLinkOpen = md.renderer.rules.link_open
@@ -68,7 +82,22 @@ const files: Record<string, string> = import.meta.glob('~/content/blog/*.md', { 
 
 const all: Post[] = Object.entries(files).map(([path, raw]) => {
   const { data, body } = parse(raw)
+
+  const headings: Heading[] = []
+  let html = md.render(body)
+  // Give every h2 an id and collect it in document order.
+  html = html.replace(/<h2>(.*?)<\/h2>/g, (_m, inner: string) => {
+    const text = inner.replace(/<[^>]+>/g, '')
+    const id = slugify(text)
+    headings.push({ id, text })
+    return `<h2 id="${id}">${inner}</h2>`
+  })
+
+  const words = body.replace(/[#>*`_\[\]()]/g, ' ').split(/\s+/).filter(Boolean).length
+
   return {
+    headings,
+    minutes: Math.max(1, Math.round(words / 220)),
     slug: path.split('/').pop()!.replace(/\.md$/, ''),
     title: data.title ?? 'Untitled',
     standfirst: data.standfirst ?? '',
@@ -77,7 +106,7 @@ const all: Post[] = Object.entries(files).map(([path, raw]) => {
     readingTime: data.readingTime ?? '',
     kind: data.kind ?? 'Post',
     description: data.description ?? data.standfirst ?? '',
-    html: md.render(body),
+    html,
   }
 // Newest first.
 }).sort((a, b) => b.date.localeCompare(a.date))
