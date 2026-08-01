@@ -104,6 +104,30 @@ test.describe('Plausible goals', () => {
     await expect.poll(() => custom(events)).toContain('EarlyAccess')
   })
 
+  test('EarlyAccess-Submit fires on submit, and EarlyAccess does not fire twice', async ({ page }) => {
+    // The regression this exists for: the submit button used to carry
+    // `EarlyAccess` as well, so one signup recorded two of them and the goal
+    // measured neither opens nor completions. Opening must count exactly once,
+    // and finishing must be its own event.
+    const events = await captureEvents(page)
+    // Stub the endpoint — this test is about what leaves the page, and a real
+    // POST would write a contact to Plunk on every run.
+    await page.route('**/api/early-access', route => route.fulfill({
+      status: 200, contentType: 'application/json', body: '{"ok":true,"isNew":false}',
+    }))
+
+    await gotoReady(page, '/learners')
+    await page.locator('.hero-cta button.plausible-event-name\\=EarlyAccess').click()
+
+    const form = page.locator('dialog[open]')
+    await expect(form).toBeVisible()
+    await form.locator('input[type="email"]').fill('e2e@example.com')
+    await form.locator('button[type="submit"]').first().click()
+
+    await expect.poll(() => custom(events)).toContain('EarlyAccess-Submit')
+    expect(custom(events).filter(e => e === 'EarlyAccess')).toHaveLength(1)
+  })
+
   test('Announcement fires from the toast', async ({ page }) => {
     const events = await captureEvents(page)
     await gotoReady(page, '/')

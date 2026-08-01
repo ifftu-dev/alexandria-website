@@ -172,7 +172,14 @@ async function submit() {
           @focus="expanded = true"
           @input="expanded = true"
         >
-        <button type="submit" class="btn plausible-event-name=EarlyAccess" :disabled="state === 'sending'">
+        <!--
+          Deliberately NOT `EarlyAccess`. Every CTA on the site fires that one to
+          open this dialog, so tagging the submit with it too counted each signup
+          twice and made the goal unreadable — it was neither opens nor
+          completions. Split, `EarlyAccess` is the top of the funnel and this is
+          the bottom, and the ratio between them is a real conversion rate.
+        -->
+        <button type="submit" class="btn plausible-event-name=EarlyAccess-Submit" :disabled="state === 'sending'">
           {{ state === 'sending' ? 'Adding you…' : 'Join the waiting list' }}
         </button>
       </div>

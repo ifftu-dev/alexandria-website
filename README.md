@@ -331,7 +331,8 @@ targets in the 40px sense and bury the standalone controls that are. It also use
 
 | Goal | Fired by |
 | :--- | :--- |
-| `EarlyAccess` | Every trigger that opens the waiting-list dialog: the hero and CTA-band buttons, and the nav, drawer and footer entries |
+| `EarlyAccess` | Every trigger that **opens** the waiting-list dialog: the hero and CTA-band buttons, the blog post footer, and the nav, drawer and footer entries |
+| `EarlyAccess-Submit` | The waiting-list form's own submit button — the **completion**. Kept separate on purpose: the submit once carried `EarlyAccess` too, so a single signup recorded two of them and the goal measured neither opens nor completions. Split, the ratio between the two is a real conversion rate |
 | `Nav-Recruiter` / `Nav-Institutions` / `Nav-Learners` | Audience links in the nav, drawer, footer and cross-page links |
 | `Nav-Recognition` / `Nav-Technology` | `/why-recognition` and `/technology` |
 | `Nav-Verify` / `Nav-Pilots` | `/verify` and `/pilots` |
