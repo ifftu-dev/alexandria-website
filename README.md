@@ -331,14 +331,23 @@ targets in the 40px sense and bury the standalone controls that are. It also use
 
 | Goal | Fired by |
 | :--- | :--- |
-| `EarlyAccess` | Every trigger that opens the waiting-list dialog: the hero and CTA-band buttons, and the nav, drawer and footer entries |
+| `EarlyAccess` | Every trigger that **opens** the waiting-list dialog: the hero and CTA-band buttons, the blog post footer, and the nav, drawer and footer entries |
+| `EarlyAccess-Submit` | The waiting-list **`<form>` element** — the **completion**. Kept separate on purpose: the submit once carried `EarlyAccess` too, so a single signup recorded two of them and the goal measured neither opens nor completions. Split, the ratio between the two is a real conversion rate |
 | `Nav-Recruiter` / `Nav-Institutions` / `Nav-Learners` | Audience links in the nav, drawer, footer and cross-page links |
 | `Nav-Recognition` / `Nav-Technology` | `/why-recognition` and `/technology` |
 | `Nav-Verify` / `Nav-Pilots` | `/verify` and `/pilots` |
-| `Enquiry` | `EnquiryForm` submit, on `/pilots`, `/employers`, `/institutions` and `/partners` |
+| `Enquiry` | The `EnquiryForm` **`<form>` element**, on `/pilots`, `/employers`, `/institutions` and `/partners` |
 | `CTA-GitHub` | Every "view the source" / "request a demo" / GitHub link |
 | `Announcement` | The dismissible banner link |
 | `404` | `error.vue`, when `error.statusCode === 404` |
+
+> **Tag a form conversion on the `<form>`, never on the submit button.** Plausible's
+> click handler walks up from the clicked element and returns as soon as it meets a
+> `form`, so a goal class on a control inside one fires nothing — silently, with no
+> error and no entry in the dashboard. Form submissions are read by a separate
+> `submit` listener that inspects the form's own classes. `@submit.prevent` is fine:
+> it stops the navigation, not the event, which still bubbles to that listener.
+> `tests/e2e/plausible.spec.ts` asserts no goal class is buried inside a form.
 
 > **A goal records nothing until it exists in Plausible.** The class only tags the
 > event; an unregistered goal is received and discarded, so the funnel looks empty

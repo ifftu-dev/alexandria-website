@@ -31,6 +31,7 @@ fi
 # has history.
 GOALS=(
   EarlyAccess
+  EarlyAccess-Submit
   Enquiry
   Nav-Learners
   Nav-Recruiter

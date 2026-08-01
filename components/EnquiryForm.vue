@@ -97,7 +97,15 @@ async function submit() {
 
 <template>
   <div class="eq" :class="`eq-${props.variant}`">
-    <form v-if="state !== 'done'" @submit.prevent="submit">
+    <!--
+      Tagged on the form, not the button. Plausible's click handler returns as
+      soon as it walks up into a `form`, so a goal class on a control inside one
+      fires nothing at all — this goal recorded zero conversions for as long as it
+      sat on the submit. Form conversions are read by a separate `submit`
+      listener that looks at the form's own classes; see EarlyAccessForm.vue for
+      the relevant few lines of their script.
+    -->
+    <form v-if="state !== 'done'" class="plausible-event-name=Enquiry" @submit.prevent="submit">
       <p class="eq-bot">
         <label>Leave this field empty<input v-model="botField" name="bot-field" tabindex="-1" autocomplete="off"></label>
       </p>
@@ -128,7 +136,7 @@ async function submit() {
         <textarea v-model="context" rows="3" placeholder="Optional. A sentence is plenty." />
       </label>
 
-      <button type="submit" class="btn plausible-event-name=Enquiry" :disabled="state === 'sending'">
+      <button type="submit" class="btn eq-submit" :disabled="state === 'sending'">
         {{ state === 'sending' ? 'Sending…' : 'Start the conversation' }}
       </button>
       <p class="eq-note" :class="{ 'eq-err': state === 'error' }" role="status" aria-live="polite">

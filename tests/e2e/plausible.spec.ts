@@ -104,6 +104,85 @@ test.describe('Plausible goals', () => {
     await expect.poll(() => custom(events)).toContain('EarlyAccess')
   })
 
+  test('EarlyAccess-Submit fires on submit, and EarlyAccess does not fire twice', async ({ page }) => {
+    // Two regressions in one. The submit used to carry `EarlyAccess` as well, so
+    // one signup recorded two of them and the goal measured neither opens nor
+    // completions. And it was tagged on the button, inside the form, where
+    // Plausible never fires it at all — see the structural test below.
+    const events = await captureEvents(page)
+    // Stub the endpoint — this test is about what leaves the page, and a real
+    // POST would write a contact to Plunk on every run.
+    await page.route('**/api/early-access', route => route.fulfill({
+      status: 200, contentType: 'application/json', body: '{"ok":true,"isNew":false}',
+    }))
+
+    await gotoReady(page, '/learners')
+    await page.locator('.hero-cta button.plausible-event-name\\=EarlyAccess').click()
+
+    const form = page.locator('dialog[open] form')
+    await expect(form).toBeVisible()
+    await form.locator('input[type="email"]').fill('e2e@example.com')
+    await form.locator('button[type="submit"]').click()
+
+    await expect.poll(() => custom(events)).toContain('EarlyAccess-Submit')
+    expect(custom(events).filter(e => e === 'EarlyAccess')).toHaveLength(1)
+  })
+
+  test('Enquiry fires when an enquiry is submitted', async ({ page }) => {
+    // This goal recorded nothing at all for as long as it sat on the submit
+    // button, and nothing here caught it: the Plunk suite asserts the POST body,
+    // and the coverage check below only looks at links.
+    const events = await captureEvents(page)
+    await page.route('**/api/pilot', route => route.fulfill({
+      status: 200, contentType: 'application/json', body: '{"ok":true}',
+    }))
+
+    await gotoReady(page, '/pilots')
+    const form = page.locator('form.plausible-event-name\\=Enquiry')
+    await form.locator('input[type="email"]').fill('e2e@example.com')
+    await form.locator('input[autocomplete="organization"]').fill('E2E Org')
+    await form.locator('button[type="submit"]').click()
+
+    await expect.poll(() => custom(events)).toContain('Enquiry')
+  })
+
+  test('no goal class sits inside a form, where it can never fire', async ({ page }) => {
+    /**
+     * The structural rule behind the two tests above, checked everywhere at once.
+     *
+     * Plausible's click handler walks up from the clicked element and returns the
+     * moment it meets a `form`:
+     *
+     *   for (i = e.target, a = 0; a <= 3 && i; a++) {
+     *     if (i.tagName && "form" === i.tagName.toLowerCase()) return
+     *     ...
+     *   }
+     *
+     * Conversions on a form are read instead by a `submit` listener that looks at
+     * the form's own classes. So a goal class on a control inside a form is not
+     * merely redundant — it fires nothing, reports no error, and leaves a funnel
+     * that looks like nobody ever converted.
+     */
+    const pages = ['/', '/learners', '/employers', '/institutions', '/pilots', '/partners',
+      '/technology', '/why-recognition', '/verify', '/blog']
+
+    const buried: string[] = []
+    for (const path of pages) {
+      await page.goto(path)
+      const found = await page.evaluate(() => {
+        const bad: string[] = []
+        for (const el of Array.from(document.querySelectorAll('[class*="plausible-event-name"]'))) {
+          if (el.tagName.toLowerCase() === 'form') continue
+          if (el.closest('form')) bad.push(`<${el.tagName.toLowerCase()}> ${el.className}`)
+        }
+        return bad
+      })
+      buried.push(...found.map(f => `${path}: ${f}`))
+    }
+    expect(buried, `goal classes inside a form (move them to the <form>):\n${buried.join('\n')}`)
+      .toEqual([])
+  })
+
   test('Announcement fires from the toast', async ({ page }) => {
     const events = await captureEvents(page)
     await gotoReady(page, '/')
