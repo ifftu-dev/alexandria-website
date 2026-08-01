@@ -4,8 +4,8 @@ import { expect, test } from '@playwright/test'
 /**
  * Every analytics goal, from the element that fires it.
  *
- * Two things about Plausible make this test look stranger than it is, and both
- * cost an afternoon to discover:
+ * Three things about Plausible make this test look stranger than it is, and all
+ * three cost an afternoon to discover:
  *
  *  1. Its script ignores events when `navigator.webdriver` is true. Any
  *     automated run records nothing and reports no error. `window.__plausible`
@@ -13,10 +13,24 @@ import { expect, test } from '@playwright/test'
  *     script loads.
  *  2. It also refuses to send from localhost, and that check is NOT bypassed by
  *     the same flag. So this suite only means anything against a deployed site.
+ *  3. Plausible then discards headless traffic AGAIN, server-side, and answers
+ *     `202 ok` while doing it. Spoofing `navigator.userAgent` does not help —
+ *     the browser still advertises HeadlessChrome in its `Sec-CH-UA` headers,
+ *     which is what reaches the server.
+ *
+ * That last one is why these tests assert on the outbound request rather than on
+ * anything downstream. **A 202 from Plausible means "received", not "recorded".**
+ * An unregistered goal, a headless user agent, a shielded IP and a data-centre
+ * IP are all answered `202` and then dropped, so no response-level check can tell
+ * a working goal from a dead one. The dashboard is the only place that can, and
+ * a headless run never reaches it — verifying a goal by eye therefore needs a
+ * genuinely headed browser (`chromium.launch({ headless: false })`), which is not
+ * something CI can do meaningfully.
  *
  * Requests to /api/event are captured and then ABORTED. The point is to prove
  * the right event name leaves the page, not to write test conversions into a
- * real dashboard — a test that pollutes the data it verifies is worse than none.
+ * real dashboard — a test that pollutes the data it verifies is worse than none,
+ * and analytics events cannot be deleted once recorded.
  *
  * `engagement` and `pageview` are Plausible's own automatic events and are
  * filtered out everywhere below.
