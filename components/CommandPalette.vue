@@ -26,6 +26,10 @@ interface Command {
   name: string
   hint: string
   run: () => void
+  /** Extra text matched against, but not shown — a post's standfirst. */
+  keywords?: string
+  /** Grouping label, so a long result list still reads as a list of things. */
+  group?: string
   /** A deadpan answer shown in place of navigating. */
   answer?: string
 }
@@ -35,6 +39,25 @@ const query = ref('')
 const cursor = ref(0)
 const answer = ref('')
 const input = ref<HTMLInputElement | null>(null)
+
+/**
+ * Posts are part of the palette, not a separate search. Someone who half
+ * remembers a phrase from the announcement should find it in the same place they
+ * look for everything else.
+ */
+const posts = usePosts()
+
+const POST_COMMANDS: Command[] = [
+  { name: 'Read the blog', hint: '/blog', run: () => go('/blog') },
+  ...posts.map(post => ({
+    name: post.title,
+    hint: formatDate(post.date),
+    // Section headings too, so half remembering "how this compares" finds it.
+    keywords: `${post.standfirst} ${post.kind} ${post.headings.map(h => h.text).join(' ')} blog post article writing`,
+    group: 'Blog',
+    run: () => go(`/blog/${post.slug}`),
+  })),
+]
 
 const COMMANDS: Command[] = [
   { name: 'Join the waiting list', hint: 'waitlist', run: () => { close(); waitlist.open() } },
@@ -69,10 +92,14 @@ const COMMANDS: Command[] = [
   },
 ]
 
+const ALL: Command[] = [...COMMANDS, ...POST_COMMANDS]
+
 const results = computed(() => {
   const q = query.value.trim().toLowerCase()
-  if (!q) return COMMANDS
-  return COMMANDS.filter(c => `${c.name} ${c.hint}`.toLowerCase().includes(q))
+  if (!q) return ALL
+  // Keywords are matched but never shown, so a post is findable by a line from
+  // its standfirst without the row turning into a paragraph.
+  return ALL.filter(c => `${c.name} ${c.hint} ${c.keywords ?? ''}`.toLowerCase().includes(q))
 })
 
 watch(results, () => { cursor.value = 0 })
@@ -168,7 +195,10 @@ defineExpose({ openPalette })
                 @mouseenter="cursor = i"
                 @click="runAt(i)"
               >
-                <span>{{ c.name }}</span>
+                <span class="cmdk-name">
+                  <span v-if="c.group" class="cmdk-group">{{ c.group }}</span>
+                  {{ c.name }}
+                </span>
                 <span class="cmdk-hint">{{ c.hint }}</span>
               </button>
             </li>
@@ -241,6 +271,18 @@ kbd {
   text-align: start;
 }
 .cmdk-list button.on { background: rgb(var(--color-primary) / 0.12); }
+.cmdk-name { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.cmdk-group {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgb(var(--color-primary) / 0.12);
+  color: rgb(var(--color-primary));
+}
 .cmdk-hint { font-family: var(--font-mono); font-size: 11.5px; color: rgb(var(--color-muted-foreground)); flex: none; }
 
 .cmdk-none { margin: 0; padding: 20px 17px; font-size: 14px; color: rgb(var(--color-muted-foreground)); }

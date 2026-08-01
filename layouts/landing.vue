@@ -10,8 +10,13 @@ function closeMobileMenu() { mobileMenuOpen.value = false }
 const waitlist = useWaitlist()
 const palette = ref<{ openPalette: () => void } | null>(null)
 
+const ANNOUNCEMENT_POST = '/blog/introducing-alexandria'
 const ANNOUNCEMENT_DISMISS_KEY = 'alexandria-announcement-dismissed'
-const showToast = ref(false)
+const armed = ref(false)
+const route = useRoute()
+// Inviting someone to read the post they are currently reading is noise, and it
+// sits on top of the text while they do it.
+const showToast = computed(() => armed.value && route.path.replace(/\/$/, '') !== ANNOUNCEMENT_POST)
 
 onMounted(() => {
   // The dismissal flag is deliberately NOT consulted. The announcement is the
@@ -22,11 +27,11 @@ onMounted(() => {
   //
   // The write below is kept so the preference is there to honour the day we
   // decide to, and so the key does not have to be reintroduced from scratch.
-  setTimeout(() => { showToast.value = true }, 1400)
+  setTimeout(() => { armed.value = true }, 1400)
 })
 
 function dismissToast() {
-  showToast.value = false
+  armed.value = false
   localStorage.setItem(ANNOUNCEMENT_DISMISS_KEY, '1')
 }
 
@@ -126,7 +131,7 @@ const year = new Date().getFullYear()
       <Transition name="toast">
         <aside v-if="showToast" class="toast" aria-label="Announcement">
           <NuxtLink
-            to="/blog/introducing-alexandria"
+            :to="ANNOUNCEMENT_POST"
             class="plausible-event-name=Announcement toast-link"
             @click="dismissToast"
           >
