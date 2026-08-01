@@ -160,7 +160,7 @@ const practice = [
         </div>
         <div>
           <p class="pv-c-k">How the design works</p>
-          <p><NuxtLink to="/technology">Technology ›</NuxtLink></p>
+          <p><NuxtLink to="/technology" class="plausible-event-name=Nav-Technology">Technology ›</NuxtLink></p>
           <p class="pv-c-s">Identity, sync and integrity, in detail.</p>
         </div>
       </div>

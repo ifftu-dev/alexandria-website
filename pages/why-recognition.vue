@@ -287,7 +287,7 @@ const method = [
       </dl>
       <p class="w-close">
         Open source, open data, open method. Anyone can check our claims — including you, and
-        including <NuxtLink to="/verify">the credential itself</NuxtLink>.
+        including <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify">the credential itself</NuxtLink>.
       </p>
     </section>
 
@@ -320,7 +320,7 @@ const method = [
             <button type="button" class="btn plausible-event-name=EarlyAccess" @click="waitlist.open()">
               Join the waiting list
             </button>
-            <NuxtLink to="/verify" class="btn-ghost btn-solid">Check a credential</NuxtLink>
+            <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify btn-ghost btn-solid">Check a credential</NuxtLink>
           </div>
         </div>
       </div>

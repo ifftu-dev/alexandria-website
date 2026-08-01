@@ -205,7 +205,7 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
           either way — that is what makes a credential portable.
         </p>
         <p class="v-note">
-          <NuxtLink to="/technology">The credential format and how it is signed</NuxtLink> if you would rather
+          <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology">The credential format and how it is signed</NuxtLink> if you would rather
           read the implementation than trust this page.
         </p>
       </div>

@@ -280,7 +280,7 @@ const featuresOpen = ref(false)
         </div>
         <div class="gap-foot">
           <p class="gap-src">{{ SOURCES.bgi2024!.line }} {{ SOURCES.census2022!.line }}</p>
-          <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence chev">
+          <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Recognition chev">
             Read the evidence in full <i>›</i>
           </NuxtLink>
         </div>
@@ -308,7 +308,7 @@ const featuresOpen = ref(false)
         </article>
       </div>
       <p class="prob-more">
-        <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence chev">
+        <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Recognition chev">
           The research behind this, and what we cannot prove <i>›</i>
         </NuxtLink>
       </p>
@@ -702,7 +702,7 @@ const featuresOpen = ref(false)
       <p class="state-close">
         Two claims underpin the whole project and neither has evidence behind it: that employers
         will pay for verified skill, and that a credential like this earns real recognition.
-        <NuxtLink to="/why-recognition">Both are written down, with what would change our minds</NuxtLink>.
+        <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Recognition">Both are written down, with what would change our minds</NuxtLink>.
       </p>
     </section>
 
@@ -714,7 +714,7 @@ const featuresOpen = ref(false)
         <NuxtLink to="/verify" class="trust-item plausible-event-name=Nav-Verify">
           <b>Verify a credential</b><span>Checked in your browser, no account</span>
         </NuxtLink>
-        <NuxtLink to="/technology" class="trust-item">
+        <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology trust-item">
           <b>Read the format</b><span>The stack and credential scheme, named</span>
         </NuxtLink>
         <NuxtLink to="/trust" class="trust-item">

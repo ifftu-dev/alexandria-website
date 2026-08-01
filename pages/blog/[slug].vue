@@ -71,7 +71,7 @@ useHead({
       <div class="pad article" v-html="html" />
 
       <footer class="pad art-foot">
-        <NuxtLink to="/blog" class="chev">All posts <i>‹</i></NuxtLink>
+        <NuxtLink to="/blog" class="plausible-event-name=Nav-Blog chev">All posts <i>‹</i></NuxtLink>
         <button type="button" class="btn plausible-event-name=EarlyAccess" @click="useWaitlist().open()">
           Join the waiting list
         </button>

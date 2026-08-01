@@ -74,7 +74,7 @@ const dataFacts = [
       </dl>
       <p class="p-sub" style="margin-top: 20px">
         The full policy for this website is on the <NuxtLink to="/privacy">privacy page</NuxtLink>.
-        The implementation is in <NuxtLink to="/technology">the technology page</NuxtLink>.
+        The implementation is in <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology">the technology page</NuxtLink>.
       </p>
     </section>
 

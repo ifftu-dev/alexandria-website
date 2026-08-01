@@ -128,7 +128,7 @@ const platforms = [
               A hash of the evidence is also intended to be anchored on-chain, so a credential’s
               existence and timing can be proven independently of us. That part is in development —
               a credential stands on its signature without it, which is why
-              <NuxtLink to="/verify">the verifier on this site</NuxtLink> reports the anchor check as
+              <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify">the verifier on this site</NuxtLink> reports the anchor check as
               skipped rather than passed.
             </p>
           </div>
@@ -301,7 +301,7 @@ const platforms = [
       </p>
       <div class="hero-cta">
         <a :href="GITHUB" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub btn">Read the source</a>
-        <NuxtLink to="/verify" class="btn-ghost btn-solid">Verify a credential</NuxtLink>
+        <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify btn-ghost btn-solid">Verify a credential</NuxtLink>
       </div>
     </section>
   </div>

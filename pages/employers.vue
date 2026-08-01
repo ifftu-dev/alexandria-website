@@ -76,7 +76,7 @@ const packages = [
         </p>
         <div class="hero-cta">
           <a href="#talk" class="btn btn-lg">Become a design partner</a>
-          <NuxtLink to="/verify" class="btn-ghost">How verification works</NuxtLink>
+          <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify btn-ghost">How verification works</NuxtLink>
         </div>
         <p class="e-prenote">
           Pre-launch. We are looking for a small number of employers to build this with, not to sell
@@ -96,7 +96,7 @@ const packages = [
         </div>
         <div class="gap-foot">
           <p class="gap-src">{{ SOURCES.bgi2024!.line }}</p>
-          <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Evidence chev">
+          <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Recognition chev">
             Read the evidence in full <i>›</i>
           </NuxtLink>
         </div>
@@ -203,7 +203,7 @@ const packages = [
           </p>
           <p>
             Everything is open source, so you can read the whole thing before you reply —
-            <NuxtLink to="/technology">how it works</NuxtLink> is written down in detail.
+            <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology">how it works</NuxtLink> is written down in detail.
           </p>
         </div>
         <div class="e-form"><EnquiryForm audience="employer" /></div>
