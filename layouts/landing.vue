@@ -10,6 +10,10 @@ function closeMobileMenu() { mobileMenuOpen.value = false }
 const waitlist = useWaitlist()
 const palette = ref<{ openPalette: () => void } | null>(null)
 
+// The palette is the most enjoyable thing here and the least discoverable —
+// nobody presses `/` on a marketing page. The button pulses until it is used.
+const searchPing = useSearchPing()
+
 const ANNOUNCEMENT_POST = '/blog/introducing-alexandria'
 const ANNOUNCEMENT_DISMISS_KEY = 'alexandria-announcement-dismissed'
 const armed = ref(false)
@@ -28,6 +32,7 @@ onMounted(() => {
   // The write below is kept so the preference is there to honour the day we
   // decide to, and so the key does not have to be reintroduced from scratch.
   setTimeout(() => { armed.value = true }, 1400)
+  searchPing.arm()
 })
 
 function dismissToast() {
@@ -51,16 +56,37 @@ const year = new Date().getFullYear()
           <span>Alexandria</span>
         </NuxtLink>
 
+        <!--
+          Ordered by axis: the argument, then who it is for, then our voice.
+
+          It used to run Why recognition / Technology / Blog / Employers /
+          Institutions — two audiences with the third missing and the blog wedged
+          between the argument and the audiences. Someone scanning that sees a
+          product for organisations, on a site whose whole thesis is that it is
+          for learners.
+
+          Six items rather than a "who it's for" menu because there is room: the
+          row uses 784px of 1080 at the narrowest width this nav is shown at, and
+          hiding three links behind a disclosure to save space we have would cost
+          clicks for nothing.
+        -->
         <nav class="nav-links" aria-label="Main">
           <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Recognition">Why recognition</NuxtLink>
           <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology">Technology</NuxtLink>
-          <NuxtLink to="/blog" class="plausible-event-name=Nav-Blog">Blog</NuxtLink>
+          <NuxtLink to="/learners" class="plausible-event-name=Nav-Learners">Learners</NuxtLink>
           <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter link-recruiter">Employers</NuxtLink>
           <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution">Institutions</NuxtLink>
+          <NuxtLink to="/blog" class="plausible-event-name=Nav-Blog">Blog</NuxtLink>
         </nav>
 
         <div class="nav-right">
-          <button type="button" class="nav-search" aria-label="Search this site" @click="palette?.openPalette()">
+          <button
+            type="button"
+            class="nav-search"
+            :class="{ pinging: searchPing.pinging.value }"
+            aria-label="Search this site"
+            @click="palette?.openPalette()"
+          >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" />
             </svg>
@@ -92,6 +118,12 @@ const year = new Date().getFullYear()
               </button>
             </div>
             <div class="drawer-links">
+              <button type="button" class="drawer-search" @click="closeMobileMenu(); palette?.openPalette()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" />
+                </svg>
+                Search this site
+              </button>
               <NuxtLink to="/learners" class="plausible-event-name=Nav-Learners" @click="closeMobileMenu">For learners</NuxtLink>
               <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter link-recruiter" @click="closeMobileMenu">For employers</NuxtLink>
               <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution" @click="closeMobileMenu">For institutions</NuxtLink>
@@ -300,7 +332,7 @@ const year = new Date().getFullYear()
 /* The palette's only discoverability affordance — the brief is explicit that it
    has to exist, since a bare `/` shortcut is invisible. */
 .nav-search {
-  display: none; align-items: center; gap: 7px; min-height: 40px;
+  display: inline-flex; align-items: center; gap: 7px; min-height: 40px;
   padding: 9px 12px; border-radius: 999px; border: 0; cursor: pointer;
   font-family: inherit; font-size: 14px; font-weight: 600;
   background: transparent; color: rgb(var(--color-muted-foreground));
@@ -313,11 +345,62 @@ const year = new Date().getFullYear()
   border: 1px solid rgb(var(--color-border));
 }
 .nav-search:hover { color: rgb(var(--color-foreground)); background: rgb(var(--color-muted)); }
-@media (min-width: 1080px) { .nav-search { display: inline-flex; } }
+
+/* Below 1080 it becomes an icon the size of the burger beside it. It used to be
+   hidden outright, which left the palette unreachable on a phone — no `/` key to
+   press — and unreachable between 880 and 1080 as well, where the burger has not
+   appeared yet either. */
+@media (max-width: 1079px) {
+  .nav-search {
+    width: 40px; height: 40px; padding: 0;
+    justify-content: center; border-radius: 10px;
+  }
+  .nav-search span, .nav-search kbd { display: none; }
+}
+
+/* A ring that expands out of the button and fades, twice a cycle, until someone
+   opens the palette. Drawn on a pseudo-element so nothing in the button's own
+   box moves — a nav control that jitters is an irritation, not an invitation.
+   It is armed a few seconds after mount so it never competes with the hero. */
+.nav-search { position: relative; }
+.nav-search.pinging { color: rgb(var(--color-foreground)); }
+.nav-search.pinging::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1.5px solid rgb(var(--color-primary));
+  animation: navPing 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+.nav-search.pinging kbd {
+  border-color: rgb(var(--color-primary) / 0.55);
+  color: rgb(var(--color-primary));
+}
+@keyframes navPing {
+  0% { transform: scale(0.94); opacity: 0; }
+  10% { opacity: 0.9; }
+  62% { transform: scale(1.24); opacity: 0; }
+  100% { transform: scale(1.24); opacity: 0; }
+}
+
+/* Still worth marking as the thing to try, just without the pulse. */
+@media (prefers-reduced-motion: reduce) {
+  .nav-search.pinging::after { animation: none; opacity: 0.6; transform: none; }
+}
 
 
 /* The drawer and footer triggers were links and are buttons now, so they need
    the surrounding link styling restated rather than inherited. */
+/* Sits with the links rather than apart from them: on a phone the drawer is the
+   whole navigation, and search belongs in it. */
+.drawer-search {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; border: 0; background: transparent; cursor: pointer;
+  font-family: inherit; text-align: start;
+}
+.drawer-search svg { width: 17px; height: 17px; flex: none; opacity: 0.75; }
+
 .drawer-cta, .foot-cta {
   font: inherit;
   background: none;
@@ -359,11 +442,13 @@ const year = new Date().getFullYear()
 .drawer-head button:hover { background: rgb(var(--color-muted)); }
 .drawer-head svg { width: 18px; height: 18px; }
 .drawer-links { display: flex; flex-direction: column; gap: 2px; padding: 12px; flex: 1; }
-.drawer-links a {
+.drawer-links a,
+.drawer-links .drawer-search {
   padding: 11px 12px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none;
   color: rgb(var(--color-foreground)); transition: background 150ms ease;
 }
-.drawer-links a:hover { background: rgb(var(--color-muted)); }
+.drawer-links a:hover,
+.drawer-links .drawer-search:hover { background: rgb(var(--color-muted)); }
 .drawer-links a.router-link-active {
   background: rgb(var(--color-primary) / 0.12);
   font-weight: 700;
