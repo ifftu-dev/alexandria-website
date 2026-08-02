@@ -1,4 +1,8 @@
 <script setup lang="ts">
+// The two figures below are quoted, not asserted — `content/evidence.ts` is the
+// single source for both, and both carry `status: 'sourced'` there.
+import { RECOGNITION_GAP, SOURCES } from '~/content/evidence'
+
 definePageMeta({ layout: 'landing' })
 
 useHead({
@@ -20,6 +24,59 @@ useHead({
 
 const waitlist = useWaitlist()
 
+const noDegree = RECOGNITION_GAP.find(f => f.id === 'no-degree')!
+const oneIn700 = RECOGNITION_GAP.find(f => f.id === 'one-in-700')!
+
+/**
+ * The page used to open with four promises and then admit it was an alpha —
+ * a learner never found out what problem this solves for them, or how it works.
+ * Its two sibling audience pages both run problem → mechanism → what it costs →
+ * honesty; these two sections are the half that was missing.
+ */
+const problems = [
+  {
+    n: '01',
+    k: 'The gate',
+    t: 'A degree is still the shortest way to be taken seriously',
+    b: `And most people do not have one — ${noDegree.value} of American adults over 25 hold no bachelor's degree. The jobs that quietly assume one have not become fewer.`,
+  },
+  {
+    n: '02',
+    k: 'The promise',
+    t: 'Dropping degree requirements mostly did not happen',
+    b: `Employers announced it widely. Fewer than 1 in 700 new hires actually benefited. The announcements changed; the hiring did not.`,
+  },
+  {
+    n: '03',
+    k: 'The receipt',
+    t: 'What you did earn belongs to a platform',
+    b: 'A PDF or a profile on someone else\'s site. Nobody can check it without trusting them — and neither can you, once they shut down.',
+  },
+]
+
+const steps = [
+  {
+    n: '01',
+    title: 'Install it',
+    body: 'Download it on any device you own. Your account is created on the device itself: no email, no password to lose, nothing held by a company.',
+  },
+  {
+    n: '02',
+    title: 'Learn offline',
+    body: 'Courses download to your device. Study on a train, somewhere with no signal, on a laptop that has been offline for a week. Assessments run locally too.',
+  },
+  {
+    n: '03',
+    title: 'Earn the credential',
+    body: 'Finish an assessment and it is signed under a key that lives on your device. It is issued to you, not held for you.',
+  },
+  {
+    n: '04',
+    title: 'Prove it to anyone',
+    body: 'Share it with an employer or an institution, choosing how much evidence travels with it. They verify it without an Alexandria account, and without asking us.',
+  },
+]
+
 const promises = [
   {
     title: 'Free, and free in the way that matters',
@@ -33,7 +90,7 @@ const promises = [
   },
   {
     title: 'Works where the internet does not',
-    body: 'Courses download to your device and assessments run on it. Nine languages ship today, including Hindi, Bengali, Telugu, Marathi and Urdu, because access is the point.',
+    body: 'Courses download to your device and assessments run on it. Nine languages ship today, across three continents — and adding one is translation work, not engineering work, so the list is the beginning rather than the limit.',
     state: 'alpha' as const,
   },
   {
@@ -63,6 +120,51 @@ const promises = [
           <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify btn-ghost">See a credential verified</NuxtLink>
         </div>
       </div>
+    </section>
+
+    <!-- The problem, from the learner's side. Both figures are sourced in
+         content/evidence.ts and the source lines are printed under them. -->
+    <section class="section pad">
+      <p class="eyebrow">The problem</p>
+      <h2 class="h-sec">You can already learn almost anything. You still cannot prove any of it.</h2>
+      <p class="p-sub">
+        Every course you have finished lives inside someone else's account. The certificate is a page
+        on their website, it is true because they say it is, and it stops being true the day they
+        decide otherwise.
+      </p>
+      <div class="prob">
+        <article v-for="p in problems" :key="p.n" class="prob-card">
+          <p class="prob-n">{{ p.n }} / {{ p.k }}</p>
+          <h3>{{ p.t }}</h3>
+          <p>{{ p.b }}</p>
+        </article>
+      </div>
+      <p class="l-src">{{ SOURCES.census2022!.line }} {{ SOURCES.bgi2024!.line }}</p>
+      <p class="prob-more">
+        <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Recognition chev">
+          The full argument, with sources <i>›</i>
+        </NuxtLink>
+      </p>
+    </section>
+
+    <section class="section pad section-wash">
+      <p class="eyebrow">How it works</p>
+      <h2 class="h-sec">Install it, learn, and walk away with something that is yours.</h2>
+      <p class="p-sub">Four steps. None of them registers you with anyone.</p>
+
+      <ol class="flow">
+        <li v-for="step in steps" :key="step.n">
+          <span class="flow-n">{{ step.n }}</span>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.body }}</p>
+        </li>
+      </ol>
+
+      <p class="prob-more">
+        <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify chev">
+          See it from the other side <i>›</i>
+        </NuxtLink>
+      </p>
     </section>
 
     <section class="section pad">
@@ -109,6 +211,16 @@ const promises = [
 
 <style scoped>
 .h-sec { margin-bottom: 14px; }
+
+/* Source lines under the problem cards, matching the evidence band elsewhere. */
+.l-src {
+  margin: 22px 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.7;
+  color: rgb(var(--color-muted-foreground));
+  max-width: 88ch;
+}
 
 .l-grid { display: grid; gap: 16px; }
 @media (min-width: 800px) { .l-grid { grid-template-columns: 1fr 1fr; } }
