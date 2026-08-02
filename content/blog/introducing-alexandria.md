@@ -111,8 +111,8 @@ a company. Every one of these lesson types is itself a sandboxed, content-addres
 with a frozen, permanence-oriented interface, so the community can build new kinds of lesson
 without waiting on me. Lessons are stored and shared peer-to-peer between users' devices
 (think of it as BitTorrent for coursework), and the interface already runs in nine languages
-— including Hindi, Bengali, Telugu, Marathi, and Urdu — because the point is access for the
-people currently locked out. Every new install ships with a starter catalogue, so there's
+— English, Chinese, Spanish, French, Hindi, Urdu, Telugu, Marathi, and Bengali — because the
+point is access for the people currently locked out. Every new install ships with a starter catalogue, so there's
 something to learn on day one.
 
 **A living map of what there is to learn.** Every lesson, credential, and opinion is
