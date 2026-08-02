@@ -14,6 +14,48 @@ const palette = ref<{ openPalette: () => void } | null>(null)
 // nobody presses `/` on a marketing page. The button pulses until it is used.
 const searchPing = useSearchPing()
 
+/**
+ * The drawer, as data.
+ *
+ * It was a flat list of ten links whose rows did not share a left edge: the
+ * links carried padding from `.drawer-links a`, the waiting-list button
+ * inherited `padding: 0` from `.drawer-cta` (shared with the footer), and the
+ * search row's label was pushed right by its own icon. Three different left
+ * edges in one column.
+ *
+ * Every row now renders from the same template with the same icon slot, so the
+ * labels line up by construction rather than by three rules agreeing. Grouping
+ * mirrors the top nav's axis — who it is for, the argument, then what you can
+ * do — because the drawer IS the navigation on a phone.
+ */
+const DRAWER_GROUPS = [
+  {
+    title: 'Who it’s for',
+    items: [
+      { to: '/learners', label: 'For learners', cls: 'plausible-event-name=Nav-Learners', icon: 'M4.26 10.147a60.44 60.44 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.636 50.636 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342' },
+      { to: '/employers', label: 'For employers', cls: 'plausible-event-name=Nav-Recruiter link-recruiter', icon: 'M20.25 14.15v4.073a2.25 2.25 0 01-1.632 2.163l-1.32.377a12.06 12.06 0 01-6.596 0l-1.32-.377a2.25 2.25 0 01-1.632-2.163V14.15M16.5 6.478V6a2.25 2.25 0 00-2.25-2.25h-4.5A2.25 2.25 0 007.5 6v.478M3 8.25h18a.75.75 0 01.75.75v3.44a2.25 2.25 0 01-1.632 2.163l-4.5 1.286a12.06 12.06 0 01-6.636 0l-4.5-1.286A2.25 2.25 0 012.25 12.44V9A.75.75 0 013 8.25z' },
+      { to: '/institutions', label: 'For institutions', cls: 'plausible-event-name=Nav-Institutions link-institution', icon: 'M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21' },
+    ],
+  },
+  {
+    title: 'The argument',
+    items: [
+      { to: '/why-recognition', label: 'Why recognition', cls: 'plausible-event-name=Nav-Recognition', icon: 'M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z' },
+      { to: '/technology', label: 'Technology', cls: 'plausible-event-name=Nav-Technology', icon: 'M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z' },
+      { to: '/blog', label: 'Blog', cls: 'plausible-event-name=Nav-Blog', icon: 'M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z' },
+    ],
+  },
+  {
+    title: 'Take part',
+    items: [
+      { to: '/verify', label: 'Verify a credential', cls: 'plausible-event-name=Nav-Verify', icon: 'M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z' },
+      { to: '/pilots', label: 'Run a pilot', cls: 'plausible-event-name=Nav-Pilots', icon: 'M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5' },
+      { action: 'waitlist', label: 'Join the waiting list', cls: 'plausible-event-name=EarlyAccess', icon: 'M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75' },
+      { href: 'https://github.com/ifftu-dev/alexandria', label: 'Source code', cls: 'plausible-event-name=CTA-GitHub', icon: 'M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5' },
+    ],
+  },
+] as const
+
 const ANNOUNCEMENT_POST = '/blog/introducing-alexandria'
 const ANNOUNCEMENT_DISMISS_KEY = 'alexandria-announcement-dismissed'
 const armed = ref(false)
@@ -118,32 +160,56 @@ const year = new Date().getFullYear()
               </button>
             </div>
             <div class="drawer-links">
-              <button type="button" class="drawer-search" @click="closeMobileMenu(); palette?.openPalette()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <button type="button" class="drawer-row drawer-search" @click="closeMobileMenu(); palette?.openPalette()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" />
                 </svg>
-                Search this site
+                <span>Search this site</span>
+                <kbd>/</kbd>
               </button>
-              <NuxtLink to="/learners" class="plausible-event-name=Nav-Learners" @click="closeMobileMenu">For learners</NuxtLink>
-              <NuxtLink to="/employers" class="plausible-event-name=Nav-Recruiter link-recruiter" @click="closeMobileMenu">For employers</NuxtLink>
-              <NuxtLink to="/institutions" class="plausible-event-name=Nav-Institutions link-institution" @click="closeMobileMenu">For institutions</NuxtLink>
-              <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify" @click="closeMobileMenu">Verify a credential</NuxtLink>
-              <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Recognition" @click="closeMobileMenu">Why recognition</NuxtLink>
-              <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology" @click="closeMobileMenu">Technology</NuxtLink>
-              <NuxtLink to="/blog" class="plausible-event-name=Nav-Blog" @click="closeMobileMenu">Blog</NuxtLink>
-              <NuxtLink to="/pilots" class="plausible-event-name=Nav-Pilots" @click="closeMobileMenu">Run a pilot</NuxtLink>
-              <button
-                type="button"
-                class="plausible-event-name=EarlyAccess drawer-cta"
-                @click="closeMobileMenu(); waitlist.open()"
-              >Join the waiting list</button>
-              <a
-                href="https://github.com/ifftu-dev/alexandria"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="plausible-event-name=CTA-GitHub"
-                @click="closeMobileMenu"
-              >Source code</a>
+
+              <template v-for="group in DRAWER_GROUPS" :key="group.title">
+                <p class="drawer-group">{{ group.title }}</p>
+                <template v-for="item in group.items" :key="item.label">
+                  <NuxtLink
+                    v-if="'to' in item"
+                    :to="item.to"
+                    :class="['drawer-row', item.cls]"
+                    @click="closeMobileMenu"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" :d="item.icon" />
+                    </svg>
+                    <span>{{ item.label }}</span>
+                  </NuxtLink>
+
+                  <a
+                    v-else-if="'href' in item"
+                    :href="item.href"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    :class="['drawer-row', item.cls]"
+                    @click="closeMobileMenu"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" :d="item.icon" />
+                    </svg>
+                    <span>{{ item.label }}</span>
+                  </a>
+
+                  <button
+                    v-else
+                    type="button"
+                    :class="['drawer-row', item.cls]"
+                    @click="closeMobileMenu(); waitlist.open()"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" :d="item.icon" />
+                    </svg>
+                    <span>{{ item.label }}</span>
+                  </button>
+                </template>
+              </template>
             </div>
             <p class="drawer-foot">Knowledge must remain free.</p>
           </nav>
@@ -441,27 +507,82 @@ const year = new Date().getFullYear()
 }
 .drawer-head button:hover { background: rgb(var(--color-muted)); }
 .drawer-head svg { width: 18px; height: 18px; }
-.drawer-links { display: flex; flex-direction: column; gap: 2px; padding: 12px; flex: 1; }
-.drawer-links a,
-.drawer-links .drawer-search {
-  padding: 11px 12px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none;
-  color: rgb(var(--color-foreground)); transition: background 150ms ease;
+.drawer-links { display: flex; flex-direction: column; gap: 1px; padding: 10px; flex: 1; overflow-y: auto; }
+
+/* ONE rule for every row, whatever element it is. The previous version styled
+   links via `.drawer-links a`, left the waiting-list button on `.drawer-cta`'s
+   `padding: 0` (a rule shared with the footer), and let the search row's icon
+   push its label right — three different left edges in one column. A grid with a
+   fixed icon track means the labels align by construction. */
+.drawer-row {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: start;
+  text-decoration: none;
+  color: rgb(var(--color-foreground));
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
 }
-.drawer-links a:hover,
-.drawer-links .drawer-search:hover { background: rgb(var(--color-muted)); }
-.drawer-links a.router-link-active {
+.drawer-row svg { width: 18px; height: 18px; opacity: 0.55; }
+.drawer-row:hover { background: rgb(var(--color-muted)); }
+.drawer-row:hover svg { opacity: 0.9; }
+.drawer-row kbd {
+  font-family: var(--font-mono); font-size: 10.5px; line-height: 1;
+  padding: 3px 6px; border-radius: 5px;
+  border: 1px solid rgb(var(--color-border)); color: rgb(var(--color-muted-foreground));
+}
+
+/* The active marker is drawn on the border box rather than inserted inline —
+   an inline ::before shifted the label off the shared left edge, which is half
+   of what made the old column look crooked. */
+.drawer-row.router-link-active {
   background: rgb(var(--color-primary) / 0.12);
-  font-weight: 700;
+  color: rgb(var(--color-primary));
+  box-shadow: inset 3px 0 0 rgb(var(--color-primary));
 }
-.drawer-links a.router-link-active::before {
-  content: "";
-  display: inline-block;
-  width: 3px;
-  height: 14px;
-  border-radius: 2px;
-  background: currentColor;
-  margin-inline-end: 9px;
-  vertical-align: -2px;
+.drawer-row.router-link-active svg { opacity: 1; }
+
+/* Group headers. The drawer is the whole navigation on a phone, so it takes the
+   same axis as the top nav: who it is for, the argument, what you can do. */
+.drawer-group {
+  margin: 16px 0 4px;
+  padding-inline: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--color-muted-foreground));
+}
+.drawer-group:first-of-type { margin-top: 14px; }
+
+/* Rows arrive a beat after the panel, top to bottom. Cheap, and it makes the
+   drawer feel like it opened rather than appeared. */
+.drawer-links > * { animation: drawerRow 260ms cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+.drawer-links > :nth-child(1) { animation-delay: 60ms; }
+.drawer-links > :nth-child(2) { animation-delay: 85ms; }
+.drawer-links > :nth-child(3) { animation-delay: 100ms; }
+.drawer-links > :nth-child(4) { animation-delay: 115ms; }
+.drawer-links > :nth-child(5) { animation-delay: 130ms; }
+.drawer-links > :nth-child(6) { animation-delay: 145ms; }
+.drawer-links > :nth-child(7) { animation-delay: 160ms; }
+.drawer-links > :nth-child(8) { animation-delay: 175ms; }
+.drawer-links > :nth-child(n + 9) { animation-delay: 190ms; }
+@keyframes drawerRow {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .drawer-links > * { animation: none; }
 }
 .drawer-foot {
   margin: 0; padding: 16px 18px; border-top: 1px solid rgb(var(--color-border));
