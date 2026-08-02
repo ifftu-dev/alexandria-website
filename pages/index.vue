@@ -58,7 +58,7 @@ const features: Feature[] = [
     bullets: [
       'Courses with real, hands-on assessments',
       'Works offline — no internet required',
-      'Nine languages, including Hindi, Bengali and Telugu',
+      'Nine languages, from English and Chinese to Spanish, Hindi and Bengali',
     ],
   },
   {
@@ -185,7 +185,7 @@ const platforms = [
 const worksToday = [
   'Learning, assessment and credentials, in the alpha, on five platforms',
   'Credentials that verify with no account and no network — including on this site',
-  'Nine languages, among them Hindi, Bengali, Telugu, Marathi and Urdu',
+  'Nine languages on three continents — English, Chinese, Spanish, French, Hindi, Urdu, Telugu, Marathi and Bengali',
   'An MIT-licensed core, public and forkable today',
 ]
 

@@ -48,7 +48,7 @@ const features = [
   { t: 'Auditable integrity', b: 'Optional on-device integrity scoring with the reasoning attached to each result. No third-party proctoring vendor, no recordings leaving the student’s machine.', state: 'alpha' as const },
   { t: 'Live tutoring', b: 'Video, audio and screen-share peer to peer, so remote cohorts do not depend on a third-party conferencing contract.', state: 'alpha' as const },
   { t: 'Works where bandwidth doesn’t', b: 'Offline-first by design. Rural campuses and field programmes keep teaching through an outage and sync afterwards.', state: 'alpha' as const },
-  { t: 'Nine languages', b: 'Including Hindi, Bengali, Telugu, Marathi and Urdu at launch, on macOS, Windows, Linux, iOS and Android from one codebase.', state: 'alpha' as const },
+  { t: 'Nine languages', b: 'English, Chinese, Spanish, French, Hindi, Urdu, Telugu, Marathi and Bengali at launch, on macOS, Windows, Linux, iOS and Android from one codebase.', state: 'alpha' as const },
 ]
 
 const fits = [

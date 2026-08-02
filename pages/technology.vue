@@ -285,7 +285,9 @@ const platforms = [
       </div>
       <p class="t-panel-n t-wide">
         For live video tutoring on Android we recommend a device with 6 GB or more of RAM. Nine
-        languages at launch, including Hindi, Bengali, Telugu, Marathi and Urdu.
+        languages at launch — English, Chinese, Spanish, French, Hindi, Urdu, Telugu, Marathi and
+        Bengali. Eight of the nine are machine-drafted and awaiting a native speaker; the app says
+        so on the ones that are.
       </p>
     </section>
 
