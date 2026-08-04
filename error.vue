@@ -16,7 +16,7 @@ const isMissing = computed(() => props.error.statusCode === 404)
  * shipping a dull 404.
  *
  * The first line is the SSR default and every visitor sees it first; the rest are
- * swapped in on mount. Randomising during render would hydrate to different text
+ * swapped in on mount. Randomizing during render would hydrate to different text
  * than the server sent, which Vue rightly complains about — and a console warning
  * is a poor price for a joke.
  */
@@ -58,7 +58,7 @@ onMounted(() => {
       <!--
         The one thing a wrong URL definitely proves. It is a real shape — the same
         fields a genuine credential carries — signed by nobody, assessed by
-        nothing, and labelled as such. The joke only works because the product is
+        nothing, and labeled as such. The joke only works because the product is
         honest about exactly this distinction elsewhere.
       -->
       <div v-if="isMissing" class="err-cred">

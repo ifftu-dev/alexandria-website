@@ -80,7 +80,7 @@ const steps = [
 const promises = [
   {
     title: 'Free, and free in the way that matters',
-    body: 'Learning is free. Earning a credential is free. Proving it to someone is free. Those three are not the parts we intend to charge for — organisations pay for hosting, integrations and support, never a learner for their own proof.',
+    body: 'Learning is free. Earning a credential is free. Proving it to someone is free. Those three are not the parts we intend to charge for — organizations pay for hosting, integrations and support, never a learner for their own proof.',
     state: 'alpha' as const,
   },
   {
@@ -169,7 +169,7 @@ const promises = [
 
     <section class="section pad">
       <h2 class="h-sec">What you get, and what it costs</h2>
-      <p class="p-sub">Labelled, so you can tell what exists today from what is being built.</p>
+      <p class="p-sub">Labeled, so you can tell what exists today from what is being built.</p>
       <div class="l-grid">
         <div v-for="p in promises" :key="p.title" class="l-card">
           <div class="l-head"><h3>{{ p.title }}</h3><StatusChip :state="p.state" /></div>

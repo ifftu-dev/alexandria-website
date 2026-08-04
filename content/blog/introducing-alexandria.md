@@ -5,7 +5,7 @@ date: 2026-07-31
 author: Pratyush Pundir
 readingTime: 10 min read
 kind: Announcement
-description: Announcing and open-sourcing Alexandria — a desktop and mobile application that turns every device into a full node in a decentralised education network, with verifiable, learner-owned credentials.
+description: Announcing and open-sourcing Alexandria — a desktop and mobile application that turns every device into a full node in a decentralized education network, with verifiable, learner-owned credentials.
 ---
 
 I'm publicly announcing and open-sourcing
@@ -32,7 +32,7 @@ I keep coming back to one thought: education might be the only way out.
 
 Not education as it exists — expensive, gatekept, designed to sort people into hierarchies.
 But education as it could be: free, universal, verifiable, and owned by the people who earn
-it. If you could learn anything, prove what you know, and have that proof recognised
+it. If you could learn anything, prove what you know, and have that proof recognized
 anywhere in the world — without needing permission from an institution, without paying
 someone for a stamp on a piece of paper — the walls start to come down. The walls of money,
 scarcity, status, geography. The walls that keep billions of people locked out of
@@ -69,7 +69,7 @@ wall I'm trying to remove — a gatekeeper with an off switch.
 
 Alexandria runs on the devices of the people using it. No central servers hold the platform
 together; small relay servers help users find each other but have no authority over what
-passes through them. If Alexandria the organisation disappeared tomorrow, every learner's
+passes through them. If Alexandria the organization disappeared tomorrow, every learner's
 credentials would still verify, every course would still be reachable, and every reputation
 record would still stand.
 
@@ -82,8 +82,8 @@ approach leaves a different part of the problem unsolved.
 | :--- | :--- | :--- |
 | **MOOCs** (Coursera, edX, Udemy) | Structured courses, reputable brands, credible instructors | Certificates cost real money, are issued *by the platform*, and carry limited weight with employers outside that platform's own ecosystem |
 | **Free content** (Khan Academy, YouTube) | Truly free, globally reachable, no paywalls | No verifiable credential at all — the knowledge doesn't convert into recognition |
-| **University credentials** | Widely recognised, taken seriously by employers and governments | Expensive, geographically gated, slow, and controlled by institutions that can deny, revoke, lose records, or disappear |
-| **LinkedIn Learning, digital badges** | Convenient, employer-facing, easy to share | Centralised and proprietary — credentials live inside one company's walled garden and vanish if the account or the platform does |
+| **University credentials** | Widely recognized, taken seriously by employers and governments | Expensive, geographically gated, slow, and controlled by institutions that can deny, revoke, lose records, or disappear |
+| **LinkedIn Learning, digital badges** | Convenient, employer-facing, easy to share | Centralized and proprietary — credentials live inside one company's walled garden and vanish if the account or the platform does |
 
 Put together, the picture is clear. We have plenty of free *content*. We do not have free
 *recognition*. The credential — the thing that actually opens doors — still belongs to
@@ -112,7 +112,7 @@ with a frozen, permanence-oriented interface, so the community can build new kin
 without waiting on me. Lessons are stored and shared peer-to-peer between users' devices
 (think of it as BitTorrent for coursework), and the interface already runs in nine languages
 — English, Chinese, Spanish, French, Hindi, Urdu, Telugu, Marathi, and Bengali — because the
-point is access for the people currently locked out. Every new install ships with a starter catalogue, so there's
+point is access for the people currently locked out. Every new install ships with a starter catalog, so there's
 something to learn on day one.
 
 **A living map of what there is to learn.** Every lesson, credential, and opinion is
@@ -149,12 +149,12 @@ flattening it into one score.
 **Honest assessments.** A local integrity layer called Sentinel watches for cheating during
 assessments, the way your browser watches for suspicious logins. All the analysis happens on
 your device; only a final integrity score ever leaves it. Your keystrokes, camera feed, and
-behaviour never touch a server.
+behavior never touch a server.
 
 **Governance that follows expertise, not money.** Every branch of the skill graph has a
 corresponding DAO, and voting power in that DAO comes from *demonstrated proficiency in the
 skills it governs* — not stake, not seniority, not how long you've been around. If you've
-proven you can analyse a topic, you're qualified to vote on decisions about how it's taught
+proven you can analyze a topic, you're qualified to vote on decisions about how it's taught
 and assessed in that domain. Proposals move through draft, committee review, and public
 vote, with supermajority thresholds and minimum proficiency bars set per proposal. Elections
 run on fixed cadences — annual for sub-DAOs, every four years for the top-level ones. These
@@ -203,7 +203,7 @@ them. A security audit in February surfaced 32 findings; as of the March remedia
 
 What still needs work: UI/UX sucks; my thoughts on the instructor economy feel incomplete;
 there's no content moderation yet (any peer can publish anything, and while the network
-penalises bad behaviour, there's no mechanism for reporting objectionable content); frontend
+penalizes bad behavior, there's no mechanism for reporting objectionable content); frontend
 test coverage is thin; and the long-term sustainability model — how the non-profit funds
 itself without compromising the platform — needs more depth. *And a lot more I can't even
 think of yet probably…*
@@ -226,8 +226,8 @@ could use adversarial testing at scale.
 **If you're a cryptographer or security researcher:** The on-device credential vault, the
 identity system, and the Sentinel integrity layer all need independent review.
 
-**If you work in policy or workforce development:** How would governments actually recognise
-credentials like these? What regulatory frameworks apply to a decentralised education
+**If you work in policy or workforce development:** How would governments actually recognize
+credentials like these? What regulatory frameworks apply to a decentralized education
 platform?
 
 **If you're a designer:** The UI has a refined editorial design system, but real UX testing

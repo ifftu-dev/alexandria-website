@@ -388,7 +388,7 @@ onUnmounted(() => {
           <p class="greet-sub">Tracked against the public skill map, not a streak counter</p>
           <div class="card goal">
             <span class="ring" style="--p:58"><span>58%</span></span>
-            <span><span class="goal-t">Become an Engineering Manager</span><span class="goal-m">System design at Apply · 2 mentoring attestations short of Analyse</span></span>
+            <span><span class="goal-t">Become an Engineering Manager</span><span class="goal-m">System design at Apply · 2 mentoring attestations short of Analyze</span></span>
           </div>
           <div class="card goal">
             <span class="ring" style="--p:41"><span>41%</span></span>
@@ -431,7 +431,7 @@ onUnmounted(() => {
 
           <div class="sec-h"><b>This session</b><button type="button" @click="go('skills')">Open skill</button></div>
           <div class="card agenda">
-            <span class="ag-row"><b>Reviewing</b>systems.design.tradeoffs · at Apply, aiming for Analyse</span>
+            <span class="ag-row"><b>Reviewing</b>systems.design.tradeoffs · at Apply, aiming for Analyze</span>
             <span class="ag-row"><b>Evidence</b>Ravi can attest the skill afterwards — you keep the credential</span>
             <span class="ag-row"><b>Notes</b>Stay yours, on this device</span>
           </div>

@@ -230,7 +230,7 @@ useHead({
   max-width: 18ch;
 }
 /* The standfirst is the post's argument in one line, so it takes the brand
-   colour rather than the muted grey the rest of the metadata uses — it is the
+   color rather than the muted gray the rest of the metadata uses — it is the
    thing a reader should carry away if they read nothing else. */
 .art-stand {
   font-family: var(--font-display);
@@ -269,7 +269,7 @@ useHead({
   max-width: 80ch;
   padding-top: clamp(34px, 4vw, 48px);
 }
-/* `.article` centres itself and pads its own top; inside the grid the column
+/* `.article` centers itself and pads its own top; inside the grid the column
    does both, so it would otherwise double the gap under the header. */
 .art-body .article { margin-inline: 0; padding-top: 0; }
 @media (min-width: 1140px) {

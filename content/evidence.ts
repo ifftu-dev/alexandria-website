@@ -103,7 +103,7 @@ export const RECOGNITION_GAP: Figure[] = [
  * a regulated category in several jurisdictions and a liability in all of them
  * when published pre-launch by a company with no educators on the platform. The
  * revenue share replaces them: it makes the same argument, it is a policy rather
- * than a forecast, and it can be checked against the licence and the payouts.
+ * than a forecast, and it can be checked against the license and the payouts.
  */
 export const TARGETS: Figure[] = [
   { id: 'learners', value: '6M', label: 'learners, at no cost to any of them', status: 'projection' },
@@ -124,7 +124,7 @@ export const MODEL_NOTE
  * 1. The handoff dated the Harvard/Burning Glass work February 2025 and
  *    described its sample as "11,000+ US job postings". Both are wrong: the
  *    report is dated 12 February 2024 (the published PDF is
- *    `Skills-Based-Hiring-02122024-vF-srmp.pdf`) and it analysed 11,300 large
+ *    `Skills-Based-Hiring-02122024-vF-srmp.pdf`) and it analyzed 11,300 large
  *    firms. Postings and firms are not interchangeable — the study's whole
  *    point is that postings changed and hiring did not, so citing postings
  *    inverts the finding.
@@ -133,7 +133,7 @@ export const MODEL_NOTE
  *    is 37.7% holding a bachelor's or higher among those aged 25 and over,
  *    which leaves 62.3% — closer to three in five than two in three. Stated
  *    here as 62% with the base named, because an evidence page that rounds in
- *    its own favour forfeits the argument it is making.
+ *    its own favor forfeits the argument it is making.
  *
  * 3. India's National Testing Agency figure ("3.8M") is sound, but only with
  *    its base attached: NEET-UG 22.76 lakh registered plus JEE Main 15.4 lakh

@@ -85,7 +85,7 @@ const features: Feature[] = [
     accent: 'cyan',
     title: 'Classrooms',
     icon: 'M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.636 50.636 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0112 13.489a50.702 50.702 0 017.74-3.342',
-    body: 'Teachers stay close to the students they invite, inside a safe, contained space — organised into channels.',
+    body: 'Teachers stay close to the students they invite, inside a safe, contained space — organized into channels.',
     motif: 'channels',
   },
   {
@@ -207,7 +207,7 @@ const problems = [
     n: '02',
     k: 'Not portable',
     title: 'It rarely crosses a border',
-    body: 'Recognition stops at the edge of the institution that granted it, and at the edge of the country that recognises that institution.',
+    body: 'Recognition stops at the edge of the institution that granted it, and at the edge of the country that recognizes that institution.',
   },
   {
     n: '03',
@@ -327,7 +327,7 @@ const featuresOpen = ref(false)
           <div class="proof-metrics">
             <div><div class="n">Offline</div><div class="l">Verification needs no network</div></div>
             <div><div class="n">0</div><div class="l">Calls to Alexandria required</div></div>
-            <div><div class="n">MIT</div><div class="l">Core licence, forever</div></div>
+            <div><div class="n">MIT</div><div class="l">Core license, forever</div></div>
           </div>
           <p style="margin-top: 24px">
             <a
@@ -606,7 +606,7 @@ const featuresOpen = ref(false)
             target="_blank"
             rel="noopener noreferrer"
             class="plausible-event-name=CTA-GitHub"
-          >Read the licence</a>
+          >Read the license</a>
         </article>
 
         <article class="free-card">
@@ -638,10 +638,10 @@ const featuresOpen = ref(false)
     <!-- ═══ WHO PAYS ═══ -->
     <section class="section pad">
       <p class="eyebrow">Who pays</p>
-      <h2 class="h-sec">Free for learners. Paid for organisations.</h2>
+      <h2 class="h-sec">Free for learners. Paid for organizations.</h2>
       <p class="p-sub">
         The split is deliberate, and it is the whole business model. Learning, owning a credential and
-        proving it are free permanently. Organisations pay for running this at scale — never for a
+        proving it are free permanently. Organizations pay for running this at scale — never for a
         learner's right to their own proof.
       </p>
       <div class="who">
@@ -656,7 +656,7 @@ const featuresOpen = ref(false)
           <StatusChip state="alpha" label="True in the alpha today" />
         </article>
         <article class="who-card">
-          <h3>What organisations pay for</h3>
+          <h3>What organizations pay for</h3>
           <ul>
             <li>Managed hosting and operations</li>
             <li>SSO, SIS and ATS integrations</li>
@@ -732,7 +732,7 @@ const featuresOpen = ref(false)
       <div class="hero-scrim" />
       <div class="pad cta-inner">
         <h2>Get in the queue.</h2>
-        <p>Individuals join the waiting list and we write when it is their turn. Organisations run a pilot: one programme or one role family, with success measures agreed before anyone starts.</p>
+        <p>Individuals join the waiting list and we write when it is their turn. Organizations run a pilot: one program or one role family, with success measures agreed before anyone starts.</p>
         <div class="cta-row">
           <button type="button" class="btn btn-lg plausible-event-name=EarlyAccess" @click="waitlist.open()">
             Join the waiting list

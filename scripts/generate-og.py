@@ -12,7 +12,7 @@ fetch previews much beyond 300 KB.
 A DARK AND A LIGHT SET ARE PRODUCED, and it is worth being exact about what that
 does and does not buy, because it is easy to assume more:
 
-  * Open Graph has no mechanism for colour scheme. Slack, LinkedIn, X, iMessage
+  * Open Graph has no mechanism for color scheme. Slack, LinkedIn, X, iMessage
     and every other unfurler fetches ONE image on the server, with no browser and
     no `prefers-color-scheme` to consult. `og:image` therefore points at the dark
     card, which matches the site's hero.
@@ -46,7 +46,7 @@ CHROME_CANDIDATES = [
     '/Applications/Chromium.app/Contents/MacOS/Chromium',
 ]
 
-# From MeshGradient.vue: the colour painted under the blobs, per theme.
+# From MeshGradient.vue: the color painted under the blobs, per theme.
 BASE = {'dark': '#131a38', 'light': '#f2f4fb'}
 
 SEEDS = [(0.22, 0.28, 0.78), (0.78, 0.22, 0.66), (0.68, 0.82, 0.60),
@@ -83,10 +83,10 @@ CARDS = [
      'The signature is verified in your browser, against the issuer’s own key. Nothing is uploaded.'),
     ('pilots', BLUE, 'Pilots',
      'Small, real, and measured.',
-     'One programme or one role family, with success measures agreed before we start.'),
+     'One program or one role family, with success measures agreed before we start.'),
     ('partners', WARM, 'Partners',
      'Where access is hardest.',
-     'Offline-first learning, multilingual delivery, and credentials that outlast the programme.'),
+     'Offline-first learning, multilingual delivery, and credentials that outlast the program.'),
     ('trust', INDIGO, 'Trust',
      'What we can claim today.',
      'Dated statuses instead of adjectives. Where something is not reviewed or built, this says so.'),

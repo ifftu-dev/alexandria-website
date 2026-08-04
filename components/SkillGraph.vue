@@ -3,7 +3,7 @@
  * Skill graph — the widget from the app's sidebar (SidebarSkillGraph.vue).
  *
  * Same rendering contract as the product: a force-directed layout on canvas,
- * node colour by status (earned green, available yellow, locked grey), node
+ * node color by status (earned green, available yellow, locked gray), node
  * radius by Bloom level via `bloomRadius(level, 2, 0.45)`, hairline links, a
  * glow behind earned and available nodes, then zoom-to-fit once the simulation
  * settles — followed by the same legend and skills-progress line.
@@ -149,7 +149,7 @@ onMounted(() => {
       l.b.vx -= fx; l.b.vy -= fy
     }
 
-    // Pull toward the centre, more gently across the x axis so the layout
+    // Pull toward the center, more gently across the x axis so the layout
     // spreads into the width it has rather than balling up.
     for (const n of nodes) {
       n.vx -= n.x * 0.010

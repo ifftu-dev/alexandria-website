@@ -84,7 +84,7 @@ function onClick(event: MouseEvent) {
   /* `dialog:modal` already carries `inset: 0` from the UA sheet, so a width of
      100% over-constrains the box and collapses the auto margins — which pinned
      this to the top-left corner instead of centring it. An explicit width plus
-     `margin: auto` centres on both axes. */
+     `margin: auto` centers on both axes. */
   margin: auto;
   width: min(34rem, calc(100vw - 2rem));
   max-height: calc(100dvh - 2rem);

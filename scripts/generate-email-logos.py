@@ -7,7 +7,7 @@ Render the two marks the confirmation email uses.
 Mail clients do not render inline SVG — Gmail strips it outright — so the marks
 have to be raster, absolute-URL images. Both are drawn at 3x the size they are
 displayed at, on transparent backgrounds, so they stay crisp on retina and sit on
-whatever the surrounding table cell is coloured.
+whatever the surrounding table cell is colored.
 
 Sources, so neither is invented here:
   Alexandria  the hexagon from the site nav (layouts/landing.vue)

@@ -71,7 +71,7 @@ def html(font_b64: str) -> str:
   .wash {{
     position: absolute; inset: 0;
     background:
-      /* vignette first, so it sits over the colour and restores the original's
+      /* vignette first, so it sits over the color and restores the original's
          dark corners — without it the wash reads flat and washed out */
       radial-gradient(115% 130% at 45% 45%, rgba(4,7,20,0) 38%, rgba(4,7,20,0.55) 78%, rgba(4,7,20,0.85) 100%),
       radial-gradient(85% 120% at 30% 34%, rgba(104,72,240,0.9) 0%, rgba(104,72,240,0.3) 44%, rgba(104,72,240,0) 70%),

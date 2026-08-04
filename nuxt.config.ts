@@ -51,7 +51,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: {
-        lang: 'en',
+        lang: 'en-US',
       },
       title: 'Alexandria — Free Learning, Credentials You Own',
       meta: [

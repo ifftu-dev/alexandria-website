@@ -119,10 +119,10 @@ export function usePost(slug: string): Post | undefined {
   return all.find(p => p.slug === slug)
 }
 
-/** "31 July 2026" — written out, because a blog date is read, not sorted. */
+/** "July 31, 2026" — written out, because a blog date is read, not sorted. */
 export function formatDate(iso: string): string {
   if (!iso) return ''
   const d = new Date(`${iso}T00:00:00Z`)
   if (Number.isNaN(d.getTime())) return iso
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
 }

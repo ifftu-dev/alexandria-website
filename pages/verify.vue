@@ -188,8 +188,8 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
             key. There is no key server to ask and no directory to trust.
           </li>
           <li>
-            <b>The credential was canonicalised.</b>
-            Field order does not change meaning, so the bytes are normalised (RFC 8785) before
+            <b>The credential was canonicalized.</b>
+            Field order does not change meaning, so the bytes are normalized (RFC 8785) before
             checking — reorder the fields and it still verifies; change a value and it does not.
           </li>
           <li>

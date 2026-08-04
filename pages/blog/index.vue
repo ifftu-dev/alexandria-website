@@ -180,8 +180,8 @@ useHead({
   margin: 0;
   max-width: 20ch;
 }
-/* Same line as the article standfirst, so it takes the same colour — a reader
-   arriving from the index should recognise it. */
+/* Same line as the article standfirst, so it takes the same color — a reader
+   arriving from the index should recognize it. */
 .bl-stand {
   position: relative;
   margin: 16px 0 0;
