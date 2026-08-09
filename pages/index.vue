@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { RECOGNITION_GAP, SOURCES } from '~/content/evidence'
+import { RECOGNITION_GAP, SOURCES, TARGETS } from '~/content/evidence'
+
+const share = TARGETS.find(f => f.id === 'share')!
 
 definePageMeta({ layout: 'landing' })
 
@@ -499,7 +501,7 @@ const featuresOpen = ref(false)
         <p class="bento-joke">
           {{ featuresOpen
             ? 'That is all of them. A shorter list would probably make a better introduction — we are working on that.'
-            : 'It is a long list. We keep meaning to trim it and have not managed yet.' }}
+            : 'This list is growing fast!' }}
         </p>
       </div>
     </section>
@@ -667,13 +669,35 @@ const featuresOpen = ref(false)
         </article>
       </div>
 
-      <div class="who-share">
-        <p class="who-share-n">40%</p>
-        <p class="who-share-t">
-          <b>of everything earned goes to the educators who create the skills.</b>
-          Not as a revenue-share experiment — as the point. Charity that runs out is not permanence;
-          the commons stays open because the people getting commercial value from it pay for it.
-        </p>
+    </section>
+
+    <!-- ═══ THE EDUCATOR SHARE ═══
+         Its own section, because it was the last line of "who pays" set in 14.5px
+         muted grey under a rule — the position and the size a reader's eye reaches
+         last, for the one number that says who this is actually built for. -->
+    <section class="section pad">
+      <div class="share">
+        <div class="share-in">
+          <p class="eyebrow">Where the money goes</p>
+          <div class="share-row">
+            <p class="share-n">{{ share.value }}</p>
+            <div class="share-body">
+              <p class="share-lead">of everything earned goes to the educators who create the skills.</p>
+              <p class="share-sub">
+                Not as a revenue-share experiment — as the point. Charity that runs out is not
+                permanence; the commons stays open because the people getting commercial value
+                from it pay for it. Nobody has earned anything here yet — this is the split we
+                are committing to, not a result we are reporting.
+              </p>
+              <p class="share-foot">
+                <StatusChip state="planned" label="A policy, not a forecast" />
+                <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Recognition chev">
+                  Why we publish no earnings projection <i>›</i>
+                </NuxtLink>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -755,6 +779,81 @@ const featuresOpen = ref(false)
 
 <style scoped>
 .tag-link { color: rgb(255 255 255 / 0.9); text-decoration: underline; text-underline-offset: 2px; }
+/* The educator share. Same gradient-edge construction as the blog's lead card —
+   1px of gradient as padding, the card sitting inside it — so the one number the
+   business model turns on is marked as important using a treatment the site
+   already has, rather than a new one invented for it. */
+.share {
+  border-radius: 20px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgb(var(--color-primary) / 0.55), rgb(var(--color-border)) 46%, rgb(var(--color-border)));
+}
+.share-in {
+  position: relative;
+  border-radius: 19px;
+  background: rgb(var(--color-card));
+  padding: clamp(28px, 4vw, 46px);
+  overflow: hidden;
+}
+.share-in::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: -90px;
+  top: -120px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(var(--color-primary) / 0.16), transparent 68%);
+  pointer-events: none;
+}
+.share-in > * { position: relative; }
+
+/* `minmax(0, 1fr)` on both axes, and `min-width: 0` on the body: a grid item
+   defaults to `min-width: auto`, so the 62ch measure below was sizing the column
+   rather than being clamped by it, and the text ran off the side of a phone. */
+.share-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px 40px; align-items: start; margin-top: 4px; }
+@media (min-width: 860px) { .share-row { grid-template-columns: auto minmax(0, 1fr); align-items: center; } }
+
+/* The figure carries the gradient rather than sitting next to it. At this size
+   it is the element, so it takes the display serif and the full width it needs. */
+.share-n {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(76px, 12vw, 148px);
+  font-weight: 300;
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  background: var(--grad-surface);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* Windows high-contrast and any engine that ignores background-clip would render
+   this invisible, so the colour is restored where the clip is not honoured. */
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .share-n { background: none; color: rgb(var(--color-primary)); }
+}
+
+.share-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; min-width: 0; }
+/* Was 14.5px muted. This is the sentence the section exists for. */
+.share-lead {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(21px, 2.6vw, 28px);
+  font-weight: 300;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  max-width: min(24ch, 100%);
+}
+.share-sub { margin: 0; font-size: 15px; line-height: 1.7; color: rgb(var(--color-muted-foreground)); max-width: min(62ch, 100%); }
+.share-foot {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px;
+  margin: 4px 0 0;
+  min-width: 0;
+}
+.share-foot a { font-size: 14px; font-weight: 600; color: rgb(var(--color-primary)); }
+.share-foot i { font-style: normal; }
+
 .who { display: grid; gap: 16px; margin-top: 26px; }
 @media (min-width: 780px) { .who { grid-template-columns: 1fr 1fr; } }
 .who-card { border: 1px solid rgb(var(--color-border)); border-radius: 14px; padding: 20px; background: rgb(var(--color-card)); }

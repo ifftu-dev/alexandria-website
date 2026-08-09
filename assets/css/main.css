@@ -1304,10 +1304,6 @@ svg { flex-shrink: 0; }
    so it is set apart rather than folded into the paragraph above it. */
 .free-gap { border-inline-start: 2px solid rgb(var(--color-border)); padding-inline-start: 12px; font-size: 13px !important; }
 
-.who-share { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 22px; margin-top: 26px; padding-top: 22px; border-top: 1px solid rgb(var(--color-border)); }
-.who-share-n { margin: 0; font-family: var(--font-display); font-size: clamp(38px, 4.4vw, 52px); font-weight: 300; letter-spacing: -0.01em; line-height: 1; color: rgb(var(--color-primary)); }
-.who-share-t { margin: 0; flex: 1 1 340px; font-size: 14.5px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
-.who-share-t b { color: rgb(var(--color-foreground)); }
 
 /* ─── Where we actually are ────────────────────────────
    The two columns are weighted the same on purpose. Shrinking the second one
