@@ -20,7 +20,7 @@ const GITHUB = 'https://github.com/ifftu-dev/alexandria'
 useHead({
   title: 'Privacy — Alexandria',
   meta: [
-    { name: 'description', content: 'We designed the product so there would be very little to write here. No account, no server-side record of your learning, no advertising, and no trackers on this site.' },
+    { name: 'description', content: 'Very little to write here by design. No account, no server-side record of your learning, no advertising, and no trackers on this site.' },
     { property: 'og:title', content: 'Privacy — Alexandria' },
     { property: 'og:description', content: 'Mostly a description of data we never receive in the first place.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/privacy' },
@@ -36,7 +36,7 @@ useHead({
 
 const short = [
   { t: 'There is no account with us', b: 'Your identity is a keypair generated on your device. We never see it, cannot reset it, and hold no email or password for it.' },
-  { t: 'Your learning stays local', b: 'What you study, how you score and how often you retry is stored on your device. There is no server-side copy for us to analyse or sell.' },
+  { t: 'Your learning stays local', b: 'What you study, how you score and how often you retry is stored on your device. There is no server-side copy for us to analyze or sell.' },
   { t: 'Integrity data never leaves', b: 'Sentinel’s camera, keystroke and pointer signals are processed on your hardware. Only a score and its reasoning attach to a credential.' },
   { t: 'Sync is sealed', b: 'Devices sync end-to-end encrypted. Relays pass along bytes they cannot read, and we operate them without keys.' },
   { t: 'You choose what to reveal', b: 'Sharing a credential with an employer is an explicit act, one credential at a time. Nothing is discoverable without your consent.' },
@@ -156,7 +156,7 @@ const practice = [
         <div>
           <p class="pv-c-k">Read the code</p>
           <p><a :href="GITHUB" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub">github.com/ifftu-dev/alexandria</a></p>
-          <p class="pv-c-s">Core under the MIT Licence.</p>
+          <p class="pv-c-s">Core under the MIT License.</p>
         </div>
         <div>
           <p class="pv-c-k">How the design works</p>

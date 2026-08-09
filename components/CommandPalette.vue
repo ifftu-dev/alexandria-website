@@ -32,7 +32,7 @@ interface Command {
   group?: string
   /** A deadpan answer shown in place of navigating. */
   answer?: string
-  /** Which bit of theatre plays before the answer lands. */
+  /** Which bit of theater plays before the answer lands. */
   gag?: 'wipe' | 'denied' | 'roadmap'
 }
 
@@ -138,7 +138,7 @@ function close() {
 }
 
 /**
- * The three joke commands get a beat of theatre before they answer.
+ * The three joke commands get a beat of theater before they answer.
  *
  * `wipe` deletes the row's own label left to right, which is the only data this
  * palette has ever been able to delete. `denied` refuses bodily. `roadmap` types
@@ -396,7 +396,7 @@ kbd {
   color: rgb(var(--color-muted-foreground));
 }
 
-/* ─── Theatre ────────────────────────────────────────────
+/* ─── Theater ────────────────────────────────────────────
    Three jokes, three beats. Everything here is decoration and every rule is
    switched off wholesale under `prefers-reduced-motion` at the foot of the file. */
 

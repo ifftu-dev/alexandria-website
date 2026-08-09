@@ -36,13 +36,20 @@ const COHORTS: Record<string, { value: string, label: string }[]> = {
   ],
   partner: [
     { value: 'exploring', label: 'Still exploring' },
-    { value: 'single', label: 'A single site or programme' },
+    { value: 'single', label: 'A single site or program' },
     { value: 'regional', label: 'Regional' },
     { value: 'national', label: 'National' },
   ],
 }
 
 const email = ref('')
+// Deliberately not `organization`, despite the label above it reading that way.
+// This name is the wire format: it is the JSON key the front end posts, the key
+// `netlify/functions/enquiry.ts` parses, the field stored on every Plunk contact
+// collected so far, and what `tests/e2e/plunk.spec.ts` asserts. Renaming it would
+// split the contact data and break the front end against the deployed function
+// for as long as the two were out of step. The label is what a reader sees; this
+// is what the wire carries.
 const organisation = ref('')
 const role = ref('')
 const context = ref('')
@@ -113,10 +120,10 @@ async function submit() {
       <div class="eq-grid">
         <label class="eq-field">
           <span>Work email</span>
-          <input v-model="email" type="email" required autocomplete="email" placeholder="you@organisation.org">
+          <input v-model="email" type="email" required autocomplete="email" placeholder="you@organization.org">
         </label>
         <label class="eq-field">
-          <span>Organisation</span>
+          <span>Organization</span>
           <input v-model="organisation" type="text" autocomplete="organization" placeholder="Optional">
         </label>
         <label class="eq-field">

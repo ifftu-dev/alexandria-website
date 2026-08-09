@@ -1304,10 +1304,6 @@ svg { flex-shrink: 0; }
    so it is set apart rather than folded into the paragraph above it. */
 .free-gap { border-inline-start: 2px solid rgb(var(--color-border)); padding-inline-start: 12px; font-size: 13px !important; }
 
-.who-share { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 22px; margin-top: 26px; padding-top: 22px; border-top: 1px solid rgb(var(--color-border)); }
-.who-share-n { margin: 0; font-family: var(--font-display); font-size: clamp(38px, 4.4vw, 52px); font-weight: 300; letter-spacing: -0.01em; line-height: 1; color: rgb(var(--color-primary)); }
-.who-share-t { margin: 0; flex: 1 1 340px; font-size: 14.5px; line-height: 1.65; color: rgb(var(--color-muted-foreground)); }
-.who-share-t b { color: rgb(var(--color-foreground)); }
 
 /* ─── Where we actually are ────────────────────────────
    The two columns are weighted the same on purpose. Shrinking the second one
@@ -1328,7 +1324,13 @@ svg { flex-shrink: 0; }
 .proof::before {
   content: "";
   position: absolute;
-  inset: -60px 0;
+  /* The bleed has to clear what the skew displaces, or the rectangle pulls away
+     from the bottom-right corner and the clipped edge reads as a diagonal — a
+     white wedge cut into the band. A -4deg skew lifts the far edge by
+     `width * tan(4deg)` ≈ 0.0699 × width, which is 101px at 1440 and 134px at
+     1920, so the old fixed 60px fell short on every desktop. 7vw covers the
+     trigonometry at any width, plus 24px of margin. */
+  inset: calc(-7vw - 24px) 0;
   background:
     radial-gradient(60% 80% at 12% 20%, rgb(79 70 229 / 0.45), transparent 60%),
     radial-gradient(50% 70% at 88% 76%, rgb(34 211 238 / 0.28), transparent 62%),

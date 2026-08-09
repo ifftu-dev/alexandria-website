@@ -363,7 +363,7 @@ async function submit() {
 .ea-chips { display: flex; flex-wrap: wrap; gap: 7px; }
 
 /* The native control keeps its place in the accessibility tree and its keyboard
-   behaviour — arrow keys across the radio group, space on a checkbox. Only its
+   behavior — arrow keys across the radio group, space on a checkbox. Only its
    painting is replaced by the chip. */
 .ea-chip {
   position: relative;

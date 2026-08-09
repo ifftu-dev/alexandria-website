@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * How the thing works, at the level a sceptic needs.
+ * How the thing works, at the level a skeptic needs.
  *
  * The page's own claim is that everything on the site is checkable, so it names
  * primitives rather than adjectives — Ed25519, JCS, blake3, wasmtime. A reader
@@ -42,12 +42,12 @@ const chips = [
 
 const identity = [
   { k: 'Selective disclosure', v: 'Reveal one skill without revealing the rest of your record.' },
-  { k: 'Offline verification', v: 'The signature checks with public key maths alone. No call to us.' },
+  { k: 'Offline verification', v: 'The signature checks with public key math alone. No call to us.' },
   { k: 'Survives us', v: 'If Alexandria disappeared tomorrow, every credential still verifies.' },
 ]
 
 const sync = [
-  { t: 'Everything works offline', b: 'Courses, assessments and credential issuance all run against local storage. A connection is an optimisation, not a requirement.' },
+  { t: 'Everything works offline', b: 'Courses, assessments and credential issuance all run against local storage. A connection is an optimization, not a requirement.' },
   { t: 'Sync is device to device', b: 'Your laptop and your phone sync directly, end-to-end encrypted. Relays exist to pass sealed bytes along and cannot read a thing.' },
   { t: 'No profile to sell', b: 'There is no server-side record of what you study, how fast you learn or how often you fail. Not policy — architecture.' },
 ]
@@ -55,7 +55,7 @@ const sync = [
 /** Illustrative. The numbers show the shape of a report, not anyone's reading. */
 const signals = [
   { k: 'Typing rhythm', v: 0.96 },
-  { k: 'Pointer behaviour', v: 0.91 },
+  { k: 'Pointer behavior', v: 0.91 },
   { k: 'On-device models', v: 0.88 },
 ]
 
@@ -67,7 +67,7 @@ const plugins = [
 ]
 
 const skillRows = [
-  { id: 'metallurgy.basics', level: 'analyse', dot: 13, tone: 'on' },
+  { id: 'metallurgy.basics', level: 'analyze', dot: 13, tone: 'on' },
   { id: 'welding.safety', level: 'apply', dot: 12, tone: 'on' },
   { id: 'welding.pipe.6g', level: 'apply', dot: 14, tone: 'violet' },
   { id: 'welding.tig', level: 'available', dot: 9, tone: 'off' },
@@ -76,7 +76,7 @@ const skillRows = [
 
 const people = [
   { t: 'Live tutoring, device to device', b: 'Video, audio and screen-share connect learner and mentor directly. No call runs through a company, and none is recorded by one.' },
-  { t: 'Classrooms, invite-only', b: 'A teacher’s own contained space, organised into channels — announcements, questions, assignments, showcase. You decide who is in it.' },
+  { t: 'Classrooms, invite-only', b: 'A teacher’s own contained space, organized into channels — announcements, questions, assignments, showcase. You decide who is in it.' },
   { t: 'Reputation without stars', b: 'Instructors are scored on measured impact on learners, per skill, with confidence bounds — wider bars mean less evidence. There is no global score anywhere.' },
 ]
 
@@ -184,7 +184,7 @@ const platforms = [
           </p>
           <p>
             It takes quiet snapshots every 15–45 seconds and scores consistency across typing rhythm,
-            pointer behaviour and small on-device models. Raw camera, keystroke and pointer data
+            pointer behavior and small on-device models. Raw camera, keystroke and pointer data
             never leave the machine; what leaves is a score and the reasoning behind it, attached to
             the credential for anyone to audit.
           </p>
@@ -239,7 +239,7 @@ const platforms = [
         <div class="t-prose">
           <p>
             Every lesson and every credential ties to a node on a public map of skills, with explicit
-            prerequisites and Bloom levels — recall, apply, analyse, and beyond. That is what lets an
+            prerequisites and Bloom levels — recall, apply, analyze, and beyond. That is what lets an
             employer read <span class="mono">welding.pipe.6g · apply</span> and know exactly what was
             demonstrated.
           </p>

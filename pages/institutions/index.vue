@@ -21,7 +21,7 @@ const GITHUB_URL = 'https://github.com/ifftu-dev/alexandria'
 useHead({
   title: 'For institutions — Alexandria',
   meta: [
-    { name: 'description', content: 'An open-source learning platform you can host yourself, mapped to a public skill graph, issuing credentials your students own outright and can prove anywhere — long after they have left you.' },
+    { name: 'description', content: 'An open-source learning platform you can host yourself, issuing credentials your students own outright and can prove anywhere — long after they leave you.' },
     { property: 'og:title', content: 'For institutions — Alexandria' },
     { property: 'og:description', content: 'Your LMS. Their credentials. Free self-hosted tier, MIT core, no vendor lock-in.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/institutions' },
@@ -43,18 +43,18 @@ const fourPoints = [
 ]
 
 const features = [
-  { t: 'Classrooms', b: 'Invite-only cohorts organised into channels — announcements, questions, assignments, showcase. Teachers decide who is in.', state: 'alpha' as const },
+  { t: 'Classrooms', b: 'Invite-only cohorts organized into channels — announcements, questions, assignments, showcase. Teachers decide who is in.', state: 'alpha' as const },
   { t: 'Practical assessment', b: 'Plugins assess what multiple choice cannot — welding, music, code, inspection — with structured evidence capture and assessor attestation.', state: 'alpha' as const },
   { t: 'Auditable integrity', b: 'Optional on-device integrity scoring with the reasoning attached to each result. No third-party proctoring vendor, no recordings leaving the student’s machine.', state: 'alpha' as const },
   { t: 'Live tutoring', b: 'Video, audio and screen-share peer to peer, so remote cohorts do not depend on a third-party conferencing contract.', state: 'alpha' as const },
-  { t: 'Works where bandwidth doesn’t', b: 'Offline-first by design. Rural campuses and field programmes keep teaching through an outage and sync afterwards.', state: 'alpha' as const },
+  { t: 'Works where bandwidth doesn’t', b: 'Offline-first by design. Rural campuses and field programs keep teaching through an outage and sync afterwards.', state: 'alpha' as const },
   { t: 'Nine languages', b: 'English, Chinese, Spanish, French, Hindi, Urdu, Telugu, Marathi and Bengali at launch, on macOS, Windows, Linux, iOS and Android from one codebase.', state: 'alpha' as const },
 ]
 
 const fits = [
   { t: 'Universities', b: 'Issue verifiable credentials alongside the degree, so graduates can prove specific capabilities, not just attendance.' },
   { t: 'Trade & vocational schools', b: 'Assess practical skill properly and give graduates proof that travels to any employer, in any country.' },
-  { t: 'NGOs & training programmes', b: 'Reach learners with no reliable connectivity and leave them with recognition that outlasts the grant cycle.' },
+  { t: 'NGOs & training programs', b: 'Reach learners with no reliable connectivity and leave them with recognition that outlasts the grant cycle.' },
   { t: 'Examination bodies', b: 'Open, auditable integrity at national scale — where the method that produced a score can be inspected by anyone.' },
 ]
 
@@ -83,7 +83,7 @@ const tiers = [
           <a :href="GITHUB_URL" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub btn-ghost">Self-host it</a>
         </div>
         <p class="i-prenote">
-          Free self-hosted tier, permanently. MIT core, no vendor lock-in, no per-student licence.
+          Free self-hosted tier, permanently. MIT core, no vendor lock-in, no per-student license.
         </p>
       </div>
     </section>
@@ -153,7 +153,7 @@ const tiers = [
             The core is MIT-licensed and the free tier is not a trial — it is the whole platform, on
             your servers, with no student cap. Paid tiers exist for institutions that want us to
             operate it, integrate it, or support it under contract. Enterprise modules sit under a
-            separate licence; nothing you rely on to teach does.
+            separate license; nothing you rely on to teach does.
           </p>
           <p>
             Whichever you choose, the credential your students walk away with is identical — and it

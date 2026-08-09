@@ -22,7 +22,7 @@ const waitlist = useWaitlist()
 useHead({
   title: 'Why recognition — Alexandria',
   meta: [
-    { name: 'description', content: 'Free learning already exists; it was never enough. The research behind the recognition gap, our own projections labelled as projections, and the two claims we cannot yet evidence.' },
+    { name: 'description', content: 'Free learning already exists; it was never enough. The research behind the recognition gap, and the two claims we cannot yet evidence.' },
     { property: 'og:title', content: 'Why recognition — Alexandria' },
     { property: 'og:description', content: 'Free learning already exists. It was never enough. The evidence, and what we still cannot prove.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/why-recognition' },
@@ -96,7 +96,7 @@ const method = [
   },
   {
     k: 'Educator revenue share',
-    v: '40% of earned revenue is a policy of ours, not a forecast. We have deliberately not published modelled educator earnings: nobody has earned anything here yet, and a projection shaped like an income claim is not something a pre-launch company should put in front of people deciding how to spend their time.',
+    v: '40% of earned revenue is a policy of ours, not a forecast. We have deliberately not published modeled educator earnings: nobody has earned anything here yet, and a projection shaped like an income claim is not something a pre-launch company should put in front of people deciding how to spend their time.',
   },
   {
     k: 'Examination data',
@@ -115,7 +115,7 @@ const method = [
         <p class="eyebrow hero-eyebrow">The evidence</p>
         <h1>Free learning already exists. It was never enough.</h1>
         <p class="hero-lede">
-          Everything on this page is either sourced to published research or labelled as our own
+          Everything on this page is either sourced to published research or labeled as our own
           projection. Where we have no evidence, we say so — that is what section six is for.
         </p>
       </div>

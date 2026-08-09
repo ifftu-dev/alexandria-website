@@ -131,7 +131,7 @@ export default async function handler(request: Request): Promise<Response> {
     const rows = [
       ['Audience', audience],
       ['Email', email],
-      ['Organisation', organisation || '—'],
+      ['Organization', organisation || '—'],
       ['Role', role || '—'],
       ['Size', cohort || '—'],
       ['From page', source || '—'],

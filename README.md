@@ -92,7 +92,7 @@ deployed this yet" are meant to be there.
 | Component | What it is |
 | :--- | :--- |
 | `AppReplica.vue` | Interactive recreation of the Alexandria desktop shell, built from the app's own tokens and component CSS. Navigates, searches (`/` or `⌘K`), verifies a credential, casts a vote. Collapses to the app's four-tab mobile layout via a container query on the window itself |
-| `SkillGraph.vue` | The app's sidebar skill graph — force-directed canvas, same status colours and Bloom-scaled radii as `SidebarSkillGraph.vue` |
+| `SkillGraph.vue` | The app's sidebar skill graph — force-directed canvas, same status colors and Bloom-scaled radii as `SidebarSkillGraph.vue` |
 | `MeshGradient.vue` | Animated gradient behind every hero and CTA band. Time-based, so drift is identical at 60 Hz and 120 Hz; pauses off-screen; static under `prefers-reduced-motion` |
 | `StatusChip.vue` | One label for how real a thing is — `alpha` / `building` / `planned` / `sample`. Used wherever a capability, price or demo is described, because mixing shipped features with roadmap items makes the credible parts inherit the doubt of the speculative ones |
 | `EnquiryForm.vue` | Pilot and partnership enquiries. Posts to `/api/pilot` or `/api/partner` — deliberately *not* the learner waitlist, so a hiring lead never lands in a campaign written for someone waiting on a build |
@@ -110,7 +110,7 @@ third-party JSON, plus DNS and TLS) to render one string.
 `python3 scripts/generate-og.py` renders one card per route with headless Chrome
 and writes JPEGs to `public/og/` — run it after changing headline copy or the
 palette. It reuses the site's own values rather than approximating them: the base
-colour and blob palettes come from `MeshGradient.vue`, the positions are its
+color and blob palettes come from `MeshGradient.vue`, the positions are its
 `SEEDS`, the mark is the nav's SVG, and the type is the same self-hosted
 Newsreader and Public Sans.
 
@@ -123,7 +123,7 @@ The generator produces **two sets** — `home.jpg` and `home-light.jpg`, and so 
 for all eleven routes. It is worth being exact about what the pair buys, because
 it is easy to assume more:
 
-> **Open Graph has no mechanism for colour scheme.** Slack, LinkedIn, X, iMessage
+> **Open Graph has no mechanism for color scheme.** Slack, LinkedIn, X, iMessage
 > and every other unfurler fetches one image on the server, with no browser and
 > no `prefers-color-scheme` to consult. There is no media query, no `<picture>`,
 > and no second URL it will consider.
@@ -241,7 +241,7 @@ d=alexandria.ifftu.dev`, `dmarc=pass`.
 
 Four decisions worth keeping:
 
-- **No `include:amazonses.com` in SPF.** It would authorise every SES customer to send as
+- **No `include:amazonses.com` in SPF.** It would authorize every SES customer to send as
   the domain. Unnecessary: SES signs with our own DKIM key, so DMARC passes on DKIM
   alignment and SPF alignment is redundant. SES uses its own envelope sender, so SPF is
   evaluated against `eu-north-1.amazonses.com` regardless.
@@ -383,7 +383,7 @@ bottom of that file: the Harvard/Burning Glass study is dated February **2024** 
 analysed 11,300 **firms** (not 11,000 job postings — which inverts its own finding), and
 "two-thirds of Americans hold no four-year degree" overstates a Census figure of 62.3%.
 
-Modelled educator earnings are deliberately absent. A projection shaped like an income
+Modeled educator earnings are deliberately absent. A projection shaped like an income
 claim, published by a pre-launch company with nobody earning on the platform, is not
 something to put in front of people deciding how to spend their time. The 40% revenue
 share makes the same argument and is a policy rather than a forecast.
@@ -424,7 +424,7 @@ netlify dev          # also runs the waiting-list function
 | `npm run preview` | Preview the production build locally |
 | `npx vue-tsc -b --noEmit` | Typecheck — CI enforces this |
 
-## Licence
+## License
 
 Copyright © 2025-2026 IFFTU Pvt. Ltd. See [LICENSE](./LICENSE) for terms.
 

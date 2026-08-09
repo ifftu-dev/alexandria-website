@@ -1,5 +1,8 @@
 <script setup lang="ts">
 useTheme()
+// Organization, WebSite and breadcrumbs on every page — 11 of 13 had no
+// structured data at all before this.
+useSiteSchema()
 
 const mobileMenuOpen = ref(false)
 function closeMobileMenu() { mobileMenuOpen.value = false }
@@ -71,7 +74,7 @@ onMounted(() => {
   // want to keep it from. Closing it still hides it for the rest of the visit —
   // it just does not follow anyone across sessions.
   //
-  // The write below is kept so the preference is there to honour the day we
+  // The write below is kept so the preference is there to honor the day we
   // decide to, and so the key does not have to be reintroduced from scratch.
   setTimeout(() => { armed.value = true }, 1400)
   searchPing.arm()
@@ -104,7 +107,7 @@ const year = new Date().getFullYear()
           It used to run Why recognition / Technology / Blog / Employers /
           Institutions — two audiences with the third missing and the blog wedged
           between the argument and the audiences. Someone scanning that sees a
-          product for organisations, on a site whose whole thesis is that it is
+          product for organizations, on a site whose whole thesis is that it is
           for learners.
 
           Six items rather than a "who it's for" menu because there is room: the
@@ -358,8 +361,8 @@ const year = new Date().getFullYear()
   transition: background 150ms ease;
 }
 /* The audience tints belong to the pages, not to the bar. Three links in three
-   colours reads as decoration and makes the nav look busier than it is; the
-   colour still appears, on hover and on the page you are actually on. */
+   colors reads as decoration and makes the nav look busier than it is; the
+   color still appears, on hover and on the page you are actually on. */
 .link-recruiter:hover, .link-recruiter.router-link-active {
   color: rgb(var(--color-recruiter));
   background: rgb(var(--color-recruiter) / 0.12);
@@ -371,14 +374,14 @@ const year = new Date().getFullYear()
 
 /* Current page. NuxtLink sets router-link-active plus aria-current="page", so
    the state is announced as well as shown. The pill is a shape, not just a
-   colour, which is what lets it carry the state without an underline as well. */
+   color, which is what lets it carry the state without an underline as well. */
 .nav-links a.router-link-active {
   font-weight: 700;
   color: rgb(var(--color-primary));
   background: rgb(var(--color-primary) / 0.14);
 }
 /* Qualified with `.nav-links a` to outrank the generic active rule above. Without
-   it the audience pill rendered in the brand indigo on the very page whose colour
+   it the audience pill rendered in the brand indigo on the very page whose color
    it exists to show. */
 .nav-links a.link-recruiter.router-link-active {
   color: rgb(var(--color-recruiter));

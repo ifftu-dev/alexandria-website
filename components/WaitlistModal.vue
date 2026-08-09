@@ -84,12 +84,20 @@ function onClick(event: MouseEvent) {
   /* `dialog:modal` already carries `inset: 0` from the UA sheet, so a width of
      100% over-constrains the box and collapses the auto margins — which pinned
      this to the top-left corner instead of centring it. An explicit width plus
-     `margin: auto` centres on both axes. */
+     `margin: auto` centers on both axes. */
   margin: auto;
   width: min(34rem, calc(100vw - 2rem));
-  max-height: calc(100dvh - 2rem);
-  overflow-y: auto;
-  overscroll-behavior: contain;
+
+  /* The scroll container is `.wl-box`, NOT this element, and that is the whole
+     fix for a scrollbar that flashed on every open. `.wl-box` animates in from
+     `translateY(8px)`; a transformed child still contributes to its parent's
+     scrollable overflow, so while the animation ran this box was 8px taller than
+     its own max-height, a scrollbar appeared, and it vanished again as the
+     transform resolved — measured at 6px decaying to 0 over ~100ms.
+     A scroller does not gain overflow from its own transform, so moving the
+     cap and the scrolling onto the box removes the flash without touching the
+     animation. */
+  overflow: visible;
 }
 .wl::backdrop {
   background: rgb(6 10 28 / 0.62);
@@ -103,6 +111,9 @@ function onClick(event: MouseEvent) {
 
 .wl-box {
   position: relative;
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background: rgb(var(--color-background));
   border: 1px solid rgb(var(--color-border));
   border-radius: 16px;

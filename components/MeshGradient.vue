@@ -10,7 +10,7 @@
 const props = withDefaults(defineProps<{
   /** rgb triplets, one per blob, e.g. '79,70,229' */
   blobs?: string[]
-  /** solid colour painted under the blobs */
+  /** solid color painted under the blobs */
   base?: string
 }>(), {
   blobs: () => ['79,70,229', '34,211,238', '244,114,182', '251,191,36', '16,185,129'],
@@ -47,7 +47,7 @@ const SEEDS = [
  * its own palette without a second source of truth. Stops mirror the canvas
  * (0.55/0.16/0 at 0/50/100%), pulled down slightly because CSS layers composite
  * normally where the canvas uses `lighter`: the canvas arriving should read as
- * the colour deepening, never as a jump.
+ * the color deepening, never as a jump.
  */
 const staticBackground = computed(() => {
   const layers = props.blobs.map((c, i) => {

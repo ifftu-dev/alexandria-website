@@ -51,7 +51,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: {
-        lang: 'en',
+        lang: 'en-US',
       },
       title: 'Alexandria — Free Learning, Credentials You Own',
       meta: [
@@ -83,7 +83,13 @@ export default defineNuxtConfig({
           // Runs before first paint so the theme is right on the first frame.
           // The announcement is a fixed-position toast now, so it no longer
           // needs hiding here to avoid moving the page.
-          innerHTML: `(function(){try{var d=document.documentElement;var t=localStorage.getItem('alexandria-theme')||'dark';if(t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme:dark)').matches))d.classList.add('dark')}catch(e){}})()`,
+          // Unset means `system`, and the test is for LIGHT rather than dark on
+          // purpose: `prefers-color-scheme` has a third state, `no-preference`,
+          // and asking "is it light?" makes dark the answer for both dark and
+          // no-preference. Keep this in step with `getSystemTheme` in
+          // composables/useTheme.ts — the two encode the same rule in different
+          // languages, and only this one runs before first paint.
+          innerHTML: `(function(){try{var d=document.documentElement;var t=localStorage.getItem('alexandria-theme')||'system';if(t==='dark'||(t==='system'&&!matchMedia('(prefers-color-scheme:light)').matches))d.classList.add('dark')}catch(e){}})()`,
           type: 'text/javascript',
         },
         {

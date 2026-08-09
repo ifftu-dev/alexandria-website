@@ -69,7 +69,7 @@ interface AssetMatch {
   release: GitHubRelease
 }
 
-/** First matching asset in one release, honouring matcher priority. */
+/** First matching asset in one release, honoring matcher priority. */
 function matchAsset(assets: GitHubAsset[], platform: DownloadInfo['platform'], arch: DownloadInfo['arch']): GitHubAsset | null {
   const patterns = ASSET_MATCHERS[`${platform}-${arch}`]
   if (!patterns) return null
