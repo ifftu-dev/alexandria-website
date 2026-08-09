@@ -246,7 +246,7 @@ const featuresOpen = ref(false)
              and an em dash starting a line reads as a typo. The second is not
              also bound backwards — "recognition — free, forever." as one
              unbreakable run is wider than a 390px viewport. -->
-        <h1>An honest attempt at making education&nbsp;— and its recognition —&nbsp;<em>free, forever.</em></h1>
+        <h1>An honest attempt to make education&nbsp;— and its recognition —&nbsp;<em>free, forever.</em></h1>
         <p class="hero-lede">
           Learning became free. Recognition did not. Alexandria is a free, open-source learning app
           for every device — and a credential you own outright, that anyone can verify, anywhere,
