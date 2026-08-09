@@ -15,6 +15,21 @@
 /classroom/*  /app-open.html   200
 /open         /app-open.html   200
 
+# www -> apex. There is no DNS record for www.alexandria.ifftu.dev today, so
+# anything typed or shared with the www prefix simply fails to resolve — no
+# server is reached and no redirect can run. That includes link unfurlers: a
+# social crawler handed the www form gets nothing back and renders no card.
+#
+# This rule is therefore INERT until the hostname is added as a domain alias in
+# Netlify. It is here so that the moment it is, www 301s to the apex rather than
+# serving the same pages under a second hostname — which would split the
+# canonical, exactly the contradiction the IFFTU site had in reverse.
+#
+# Host-level rules need the full origin on the left; a bare /* would match the
+# apex too and loop. The trailing ! forces the rule even where a static file
+# would otherwise be served.
+https://www.alexandria.ifftu.dev/*  https://alexandria.ifftu.dev/:splat  301!
+
 # The old card was a 200 KB PNG carrying the previous site's design and copy
 # ("decentralized", "blockchain-verified credentials"). Anything that already
 # scraped that URL should land on the current card rather than a 404.
