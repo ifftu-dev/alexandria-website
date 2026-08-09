@@ -1,10 +1,20 @@
 type Theme = 'light' | 'dark' | 'system'
 
-const theme = ref<Theme>('dark')
+/**
+ * Unset follows the operating system, and falls back to dark.
+ *
+ * The pre-paint script in nuxt.config.ts encodes the same rule and is the one
+ * that actually decides the first frame; this has to agree with it or the page
+ * flips after hydration.
+ */
+const theme = ref<Theme>('system')
 
 function getSystemTheme(): 'light' | 'dark' {
-  if (import.meta.server) return 'light'
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  // Dark on the server so SSR matches the pre-paint default rather than
+  // flashing, and the query asks for light because `prefers-color-scheme` has a
+  // third state — `no-preference` — which should land on dark, not light.
+  if (import.meta.server) return 'dark'
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
 }
 
 function applyTheme(value: Theme) {
