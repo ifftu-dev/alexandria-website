@@ -22,7 +22,7 @@ const waitlist = useWaitlist()
 useHead({
   title: 'Why recognition — Alexandria',
   meta: [
-    { name: 'description', content: 'Free learning already exists; it was never enough. The research behind the recognition gap, our own projections labeled as projections, and the two claims we cannot yet evidence.' },
+    { name: 'description', content: 'Free learning already exists; it was never enough. The research behind the recognition gap, and the two claims we cannot yet evidence.' },
     { property: 'og:title', content: 'Why recognition — Alexandria' },
     { property: 'og:description', content: 'Free learning already exists. It was never enough. The evidence, and what we still cannot prove.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/why-recognition' },

@@ -20,7 +20,7 @@ const GITHUB = 'https://github.com/ifftu-dev/alexandria'
 useHead({
   title: 'Privacy — Alexandria',
   meta: [
-    { name: 'description', content: 'We designed the product so there would be very little to write here. No account, no server-side record of your learning, no advertising, and no trackers on this site.' },
+    { name: 'description', content: 'Very little to write here by design. No account, no server-side record of your learning, no advertising, and no trackers on this site.' },
     { property: 'og:title', content: 'Privacy — Alexandria' },
     { property: 'og:description', content: 'Mostly a description of data we never receive in the first place.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/privacy' },

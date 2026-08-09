@@ -20,7 +20,7 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'For employers — Alexandria',
   meta: [
-    { name: 'description', content: 'A resume is a claim. An Alexandria credential is a signed record of an assessment you can open, inspect and verify yourself — without asking us, and without taking the candidate’s word for it.' },
+    { name: 'description', content: 'A resume is a claim. An Alexandria credential is a signed record of an assessment you can open, inspect and verify yourself — without asking us.' },
     { property: 'og:title', content: 'For employers — Alexandria' },
     { property: 'og:description', content: 'Hire verified talent, not resumes. Verify credentials independently, with candidate consent.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/employers' },

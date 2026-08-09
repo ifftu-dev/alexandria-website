@@ -93,6 +93,14 @@ CARDS = [
     ('privacy', INDIGO, 'Privacy',
      'Very little to write here.',
      'Mostly a description of data we never receive, because the app runs on your device.'),
+    # /blog and the announcement post both fell back to home.jpg, so anything
+    # shared from the blog previewed as the homepage.
+    ('blog', INDIGO, 'Blog',
+     'Building in the open.',
+     'Announcements, progress and essays — what we are doing, what changed, and what we got wrong.'),
+    ('blog-introducing-alexandria', INDIGO, 'Announcement',
+     'Introducing Alexandria.',
+     'An honest attempt to make knowledge — and its recognition — truly free. For everyone. Forever.'),
 ]
 
 # Per theme: page ink, secondary ink, scrim over the blobs, chip border.

@@ -25,6 +25,16 @@ const html = post ? post.html.replace(/<table>/g, '<div class="art-tablewrap"><t
 
 const url = `https://alexandria.ifftu.dev/blog/${post.slug}`
 
+/**
+ * A card per post where one has been generated (scripts/generate-og.py names
+ * them `blog-<slug>`), falling back to the blog card rather than the homepage —
+ * sharing a post used to preview as the front page.
+ */
+const OG_POSTS = new Set(['introducing-alexandria'])
+const ogImage = OG_POSTS.has(post.slug)
+  ? `https://alexandria.ifftu.dev/og/blog-${post.slug}.jpg`
+  : 'https://alexandria.ifftu.dev/og/blog.jpg'
+
 const body = ref<HTMLElement | null>(null)
 const progress = ref(0)
 const activeHeading = ref('')
@@ -79,8 +89,12 @@ useHead({
     { property: 'og:url', content: url },
     { property: 'article:published_time', content: post.date },
     { property: 'article:author', content: post.author },
+    { property: 'og:image', content: ogImage },
+    { property: 'og:image:alt', content: `${post.title} — Alexandria` },
     { name: 'twitter:title', content: post.title },
     { name: 'twitter:description', content: post.description },
+    { name: 'twitter:image', content: ogImage },
+    { name: 'twitter:image:alt', content: `${post.title} — Alexandria` },
   ],
   link: [{ rel: 'canonical', href: url }],
   script: [

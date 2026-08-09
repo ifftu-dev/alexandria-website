@@ -4,7 +4,7 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'Partners and public programs — Alexandria',
   meta: [
-    { name: 'description', content: 'Offline-first learning, multilingual delivery and portable credentials for governments, workforce programs, NGOs and foundations working where connectivity and recognition are hardest.' },
+    { name: 'description', content: 'Offline-first learning, multilingual delivery and portable credentials for governments, NGOs and foundations working where access is hardest.' },
     { property: 'og:title', content: 'Partners and public programs — Alexandria' },
     { property: 'og:description', content: 'Portable learning infrastructure for programs working where access is hardest.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/partners' },

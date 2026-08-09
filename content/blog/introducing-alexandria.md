@@ -5,7 +5,7 @@ date: 2026-07-31
 author: Pratyush Pundir
 readingTime: 10 min read
 kind: Announcement
-description: Announcing and open-sourcing Alexandria — a desktop and mobile application that turns every device into a full node in a decentralized education network, with verifiable, learner-owned credentials.
+description: Announcing and open-sourcing Alexandria — a desktop and mobile app turning every device into a full node in a decentralized education network.
 ---
 
 I'm publicly announcing and open-sourcing

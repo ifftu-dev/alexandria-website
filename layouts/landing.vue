@@ -1,5 +1,8 @@
 <script setup lang="ts">
 useTheme()
+// Organization, WebSite and breadcrumbs on every page — 11 of 13 had no
+// structured data at all before this.
+useSiteSchema()
 
 const mobileMenuOpen = ref(false)
 function closeMobileMenu() { mobileMenuOpen.value = false }

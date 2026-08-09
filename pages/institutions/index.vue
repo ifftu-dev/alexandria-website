@@ -21,7 +21,7 @@ const GITHUB_URL = 'https://github.com/ifftu-dev/alexandria'
 useHead({
   title: 'For institutions — Alexandria',
   meta: [
-    { name: 'description', content: 'An open-source learning platform you can host yourself, mapped to a public skill graph, issuing credentials your students own outright and can prove anywhere — long after they have left you.' },
+    { name: 'description', content: 'An open-source learning platform you can host yourself, issuing credentials your students own outright and can prove anywhere — long after they leave you.' },
     { property: 'og:title', content: 'For institutions — Alexandria' },
     { property: 'og:description', content: 'Your LMS. Their credentials. Free self-hosted tier, MIT core, no vendor lock-in.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/institutions' },
