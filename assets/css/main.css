@@ -824,11 +824,24 @@ svg { flex-shrink: 0; }
 .sync { display: flex; align-items: center; gap: 9px; margin-top: 12px; font-size: 10.5px; color: rgb(var(--color-muted-foreground)); }
 .sync-line { flex: 1; height: 2px; border-radius: 99px; background: rgb(var(--color-border)); position: relative; overflow: hidden; }
 .sync-line i {
-  position: absolute; inset-block: 0; width: 34%; border-radius: 99px;
+  position: absolute; inset-block: 0; left: 0; width: 34%; border-radius: 99px;
   background: linear-gradient(90deg, transparent, rgb(var(--tint)), transparent);
   animation: sync-slide 3.6s ease-in-out infinite;
+  will-change: transform;
 }
-@keyframes sync-slide { 0% { left: -34%; } 100% { left: 100%; } }
+/* `transform`, not `left`. This runs forever on the home page, and animating an
+   inset property re-runs layout on every frame — Lighthouse names this element
+   under "non-composited animations" for exactly that reason.
+
+   The percentages differ because they are measured against different boxes: an
+   inset percentage is of the PARENT's width, a translate percentage is of the
+   ELEMENT's own. The element is 34% of the parent, so parent -34% is one element
+   width (-100%) and parent 100% is 100/34 element widths (294.118%). Same
+   motion, on the compositor. */
+@keyframes sync-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(294.118%); }
+}
 
 /* instructor impact distribution */
 .dist { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }

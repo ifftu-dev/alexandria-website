@@ -233,6 +233,7 @@ const year = new Date().getFullYear()
         <aside v-if="showToast" class="toast" aria-label="Announcement">
           <NuxtLink
             :to="ANNOUNCEMENT_POST"
+            :prefetch="false"
             class="plausible-event-name=Announcement toast-link"
             @click="dismissToast"
           >

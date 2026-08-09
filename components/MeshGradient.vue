@@ -136,8 +136,24 @@ onMounted(() => {
     ctx!.globalCompositeOperation = 'source-over'
   }
 
+  /**
+   * Capped at ~30fps. The DPR cap above bounded how many pixels each frame
+   * costs; this bounds how many frames there are. Five viewport-sized radial
+   * gradients is fill-rate-bound work, and Rendering was the largest single
+   * group on the main thread.
+   *
+   * Motion is unaffected: `paint` advances by real elapsed time, so the drift
+   * moves at the same speed whatever the frame rate — and at DRIFT this slow
+   * there is nothing at 60fps that is not at 30.
+   */
+  const FRAME_MS = 1000 / 30
+  let painted = 0
+
   function draw(now = 0) {
-    paint(now)
+    if (now - painted >= FRAME_MS || !painted) {
+      painted = now
+      paint(now)
+    }
     raf = requestAnimationFrame(draw)
   }
 
