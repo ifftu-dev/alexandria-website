@@ -60,8 +60,12 @@ WARM = ['251,191,36', '244,114,182', '79,70,229', '34,211,238', '16,185,129']
 # (route stem, blob palette, eyebrow, title, subtitle)
 # Titles are the pages' own h1s, trimmed only where 72px over 18ch would not fit.
 CARDS = [
+    # Mirrors the hero h1 and lede on the home page. The old headline here read
+    # "Education, and its recognition — free, forever.", which was the hero copy
+    # before it changed — so every share preview carried a sentence the page no
+    # longer says.
     ('home', INDIGO, 'Alpha · waiting list open',
-     'Education, and its recognition — free, forever.',
+     'An honest attempt to make education — and its recognition — free, forever.',
      'Learning became free. Recognition did not. A credential you own outright, that anyone can verify.'),
     ('why-recognition', INDIGO, 'The evidence',
      'Free learning already exists. It was never enough.',
@@ -103,6 +107,28 @@ CARDS = [
      'An honest attempt to make knowledge — and its recognition — truly free. For everyone. Forever.'),
 ]
 
+def title_size(title: str) -> int:
+    """Headline size, chosen from the title's length.
+
+    This used to be a flat 72px, which capped a usable headline at about three
+    lines: anything longer ran past the bottom of the 630px card and clipped the
+    footer. That forced card headlines to be trimmed away from the wording the
+    page actually uses, and the home card drifted out of step with its own hero
+    that way.
+
+    Length is a fair proxy for line count here because the measure is capped at
+    18ch, so a longer string wraps rather than widening. Thresholds are set from
+    the longest title in CARDS; a new one past 78 characters should be checked by
+    eye rather than assumed to fit.
+    """
+    n = len(title)
+    if n <= 50:
+        return 72
+    if n <= 64:
+        return 62
+    return 54
+
+
 # Per theme: page ink, secondary ink, scrim over the blobs, chip border.
 THEME = {
     'dark': {
@@ -141,6 +167,7 @@ def gradients(blobs, theme: str) -> str:
 def html(card, theme: str, fonts: dict) -> str:
     _stem, blobs, eyebrow, title, sub = card
     t = THEME[theme]
+    title_px = title_size(title)
     return f"""<!doctype html>
 <meta charset="utf-8">
 <style>
@@ -170,7 +197,7 @@ def html(card, theme: str, fonts: dict) -> str:
   }}
   h1 {{
     font-family: 'Newsreader', Georgia, serif;
-    font-size: 72px; font-weight: 300; line-height: 1.04; letter-spacing: -0.018em;
+    font-size: {title_px}px; font-weight: 300; line-height: 1.04; letter-spacing: -0.018em;
     color: {t['ink']}; max-width: 18ch;
   }}
   p {{ margin-top: 22px; font-size: 24px; line-height: 1.45; color: {t['ink2']}; max-width: 36ch; }}

@@ -50,6 +50,26 @@
   descent-override: 26%;
   line-gap-override: 0%;
 }
+/* The italic needs its own fallback face. Without one, an italic run falls back
+   to Georgia carrying the ROMAN metrics above, and Georgia Italic is narrower
+   than Georgia — so the hero h1, which ends in an italic phrase, measured one
+   width before `newsreader-italic.woff2` landed and another after. That re-wrap
+   moved everything below the hero: Lighthouse attributed 0.099 of layout shift
+   to it, cause "Web font loaded", on an element 585px down the page.
+
+   80.3% is measured, not guessed: "free, forever." set at 100px is 464.7px in
+   Newsreader Italic and 578.4px in Georgia Italic, so the fallback has to be
+   scaled to 80.3% to occupy the same width. Reusing the roman's 96% here made
+   the shift worse (0.099 -> 0.102), which is how the mismatch was found. */
+@font-face {
+  font-family: 'Newsreader Fallback';
+  font-style: italic;
+  src: local('Georgia Italic'), local('Georgia-Italic'), local('Georgia');
+  size-adjust: 80.3%;
+  ascent-override: 96%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
 
 @font-face {
   font-family: 'Newsreader Variable';
