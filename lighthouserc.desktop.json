@@ -1,0 +1,71 @@
+{
+  "//": [
+    "Lighthouse CI \u2014 desktop. Same construction as lighthouserc.mobile.json; read",
+    "the note there for why the budgets sit above the measured values.",
+    "",
+    "Measured median-of-3 at the time of writing:",
+    "",
+    "    /   FCP 608  LCP 688  SI 608  TBT 0  CLS 0.013",
+    "",
+    "Desktop timings are small enough that runner noise is a large fraction of",
+    "them, so the multiplier here is 2x rather than mobile's 1.6x."
+  ],
+  "ci": {
+    "collect": {
+      "startServerCommand": "npx --yes serve dist -l 4199",
+      "startServerReadyPattern": "Accepting connections",
+      "url": [
+        "http://localhost:4199/",
+        "http://localhost:4199/learners"
+      ],
+      "numberOfRuns": 3,
+      "settings": {
+        "preset": "desktop",
+        "chromeFlags": "--no-sandbox --headless=new"
+      }
+    },
+    "assert": {
+      "assertions": {
+        "first-contentful-paint": [
+          "error",
+          {
+            "maxNumericValue": 1500,
+            "aggregationMethod": "median"
+          }
+        ],
+        "largest-contentful-paint": [
+          "error",
+          {
+            "maxNumericValue": 1700,
+            "aggregationMethod": "median"
+          }
+        ],
+        "speed-index": [
+          "error",
+          {
+            "maxNumericValue": 1500,
+            "aggregationMethod": "median"
+          }
+        ],
+        "total-blocking-time": [
+          "error",
+          {
+            "maxNumericValue": 150,
+            "aggregationMethod": "median"
+          }
+        ],
+        "cumulative-layout-shift": [
+          "error",
+          {
+            "maxNumericValue": 0.1,
+            "aggregationMethod": "median"
+          }
+        ]
+      }
+    },
+    "upload": {
+      "target": "filesystem",
+      "outputDir": ".lighthouseci/reports"
+    }
+  }
+}
