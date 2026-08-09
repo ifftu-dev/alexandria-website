@@ -234,6 +234,33 @@ svg { flex-shrink: 0; }
   }
 }
 
+/* ─── Off-screen sections ──────────────────────────────
+   The home page is 13,400px tall on a phone and only the hero is above the
+   fold, so the browser lays out and paints roughly 10,600px nobody has asked
+   to see yet. `content-visibility: auto` lets it skip that until a section
+   nears the viewport.
+
+   `contain-intrinsic-size: auto 800px` is the placeholder height used before a
+   section has ever been rendered. The `auto` keyword is what makes this safe:
+   once a section HAS been rendered the browser remembers its real size and uses
+   that instead, so the scroll height settles after one pass rather than
+   springing every time a section is recycled. Measured section heights run
+   441-1298px, so 800px is a middle estimate and only matters on first paint.
+
+   From the third section onward. The hero and the band under it are visible or
+   nearly visible on load, and skipping work for something about to be shown
+   costs more than it saves.
+
+   This does not risk CLS the way the earlier client-only replica did: shifts
+   below the viewport are not counted, and `auto` stops the remembered sizes
+   from drifting. The measurement is in the commit message either way. */
+@supports (content-visibility: auto) {
+  main > div > section:nth-of-type(n + 3) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
+  }
+}
+
 /* ─── Layout helpers ───────────────────────────────────── */
 .pad { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
 @media (max-width: 600px) { .pad { padding: 0 16px; } }
