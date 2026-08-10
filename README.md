@@ -426,6 +426,6 @@ netlify dev          # also runs the waiting-list function
 
 ## License
 
-Copyright © 2025-2026 IFFTU Pvt. Ltd. See [LICENSE](./LICENSE) for terms.
+Copyright © 2025-2026 Alexandria Pvt. Ltd. See [LICENSE](./LICENSE) for terms.
 
 The Alexandria product is owned by Alexandria Pvt. Ltd.; the app's core is MIT-licensed with enterprise modules under the IFFTU Enterprise License, which is what the site footer states.
