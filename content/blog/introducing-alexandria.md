@@ -176,9 +176,10 @@ governance contracts — see the [Protocol Specification](https://github.com/iff
 ## What I'm Releasing
 
 **[The codebase](https://github.com/ifftu-dev/alexandria)** — Pretty self-explanatory.
-Everything, *except enterprise features*, is open-sourced under the expat MIT license.
-
-> *Editor's note (August 2026): Alexandria is now licensed under the [GNU AGPL v3](https://github.com/ifftu-dev/alexandria/blob/main/LICENSE.md), and there are no longer any enterprise features inside the repository — the whole app is copyleft-licensed and the commercial layer is a separate service. MIT allowed anyone to take the work and close it; the AGPL does not.*
+All of it, open-sourced under the [GNU AGPL v3](https://github.com/ifftu-dev/alexandria/blob/main/LICENSE.md).
+Not a permissive license: anyone who runs a modified Alexandria as a service has to
+publish their changes too. Taking this work and closing it is the one thing the license
+does not permit.
 
 **[Vision Paper](https://github.com/ifftu-dev/alexandria/blob/main/docs/vision.md)** — A
 document explaining the motivation, the design, and why this matters for learners,
