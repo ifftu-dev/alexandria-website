@@ -156,7 +156,7 @@ const practice = [
         <div>
           <p class="pv-c-k">Read the code</p>
           <p><a :href="GITHUB" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub">github.com/ifftu-dev/alexandria</a></p>
-          <p class="pv-c-s">Core under the MIT License.</p>
+          <p class="pv-c-s">Core under the GNU AGPL v3.</p>
         </div>
         <div>
           <p class="pv-c-k">How the design works</p>

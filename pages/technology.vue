@@ -37,7 +37,7 @@ const chips = [
   { label: 'W3C Verifiable Credentials', state: 'alpha' as const },
   { label: 'did:key · Ed25519', state: 'alpha' as const },
   { label: 'Cardano anchoring', state: 'building' as const },
-  { label: 'MIT core', state: 'alpha' as const },
+  { label: 'AGPL core', state: 'alpha' as const },
 ]
 
 const identity = [

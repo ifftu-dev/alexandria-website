@@ -23,7 +23,7 @@ useHead({
   meta: [
     { name: 'description', content: 'An open-source learning platform you can host yourself, issuing credentials your students own outright and can prove anywhere — long after they leave you.' },
     { property: 'og:title', content: 'For institutions — Alexandria' },
-    { property: 'og:description', content: 'Your LMS. Their credentials. Free self-hosted tier, MIT core, no vendor lock-in.' },
+    { property: 'og:description', content: 'Your LMS. Their credentials. Free self-hosted tier, AGPL core, no vendor lock-in.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/institutions' },
     { property: 'og:image', content: 'https://alexandria.ifftu.dev/og/institutions.jpg' },
     { property: 'og:image:alt', content: 'For institutions — your LMS, their credentials.' },
@@ -38,7 +38,7 @@ useHead({
 const fourPoints = [
   { t: 'Free self-hosted tier', b: 'Run the whole platform on your own infrastructure at no cost, forever.' },
   { t: 'Skill-mapped curriculum', b: 'Your modules tie to public skill nodes with explicit prerequisites and levels.' },
-  { t: 'Zero lock-in', b: 'MIT-licensed core. Your data is yours; fork it if we ever disappoint you.' },
+  { t: 'Zero lock-in', b: 'AGPL-licensed core. Your data is yours; fork it if we ever disappoint you.' },
   { t: 'Students own the proof', b: 'Credentials issued under your authority, held by the student, verifiable anywhere.' },
 ]
 
@@ -83,7 +83,7 @@ const tiers = [
           <a :href="GITHUB_URL" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub btn-ghost">Self-host it</a>
         </div>
         <p class="i-prenote">
-          Free self-hosted tier, permanently. MIT core, no vendor lock-in, no per-student license.
+          Free self-hosted tier, permanently. AGPL core, no vendor lock-in, no per-student license.
         </p>
       </div>
     </section>
@@ -150,10 +150,11 @@ const tiers = [
       <div class="i-split">
         <div class="t-prose">
           <p>
-            The core is MIT-licensed and the free tier is not a trial — it is the whole platform, on
+            The core is AGPL-licensed and the free tier is not a trial — it is the whole platform, on
             your servers, with no student cap. Paid tiers exist for institutions that want us to
-            operate it, integrate it, or support it under contract. Enterprise modules sit under a
-            separate license; nothing you rely on to teach does.
+            operate it, integrate it, or support it under contract. Enterprise features are a
+            separate service entirely, not a locked part of this one; nothing you rely on to teach
+            sits behind them.
           </p>
           <p>
             Whichever you choose, the credential your students walk away with is identical — and it

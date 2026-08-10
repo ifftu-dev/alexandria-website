@@ -188,7 +188,7 @@ const worksToday = [
   'Learning, assessment and credentials, in the alpha, on five platforms',
   'Credentials that verify with no account and no network — including on this site',
   'Nine languages on three continents — English, Chinese, Spanish, French, Hindi, Urdu, Telugu, Marathi and Bengali',
-  'An MIT-licensed core, public and forkable today',
+  'An AGPL-licensed core, public and forkable today',
 ]
 
 const notYet = [
@@ -329,7 +329,7 @@ const featuresOpen = ref(false)
           <div class="proof-metrics">
             <div><div class="n">Offline</div><div class="l">Verification needs no network</div></div>
             <div><div class="n">0</div><div class="l">Calls to Alexandria required</div></div>
-            <div><div class="n">MIT</div><div class="l">Core license, forever</div></div>
+            <div><div class="n">AGPL</div><div class="l">Core license, forever</div></div>
           </div>
           <p style="margin-top: 24px">
             <a
@@ -599,9 +599,10 @@ const featuresOpen = ref(false)
           <StatusChip state="alpha" label="Real today" />
           <h3>A fork always exists</h3>
           <p>
-            The core is MIT-licensed. If we ever betrayed this, the work could be taken and run by
-            anyone, without our permission and without our cooperation. That is a floor, not a
-            ceiling — but it is a real one, and you can check it.
+            The core is AGPL-licensed. If we ever betrayed this, the work could be taken and run by
+            anyone, without our permission and without our cooperation — and because the licence is
+            copyleft, whoever picks it up has to keep it open too. That is a floor, not a ceiling —
+            but it is a real one, and you can check it.
           </p>
           <a
             href="https://github.com/ifftu-dev/alexandria/blob/main/LICENSE.md"
@@ -745,7 +746,7 @@ const featuresOpen = ref(false)
           <b>What we can claim</b><span>Security and compliance, dated</span>
         </NuxtLink>
         <a href="https://github.com/ifftu-dev/alexandria" target="_blank" rel="noopener noreferrer" class="trust-item plausible-event-name=CTA-GitHub">
-          <b>Read the source</b><span>MIT core, enterprise modules separate</span>
+          <b>Read the source</b><span>AGPL core, enterprise in a separate repo</span>
         </a>
       </div>
     </section>

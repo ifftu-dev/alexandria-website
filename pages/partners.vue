@@ -22,7 +22,7 @@ const fits = [
   { title: 'Where connectivity is intermittent', body: 'Courses download and assessments run on the device. A learner who is offline for a week loses nothing, and syncs when they can.', state: 'alpha' as const },
   { title: 'Where recognition does not travel', body: 'A credential signed under the learner’s own key is checkable by an employer in another country, another system, or ten years later.', state: 'alpha' as const },
   { title: 'Where the language is not English', body: 'Nine languages today, across Europe, South Asia and East Asia. Adding one is translation work, not engineering work.', state: 'alpha' as const },
-  { title: 'Where the program must outlive the vendor', body: 'The core is MIT-licensed and self-hostable. If we disappear, the deployment and every credential it issued keep working.', state: 'alpha' as const },
+  { title: 'Where the program must outlive the vendor', body: 'The core is AGPL-licensed and self-hostable. If we disappear, the deployment and every credential it issued keep working.', state: 'alpha' as const },
 ]
 </script>
 
