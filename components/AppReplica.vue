@@ -28,10 +28,17 @@ const omniInput = ref<HTMLInputElement | null>(null)
  * the default learner — the app is meant for anyone, and one hard-coded name says
  * otherwise. Priya is first because the prerendered HTML ships that frame, and the
  * cycling only starts once the client has hydrated.
+ *
+ * Ramlal, Lakshmi, Muthu, Sunita, Gopal and Kamla are here deliberately: village
+ * names, not the metropolitan Indian names a marketing site defaults to. The
+ * learner this app is built for is likelier to be in a district town than a
+ * tier-one city, and the shell should say so. No two sit next to each other in
+ * the order, so the rotation reads as the world rather than one country.
  */
 const NAMES = [
-  'Priya', 'Wei', 'María', 'Mohammed', 'Yuki', 'Amara',
-  'Sofia', 'Ivan', 'Linh', 'Fatima', 'Thabo', 'Lucas',
+  'Priya', 'Wei', 'María', 'Ramlal', 'Mohammed', 'Yuki',
+  'Lakshmi', 'Amara', 'Sofia', 'Muthu', 'Ivan', 'Linh',
+  'Sunita', 'Fatima', 'Thabo', 'Gopal', 'Lucas', 'Kamla',
 ] as const
 
 const nameIndex = ref(0)
