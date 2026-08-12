@@ -6,9 +6,10 @@ Marketing website for [Alexandria](https://github.com/ifftu-dev/alexandria) — 
 
 **Live at [alexandria.ifftu.dev](https://alexandria.ifftu.dev)**
 
-> **This branch collects waiting-list signups instead of offering downloads.**
-> `feat/site-redesign` is the same site with platform-detected download buttons,
-> for when the alpha opens to everyone. The two differ only in what the CTA asks for.
+> **The site collects waiting-list signups instead of offering downloads.**
+> When the alpha opens to everyone, the CTA becomes a platform-detected download
+> button — `usePlatform` and `useDownload` are already here for it. That swap is the
+> only thing standing between this site and the one that ships builds.
 
 ## Stack
 
@@ -91,7 +92,7 @@ deployed this yet" are meant to be there.
 
 | Component | What it is |
 | :--- | :--- |
-| `AppReplica.vue` | Interactive recreation of the Alexandria desktop shell, built from the app's own tokens and component CSS. Navigates, searches (`/` or `⌘K`), verifies a credential, casts a vote. Collapses to the app's four-tab mobile layout via a container query on the window itself |
+| `AppReplica.vue` | Interactive recreation of the Alexandria desktop shell, built from the app's own tokens and component CSS. Navigates, searches (`/` or `⌘K`), verifies a credential, casts a vote. Collapses to the app's four-tab mobile layout via a container query on the window itself. The learner it is signed in as cycles through twelve names from as many regions, so no one place reads as the default; reduced motion keeps the rotation and cuts the slide |
 | `SkillGraph.vue` | The app's sidebar skill graph — force-directed canvas, same status colors and Bloom-scaled radii as `SidebarSkillGraph.vue` |
 | `MeshGradient.vue` | Animated gradient behind every hero and CTA band. Time-based, so drift is identical at 60 Hz and 120 Hz; pauses off-screen; static under `prefers-reduced-motion` |
 | `StatusChip.vue` | One label for how real a thing is — `alpha` / `building` / `planned` / `sample`. Used wherever a capability, price or demo is described, because mixing shipped features with roadmap items makes the credible parts inherit the doubt of the speculative ones |
