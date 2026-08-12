@@ -23,6 +23,21 @@ const omniOpen = ref(false)
 const omniQuery = ref('')
 const omniInput = ref<HTMLInputElement | null>(null)
 
+/**
+ * The person the replica is signed in as. It cycles so no single region reads as
+ * the default learner — the app is meant for anyone, and one hard-coded name says
+ * otherwise. Priya is first because the prerendered HTML ships that frame, and the
+ * cycling only starts once the client has hydrated.
+ */
+const NAMES = [
+  'Priya', 'Wei', 'María', 'Mohammed', 'Yuki', 'Amara',
+  'Sofia', 'Ivan', 'Linh', 'Fatima', 'Thabo', 'Lucas',
+] as const
+
+const nameIndex = ref(0)
+const learner = computed(() => NAMES[nameIndex.value]!)
+const initial = computed(() => learner.value.slice(0, 1).toUpperCase())
+
 const verified = reactive<Record<string, 'idle' | 'checking' | 'done'>>({})
 const vote = ref<'for' | 'against' | 'abstain' | null>(null)
 const toast = ref('')
@@ -167,12 +182,43 @@ function onKeydown(e: KeyboardEvent) {
   openOmni()
 }
 
+/**
+ * Advance the name roughly once a second. The hero is often on screen for only a
+ * few seconds, and a name that turns over slowly reads as a hard-coded one to
+ * anybody who does not stay — the whole point is that it visibly is not.
+ *
+ * Reduced motion keeps the rotation and drops the animation: the name still
+ * turns over, it just cuts rather than slides. It pauses in a background tab,
+ * where the repaint buys nothing anyone can see.
+ */
+let nameTimer: ReturnType<typeof setInterval> | null = null
+
+function stopNames() {
+  if (nameTimer) { clearInterval(nameTimer); nameTimer = null }
+}
+
+function startNames() {
+  if (nameTimer || document.hidden) return
+  nameTimer = setInterval(() => {
+    nameIndex.value = (nameIndex.value + 1) % NAMES.length
+  }, 1100)
+}
+
+function onVisibility() {
+  if (document.hidden) stopNames()
+  else startNames()
+}
+
 onMounted(() => {
   show('home')
   window.addEventListener('keydown', onKeydown)
+  document.addEventListener('visibilitychange', onVisibility)
+  startNames()
 })
 onUnmounted(() => {
   window.removeEventListener('keydown', onKeydown)
+  document.removeEventListener('visibilitychange', onVisibility)
+  stopNames()
   if (toastTimer) clearTimeout(toastTimer)
 })
 </script>
@@ -203,7 +249,9 @@ onUnmounted(() => {
 
       <div class="tb-right">
         <span class="tb-net"><i />Connected</span>
-        <button class="tb-av" type="button" title="Priya · local profile" @click="say('Local profile — nothing stored on a server')">P</button>
+        <button class="tb-av" type="button" :title="`${learner} · local profile`" @click="say('Local profile — nothing stored on a server')">
+          <Transition name="nm" mode="out-in"><span :key="initial">{{ initial }}</span></Transition>
+        </button>
       </div>
     </div>
 
@@ -267,7 +315,7 @@ onUnmounted(() => {
       <main class="main">
         <!-- HOME -->
         <section v-if="screen === 'home'" class="scr">
-          <p class="greet">Good evening, Priya</p>
+          <p class="greet">Good evening, <Transition name="nm" mode="out-in"><span :key="learner" class="greet-name">{{ learner }}</span></Transition></p>
           <p class="greet-sub">3 peers nearby are sharing courses you follow</p>
 
           <button type="button" class="card resume" @click="say('Opens the lesson player — full-bleed, works offline')">
@@ -676,6 +724,16 @@ button { font-family: inherit; }
 .scr { animation: screen-in 280ms cubic-bezier(0.22, 1, 0.36, 1) both; }
 @keyframes screen-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .greet { font-size: 1.375rem; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 0.2rem; }
+/* The name swaps in place: inline-block so the transform applies, and opacity and
+   transform only, so the swap composites rather than reflowing the line. */
+.greet-name { display: inline-block; }
+.nm-enter-active, .nm-leave-active { transition: opacity 180ms ease, transform 180ms ease; }
+.nm-enter-from { opacity: 0; transform: translateY(0.3em); }
+.nm-leave-to { opacity: 0; transform: translateY(-0.3em); }
+@media (prefers-reduced-motion: reduce) {
+  .nm-enter-active, .nm-leave-active { transition: none; }
+  .nm-enter-from, .nm-leave-to { transform: none; }
+}
 .greet-sub { font-size: 0.8125rem; color: rgb(var(--app-muted-foreground)); margin: 0 0 1.1rem; }
 .hint { font-size: 0.6875rem; color: rgb(var(--app-muted-foreground)); margin: 0.55rem 0 0; }
 
