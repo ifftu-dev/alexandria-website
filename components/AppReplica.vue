@@ -32,13 +32,18 @@ const omniInput = ref<HTMLInputElement | null>(null)
  * Ramlal, Lakshmi, Muthu, Sunita, Gopal and Kamla are here deliberately: village
  * names, not the metropolitan Indian names a marketing site defaults to. The
  * learner this app is built for is likelier to be in a district town than a
- * tier-one city, and the shell should say so. No two sit next to each other in
- * the order, so the rotation reads as the world rather than one country.
+ * tier-one city, and the shell should say so. Haripada and Anima are Bengali,
+ * Jagabandhu and Basanti Odia — two states whose names a pan-Indian list of the
+ * usual sort leaves out entirely.
+ *
+ * The order alternates Indian and non-Indian throughout, so a rotation that is
+ * half one country still reads as the world.
  */
 const NAMES = [
-  'Priya', 'Wei', 'María', 'Ramlal', 'Mohammed', 'Yuki',
-  'Lakshmi', 'Amara', 'Sofia', 'Muthu', 'Ivan', 'Linh',
-  'Sunita', 'Fatima', 'Thabo', 'Gopal', 'Lucas', 'Kamla',
+  'Priya', 'Wei', 'Haripada', 'María', 'Ramlal', 'Mohammed',
+  'Lakshmi', 'Yuki', 'Basanti', 'Amara', 'Muthu', 'Sofia',
+  'Anima', 'Ivan', 'Sunita', 'Linh', 'Jagabandhu', 'Fatima',
+  'Gopal', 'Thabo', 'Kamla', 'Lucas',
 ] as const
 
 const nameIndex = ref(0)

@@ -92,7 +92,7 @@ deployed this yet" are meant to be there.
 
 | Component | What it is |
 | :--- | :--- |
-| `AppReplica.vue` | Interactive recreation of the Alexandria desktop shell, built from the app's own tokens and component CSS. Navigates, searches (`/` or `⌘K`), verifies a credential, casts a vote. Collapses to the app's four-tab mobile layout via a container query on the window itself. The learner it is signed in as cycles through eighteen names — rural Indian ones among them, since that is who the app is for — so no one place reads as the default; reduced motion keeps the rotation and cuts the slide |
+| `AppReplica.vue` | Interactive recreation of the Alexandria desktop shell, built from the app's own tokens and component CSS. Navigates, searches (`/` or `⌘K`), verifies a credential, casts a vote. Collapses to the app's four-tab mobile layout via a container query on the window itself. The learner it is signed in as cycles through twenty-two names — rural Indian, Bengali and Odia ones among them, since that is who the app is for — so no one place reads as the default; reduced motion keeps the rotation and cuts the slide |
 | `SkillGraph.vue` | The app's sidebar skill graph — force-directed canvas, same status colors and Bloom-scaled radii as `SidebarSkillGraph.vue` |
 | `MeshGradient.vue` | Animated gradient behind every hero and CTA band. Time-based, so drift is identical at 60 Hz and 120 Hz; pauses off-screen; static under `prefers-reduced-motion` |
 | `StatusChip.vue` | One label for how real a thing is — `alpha` / `building` / `planned` / `sample`. Used wherever a capability, price or demo is described, because mixing shipped features with roadmap items makes the credible parts inherit the doubt of the speculative ones |
