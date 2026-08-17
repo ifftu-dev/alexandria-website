@@ -6,10 +6,16 @@
  * primitives rather than adjectives — Ed25519, JCS, blake3, wasmtime. A reader
  * can disagree with those. Nobody can disagree with "secure and scalable".
  *
- * Two things here are deliberately marked rather than asserted. On-chain
- * anchoring is in development, not shipping, and the design brief described it
- * in the present tense throughout. And the Sentinel panel is sample data — it
- * shows the shape of an integrity report, not a reading taken from anyone.
+ * Several things here are deliberately marked rather than asserted, because the
+ * design brief described all of them in the present tense. On-chain anchoring
+ * runs against preprod but does nothing in a build without a Blockfrost key.
+ * The Sentinel panel is sample data — the shape of an integrity report, not a
+ * reading taken from anyone. The music plugin has no grader. Practical-trade
+ * review happens on the same node as the learner. And the organisation side is
+ * finished in another repository that nobody is running.
+ *
+ * The rule this page keeps failing and re-learning: "the API could support X"
+ * is not the same claim as "X exists".
  */
 definePageMeta({ layout: 'landing' })
 
@@ -62,7 +68,7 @@ const signals = [
 const plugins = [
   { t: 'Code', b: 'A real editor with a test harness, in JavaScript, TypeScript, Python and C++. Graded on what runs, not on what is recalled — the grader is a sandboxed WebAssembly module, so the same submission scores the same everywhere.' },
   { t: 'Music', b: 'Audio capture and live pitch detection. Play the passage and the plugin marks each note as you go. It does not yet produce a score a credential can be issued from — a person reads the result.' },
-  { t: 'Practical trades', b: 'Structured evidence capture plus assessor attestation, for welding, inspection and site work. The assessor reviews on the same node today; sending a submission to one somewhere else is a later phase.' },
+  { t: 'Practical trades', b: 'One general plugin rather than a plugin per trade: the learner submits work in any format — photo, video, audio, document — and asks a human assessor to score it against the skills claimed. Usable for welding, inspection and site work; none of those has a purpose-built plugin. The assessor reviews on the same node today, and sending a submission to one somewhere else is a later phase.' },
   { t: 'Yours', b: 'The plugin API is open. If you can define how a skill is proven, you can ship the assessment for it.' },
 ]
 

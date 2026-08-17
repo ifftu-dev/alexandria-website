@@ -167,7 +167,12 @@ function verify(id: string) {
   const reduce = import.meta.client && window.matchMedia('(prefers-reduced-motion: reduce)').matches
   setTimeout(() => {
     verified[id] = 'done'
-    say('Verified with 0 network calls')
+    // Depiction, not a measurement: no signature is checked here. The real
+    // check lives on /verify and runs Ed25519 in the page. Announcing a
+    // timing or a network count for something that did not happen would be
+    // inventing evidence on the one page that argues you should not need to
+    // trust us.
+    say('Verified — in the app this is a local signature check')
   }, reduce ? 0 : 620)
 }
 
@@ -436,7 +441,7 @@ onUnmounted(() => {
               :class="{ ok: verified[c.id] === 'done' }"
               @click="verify(c.id)"
             >
-              {{ verified[c.id] === 'done' ? '✓ Genuine · 18 ms' : verified[c.id] === 'checking' ? 'Checking…' : 'Verify' }}
+              {{ verified[c.id] === 'done' ? '✓ Genuine' : verified[c.id] === 'checking' ? 'Checking…' : 'Verify' }}
             </button>
           </div>
           <p class="hint">Six kinds of credential. Share only what you choose — the level alone, or the full record behind it.</p>

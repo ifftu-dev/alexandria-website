@@ -48,8 +48,11 @@ interface Feature {
 }
 
 // Every capability the site has ever claimed, in the order the old page told
-// the story. Nothing here is aspirational — the two audience pages carry the
-// not-yet-built work behind their own notices.
+// the story. Each entry describes something that runs in the alpha today; where
+// a capability is partly built, the entry says which part. Anything not started
+// belongs on the audience pages behind a StatusChip, not here — and "the plugin
+// API could support X" is not the same claim as "X exists", which is a mistake
+// this list has made before.
 const features: Feature[] = [
   {
     span: 'span-4',
@@ -79,7 +82,7 @@ const features: Feature[] = [
     accent: 'amber',
     title: 'Teach and assess anything',
     icon: 'M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959a.64.64 0 01-.657.643 48.39 48.39 0 01-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 01-.658.663c-.355 0-.676-.186-.959-.401a1.647 1.647 0 00-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401.31 0 .555.26.532.57a48.039 48.039 0 01-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 00.657-.643c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.035 1.007-1.875 2.25-1.875s2.25.84 2.25 1.875c0 .369-.128.713-.349 1.003-.215.283-.401.604-.401.959 0 .333.277.599.61.58a48.1 48.1 0 005.427-.63 48.05 48.05 0 00.582-4.717.532.532 0 00-.533-.57c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.959.401a.656.656 0 00.659-.663 47.703 47.703 0 00-.31-4.82c-1.517.19-3.058.309-4.616.354a.64.64 0 01-.657-.643z',
-    body: 'Video, text and multiple choice are not enough — different skills need different ways to teach and test. Plugins let Alexandria assess welding, music, engineering, surgery, and beyond.',
+    body: 'Video, text and multiple choice are not enough — different skills need different ways to teach and test. Alexandria ships plugins for code in four languages, live pitch detection for music, multiple choice, and assessor review of practical work. The plugin API is open, so welding, engineering and the rest are things somebody can build rather than things that exist today.',
     motif: 'plugins',
   },
   {
@@ -267,7 +270,11 @@ const featuresOpen = ref(false)
         <LazyAppReplica hydrate-on-idle />
       </div>
       <p class="shelf-cap">
-        The real shell — press <b>/</b> for search, open <b>Skills &amp; Credentials</b> and verify one
+        <StatusChip state="sample" label="Replica · invented data" />
+        The app's actual layout, rebuilt for this page — press <b>/</b> for search, or open
+        <b>Skills &amp; Credentials</b>. The people and credentials in it are made up, and the
+        verify button here is a depiction.
+        <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify">Check a real one instead ›</NuxtLink>
       </p>
     </div>
 
@@ -361,16 +368,16 @@ const featuresOpen = ref(false)
     <span class="k">"anchor"</span>: <span class="s">"cardano:tx/8a41…c92f"</span> }
 }</pre>
           <pre v-else-if="codeTab === 'verify'"><span class="c"># works with the network unplugged</span>
-<span class="g">$</span> alexandria verify credential.json --offline
+<span class="g">$</span> alexandria credentials verify bundle.json
 
 <span class="c"># or without Alexandria at all</span>
 <span class="g">$</span> npm i -g @digitalbazaar/vc
 <span class="g">$</span> vc verify --input credential.json \
      --did-resolver did-key</pre>
-          <pre v-else><span class="g">✓</span> signature valid        <span class="c">ed25519 · holder key</span>
-<span class="g">✓</span> contents unchanged     <span class="c">blake3 digest match</span>
-<span class="g">✓</span> anchor found           <span class="c">cardano tx 8a41…c92f</span>
+          <pre v-else><span class="g">✓</span> signature valid        <span class="c">ed25519 · did:key, self-resolving</span>
+<span class="g">✓</span> contents unchanged     <span class="c">JCS canonicalisation, RFC 8785</span>
 <span class="g">✓</span> checked offline        <span class="c">0 network calls</span>
+<span class="c">·</span> revocation unknown     <span class="c">no status list supplied</span>
 
 <span class="y">GENUINE</span> — issued by the holder, unaltered</pre>
         </div>
