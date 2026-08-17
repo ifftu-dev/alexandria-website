@@ -26,9 +26,38 @@
 # header is set twice with different cases").
 
 # Security headers
+#
+# The site carries deep links into the desktop and mobile app (/guardian/*,
+# /course/*, /classroom/*, /open), so a script-injection here has a path toward
+# app users rather than stopping at a marketing page.
+#
+# The CSP is written against what this site actually serves, which was checked
+# against a real `npm run generate` output rather than assumed:
+#
+#   script-src 'unsafe-inline'  — Nuxt emits several inline scripts per page
+#     (the import map, the no-flash theme bootstrap, `window.__NUXT__`) and a
+#     static `generate` build has no nonce to hand them. Removing this needs
+#     build-side CSP hash support, not a header edit, and shipping a policy
+#     that blanks the site is worse than shipping an honest one. Recorded as
+#     still open in ../docs/security-audit.md.
+#   script-src https://plausible.io — the analytics bundle.
+#   connect-src https://plausible.io — where it sends events.
+#
+# The directives that DO bite without that work are still worth having:
+# `connect-src` bounds where injected script could exfiltrate to,
+# `frame-ancestors 'none'` stops clickjacking (and is the half browsers honour
+# over X-Frame-Options), `object-src 'none'` and `base-uri 'none'` close two
+# classic injection vectors, and `form-action 'self'` stops a form being
+# repointed at another origin.
+#
+# HSTS is preload-eligible: Netlify serves this over TLS and there is no
+# plaintext origin to strand.
 [[headers]]
   for = "/*"
   [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://plausible.io; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://plausible.io; media-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "DENY"
     Referrer-Policy = "strict-origin-when-cross-origin"

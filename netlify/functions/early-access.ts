@@ -27,6 +27,8 @@
  */
 import { confirmationHtml } from '../email/confirmation.js'
 
+import { isRateLimited, tooManyRequests } from './_ratelimit.js'
+
 export const config = { path: '/api/early-access' }
 
 // The Netlify runtime provides `process.env`. Declared here rather than pulling
@@ -82,6 +84,8 @@ export default async function handler(request: Request): Promise<Response> {
   if (request.method !== 'POST') {
     return json({ ok: false, error: 'Method not allowed' }, 405)
   }
+
+  if (isRateLimited(request)) return tooManyRequests()
 
   let payload: Payload
   try {

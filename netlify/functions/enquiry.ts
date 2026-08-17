@@ -15,6 +15,8 @@
  * Env: PLUNK_API_KEY, PLUNK_API_BASE, PLUNK_FROM, PLUNK_FROM_NAME (as the
  * waitlist function), plus ENQUIRY_TO for where notifications land.
  */
+import { isRateLimited, tooManyRequests } from './_ratelimit.js'
+
 export const config = { path: ['/api/pilot', '/api/partner'] }
 
 declare const process: { env: Record<string, string | undefined> }
@@ -40,7 +42,14 @@ const AUDIENCES = new Set(['employer', 'institution', 'partner'])
 
 /** Trim and cap anything free-text before it reaches the account. */
 function clean(value: unknown, max: number): string {
-  return typeof value === 'string' ? value.trim().slice(0, max) : ''
+  if (typeof value !== 'string') return ''
+  // Strip control characters, not just trim. `organisation` is interpolated
+  // into the notification email's `subject`, and a subject is a header — a CR
+  // or LF in it is header injection. Everything in the body is escapeHtml'd;
+  // the subject deserves the same care rather than relying on Plunk to
+  // sanitise on our behalf.
+  // eslint-disable-next-line no-control-regex
+  return value.replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max)
 }
 
 function json(body: Record<string, unknown>, status = 200) {
@@ -58,6 +67,8 @@ function escapeHtml(s: string): string {
 
 export default async function handler(request: Request): Promise<Response> {
   if (request.method !== 'POST') return json({ ok: false, error: 'Method not allowed' }, 405)
+
+  if (isRateLimited(request)) return tooManyRequests()
 
   let payload: Payload
   try {
