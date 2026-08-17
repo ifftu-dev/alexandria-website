@@ -661,12 +661,12 @@ const featuresOpen = ref(false)
         <article class="who-card">
           <h3>What organizations pay for</h3>
           <ul>
-            <li>Managed hosting and operations</li>
-            <li>SSO, SIS and ATS integrations</li>
-            <li>Team workflows and shared review</li>
-            <li>Support, migration and deployment</li>
+            <li>Single sign-on, ATS delivery and bulk verification <em>— built, untested by any customer</em></li>
+            <li>Team workflows and shared review <em>— built, untested by any customer</em></li>
+            <li>Student-record (SIS) and directory provisioning <em>— not started</em></li>
+            <li>Managed hosting, support and migration <em>— not started</em></li>
           </ul>
-          <StatusChip state="planned" label="Planned · nothing purchasable yet" />
+          <StatusChip state="built" label="Built in part · nothing purchasable yet" />
         </article>
       </div>
 

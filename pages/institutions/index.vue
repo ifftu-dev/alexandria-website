@@ -44,7 +44,7 @@ const fourPoints = [
 
 const features = [
   { t: 'Classrooms', b: 'Invite-only cohorts organized into channels — announcements, questions, assignments, showcase. Teachers decide who is in.', state: 'alpha' as const },
-  { t: 'Practical assessment', b: 'Plugins assess what multiple choice cannot — welding, music, code, inspection — with structured evidence capture and assessor attestation.', state: 'alpha' as const },
+  { t: 'Practical assessment', b: 'Plugins assess what multiple choice cannot — welding, music, code, inspection. Code is graded automatically; practical work is captured as structured evidence and reviewed by an assessor on the same node. Routing a submission to an assessor on another device is not built yet.', state: 'alpha' as const },
   { t: 'Auditable integrity', b: 'Optional on-device integrity scoring with the reasoning attached to each result. No third-party proctoring vendor, no recordings leaving the student’s machine.', state: 'alpha' as const },
   { t: 'Live tutoring', b: 'Video, audio and screen-share peer to peer, so remote cohorts do not depend on a third-party conferencing contract.', state: 'alpha' as const },
   { t: 'Works where bandwidth doesn’t', b: 'Offline-first by design. Rural campuses and field programs keep teaching through an outage and sync afterwards.', state: 'alpha' as const },

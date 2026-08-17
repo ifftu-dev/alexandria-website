@@ -60,9 +60,9 @@ const signals = [
 ]
 
 const plugins = [
-  { t: 'Code', b: 'A real editor with a test harness. Scored on what runs, not on what is recalled.' },
-  { t: 'Music', b: 'Audio capture and pitch analysis. Play the passage; the plugin hears whether you played it.' },
-  { t: 'Practical trades', b: 'Structured evidence capture plus assessor attestation, for welding, inspection and site work.' },
+  { t: 'Code', b: 'A real editor with a test harness, in JavaScript, TypeScript, Python and C++. Graded on what runs, not on what is recalled — the grader is a sandboxed WebAssembly module, so the same submission scores the same everywhere.' },
+  { t: 'Music', b: 'Audio capture and live pitch detection. Play the passage and the plugin marks each note as you go. It does not yet produce a score a credential can be issued from — a person reads the result.' },
+  { t: 'Practical trades', b: 'Structured evidence capture plus assessor attestation, for welding, inspection and site work. The assessor reviews on the same node today; sending a submission to one somewhere else is a later phase.' },
   { t: 'Yours', b: 'The plugin API is open. If you can define how a skill is proven, you can ship the assessment for it.' },
 ]
 
@@ -296,10 +296,21 @@ const platforms = [
       <p class="eyebrow">Honest limits</p>
       <h2 class="h-sec">What this does not do yet.</h2>
       <p class="p-sub t-limits">
-        All of the above is built and shipping in the alpha, apart from on-chain anchoring, which is
-        in development. None of it has been through an independent validity study, there is no
-        content moderation in place, and no external users have stress-tested any of it. The security
-        audit is in progress and we will publish its findings, open or fixed.
+        All of the above is built and shipping in the alpha, with four exceptions, each named where
+        it appears above. On-chain anchoring is written and runs against the Cardano test network,
+        but a build does nothing with it until someone supplies their own Blockfrost key — so treat
+        it as in development. Practical-trade submissions are reviewed by an assessor on the same
+        node; routing one to an assessor elsewhere is a later phase. The music plugin marks notes
+        but does not yet produce a score a credential can be issued from. And the organization side
+        — single sign-on, ATS delivery, bulk verification, the employer console — is finished and
+        under test in a separate repository that nobody outside this project is running.
+      </p>
+      <p class="p-sub t-limits">
+        None of it has been through an independent validity study, there is no content moderation in
+        place, and no external users have stress-tested any of it. An internal security review of
+        the Rust core, Tauri configuration, dependencies and frontend was carried out in February
+        2026 and its remediation is unfinished; no independent audit has been commissioned. The
+        <NuxtLink to="/trust">trust page</NuxtLink> carries the counts and the dates.
       </p>
       <div class="hero-cta">
         <a :href="GITHUB" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub btn">Read the source</a>

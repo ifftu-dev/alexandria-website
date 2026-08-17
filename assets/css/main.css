@@ -1245,6 +1245,14 @@ svg { flex-shrink: 0; }
   background: rgb(var(--color-ok) / 0.12);
   border-color: rgb(var(--color-ok) / 0.28);
 }
+/* Deliberately not the `alpha` green. It is finished, and it is not yours to
+   run — a reader who reads the colour and skips the words should not come away
+   thinking they can download it. */
+.chip-built {
+  color: rgb(var(--color-foreground));
+  background: rgb(var(--color-muted));
+  border-color: rgb(var(--color-foreground) / 0.28);
+}
 .chip-building {
   color: rgb(var(--color-primary));
   background: rgb(var(--color-primary) / 0.12);

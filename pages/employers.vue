@@ -41,8 +41,8 @@ const problems = [
 ]
 
 const steps = [
-  { n: '01', t: 'Search on skill', b: 'Query the public skill map directly — welding.pipe.6g · apply — not job titles or keywords.', state: 'planned' as const },
-  { n: '02', t: 'Candidate consents', b: 'Nothing is visible without the holder choosing to reveal it, and they reveal only the parts they choose.', state: 'planned' as const },
+  { n: '01', t: 'Search on skill', b: 'Query the public skill map directly — welding.pipe.6g · apply — not job titles or keywords.', state: 'built' as const },
+  { n: '02', t: 'Candidate consents', b: 'Nothing is visible without the holder choosing to reveal it, and they reveal only the parts they choose. The consent half runs in the app today; the console that asks is built and not yet running for anyone.', state: 'built' as const },
   { n: '03', t: 'Verify it yourself', b: 'Check the signature with our tooling, your own, or any W3C-compliant verifier. No API call to us required.', state: 'alpha' as const },
   { n: '04', t: 'See the whole record', b: 'Behind each credential: what was assessed, how it was scored, and the integrity signals at the time.', state: 'alpha' as const },
 ]
@@ -56,8 +56,8 @@ const steps = [
  */
 const packages = [
   { name: 'Placement', value: 'Priced against the standard contingency range, and below it. The figure is not settled, so it is not published yet.', state: 'planned' as const },
-  { name: 'Hiring assessments', value: 'Run your own assessments on the platform, or accept credentials the candidate already holds.', state: 'planned' as const },
-  { name: 'Verification', value: 'Per-check verification at scale for high-volume screening. Offline checking is always free.', state: 'planned' as const },
+  { name: 'Hiring assessments', value: 'Run your own assessments on the platform, or accept credentials the candidate already holds. The assessment and review flow is built; nobody has run a real one.', state: 'built' as const },
+  { name: 'Verification', value: 'Per-check verification at scale for high-volume screening, built and metered but not yet sold. Offline checking is free today and always will be.', state: 'built' as const },
 ]
 </script>
 

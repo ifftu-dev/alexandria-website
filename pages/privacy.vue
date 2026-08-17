@@ -13,7 +13,7 @@
  */
 definePageMeta({ layout: 'landing' })
 
-const UPDATED = '31 July 2026'
+const UPDATED = '18 August 2026'
 const CONTACT = 'pratyush@ifftu.dev'
 const GITHUB = 'https://github.com/ifftu-dev/alexandria'
 
@@ -37,7 +37,7 @@ useHead({
 const short = [
   { t: 'There is no account with us', b: 'Your identity is a keypair generated on your device. We never see it, cannot reset it, and hold no email or password for it.' },
   { t: 'Your learning stays local', b: 'What you study, how you score and how often you retry is stored on your device. There is no server-side copy for us to analyze or sell.' },
-  { t: 'Integrity data never leaves', b: 'Sentinel’s camera, keystroke and pointer signals are processed on your hardware. Only a score and its reasoning attach to a credential.' },
+  { t: 'Integrity data leaves only if you send it', b: 'Sentinel’s camera, keystroke and pointer signals are processed on your hardware, and only a score and its reasoning attach to a credential. There is one exception and it is yours to use: if a session is flagged and you want to contest it, you can choose to send that session’s evidence to whoever raised the flag. Nobody can ask you for it, no screen there offers a button that requests it, only the one reviewer handling your case can open it, and deleting it here deletes their copy too.' },
   { t: 'Sync is sealed', b: 'Devices sync end-to-end encrypted. Relays pass along bytes they cannot read, and we operate them without keys.' },
   { t: 'You choose what to reveal', b: 'Sharing a credential with an employer is an explicit act, one credential at a time. Nothing is discoverable without your consent.' },
   { t: 'No advertising, ever', b: 'We do not sell data, run ads, or share anything with data brokers. The platform is funded by employers and institutions.' },
@@ -73,7 +73,7 @@ const received = [
 
 const practice = [
   { t: 'We cannot recover your identity', b: 'This is the honest cost of the design. If you lose every device holding your key and have no backup, we have no way to restore it, because we never had it. The app will nag you to make a backup, and you should.' },
-  { t: 'A credential you shared stays shared', b: 'Once you reveal a credential to an employer, they hold a copy that verifies on its own. You can stop sharing going forward; you cannot un-give what was given.' },
+  { t: 'A credential you shared stays shared', b: 'Once you reveal a credential to an employer, they hold a copy that verifies on its own. You can stop sharing going forward; you cannot un-give what was given. Appeal evidence is the one thing that works the other way — it lives on their server rather than in their hand, so asking for it back actually removes it, and your device keeps asking until it does.' },
   { t: 'Institutions you join set their own terms', b: 'If you enrol in a classroom run by a school or employer, what you submit there is visible to them under their policy, not ours. The app tells you when you are entering such a space.' },
   { t: 'Deleting is local, and real', b: 'Removing the app removes your data, because that is where it lived. To remove a waiting-list address or an enquiry from our side, email us and we will delete it.' },
 ]

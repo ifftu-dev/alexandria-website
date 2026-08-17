@@ -95,8 +95,8 @@ const promises = [
   },
   {
     title: 'You decide what anyone sees',
-    body: 'Sharing a credential is a deliberate act, and you choose how much of the evidence travels with it. There is no profile being quietly indexed for recruiters.',
-    state: 'building' as const,
+    body: 'Sharing a credential is a deliberate act, and you choose how much of the evidence travels with it — answer a request for one skill and only that skill leaves, checked at both ends. Being listed where employers can find you is a separate choice you make per skill, and the app shows you the exact bytes before any of it goes.',
+    state: 'alpha' as const,
   },
 ]
 </script>
