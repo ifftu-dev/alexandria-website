@@ -151,13 +151,16 @@ assessments, the way your browser watches for suspicious logins. All the analysi
 your device; only a final integrity score ever leaves it. Your keystrokes, camera feed, and
 behavior never touch a server.
 
-**Governance that follows expertise, not money.** Every branch of the skill graph has a
-corresponding DAO, and voting power in that DAO comes from *demonstrated proficiency in the
-skills it governs* — not stake, not seniority, not how long you've been around. If you've
+**Governance that follows expertise, not money.** Every branch of the skill graph has its
+own community ([a DAO](https://en.wikipedia.org/wiki/Decentralized_autonomous_organization),
+if you speak crypto), and voting power in that community comes from *demonstrated
+proficiency in the skills it governs* — not stake, not seniority, not how long you've been
+around. If you've
 proven you can analyze a topic, you're qualified to vote on decisions about how it's taught
 and assessed in that domain. Proposals move through draft, committee review, and public
 vote, with supermajority thresholds and minimum proficiency bars set per proposal. Elections
-run on fixed cadences — annual for sub-DAOs, every four years for the top-level ones. These
+run on fixed cadences — annual for each branch's community, every four years for the
+top-level ones. These
 decisions are made off-chain — proposals and votes propagate as signed messages between
 peers, and every node tallies them independently — and each finalized outcome is anchored to
 Cardano so it's tamper-evident and auditable by anyone. Moving the full rule-set on-chain,
