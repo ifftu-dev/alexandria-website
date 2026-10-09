@@ -109,11 +109,11 @@ export function publicKeyFromDidKey(did: string): Uint8Array {
   return decoded.slice(2)
 }
 
-function textBytes(s: string): Uint8Array {
+function textBytes(s: string): Uint8Array<ArrayBuffer> {
   return new TextEncoder().encode(s)
 }
 
-async function sha256(bytes: Uint8Array): Promise<Uint8Array> {
+async function sha256(bytes: Uint8Array<ArrayBuffer>): Promise<Uint8Array> {
   return new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))
 }
 
