@@ -364,7 +364,7 @@ const featuresOpen = ref(false)
     <span class="k">"level"</span>: <span class="s">"apply"</span>,
     <span class="k">"evidence"</span>: <span class="s">"blake3:9f2c…e17a"</span>
   },
-  <span class="k">"proof"</span>: { <span class="k">"type"</span>: <span class="s">"Ed25519Signature2020"</span>,
+  <span class="k">"proof"</span>: { <span class="k">"type"</span>: <span class="s">"DataIntegrityProof"</span>, <span class="k">"cryptosuite"</span>: <span class="s">"eddsa-jcs-2022"</span>,
     <span class="k">"anchor"</span>: <span class="s">"cardano:tx/8a41…c92f"</span> }
 }</pre>
           <pre v-else-if="codeTab === 'verify'"><span class="c"># works with the network unplugged</span>

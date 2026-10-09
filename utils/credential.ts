@@ -1,14 +1,16 @@
 /**
  * Verify an Alexandria credential in the browser.
  *
- * This is a reimplementation of the app's own check
- * (`src-tauri/src/domain/vc/verify.rs`), not an approximation of it, so a
+ * The credential is a W3C Verifiable Credential (Data Model 2.0) secured with
+ * a Data Integrity proof, cryptosuite `eddsa-jcs-2022`. This page implements
+ * that suite as the specification states it, not an approximation of it, so a
  * credential exported from the app verifies here and a tampered one does not:
  *
- *   1. Canonicalize the envelope with `proof.jws` emptied — JCS, RFC 8785.
- *   2. Signing input is `protectedHeader . canonicalBytes` (detached JWS: the
- *      middle segment of `header..signature` is empty).
- *   3. Verify Ed25519 against the public key carried inside the issuer's
+ *   1. JCS-canonicalize (RFC 8785) the credential without its `proof`, and the
+ *      proof options without `proofValue` plus the credential's `@context`.
+ *   2. hashData = SHA-256(canonical proof options) || SHA-256(canonical document).
+ *   3. `proofValue` is multibase base58btc of the Ed25519 signature over
+ *      hashData. Verify it against the public key carried inside the issuer's
  *      `did:key`, which is self-resolving — no network, no key server.
  *
  * Everything happens on the page. Nothing is uploaded; there is nowhere to
@@ -105,14 +107,25 @@ export function publicKeyFromDidKey(did: string): Uint8Array {
   return decoded.slice(2)
 }
 
-function b64urlDecode(input: string): Uint8Array {
-  const padded = input.replace(/-/g, '+').replace(/_/g, '/')
-  const binary = atob(padded + '='.repeat((4 - (padded.length % 4)) % 4))
-  return Uint8Array.from(binary, c => c.charCodeAt(0))
-}
-
 function textBytes(s: string): Uint8Array {
   return new TextEncoder().encode(s)
+}
+
+async function sha256(bytes: Uint8Array): Promise<Uint8Array> {
+  return new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))
+}
+
+/** The 64 bytes an `eddsa-jcs-2022` proof signs. */
+export async function hashData(credential: Record<string, unknown>): Promise<Uint8Array> {
+  const { proof, ...document } = credential
+  const { proofValue: _omitted, ...options } = proof as Record<string, unknown>
+  const config = { ...options, '@context': credential['@context'] }
+  const left = await sha256(textBytes(canonicalize(config)))
+  const right = await sha256(textBytes(canonicalize(document)))
+  const out = new Uint8Array(64)
+  out.set(left)
+  out.set(right, 32)
+  return out
 }
 
 /** Verify a parsed credential object. */
@@ -128,7 +141,7 @@ export async function verifyCredential(credential: unknown): Promise<VerifyOutco
   // ---- shape -------------------------------------------------------------
   const issuer: unknown = vc.issuer
   const proof = vc.proof as Record<string, any> | undefined
-  if (typeof issuer !== 'string' || !proof || typeof proof.jws !== 'string') {
+  if (typeof issuer !== 'string' || !proof || typeof proof.proofValue !== 'string') {
     return fail('Missing an issuer or a proof — this does not look like a credential.')
   }
   checks.push({
@@ -160,30 +173,35 @@ export async function verifyCredential(credential: unknown): Promise<VerifyOutco
   }
 
   // ---- signature ---------------------------------------------------------
-  const segments = proof.jws.split('.')
-  if (segments.length !== 3 || segments[1] !== '') {
+  if (proof.type !== 'DataIntegrityProof' || proof.cryptosuite !== 'eddsa-jcs-2022') {
     checks.push({
       id: 'signature',
       label: 'Signature',
       state: 'fail',
-      detail: 'proof.jws is not a detached JWS (expected header..signature)',
+      detail: `proof is ${proof.type ?? 'untyped'} / ${proof.cryptosuite ?? 'no cryptosuite'}; this page checks Data Integrity eddsa-jcs-2022`,
     })
     return { valid: false, checks, error: 'The proof is not in the expected form.' }
+  }
+  const [controller, fragment] = String(proof.verificationMethod ?? '').split('#')
+  if (controller !== issuer || !fragment) {
+    checks.push({
+      id: 'signature',
+      label: 'Signature',
+      state: 'fail',
+      detail: 'proof.verificationMethod is not a key the issuer controls',
+    })
+    return { valid: false, checks, error: 'The proof names a key the issuer does not control.' }
   }
 
   let signatureValid = false
   try {
-    const signature = b64urlDecode(segments[2]!)
-    // Canonical bytes are computed over the envelope with the signature
-    // removed — the issuer signed the credential as it was before the
-    // signature existed.
-    const unsigned = { ...vc, proof: { ...proof, jws: '' } }
-    const canonicalBytes = textBytes(canonicalize(unsigned))
-    const header = textBytes(`${segments[0]}.`)
-    const signingInput = new Uint8Array(header.length + canonicalBytes.length)
-    signingInput.set(header)
-    signingInput.set(canonicalBytes, header.length)
-    signatureValid = await verifyAsync(signature, signingInput, publicKey)
+    if (!proof.proofValue.startsWith('z')) throw new Error('proofValue is not multibase base58btc')
+    const signature = base58Decode(proof.proofValue.slice(1))
+    if (signature.length !== 64) throw new Error('not an Ed25519 signature')
+    // The issuer signed the two hashes of the credential as it was before the
+    // signature existed: the proof options without their value, and the
+    // document without its proof.
+    signatureValid = await verifyAsync(signature, await hashData(vc), publicKey)
   }
   catch {
     signatureValid = false
