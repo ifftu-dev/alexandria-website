@@ -16,10 +16,12 @@
  * Everything happens on the page. Nothing is uploaded; there is nowhere to
  * upload it to.
  *
- * What this does NOT do, and the UI must not imply otherwise: revocation is a
- * status-list lookup the app performs against its own store, and the on-chain
- * anchor is a Cardano query. Both need data this page does not have, so both are
- * reported as "not checked here" rather than silently passed.
+ * Revocation: when the credential names its status list by an https URL, this
+ * page fetches it — one plain GET — and reads the bit, after checking that what
+ * came back is that list, signed by that issuer. A list named by a URN lives
+ * only in the issuer's exported bundle, which this page does not have, and is
+ * reported as "not checked here" rather than silently passed. The on-chain
+ * anchor is a Cardano query and is likewise reported, not assumed.
  */
 import { verifyAsync } from '@noble/ed25519'
 
@@ -128,8 +130,81 @@ export async function hashData(credential: Record<string, unknown>): Promise<Uin
   return out
 }
 
+export interface VerifyOptions {
+  /** Replaced in tests; the page uses the browser's `fetch`. */
+  fetch?: typeof fetch
+}
+
+/** A status list reference a verifier can fetch: https, or http on loopback. */
+export function isListUrl(reference: unknown): reference is string {
+  if (typeof reference !== 'string') return false
+  try {
+    const url = new URL(reference)
+    const loopback = ['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname)
+    return url.protocol === 'https:' || (url.protocol === 'http:' && loopback)
+  }
+  catch {
+    return false
+  }
+}
+
+/** `encodedList` → bitstring: multibase base64url (`u`) of GZIP bytes. */
+export async function decodeEncodedList(encoded: unknown): Promise<Uint8Array> {
+  if (typeof encoded !== 'string' || !encoded.startsWith('u')) throw new Error('encodedList is not multibase base64url')
+  const b64 = encoded.slice(1).replace(/-/g, '+').replace(/_/g, '/')
+  const compressed = Uint8Array.from(atob(b64), c => c.charCodeAt(0))
+  const stream = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'))
+  const bytes = new Uint8Array(await new Response(stream).arrayBuffer())
+  if (bytes.length > 1 << 20) throw new Error('status list is larger than 1 MiB')
+  return bytes
+}
+
+/**
+ * Fetch the list a credential names and read its bit. The fetched document
+ * must be a `BitstringStatusListCredential` whose `id` is the URL, whose
+ * issuer is the credential's issuer and whose own proof verifies — otherwise
+ * it is somebody else's list and the credential stays unchecked.
+ */
+async function checkRevocation(
+  vc: Record<string, any>,
+  issuer: string,
+  options: VerifyOptions,
+): Promise<Pick<VerifyCheck, 'state' | 'detail'>> {
+  const status = vc.credentialStatus as Record<string, any> | undefined
+  if (!status) return { state: 'skip', detail: 'No status list on this credential' }
+  const reference = status.statusListCredential
+  if (!isListUrl(reference)) {
+    return { state: 'skip', detail: 'This credential names a status list by URN; it travels in the issuer’s exported bundle, which this page does not have' }
+  }
+  try {
+    const doFetch = options.fetch ?? fetch
+    const response = await doFetch(reference, { headers: { accept: 'application/vc, application/json' }, redirect: 'error' })
+    if (!response.ok) throw new Error(`the host answered ${response.status}`)
+    const list = await response.json() as Record<string, any>
+    if (list.id !== reference) throw new Error('the document is not the list the credential named')
+    if (list.issuer !== issuer) throw new Error('the list is not issued by the credential issuer')
+    if (!(list.type ?? []).includes('BitstringStatusListCredential')) throw new Error('not a BitstringStatusListCredential')
+    const subject = list.credentialSubject ?? {}
+    if (subject.type !== 'BitstringStatusList' || subject.statusPurpose !== status.statusPurpose) {
+      throw new Error('the list is not a status list for this purpose')
+    }
+    const signed = await verifyCredential(list, { fetch: async () => { throw new Error('a status list does not fetch further lists') } })
+    if (!signed.checks.some(c => c.id === 'signature' && c.state === 'pass')) throw new Error('the list’s own signature does not verify')
+    const bits = await decodeEncodedList(subject.encodedList)
+    const index = Number.parseInt(String(status.statusListIndex), 10)
+    if (!Number.isInteger(index) || index < 0 || index >= bits.length * 8) throw new Error('statusListIndex is out of range')
+    const set = ((bits[index >> 3]! >> (7 - (index & 7))) & 1) === 1
+    return set
+      ? { state: 'fail', detail: `Revoked — bit ${index} is set in the issuer’s published list (${reference})` }
+      : { state: 'pass', detail: `Not revoked — bit ${index} is clear in the issuer’s published list, fetched from ${reference}` }
+  }
+  catch (error) {
+    return { state: 'skip', detail: `Status list not checked: ${error instanceof Error ? error.message : String(error)}` }
+  }
+}
+
 /** Verify a parsed credential object. */
-export async function verifyCredential(credential: unknown): Promise<VerifyOutcome> {
+export async function verifyCredential(credential: unknown, options: VerifyOptions = {}): Promise<VerifyOutcome> {
   const checks: VerifyCheck[] = []
   const fail = (error: string): VerifyOutcome => ({ valid: false, checks, error })
 
@@ -230,15 +305,11 @@ export async function verifyCredential(credential: unknown): Promise<VerifyOutco
       : `valid from ${vc.validFrom ?? '—'}, no expiry`,
   })
 
+  // ---- revocation --------------------------------------------------------
+  const revocation = await checkRevocation(vc, issuer, options)
+  checks.push({ id: 'revocation', label: 'Revocation', ...revocation })
+
   // ---- what this page honestly cannot check ------------------------------
-  checks.push({
-    id: 'revocation',
-    label: 'Revocation',
-    state: 'skip',
-    detail: vc.credentialStatus
-      ? 'This credential names a status list; checking it needs the issuer’s list, which this page does not fetch'
-      : 'No status list on this credential',
-  })
   checks.push({
     id: 'anchor',
     label: 'Chain anchor',
@@ -254,5 +325,6 @@ export async function verifyCredential(credential: unknown): Promise<VerifyOutco
     ? claimKeys.map(k => `${k}: ${JSON.stringify(vc.credentialSubject[k])}`).join(' · ')
     : undefined
 
-  return { valid: signatureValid && inWindow, checks, issuer, subject, claim }
+  const revoked = checks.some(c => c.id === 'revocation' && c.state === 'fail')
+  return { valid: signatureValid && inWindow && !revoked, checks, issuer, subject, claim }
 }
