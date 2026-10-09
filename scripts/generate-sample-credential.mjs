@@ -4,10 +4,10 @@
  *     node scripts/generate-sample-credential.mjs
  *
  * Signs a real credential with a real Ed25519 key, using the scheme the app
- * uses (`src-tauri/src/domain/vc/sign.rs`): JCS-canonicalize the envelope with
- * `proof.jws` emptied, sign `protectedHeader . canonicalBytes`, store the result
- * as a detached JWS. The issuer DID is derived from the public key, so it is
- * self-resolving.
+ * uses (`crates/alexandria-verify/src/vc/sign.rs`): a W3C Data Integrity proof,
+ * cryptosuite `eddsa-jcs-2022` — SHA-256 of the JCS proof options and SHA-256 of
+ * the JCS document, signed together, `proofValue` multibase base58btc. The
+ * issuer DID is derived from the public key, so it is self-resolving.
  *
  * The private key is generated fresh each run and thrown away — it exists only
  * long enough to sign, and nothing else is ever issued under it. That matters:
@@ -16,6 +16,7 @@
  * actually uses to issue credentials to people.
  */
 import { writeFileSync } from 'node:fs'
+import { createHash } from 'node:crypto'
 import { getPublicKeyAsync, signAsync, utils } from '@noble/ed25519'
 import { canonicalize } from '../utils/credential.ts'
 
@@ -43,9 +44,6 @@ function base58Encode(bytes) {
   return out + digits.reverse().map(d => B58[d]).join('')
 }
 
-const b64url = bytes =>
-  Buffer.from(bytes).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
-
 const privateKey = utils.randomSecretKey()
 const publicKey = await getPublicKeyAsync(privateKey)
 
@@ -61,10 +59,7 @@ const issuerDid = `did:key:z${base58Encode(prefixed)}`
 const subjectDid = 'did:key:z6MkjSampleLearnerSubjectDidForDemonstration'
 
 const credential = {
-  '@context': [
-    'https://www.w3.org/ns/credentials/v2',
-    'https://alexandria.ifftu.dev/credentials/v1',
-  ],
+  '@context': ['https://www.w3.org/ns/credentials/v2'],
   'id': 'urn:uuid:5f1d7e6c-2a44-4d6e-9f1c-8a3b2c4d5e6f',
   'type': ['VerifiableCredential', 'AssessmentCredential'],
   'issuer': issuerDid,
@@ -77,22 +72,22 @@ const credential = {
     assessedAt: '2026-06-02T09:38:00Z',
   },
   'proof': {
-    type: 'Ed25519Signature2020',
+    type: 'DataIntegrityProof',
+    cryptosuite: 'eddsa-jcs-2022',
     created: '2026-06-02T09:41:00Z',
-    verificationMethod: `${issuerDid}#key-1`,
+    verificationMethod: `${issuerDid}#${issuerDid.slice('did:key:'.length)}`,
     proofPurpose: 'assertionMethod',
-    jws: '',
   },
 }
 
-const header = b64url(new TextEncoder().encode(JSON.stringify({ alg: 'EdDSA', b64: false, crit: ['b64'] })))
-const canonicalBytes = new TextEncoder().encode(canonicalize(credential))
-const signingInput = new Uint8Array(header.length + 1 + canonicalBytes.length)
-signingInput.set(new TextEncoder().encode(`${header}.`))
-signingInput.set(canonicalBytes, header.length + 1)
-
-const signature = await signAsync(signingInput, privateKey)
-credential.proof.jws = `${header}..${b64url(signature)}`
+const { proof, ...document } = credential
+const proofConfig = { ...proof, '@context': credential['@context'] }
+const hashData = Buffer.concat([
+  createHash('sha256').update(canonicalize(proofConfig), 'utf8').digest(),
+  createHash('sha256').update(canonicalize(document), 'utf8').digest(),
+])
+const signature = await signAsync(hashData, privateKey)
+credential.proof.proofValue = `z${base58Encode(signature)}`
 
 writeFileSync('public/sample-credential.json', `${JSON.stringify(credential, null, 2)}\n`)
 console.log(`  public/sample-credential.json written`)

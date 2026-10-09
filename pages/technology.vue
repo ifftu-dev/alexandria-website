@@ -158,7 +158,8 @@ const platforms = [
     <span class="k">"evidence"</span>: <span class="s">"blake3:9f2c…e17a"</span>
   },
   <span class="k">"proof"</span>: {
-    <span class="k">"type"</span>: <span class="s">"Ed25519Signature2020"</span>
+    <span class="k">"type"</span>: <span class="s">"DataIntegrityProof"</span>,
+    <span class="k">"cryptosuite"</span>: <span class="s">"eddsa-jcs-2022"</span>
   }
 }</code></pre>
         </div>
