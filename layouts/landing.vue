@@ -313,15 +313,15 @@ const year = new Date().getFullYear()
             <h2>Legal</h2>
             <ul>
               <li><NuxtLink to="/privacy">Privacy policy</NuxtLink></li>
-              <li><a href="https://github.com/ifftu-dev/alexandria/blob/main/LICENSE.md" target="_blank" rel="noopener noreferrer">License (open-core)</a></li>
+              <li><a href="https://github.com/ifftu-dev/alexandria/blob/main/LICENSE.md" target="_blank" rel="noopener noreferrer">Application license</a></li>
             </ul>
           </div>
         </div>
 
         <div class="foot-base">
           <p>
-            &copy; {{ year }} Alexandria Pvt. Ltd. Core released under the MIT License;
-            enterprise modules under the IFFTU Enterprise License.
+            &copy; {{ year }} Alexandria Pvt. Ltd. Application: GNU AGPL v3 or later.
+            Credential verification library: MIT OR Apache-2.0.
           </p>
           <a class="ifftu" href="https://www.ifftu.dev" target="_blank" rel="noopener noreferrer">
             An <b>IFFTU</b> product

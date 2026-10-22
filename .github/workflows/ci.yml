@@ -22,6 +22,8 @@ jobs:
           node-version: "24"
           cache: "npm"
       - run: npm ci
+      - name: Public copy regression tests
+        run: node --test tests/public-copy.test.mjs
       - name: TypeScript type-check
         run: npx nuxi typecheck
       - name: Build

@@ -139,7 +139,7 @@ const TEMPLATE = `<!DOCTYPE html>
             <img src="https://alexandria.ifftu.dev/email/email-icon-free.png" width="40" height="40" alt="" style="width:40px;height:40px;display:block;">
           </td>
           <td valign="top" style="padding-bottom:20px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:25px;color:#A9B6CC;">
-            <span style="color:#FFFFFF;font-weight:bold;">Free and open source.</span><br>MIT-licensed core, native on all five major platforms.
+            <span style="color:#FFFFFF;font-weight:bold;">Free and open source.</span><br>Application licensed under GNU AGPL v3 or later. Credential verification library: MIT OR Apache-2.0.
           </td>
         </tr>
         <tr>

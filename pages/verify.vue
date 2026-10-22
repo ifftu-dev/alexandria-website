@@ -13,16 +13,16 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'Verify a credential — Alexandria',
   meta: [
-    { name: 'description', content: 'Check an Alexandria credential yourself. The signature is verified in your browser against the issuer’s key — no account, no upload, nothing sent anywhere.' },
+    { name: 'description', content: 'Check an Alexandria credential signature in your browser, without an account or credential upload. Revocation checks may request the issuer’s status list.' },
     { property: 'og:title', content: 'Verify a credential — Alexandria' },
-    { property: 'og:description', content: 'Check an Alexandria credential in your own browser. No account, no upload.' },
+    { property: 'og:description', content: 'Check a credential signature in your browser. No account or credential upload; status-list checks may make network requests.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/verify' },
     { property: 'og:image', content: 'https://alexandria.ifftu.dev/og/verify.jpg' },
     { property: 'og:image:alt', content: 'Verify — check an Alexandria credential yourself, in your browser.' },
     { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og/verify.jpg' },
     { name: 'twitter:image:alt', content: 'Verify — check an Alexandria credential yourself, in your browser.' },
     { name: 'twitter:title', content: 'Verify a credential — Alexandria' },
-    { name: 'twitter:description', content: 'Check an Alexandria credential in your own browser. No account, no upload.' },
+    { name: 'twitter:description', content: 'Check a credential signature in your browser. No account or credential upload; status-list checks may make network requests.' },
   ],
   link: [{ rel: 'canonical', href: 'https://alexandria.ifftu.dev/verify' }],
 })
@@ -91,7 +91,8 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
         <h1>Check a credential yourself.</h1>
         <p class="hero-lede">
           Paste a credential and this page checks its signature against the issuer's own key —
-          in your browser, with no account and nothing sent anywhere.
+          in your browser, without an account or uploading the credential JSON.
+          Revocation checks may request the issuer's status list.
         </p>
       </div>
     </section>
@@ -119,6 +120,13 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
               placeholder="Paste credential JSON here, or drop the file."
             />
           </div>
+
+          <p class="v-note v-privacy">
+            The signature is checked locally. If the credential names a status list at an HTTPS
+            URL (or an HTTP URL on localhost), this page attempts to fetch that list. The status
+            host may receive your IP address and the requested URL; the credential JSON is not
+            uploaded. Browser or site security policies may block the request.
+          </p>
 
           <div class="v-actions">
             <button type="button" class="btn" :disabled="busy || !input.trim()" @click="run">
@@ -151,6 +159,11 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
               {{ outcome.valid ? 'Signature valid' : 'Not valid' }}
             </p>
             <p v-if="outcome.error" class="v-err">{{ outcome.error }}</p>
+            <p class="v-note">
+              Read each check below. A valid signature does not establish the issuer's authority
+              or the truth of the skill claim. An unchecked revocation status is not proof that
+              the credential has not been revoked.
+            </p>
 
             <dl v-if="hasSubject" class="v-meta">
               <template v-if="outcome.issuer">
@@ -199,10 +212,15 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
           </li>
         </ol>
         <p class="v-note">
-          Two things this page does not do, and says so in the results rather than passing them
-          quietly: it does not fetch the issuer's revocation list, and it does not query the chain
-          for an anchor. Both need data a static page cannot have. The signature stands on its own
-          either way — that is what makes a credential portable.
+          <b>Revocation is a separate check.</b> For a supported status-list URL, this page attempts
+          to fetch the list, verifies its issuer and signature, then reads the credential's status
+          bit. A missing, unsupported, unreachable or unverifiable list is reported as unchecked,
+          not as proof of non-revocation. A valid signature alone does not settle revocation.
+        </p>
+        <p class="v-note">
+          <b>Chain anchors are not checked here.</b> This page does not query Cardano to confirm an
+          anchor. Inspect the separate result for each check; signature verification does not
+          establish assessment quality, issuer authority or recognition by an institution.
         </p>
         <p class="v-note">
           <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology">The credential format and how it is signed</NuxtLink> if you would rather

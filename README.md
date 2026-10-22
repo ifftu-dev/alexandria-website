@@ -429,4 +429,4 @@ netlify dev          # also runs the waiting-list function
 
 Copyright © 2025-2026 Alexandria Pvt. Ltd. See [LICENSE](./LICENSE) for terms.
 
-The Alexandria product is owned by Alexandria Pvt. Ltd.; the app's core is MIT-licensed with enterprise modules under the IFFTU Enterprise License, which is what the site footer states.
+This website repository is MIT-licensed. The Alexandria application is licensed under GNU AGPL v3 or later; its credential verification library (`crates/alexandria-verify`) is licensed MIT OR Apache-2.0. See the [application's license](https://github.com/ifftu-dev/alexandria/blob/main/LICENSE.md) for component-specific terms. The website's license does not change the application's license.
