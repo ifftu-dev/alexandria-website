@@ -189,7 +189,7 @@ const platforms = [
  */
 const worksToday = [
   'Learning, assessment and credentials, in the alpha, on five platforms',
-  'Credentials that verify with no account and no network — including on this site',
+  'Credential signatures checked in your browser, with no account or credential upload',
   'Nine languages on three continents — English, Chinese, Spanish, French, Hindi, Urdu, Telugu, Marathi and Bengali',
   'An AGPL-licensed core, public and forkable today',
 ]
@@ -330,11 +330,12 @@ const featuresOpen = ref(false)
           <p class="eyebrow">Verify it yourself</p>
           <h2>Don't trust us. Check the credential.</h2>
           <p class="p-sub">
-            Every credential is a W3C Verifiable Credential, Ed25519-signed under the holder's own DID
-            and hash-anchored on-chain. Confirm it with our tooling, someone else's, or none at all.
+            Alexandria uses W3C Verifiable Credentials with Ed25519 signatures checked against the
+            issuer's key. Signatures can be checked independently; revocation and optional chain
+            anchors need separate checks. A valid signature does not establish the truth of a claim.
           </p>
           <div class="proof-metrics">
-            <div><div class="n">Offline</div><div class="l">Verification needs no network</div></div>
+            <div><div class="n">Offline</div><div class="l">Signature checks need no network</div></div>
             <div><div class="n">0</div><div class="l">Calls to Alexandria required</div></div>
             <div><div class="n">AGPL</div><div class="l">Core license, forever</div></div>
           </div>
