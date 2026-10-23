@@ -407,11 +407,11 @@ catch-all *after*. Order in that file is what makes them work.
 `/og-image.png` also redirects there, to `/og/home.jpg`, for anything that scraped the old
 card before the redesign.
 
-### TLS runtime requirement
+### Managed TLS for form submissions
 
-Builds use Node 22.23.4, which includes the eMudhra certificate-compromise fix. Netlify manages the deployed functions runtime separately, so the build version alone does not prove the functions use a patched runtime. Before sending any Plunk request, the early-access and enquiry handlers check the running Node version: 22.23.4+, 24.22.1+, or 26.12.1+ within those release lines. Older, unknown, and prerelease runtimes return HTTP 503 with `Cache-Control: no-store`, without sending credentials or form data upstream. Static pages remain available.
+Builds use Node 22.23.4, which includes the eMudhra certificate-compromise fix. Netlify manages the deployed functions runtime separately. Form submissions rely on Netlify's managed runtime and its certificate trust store, with Node's normal HTTPS certificate and hostname verification enabled. The early-access and enquiry handlers do not block submissions based on the runtime's Node version. The patched build requirement in `package.json` remains in place; it does not attest to the functions runtime's patch level.
 
-After deployment, send a `OPTIONS` request to `/api/early-access`, `/api/pilot`, and `/api/partner` (for example, `curl --include --request OPTIONS https://alexandria.ifftu.dev/api/early-access`). Each handler returns 204 for a patched runtime or 503 otherwise, with `Cache-Control: no-store`. These probes send no credentials, create no contacts, and send no email; they verify the runtime requirement, not Plunk availability. A runtime rejection is logged as `Outbound HTTPS disabled`; update the managed runtime and redeploy before restoring form submissions. Keep the runtime guard and `package.json` engine ranges in sync when adopting a new Node release line. `node --test tests/*.test.mjs` covers version boundaries and verifies both handlers block outbound calls on an unpatched runtime.
+After deployment, send an `OPTIONS` request to `/api/early-access`, `/api/pilot`, and `/api/partner` (for example, `curl --include --request OPTIONS https://alexandria.ifftu.dev/api/early-access`). Each handler returns 204 with `Allow: POST, OPTIONS` and `Cache-Control: no-store`. These probes send no credentials, create no contacts, and send no email; they check route availability, not runtime patch level or Plunk delivery. Missing Plunk configuration still returns 503, and an upstream contact-request failure, including TLS validation failure, returns 502. `node --test tests/*.test.mjs` covers submissions on managed runtimes, upstream failures, and probes without side effects.
 
 ## Getting Started
 

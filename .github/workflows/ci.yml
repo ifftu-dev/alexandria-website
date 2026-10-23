@@ -22,7 +22,7 @@ jobs:
           node-version-file: ".nvmrc"
           cache: "npm"
       - run: npm ci
-      - name: Public copy and TLS runtime regression tests
+      - name: Public copy and form regression tests
         run: node --test tests/*.test.mjs
       - name: TypeScript type-check
         run: npx nuxi typecheck
