@@ -63,3 +63,27 @@ test('both handlers block outbound calls on an unpatched runtime and work after 
     assert.ok(fetch.mock.callCount() > before)
   }
 })
+
+
+test('OPTIONS probes verify both live runtimes without credentials or outbound requests', async t => {
+  const original = Object.getOwnPropertyDescriptor(process.versions, 'node')
+  t.after(() => Object.defineProperty(process.versions, 'node', original))
+  t.mock.method(console, 'error', () => {})
+  t.mock.method(globalThis, 'fetch', () => { throw new Error('Health probes must not call upstream') })
+  const previousKey = process.env.PLUNK_API_KEY
+  delete process.env.PLUNK_API_KEY
+  t.after(() => {
+    if (previousKey !== undefined) process.env.PLUNK_API_KEY = previousKey
+  })
+  for (const file of ['early-access', 'enquiry']) {
+    const { default: handler } = await load(file)
+    for (const [version, status] of [['22.23.3', 503], ['22.23.4', 204]]) {
+      Object.defineProperty(process.versions, 'node', { value: version })
+      const response = await handler(new Request('https://example.test/api/test', { method: 'OPTIONS' }))
+      assert.equal(response.status, status, `${file} on ${version}`)
+      if (status === 204) assert.equal(response.headers.get('allow'), 'POST, OPTIONS')
+      assert.equal(response.headers.get('cache-control'), 'no-store')
+    }
+  }
+  assert.equal(fetch.mock.callCount(), 0)
+})

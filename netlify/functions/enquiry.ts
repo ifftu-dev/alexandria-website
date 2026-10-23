@@ -67,6 +67,13 @@ function escapeHtml(s: string): string {
 }
 
 export default async function handler(request: Request): Promise<Response> {
+  if (request.method === 'OPTIONS') {
+    return insecureTlsRuntimeResponse() ?? new Response(null, {
+      status: 204,
+      headers: { 'Cache-Control': 'no-store', Allow: 'POST, OPTIONS' },
+    })
+  }
+
   if (request.method !== 'POST') return json({ ok: false, error: 'Method not allowed' }, 405)
 
   if (isRateLimited(request)) return tooManyRequests()
