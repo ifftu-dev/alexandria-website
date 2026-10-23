@@ -9,7 +9,7 @@
   directory = "netlify/functions"
 
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "22.23.4"
 
 # Asset caching is deliberately NOT set here. Nitro writes dist/_headers with
 # three rules that this one blanket rule was overriding:
