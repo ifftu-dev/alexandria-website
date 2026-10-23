@@ -28,7 +28,6 @@
 import { confirmationHtml } from '../email/confirmation.js'
 
 import { isRateLimited, tooManyRequests } from './_ratelimit.js'
-import { insecureTlsRuntimeResponse } from './_tls-runtime.js'
 
 export const config = { path: '/api/early-access' }
 
@@ -83,7 +82,7 @@ function json(body: Record<string, unknown>, status = 200) {
 
 export default async function handler(request: Request): Promise<Response> {
   if (request.method === 'OPTIONS') {
-    return insecureTlsRuntimeResponse() ?? new Response(null, {
+    return new Response(null, {
       status: 204,
       headers: { 'Cache-Control': 'no-store', Allow: 'POST, OPTIONS' },
     })
@@ -174,9 +173,6 @@ export default async function handler(request: Request): Promise<Response> {
     console.error('early-access: PLUNK_API_KEY is not set')
     return json({ ok: false, error: 'Signup is not configured yet. Try again shortly.' }, 503)
   }
-
-  const unavailable = insecureTlsRuntimeResponse()
-  if (unavailable) return unavailable
 
   const auth = {
     'Content-Type': 'application/json',
