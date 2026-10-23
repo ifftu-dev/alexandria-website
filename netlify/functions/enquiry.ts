@@ -16,6 +16,7 @@
  * waitlist function), plus ENQUIRY_TO for where notifications land.
  */
 import { isRateLimited, tooManyRequests } from './_ratelimit.js'
+import { insecureTlsRuntimeResponse } from './_tls-runtime.js'
 
 export const config = { path: ['/api/pilot', '/api/partner'] }
 
@@ -102,6 +103,9 @@ export default async function handler(request: Request): Promise<Response> {
     console.error('enquiry: PLUNK_API_KEY is not set')
     return json({ ok: false, error: 'Enquiries are not configured yet. Try again shortly.' }, 503)
   }
+
+  const unavailable = insecureTlsRuntimeResponse()
+  if (unavailable) return unavailable
 
   const auth = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` }
 

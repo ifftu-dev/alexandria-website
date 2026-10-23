@@ -25,7 +25,6 @@ useHead({
 const waitlist = useWaitlist()
 
 const noDegree = RECOGNITION_GAP.find(f => f.id === 'no-degree')!
-const oneIn700 = RECOGNITION_GAP.find(f => f.id === 'one-in-700')!
 
 /**
  * The page used to open with four promises and then admit it was an alpha —

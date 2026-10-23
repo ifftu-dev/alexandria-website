@@ -17,7 +17,7 @@ Marketing website for [Alexandria](https://github.com/ifftu-dev/alexandria) — 
 - [Tailwind CSS v4](https://tailwindcss.com) alongside a hand-written token system in `assets/css/main.css`
 - TypeScript, strict; `vue-tsc -b --noEmit` must pass
 - Self-hosted Newsreader, Public Sans and IBM Plex Mono, Latin subsets only
-- Node 22 (see `.nvmrc`)
+- Node 22.23.4 (see `.nvmrc`); supported alternatives are Node 24.22.1+ within 24.x and 26.12.1+ within 26.x
 - Deployed on [Netlify](https://www.netlify.com) — `npm run generate` to `dist/`
 
 ## Typography
@@ -406,6 +406,12 @@ catch-all *after*. Order in that file is what makes them work.
 
 `/og-image.png` also redirects there, to `/og/home.jpg`, for anything that scraped the old
 card before the redesign.
+
+### TLS runtime requirement
+
+Builds use Node 22.23.4, which includes the eMudhra certificate-compromise fix. Netlify manages the deployed functions runtime separately, so the build version alone does not prove the functions use a patched runtime. Before sending any Plunk request, the early-access and enquiry handlers check the running Node version: 22.23.4+, 24.22.1+, or 26.12.1+ within those release lines. Older, unknown, and prerelease runtimes return HTTP 503 with `Cache-Control: no-store`, without sending credentials or form data upstream. Static pages remain available.
+
+After deployment, confirm the functions runtime is patched. A runtime rejection is logged as `Outbound HTTPS disabled`; update the managed runtime and redeploy before restoring form submissions. Keep the runtime guard and `package.json` engine ranges in sync when adopting a new Node release line. `node --test tests/*.test.mjs` covers version boundaries and verifies both handlers block outbound calls on an unpatched runtime.
 
 ## Getting Started
 
