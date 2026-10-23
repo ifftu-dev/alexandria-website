@@ -82,7 +82,7 @@ function json(body: Record<string, unknown>, status = 200) {
 }
 
 export default async function handler(request: Request): Promise<Response> {
-  if (request.method === 'HEAD') {
+  if (request.method === 'OPTIONS') {
     return insecureTlsRuntimeResponse() ?? new Response(null, {
       status: 204,
       headers: { 'Cache-Control': 'no-store' },

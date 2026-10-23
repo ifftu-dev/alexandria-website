@@ -65,7 +65,7 @@ test('both handlers block outbound calls on an unpatched runtime and work after 
 })
 
 
-test('HEAD probes verify both live runtimes without credentials or outbound requests', async t => {
+test('OPTIONS probes verify both live runtimes without credentials or outbound requests', async t => {
   const original = Object.getOwnPropertyDescriptor(process.versions, 'node')
   t.after(() => Object.defineProperty(process.versions, 'node', original))
   t.mock.method(console, 'error', () => {})
@@ -79,7 +79,7 @@ test('HEAD probes verify both live runtimes without credentials or outbound requ
     const { default: handler } = await load(file)
     for (const [version, status] of [['22.23.3', 503], ['22.23.4', 204]]) {
       Object.defineProperty(process.versions, 'node', { value: version })
-      const response = await handler(new Request('https://example.test/api/test', { method: 'HEAD' }))
+      const response = await handler(new Request('https://example.test/api/test', { method: 'OPTIONS' }))
       assert.equal(response.status, status, `${file} on ${version}`)
       assert.equal(response.headers.get('cache-control'), 'no-store')
     }
