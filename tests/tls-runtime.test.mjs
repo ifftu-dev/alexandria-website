@@ -81,6 +81,7 @@ test('OPTIONS probes verify both live runtimes without credentials or outbound r
       Object.defineProperty(process.versions, 'node', { value: version })
       const response = await handler(new Request('https://example.test/api/test', { method: 'OPTIONS' }))
       assert.equal(response.status, status, `${file} on ${version}`)
+      if (status === 204) assert.equal(response.headers.get('allow'), 'POST, OPTIONS')
       assert.equal(response.headers.get('cache-control'), 'no-store')
     }
   }

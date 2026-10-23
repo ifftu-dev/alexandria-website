@@ -70,7 +70,7 @@ export default async function handler(request: Request): Promise<Response> {
   if (request.method === 'OPTIONS') {
     return insecureTlsRuntimeResponse() ?? new Response(null, {
       status: 204,
-      headers: { 'Cache-Control': 'no-store' },
+      headers: { 'Cache-Control': 'no-store', Allow: 'POST, OPTIONS' },
     })
   }
 
