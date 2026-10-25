@@ -31,7 +31,7 @@ useHead({
         'description': 'A free, open-source learning app where you study offline and earn credentials you truly own.',
         'url': 'https://alexandria.ifftu.dev',
         'downloadUrl': 'https://github.com/ifftu-dev/alexandria/releases/latest',
-        'author': { '@type': 'Organization', 'name': 'Alexandria Pvt. Ltd.', 'url': 'https://alexandria.ifftu.dev' },
+        'author': { '@type': 'Person', 'name': 'Pratyush Pundir', 'email': 'pratyush@alexandria.ifftu.dev', 'url': 'https://alexandria.ifftu.dev' },
       }),
     },
   ],

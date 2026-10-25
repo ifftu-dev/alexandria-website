@@ -13,8 +13,8 @@
  */
 definePageMeta({ layout: 'landing' })
 
-const UPDATED = '18 August 2026'
-const CONTACT = 'pratyush@ifftu.dev'
+const UPDATED = '25 October 2026'
+const CONTACT = 'pratyush@alexandria.ifftu.dev'
 const GITHUB = 'https://github.com/ifftu-dev/alexandria'
 
 useHead({
@@ -151,7 +151,7 @@ const practice = [
         <div>
           <p class="pv-c-k">Contact</p>
           <p><a :href="`mailto:${CONTACT}`">{{ CONTACT }}</a></p>
-          <p class="pv-c-s">Alexandria Pvt. Ltd., an IFFTU product.</p>
+          <p class="pv-c-s">Pratyush Pundir, creator of Alexandria, an IFFTU project.</p>
         </div>
         <div>
           <p class="pv-c-k">Read the code</p>

@@ -55,7 +55,6 @@ export function useSiteSchema() {
         '@type': 'Organization',
         '@id': `${SITE}/#organization`,
         'name': 'Alexandria',
-        'legalName': 'Alexandria Pvt. Ltd.',
         'url': SITE,
         'logo': { '@type': 'ImageObject', 'url': `${SITE}/icon.svg` },
         'description': 'A free, open-source learning app where you study offline and own the credentials you earn.',
@@ -71,6 +70,7 @@ export function useSiteSchema() {
         'url': SITE,
         'inLanguage': 'en-US',
         'publisher': { '@id': `${SITE}/#organization` },
+        'copyrightHolder': { '@type': 'Person', 'name': 'Pratyush Pundir', 'email': 'pratyush@alexandria.ifftu.dev' },
       },
     ]
 

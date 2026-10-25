@@ -320,7 +320,7 @@ const year = new Date().getFullYear()
 
         <div class="foot-base">
           <p>
-            &copy; {{ year }} Alexandria Pvt. Ltd. Application: GNU AGPL v3 or later.
+            &copy; {{ year }} <a href="mailto:pratyush@alexandria.ifftu.dev">Pratyush Pundir</a>. Application: GNU AGPL v3 or later.
             Credential verification library: MIT OR Apache-2.0.
           </p>
           <a class="ifftu" href="https://www.ifftu.dev" target="_blank" rel="noopener noreferrer">
