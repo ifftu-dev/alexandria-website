@@ -46,3 +46,18 @@ hook="$(git rev-parse --git-path hooks)/commit-msg"
 printf '#!/bin/sh\nexec scripts/check-commit-messages.sh --file "$1"\n' > "$hook"
 chmod +x "$hook"
 ```
+
+## Docs
+
+`scripts/check-docs.sh` runs in CI on every pull request that touches Markdown. It keeps `README.md` under 200 lines, requires a `Status:` line under the title of every file in `docs/`, rejects absolute home-directory paths, and checks relative links. Run it locally before pushing doc changes.
+
+| Status | Meaning |
+|---|---|
+| `draft` | Proposed, not started |
+| `active` | Being implemented |
+| `live` | Maintained guide, reference or runbook |
+| `implemented` | Finished spec or audit. Frozen: later changes start a new doc |
+| `superseded` | Replaced; add `Superseded-by: <path>` |
+| `retired` | Describes something that was removed |
+
+Put `Updated: YYYY-MM-DD` on the line after `Status:`.
