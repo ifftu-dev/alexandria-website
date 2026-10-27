@@ -39,7 +39,8 @@
 #     static `generate` build has no nonce to hand them. Removing this needs
 #     build-side CSP hash support, not a header edit, and shipping a policy
 #     that blanks the site is worse than shipping an honest one. Recorded as
-#     still open in ../docs/security-audit.md.
+#     still open in the monorepo security audit index (alexandria repo,
+#     docs/audits/monorepo-security-2026-08.md).
 #   script-src https://plausible.io — the analytics bundle.
 #   connect-src https://plausible.io — where it sends events.
 #

@@ -26,7 +26,7 @@ if [[ -z "${PLAUSIBLE_API_KEY:-}" ]]; then
   exit 1
 fi
 
-# Every goal the markup tags. Keep in step with the table in README.md — the
+# Every goal the markup tags. Keep in step with the table in docs/analytics.md — the
 # names are load-bearing, and renaming one silently breaks a funnel that already
 # has history.
 GOALS=(
