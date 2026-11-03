@@ -81,7 +81,7 @@ const dataFacts = [
     <section class="section pad">
       <h2 class="h-sec">Reporting something</h2>
       <p class="p-sub">
-        Security findings go to <a href="mailto:security@ifftu.dev">security@ifftu.dev</a>. We would rather
+        Security findings go to <a href="mailto:admin@ifftu.dev">admin@ifftu.dev</a>. We would rather
         hear it from you than read about it later, and we will credit you unless you ask us not to.
       </p>
     </section>

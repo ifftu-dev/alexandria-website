@@ -58,7 +58,7 @@ The IFFTU site keeps its existing American spelling and serial comma, and hyphen
 5. As a visitor looking at the app replica, I want it to show the app's current labels, so that the caption "the app's actual layout" is true.
 6. As a visitor, I want the privacy policy to disclose every third party the site loads, so that I can trust the rest of it.
 7. As a visitor, I want the privacy and trust pages to agree about analytics, so that I do not have to decide which one is wrong.
-8. As a security researcher, I want one reporting address across Alexandria and IFFTU, so that my report reaches the right inbox.
+8. As a security researcher, I want the trust page to give a reporting address that a person reads, so that my report is acted on.
 9. As a security-minded evaluator, I want the trust page to describe the latest security reviews with their dates, so that I can judge the current posture rather than a historical one.
 10. As an evaluator, I want the technology page's security paragraph to agree with the trust page, so that the two pages do not contradict each other.
 11. As a visitor using the search palette, I want every page reachable from it, so that "Search this site" is true.
@@ -88,16 +88,15 @@ The IFFTU site keeps its existing American spelling and serial comma, and hyphen
 - Breadcrumbs under the blog use the post's title instead of title-casing its slug. All other routes keep the slug-derived name.
 - The privacy page lists Plausible as the one third-party origin the site loads, consistent with the trust page and the site's own configuration, and its "last updated" date moves to the date of this change.
 - The trust page summarizes the security reviews from the app repository's audit records: a February review, a monorepo-wide August review whose findings were all fixed or accepted in writing, and a later August pass that left a few items open and written down. The technology page's security paragraph points to the same facts.
-- Security reports on both sites go to the dedicated security address the IFFTU site already publishes.
+- The trust page keeps admin@ifftu.dev for security reports, the inbox known to be read.
 - Where two pieces of copy contradict each other (the replica's mic state, the announcement's design-system claim, a footer column headed "For"), the inaccurate one changes.
 - Figures stay in the shared evidence module, and prose that states one renders it from there; corrected labels are made there so every page that renders them changes together.
-- The announcement post is a dated document. Typos, grammar and the author contact address are corrected; claims that were accurate on its publication date are left as written.
+- The announcement post is corrected in place, with no editor's note: typos, grammar, the author contact address, and claims that are no longer true (the Discussions name, how completion credentials are issued, what Sentinel sends, how skill-graph changes are approved, and the security-review status).
 
 ## Testing Decisions
 
 - Copy is tested at one seam: the existing source-level copy test that already guards the license and verifier wording. It reads source files and asserts on the text a visitor sees, which is the external behavior of a static site.
 - New tests in that file assert: none of the retired spellings and terms appear in visible copy (with code comments stripped and code identifiers excluded by matching visible-text shapes rather than bare words); the privacy page names Plausible and no longer claims to load nothing from another origin; and the search palette has a command for every top-level page in the pages directory.
-- The shared security address spans two repositories, so no test in either can see both; it is a one-line change checked by review.
 - A good test here names a rule a future editor could break, not a specific sentence. "Every page is reachable from the palette" survives a page being added; "the palette contains these ten strings" would not.
 - The breadcrumb change is checked against the generated HTML of the announcement post after a static build, because the composable only runs inside Nuxt.
 - Typecheck and the production build run as in CI. The IFFTU site is checked by its own build.
@@ -106,10 +105,6 @@ The IFFTU site keeps its existing American spelling and serial comma, and hyphen
 
 - Visual or layout changes, and any rewrite beyond correcting what is wrong or inconsistent.
 - Renaming code identifiers, routes, anchors, payload fields or analytics goals.
-- Rewriting historical claims in the dated announcement post, including its account of credential issuance and its security-audit figures.
 - The accent-color decision and other open design questions.
 - Legal review of the privacy policy.
 
-## Further Notes
-
-- The dedicated security mailbox is published on the IFFTU site already; delivery to it should be confirmed by a person before this ships.

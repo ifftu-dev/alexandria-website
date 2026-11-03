@@ -100,7 +100,7 @@ or Android phone. The difference is that installing it turns your device into a 
 participant in the network — not a client connecting to a server, but the whole system,
 bundled and running locally. It does six things.
 
-**A learning platform.** Courses, short-form video tutorials, and *Opinions* — credentialed
+**A learning platform.** Courses, short-form video tutorials, and *Discussions* — credentialed
 takes from practitioners who already hold the skill they're commenting on. Learning is
 hands-on: lessons can embed interactive exercises and full in-app code editors for
 Python, JavaScript, TypeScript, and C++ that run and grade your work locally — no compiler
@@ -115,22 +115,23 @@ without waiting on me. Lessons are stored and shared peer to peer between users'
 point is access for the people currently locked out. Every new install ships with a starter catalog, so there's
 something to learn on day one.
 
-**A living map of what there is to learn.** Every lesson, credential, and opinion is
+**A living map of what there is to learn.** Every lesson, credential, and discussion is
 anchored to a public *skill graph* — a three-tier taxonomy (broad fields like *Computer
 Science* → subjects like *Distributed Systems* → individual skills) with explicit
 prerequisite edges (*calculus requires algebra*) and a mastery level attached to each skill,
 drawn from Bloom's taxonomy: can you *remember* it, *apply* it, *create* with it? This is
 what lets a credential earned in one part of the world mean something precise to someone on
 the other side of it. The graph isn't curated by a central team — proposed changes (adding a
-skill, reshaping prerequisites, deprecating something outdated) are ratified by a domain
-committee, versioned, signed, and gossiped to every node so every participant agrees on what
+skill, reshaping prerequisites, deprecating something outdated) go through committee
+review and a public vote, then are versioned, signed, and gossiped to every node so every participant agrees on what
 a given skill *means*.
 
 **Credentials you actually own.** When you demonstrate a skill — through an assessment, a
 project, or a peer's attestation — you earn a W3C Verifiable Credential that you sign
 yourself, under a `did:key` only you control. No platform holds it. Complete a course's
-assessments and the loop runs on its own: a Cardano validator witnesses the completion, and
-a local observer auto-issues the credential to you. There are six learner credential types —
+assessments and the credential is issued on your device on the spot — no network, no ledger,
+no one's approval. A Cardano validator can also witness the completion, but that is optional
+and never a gate. There are six learner credential types —
 a formal credential, an assessment credential, a peer attestation, and so on — so a
 self-signed practice run reads differently from a proctored exam. Because you sign the
 credential yourself, anyone in the world can verify it offline, with nothing but the file
@@ -148,7 +149,7 @@ flattening it into one score.
 
 **Honest assessments.** A local integrity layer called Sentinel watches for cheating during
 assessments, the way your bank watches for suspicious logins. All the analysis happens on
-your device; only a final integrity score ever leaves it. Your keystrokes, camera feed, and
+your device; only an integrity score and the reasoning behind it ever leave it. Your keystrokes, camera feed, and
 behavior never touch a server.
 
 **Governance that follows expertise, not money.** Every branch of the skill graph has its
@@ -204,8 +205,9 @@ Everything is under active development. I want to be upfront about where it stan
 The core design holds up in the implementation. The reputation model, the credential
 pipeline, the peer-to-peer protocol, the on-device integrity layer, and the offline-first
 architecture are all solid enough to build on, with a large automated test suite behind
-them. A security audit in February surfaced 32 findings; as of the March remediation pass,
-21 are fixed and 11 remain.
+them. Internal security reviews ran in February and August;
+every finding has been fixed or accepted with written reasoning, and the few still open are
+written down in the repository.
 
 What still needs work: the UI/UX (it sucks); my thoughts on the instructor economy feel incomplete;
 there's no content moderation yet (any peer can publish anything, and while the network
