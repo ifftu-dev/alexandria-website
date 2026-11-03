@@ -71,21 +71,29 @@
   line-gap-override: 0%;
 }
 
+/* `optional`, not `swap`, on both Newsreader faces. They are preloaded (see
+   app.vue), so on any ordinary connection they arrive inside the block period
+   and paint first time. When they do not, the page keeps the fallback rather
+   than swapping late, and a late swap is what re-wraps the hero h1 and moves
+   everything below it. The Georgia-based fallbacks above only match metrics
+   where Georgia exists; Linux and Android have no Georgia, so on those the swap
+   still cost ~0.09–0.10 CLS on a CI runner, right at the 0.1 budget. */
 @font-face {
   font-family: 'Newsreader Variable';
   font-style: normal;
-  font-display: swap;
+  font-display: optional;
   font-weight: 200 800;
   src: url('../fonts/newsreader-normal.woff2') format('woff2-variations');
   unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
 
 /* Italic is a separate 63 KB file for a handful of words — the hero emphasis and
-   the pull quote. `swap` keeps it off the critical path; it is never the LCP. */
+   the pull quote. It is never the LCP, but it ends the hero h1, so it takes
+   `optional` for the same reason as the roman face above. */
 @font-face {
   font-family: 'Newsreader Variable';
   font-style: italic;
-  font-display: swap;
+  font-display: optional;
   font-weight: 200 800;
   src: url('../fonts/newsreader-italic.woff2') format('woff2-variations');
   unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
