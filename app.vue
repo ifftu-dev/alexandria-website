@@ -16,7 +16,9 @@
 // below the hero. That is a 0.104 layout shift, measured on a Linux CI runner
 // standing in for exactly that case.
 //
-// 17 KB to remove a Core Web Vital failure for every visitor without Georgia.
+// Both faces are also `font-display: optional` (main.css), so a font that misses
+// the block period is skipped for that view rather than swapped in late. The
+// preload is what makes "optional" mean "used" on an ordinary connection.
 import displayUrl from '~/assets/fonts/newsreader-normal.woff2?url'
 import italicUrl from '~/assets/fonts/newsreader-italic.woff2?url'
 
