@@ -27,12 +27,14 @@ export function useSiteSchema() {
 
     const items = [{ name: 'Home', item: SITE + '/' }]
     let acc = ''
-    for (const part of parts) {
+    for (const [i, part] of parts.entries()) {
       acc += `/${part}`
+      // A post's slug drops the capitals its title has (`introducing-alexandria`),
+      // so a post is named by its title. Every other route is named from the
+      // path: `/why-recognition` → `Why recognition`.
+      const post = i === 1 && parts[0] === 'blog' ? usePost(part) : undefined
       items.push({
-        // `/why-recognition` → `Why recognition`. Good enough for every route
-        // the site has, and the post slug reads correctly too.
-        name: part.replace(/-/g, ' ').replace(/^./, c => c.toUpperCase()),
+        name: post?.title ?? part.replace(/-/g, ' ').replace(/^./, c => c.toUpperCase()),
         item: SITE + acc,
       })
     }
