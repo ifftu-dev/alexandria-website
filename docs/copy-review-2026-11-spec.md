@@ -88,7 +88,7 @@ The IFFTU site keeps its existing American spelling and serial comma, and hyphen
 - Breadcrumbs under the blog use the post's title instead of title-casing its slug. All other routes keep the slug-derived name.
 - The privacy page lists Plausible as the one third-party origin the site loads, consistent with the trust page and the site's own configuration, and its "last updated" date moves to the date of this change.
 - The trust page summarizes the security reviews from the app repository's audit records: a February review, a monorepo-wide August review whose findings were all fixed or accepted in writing, and a later August pass that left a few items open and written down. The technology page's security paragraph points to the same facts.
-- The trust page keeps admin@ifftu.dev for security reports, the inbox known to be read.
+- Security reports go to admin@alexandria.ifftu.dev on the Alexandria site and admin@ifftu.dev on the IFFTU site.
 - Where two pieces of copy contradict each other (the replica's mic state, the announcement's design-system claim, a footer column headed "For"), the inaccurate one changes.
 - Figures stay in the shared evidence module, and prose that states one renders it from there; corrected labels are made there so every page that renders them changes together.
 - The announcement post is corrected in place, with no editor's note: typos, grammar, the author contact address, and claims that are no longer true (the Discussions name, how completion credentials are issued, what Sentinel sends, how skill-graph changes are approved, and the security-review status).
