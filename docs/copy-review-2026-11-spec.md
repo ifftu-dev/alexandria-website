@@ -1,8 +1,8 @@
 # Copy review: typos, consistency and stale claims
 
-Status: active
+Status: implemented
 Updated: 2026-11-03
-Triage: ready-for-agent
+Triage: done
 Repos: website
 
 ## Problem Statement
@@ -108,3 +108,6 @@ The IFFTU site keeps its existing American spelling and serial comma, and hyphen
 - The accent-color decision and other open design questions.
 - Legal review of the privacy policy.
 
+## Notes
+
+- 2026-11-03: Implemented and merged for both sites. The PR's Lighthouse mobile check failed on hero layout shift from the Newsreader font swap, which already measured close to the budget on main; that is fixed separately.
