@@ -53,15 +53,15 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'en-US',
       },
-      title: 'Alexandria — Free Learning, Credentials You Own',
+      title: 'Alexandria — Free learning, credentials you own',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
-        { name: 'description', content: 'Alexandria is a free, open-source learning app for macOS, Windows, Linux, iOS, and Android. Study offline, earn credentials you truly own, and keep your learning and data on your own device — your account is created there and no company holds it.' },
+        { name: 'description', content: 'A free, open-source learning app for macOS, Windows, Linux, iOS and Android. Study offline, earn credentials you truly own and keep your data on your own device.' },
         { name: 'theme-color', content: '#ffffff', media: '(prefers-color-scheme: light)' },
         { name: 'theme-color', content: '#0f172a', media: '(prefers-color-scheme: dark)' },
         { name: 'color-scheme', content: 'light dark' },
-        { name: 'keywords', content: 'learning platform, free education, open source, decentralized, verifiable credentials, did, selective disclosure, peer-to-peer learning, offline-first, native app, Tauri, Cardano' },
+        { name: 'keywords', content: 'learning platform, free education, open source, decentralized, verifiable credentials, DID, selective disclosure, peer-to-peer learning, offline-first, native app, Tauri, Cardano' },
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Alexandria' },
         // Per-page cards override these; this is the fallback for any route
@@ -71,7 +71,7 @@ export default defineNuxtConfig({
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
         { property: 'og:image:alt', content: 'Alexandria — education, and its recognition, free forever. A free, open-source learning app.' },
-        { property: 'og:locale', content: 'en' },
+        { property: 'og:locale', content: 'en_US' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:site', content: '@Alexandria_FTU' },
         { name: 'twitter:creator', content: '@Alexandria_FTU' },

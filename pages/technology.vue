@@ -22,7 +22,7 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'Technology — Alexandria',
   meta: [
-    { name: 'description', content: 'Identity, sync, integrity, assessment plugins and the skill map — how each part of Alexandria works, named precisely enough to argue with.' },
+    { name: 'description', content: 'Identity, sync, integrity, assessment plugins and the skill graph — how each part of Alexandria works, named precisely enough to argue with.' },
     { property: 'og:title', content: 'Technology — Alexandria' },
     { property: 'og:description', content: 'Every claim on this site is a thing you can check. Here is how each part works.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/technology' },
@@ -227,7 +227,7 @@ const platforms = [
       <p class="p-sub">
         Different skills need different ways to teach and test. A plugin is a self-contained
         assessment engine — it defines what a candidate does, what evidence is captured and how it is
-        scored — and once installed it can issue credentials like any other assessment. They run as
+        scored — and once installed it can issue credentials like any other assessment. Plugins run as
         sandboxed WebAssembly, so a plugin cannot reach anything the learner did not give it.
       </p>
       <div class="t-cards t-cards-4">
@@ -240,13 +240,13 @@ const platforms = [
 
     <!-- ═══ 05 SKILL MAP ═══ -->
     <section class="section pad">
-      <p class="eyebrow">05 / The skill map</p>
+      <p class="eyebrow">05 / The skill graph</p>
       <h2 class="h-sec">A credential has to mean the same thing everywhere.</h2>
       <div class="t-split">
         <div class="t-prose">
           <p>
             Every lesson and every credential ties to a node on a public map of skills, with explicit
-            prerequisites and Bloom levels — recall, apply, analyze, and beyond. That is what lets an
+            prerequisites and Bloom’s levels — remember, apply, analyze and beyond. That is what lets an
             employer read <span class="mono">welding.pipe.6g · apply</span> and know exactly what was
             demonstrated.
           </p>
@@ -258,7 +258,7 @@ const platforms = [
         </div>
 
         <div class="t-panel">
-          <div class="t-panel-h"><b>Skill map</b><span class="t-panel-c">5 / 16 earned</span></div>
+          <div class="t-panel-h"><b>Skill graph</b><span class="t-panel-c">5 / 16 earned</span></div>
           <div v-for="r in skillRows" :key="r.id" class="t-skill">
             <span class="t-dot" :class="`t-dot-${r.tone}`" :style="{ width: `${r.dot}px`, height: `${r.dot}px` }" />
             <span class="mono t-skill-id">{{ r.id }}</span>
@@ -303,8 +303,8 @@ const platforms = [
       <p class="eyebrow">Honest limits</p>
       <h2 class="h-sec">What this does not do yet.</h2>
       <p class="p-sub t-limits">
-        All of the above is built and shipping in the alpha, with four exceptions, each named where
-        it appears above. On-chain anchoring is written and runs against the Cardano test network,
+        All of the above is built and shipping in the alpha, with four exceptions, all listed
+        here. On-chain anchoring is written and runs against the Cardano test network,
         but a build does nothing with it until someone supplies their own Blockfrost key — so treat
         it as in development. Practical-trade submissions are reviewed by an assessor on the same
         node; routing one to an assessor elsewhere is a later phase. The music plugin marks notes
@@ -314,10 +314,10 @@ const platforms = [
       </p>
       <p class="p-sub t-limits">
         None of it has been through an independent validity study, there is no content moderation in
-        place, and no external users have stress-tested any of it. An internal security review of
-        the Rust core, Tauri configuration, dependencies and frontend was carried out in February
-        2026 and its remediation is unfinished; no independent audit has been commissioned. The
-        <NuxtLink to="/trust">trust page</NuxtLink> carries the counts and the dates.
+        place, and no external users have stress-tested any of it. Internal security reviews ran in
+        February and August 2026; a few findings remain open, each one written down. No independent
+        audit has been commissioned. The
+        <NuxtLink to="/trust">trust page</NuxtLink> carries the details and the dates.
       </p>
       <div class="hero-cta">
         <a :href="GITHUB" target="_blank" rel="noopener noreferrer" class="plausible-event-name=CTA-GitHub btn">Read the source</a>

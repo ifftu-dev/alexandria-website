@@ -4,14 +4,14 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'Run a pilot — Alexandria',
   meta: [
-    { name: 'description', content: 'Pilot Alexandria with one program or one role family. Defined scope, 8–12 weeks, agreed success measures, and an honest account of what is and is not built yet.' },
+    { name: 'description', content: 'Pilot Alexandria with one program or one role family. Defined scope, 8–12 weeks, agreed success measures and an honest account of what is and is not built yet.' },
     { property: 'og:title', content: 'Run a pilot — Alexandria' },
     { property: 'og:description', content: 'Pilot Alexandria with one program or one role family. Defined scope and agreed success measures.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/pilots' },
     { property: 'og:image', content: 'https://alexandria.ifftu.dev/og/pilots.jpg' },
-    { property: 'og:image:alt', content: 'Pilots — small, real, and measured.' },
+    { property: 'og:image:alt', content: 'Pilots — small, real and measured.' },
     { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og/pilots.jpg' },
-    { name: 'twitter:image:alt', content: 'Pilots — small, real, and measured.' },
+    { name: 'twitter:image:alt', content: 'Pilots — small, real and measured.' },
     { name: 'twitter:title', content: 'Run a pilot — Alexandria' },
     { name: 'twitter:description', content: 'Pilot Alexandria with one program or one role family.' },
   ],
@@ -25,8 +25,8 @@ const SHAPES = {
   institution: {
     scope: 'One program, one credential pathway, 50–250 learners',
     length: '8–12 weeks',
-    inputs: 'A course or module you already teach, an assessment you already trust, and someone who can answer questions about how it is run.',
-    outputs: 'Learners holding credentials they can prove independently, a skill map of what your curriculum actually develops, and a written evaluation.',
+    inputs: 'A course or module you already teach, an assessment you already trust and someone who can answer questions about how it is run.',
+    outputs: 'Learners holding credentials they can prove independently, a skill graph of what your curriculum actually develops and a written evaluation.',
     measures: ['Activation and completion', 'Assessment integrity', 'Credentials issued and independently verified', 'Offline usage', 'Administrator effort'],
   },
   employer: {
@@ -48,7 +48,7 @@ const shape = computed(() => SHAPES[audience.value])
       <div class="hero-scrim" />
       <div class="pad hero-inner hero-centered">
         <p class="eyebrow hero-eyebrow">Pilots</p>
-        <h1>Small, real, and measured.</h1>
+        <h1>Small, real and measured.</h1>
         <p class="hero-lede">
           One program or one role family, with success measures agreed before we start. We would
           rather run a narrow pilot that produces evidence than a wide one that produces enthusiasm.

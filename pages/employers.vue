@@ -13,7 +13,9 @@
  * deck and its own handoff notes flag them as needing clearance before
  * publication; see the comment on `packages` below.
  */
-import { RECOGNITION_GAP, SOURCES } from '~/content/evidence'
+import { RECOGNITION_GAP, SOURCES, TARGETS } from '~/content/evidence'
+
+const share = TARGETS.find(f => f.id === 'share')!
 
 definePageMeta({ layout: 'landing' })
 
@@ -36,15 +38,15 @@ useHead({
 
 const problems = [
   { n: '01', k: 'Screening', t: 'The degree filter is a blunt proxy', b: 'It removes most of the working population to approximate a capability you could simply measure.' },
-  { n: '02', k: 'Assessment', t: 'You pay to re-discover known facts', b: 'The candidate has probably proven this exact skill before. You have no way to see it, so you buy the test again.' },
-  { n: '03', k: 'Trust', t: 'Certificates are unverifiable', b: 'A PDF badge proves nothing about who sat the assessment, or whether it was ever passed at all.' },
+  { n: '02', k: 'Assessment', t: 'You pay to rediscover known facts', b: 'The candidate has probably proven this exact skill before. You have no way to see it, so you buy the test again.' },
+  { n: '03', k: 'Trust', t: 'Certificates are unverifiable', b: 'A PDF badge proves nothing about who took the assessment, or whether it was ever passed at all.' },
 ]
 
 const steps = [
-  { n: '01', t: 'Search on skill', b: 'Query the public skill map directly — welding.pipe.6g · apply — not job titles or keywords.', state: 'built' as const },
+  { n: '01', t: 'Search on skill', b: 'Query the public skill graph directly — welding.pipe.6g · apply — not job titles or keywords.', state: 'built' as const },
   { n: '02', t: 'Candidate consents', b: 'Nothing is visible without the holder choosing to reveal it, and they reveal only the parts they choose. The consent half runs in the app today; the console that asks is built and not yet running for anyone.', state: 'built' as const },
   { n: '03', t: 'Verify it yourself', b: 'Check the signature with our tooling, your own, or any W3C-compliant verifier. No API call to us required.', state: 'alpha' as const },
-  { n: '04', t: 'See the whole record', b: 'Behind each credential: what was assessed, how it was scored, and the integrity signals at the time.', state: 'alpha' as const },
+  { n: '04', t: 'See the whole record', b: 'Behind each credential: what was assessed, how it was scored and the integrity signals at the time.', state: 'alpha' as const },
 ]
 
 /**
@@ -106,7 +108,7 @@ const packages = [
     <!-- ═══ THE PROBLEM ═══ -->
     <section class="section pad">
       <p class="eyebrow">The problem you already have</p>
-      <h2 class="h-sec">Everyone re-tests every candidate, from scratch, forever.</h2>
+      <h2 class="h-sec">Everyone retests every candidate, from scratch, forever.</h2>
       <p class="p-sub">
         Your assessment budget exists because nothing a candidate brings with them can be trusted.
         That work is duplicated at every company the candidate applies to, and paid for every time.
@@ -146,7 +148,7 @@ const packages = [
           </div>
           <div>
             <p class="e-cand-k">Assessed</p>
-            <p class="e-cand-v">On device, 14 March 2026</p>
+            <p class="e-cand-v">On device, March 14, 2026</p>
             <p class="e-cand-s">Integrity score 0.94 · high</p>
           </div>
           <div>
@@ -169,8 +171,8 @@ const packages = [
       <h2 class="h-sec">You are the side that pays. That is deliberate.</h2>
       <p class="p-sub">
         Learners are never charged — not for courses, not for assessments, not for the credential.
-        The commons is funded by the people who get commercial value from it, which is you, and forty
-        per cent of what we earn goes to the educators who built the skills you are hiring on. The
+        The commons is funded by the people who get commercial value from it, which is you, and {{ share.value }}
+        of what we earn goes to the educators who teach the skills you are hiring on. The
         trade is straightforward: you get a verified talent pool that costs less to screen, and the
         pool stays free to grow.
       </p>

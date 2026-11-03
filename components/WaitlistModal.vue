@@ -65,8 +65,8 @@ function onClick(event: MouseEvent) {
       <p class="wl-eyebrow">Alpha · waiting list</p>
       <h2 id="wl-title" class="wl-title">Join the waiting list</h2>
       <p class="wl-sub">
-        We are letting people in a group at a time while the alpha settles. Tell us who you are and
-        what you'd run it on, and we'll email you when it's your turn.
+        We are letting people in one group at a time while the alpha settles. Tell us who you are and
+        what you’d run it on, and we’ll email you when it’s your turn.
       </p>
 
       <EarlyAccessForm variant="band" />

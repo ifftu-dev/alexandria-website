@@ -6,16 +6,16 @@ const share = TARGETS.find(f => f.id === 'share')!
 definePageMeta({ layout: 'landing' })
 
 useHead({
-  title: 'Alexandria — Free Learning, Credentials You Own',
+  title: 'Alexandria — Free learning, credentials you own',
   meta: [
-    { name: 'description', content: 'A free, open-source learning app for Mac, Windows, Linux, iOS and Android. Study offline, earn credentials you truly own, and keep your data on your own device.' },
-    { property: 'og:title', content: 'Alexandria — Free Learning, Credentials You Own' },
-    { property: 'og:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours, and keep your data on your own device.' },
+    { name: 'description', content: 'A free, open-source learning app for macOS, Windows, Linux, iOS and Android. Study offline, earn credentials you truly own and keep your data on your own device.' },
+    { property: 'og:title', content: 'Alexandria — Free learning, credentials you own' },
+    { property: 'og:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours and keep your data on your own device.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/' },
     { property: 'og:image', content: 'https://alexandria.ifftu.dev/og/home.jpg' },
     { name: 'twitter:image', content: 'https://alexandria.ifftu.dev/og/home.jpg' },
-    { name: 'twitter:title', content: 'Alexandria — Free Learning, Credentials You Own' },
-    { name: 'twitter:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours, and keep your data on your own device.' },
+    { name: 'twitter:title', content: 'Alexandria — Free learning, credentials you own' },
+    { name: 'twitter:description', content: 'A free learning app for every device. Study offline, earn credentials that are truly yours and keep your data on your own device.' },
   ],
   link: [{ rel: 'canonical', href: 'https://alexandria.ifftu.dev/' }],
   script: [
@@ -59,17 +59,17 @@ const features: Feature[] = [
     accent: 'primary',
     title: 'Learn without limits',
     icon: 'M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z',
-    body: 'Courses, video tutorials and Opinions — takes from practitioners who hold the very skill they teach. Free, open-source, offline-first.',
+    body: 'Courses, video tutorials and Discussions — takes from practitioners who hold the very skill they teach. Free, open-source, offline-first.',
     bullets: [
       'Courses with real, hands-on assessments',
       'Works offline — no internet required',
-      'Nine languages, from English and Chinese to Spanish, Hindi and Bengali',
+      'Nine languages, including English, Chinese, Spanish, Hindi and Bengali',
     ],
   },
   {
     span: 'span-2',
     accent: 'cyan',
-    title: 'Opinions',
+    title: 'Discussions',
     icon: 'M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z',
     body: 'Real learning is not only settled facts — it is weighing competing views and forming your own.',
     bullets: [
@@ -82,7 +82,7 @@ const features: Feature[] = [
     accent: 'amber',
     title: 'Teach and assess anything',
     icon: 'M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959a.64.64 0 01-.657.643 48.39 48.39 0 01-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 01-.658.663c-.355 0-.676-.186-.959-.401a1.647 1.647 0 00-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401.31 0 .555.26.532.57a48.039 48.039 0 01-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 00.657-.643c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.035 1.007-1.875 2.25-1.875s2.25.84 2.25 1.875c0 .369-.128.713-.349 1.003-.215.283-.401.604-.401.959 0 .333.277.599.61.58a48.1 48.1 0 005.427-.63 48.05 48.05 0 00.582-4.717.532.532 0 00-.533-.57c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.959.401a.656.656 0 00.659-.663 47.703 47.703 0 00-.31-4.82c-1.517.19-3.058.309-4.616.354a.64.64 0 01-.657-.643z',
-    body: 'Video, text and multiple choice are not enough — different skills need different ways to teach and test. Alexandria ships plugins for code in four languages, live pitch detection for music, multiple choice, and assessor review of practical work. The plugin API is open, so welding, engineering and the rest are things somebody can build rather than things that exist today.',
+    body: 'Video, text and multiple choice are not enough — different skills need different ways to teach and test. Alexandria ships plugins for code in four languages, live pitch detection for music, multiple choice and assessor review of practical work. The plugin API is open, so welding, engineering and the rest are things somebody can build rather than things that exist today.',
     motif: 'plugins',
   },
   {
@@ -136,9 +136,9 @@ const features: Feature[] = [
   {
     span: 'span-3',
     accent: 'amber',
-    title: 'Community governed',
+    title: 'Community-governed',
     icon: 'M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z',
-    body: 'Only people who have proven expertise in a subject get a vote on how it is taught — not money, not seniority.',
+    body: 'A vote on how a subject is taught is earned by proven expertise in it — not money, not seniority.',
     bullets: ['A vote is earned by what you can do, per subject', 'Draft → committee → public vote'],
   },
 ]
@@ -168,7 +168,7 @@ const pluginShots = [
 ]
 
 const steps = [
-  { n: '01', title: 'Download & launch', body: 'Install on any device. Your account is created on the device itself — no email, no password to lose, and nothing registered with a company.' },
+  { n: '01', title: 'Download & launch', body: 'Install on any device. Your account is created on the device itself — no email, no password to lose and nothing registered with a company.' },
   { n: '02', title: 'Learn & earn credentials', body: 'Take free courses, tutorials and assessments. Finish an assessment and you earn a credential for it — no waiting, no paperwork.' },
   { n: '03', title: 'Own & prove', body: 'Each credential is signed under your own identity and made tamper-proof, so anyone can check it is genuine — anywhere, even without Alexandria.' },
   { n: '04', title: 'Share & take part', body: 'Share credentials with employers, choosing exactly what to reveal. What you have proven gives you a say in how your community is run.' },
@@ -190,13 +190,13 @@ const platforms = [
 const worksToday = [
   'Learning, assessment and credentials, in the alpha, on five platforms',
   'Credential signatures checked in your browser, with no account or credential upload',
-  'Nine languages on three continents — English, Chinese, Spanish, French, Hindi, Urdu, Telugu, Marathi and Bengali',
+  'Nine languages — English, Chinese, Spanish, French, Hindi, Urdu, Telugu, Marathi and Bengali',
   'An AGPL-licensed core, public and forkable today',
 ]
 
 const notYet = [
   'No institution has deployed this',
-  'Nobody has been hired through a credential issued by it',
+  'Nobody has been hired through an Alexandria credential',
   'No independent validity study has been completed',
   'No content moderation, and the interface needs real design work',
 ]
@@ -206,7 +206,7 @@ const problems = [
     n: '01',
     k: 'Locked',
     title: 'It lives on someone else’s server',
-    body: 'A certificate belongs to the platform that issued it. When the platform pivots, prices up or shuts down, your proof goes with it.',
+    body: 'A certificate belongs to the platform that issued it. When the platform pivots, raises its prices or shuts down, your proof goes with it.',
   },
   {
     n: '02',
@@ -252,8 +252,8 @@ const featuresOpen = ref(false)
         <h1>An honest attempt to make education&nbsp;— and its recognition —&nbsp;<em>free, forever.</em></h1>
         <p class="hero-lede">
           Learning became free. Recognition did not. Alexandria is a free, open-source learning app
-          for every device — and a credential you own outright, that anyone can verify, anywhere,
-          without us.
+          for every device, and the credentials you earn with it are yours outright — verifiable by
+          anyone, anywhere, without us.
         </p>
         <div id="early-access" class="hero-cta">
           <button type="button" class="btn btn-lg plausible-event-name=EarlyAccess" @click="waitlist.open()">
@@ -271,7 +271,7 @@ const featuresOpen = ref(false)
       </div>
       <p class="shelf-cap">
         <StatusChip state="sample" label="Replica · invented data" />
-        The app's actual layout, rebuilt for this page — press <b>/</b> for search, or open
+        The app’s actual layout, rebuilt for this page — press <b>/</b> for search, or open
         <b>Skills &amp; Credentials</b>. The people and credentials in it are made up, and the
         verify button here is a depiction.
         <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify">Check a real one instead ›</NuxtLink>
@@ -301,12 +301,12 @@ const featuresOpen = ref(false)
       <p class="eyebrow">The problem</p>
       <h2 class="h-sec">
         The knowledge is identical. The recognition is not — and it is the recognition that changes
-        the life.
+        a life.
       </h2>
       <p class="p-sub">
         A teenager in a Mumbai slum can take the same course as one at MIT — the same lectures, the
         same problems, the same hours. Only one of them ends up with a credential anyone will accept.
-        Employers have tried to fix this from their side and largely failed, because nothing replaced
+        Employers have tried to fix this from their side and largely failed, because nothing has replaced
         the degree as a signal they could trust.
       </p>
       <div class="prob">
@@ -328,10 +328,10 @@ const featuresOpen = ref(false)
       <div class="pad proof-grid">
         <div>
           <p class="eyebrow">Verify it yourself</p>
-          <h2>Don't trust us. Check the credential.</h2>
+          <h2>Don’t trust us. Check the credential.</h2>
           <p class="p-sub">
             Alexandria uses W3C Verifiable Credentials with Ed25519 signatures checked against the
-            issuer's key. Signatures can be checked independently; revocation and optional chain
+            issuer’s key. Signatures can be checked independently; revocation and optional chain
             anchors need separate checks. A valid signature does not establish the truth of a claim.
           </p>
           <div class="proof-metrics">
@@ -376,7 +376,7 @@ const featuresOpen = ref(false)
 <span class="g">$</span> vc verify --input credential.json \
      --did-resolver did-key</pre>
           <pre v-else><span class="g">✓</span> signature valid        <span class="c">ed25519 · did:key, self-resolving</span>
-<span class="g">✓</span> contents unchanged     <span class="c">JCS canonicalisation, RFC 8785</span>
+<span class="g">✓</span> contents unchanged     <span class="c">JCS canonicalization, RFC 8785</span>
 <span class="g">✓</span> checked offline        <span class="c">0 network calls</span>
 <span class="c">·</span> revocation unknown     <span class="c">no status list supplied</span>
 
@@ -430,7 +430,7 @@ const featuresOpen = ref(false)
               <span v-for="(channel, i) in channels" :key="channel" :class="{ on: i === 0 }">
                 <b>#</b>{{ channel }}
               </span>
-              <p>invite-only · you decide who's in</p>
+              <p>invite-only · you decide who’s in</p>
             </div>
 
             <!-- Sentinel status, mirroring the panel in SentinelTrainingWizard.vue -->
@@ -452,7 +452,7 @@ const featuresOpen = ref(false)
 
             <!-- the app's own sidebar skill-graph widget -->
             <div v-else-if="feature.motif === 'graph'" class="shot">
-              <div class="shot-bar"><b>Skill map</b><span class="mono">FROM THE APP SIDEBAR</span></div>
+              <div class="shot-bar"><b>Skill graph</b><span class="mono">FROM THE APP SIDEBAR</span></div>
               <div class="shot-body">
                 <LazySkillGraph hydrate-on-visible :height="196" />
               </div>
@@ -543,7 +543,7 @@ const featuresOpen = ref(false)
         </div>
       </div>
       <p class="platform-note">
-        Runs on macOS 10.15+, Windows 10+, Linux, iOS 16.4+, and Android 9+.
+        Runs on macOS 10.15+, Windows 10+, Linux, iOS 16.4+ and Android 9+.
         For live video tutoring on Android we recommend a device with 6&nbsp;GB+ RAM.
       </p>
     </section>
@@ -558,7 +558,7 @@ const featuresOpen = ref(false)
         <article class="aud-card">
           <div class="aud-rule aud-rule-r" />
           <div class="aud-body">
-            <p class="aud-tag" style="color: rgb(var(--color-recruiter))">For recruiters</p>
+            <p class="aud-tag" style="color: rgb(var(--color-recruiter))">For employers</p>
             <h3>Hire verified talent, not resumes.</h3>
             <p>Discover candidates through credentials you can verify yourself and a transparent record of how they learned.</p>
             <div class="aud-pills">
@@ -608,7 +608,7 @@ const featuresOpen = ref(false)
           <h3>A fork always exists</h3>
           <p>
             The core is AGPL-licensed. If we ever betrayed this, the work could be taken and run by
-            anyone, without our permission and without our cooperation — and because the licence is
+            anyone, without our permission and without our cooperation — and because the license is
             copyleft, whoever picks it up has to keep it open too. That is a floor, not a ceiling —
             but it is a real one, and you can check it.
           </p>
@@ -625,7 +625,7 @@ const featuresOpen = ref(false)
           <h3>A non-profit veto over free access</h3>
           <p>
             The intended structure: a permanent, dilution-proof veto over free learner access, held
-            by IFFTU as a Section 8 non-profit — so that nobody, including us and including a future
+            by IFFTU as a Section 8 nonprofit — so that nobody, including us and including a future
             investor, can charge a learner for their own proof.
           </p>
           <p class="free-gap">
@@ -652,8 +652,8 @@ const featuresOpen = ref(false)
       <h2 class="h-sec">Free for learners. Paid for organizations.</h2>
       <p class="p-sub">
         The split is deliberate, and it is the whole business model. Learning, owning a credential and
-        proving it are free permanently. Organizations pay for running this at scale — never for a
-        learner's right to their own proof.
+        proving it are permanently free. Organizations pay for running this at scale — never for a
+        learner’s right to their own proof.
       </p>
       <div class="who">
         <article class="who-card">
@@ -691,7 +691,7 @@ const featuresOpen = ref(false)
           <div class="share-row">
             <p class="share-n">{{ share.value }}</p>
             <div class="share-body">
-              <p class="share-lead">of everything earned goes to the educators who create the skills.</p>
+              <p class="share-lead">of everything earned goes to the educators who teach the skills.</p>
               <p class="share-sub">
                 Not as a revenue-share experiment — as the point. Charity that runs out is not
                 permanence; the commons stays open because the people getting commercial value
@@ -713,7 +713,7 @@ const featuresOpen = ref(false)
     <!-- ═══ WHERE WE ACTUALLY ARE ═══ -->
     <section class="section pad section-wash">
       <p class="eyebrow">Where we actually are</p>
-      <h2 class="h-sec">Built, shipped, and unproven.</h2>
+      <h2 class="h-sec">Built, shipped and unproven.</h2>
       <p class="p-sub">
         Two lists, because a page that only tells you what works has told you what it wants to be
         true.
@@ -726,14 +726,14 @@ const featuresOpen = ref(false)
           </ul>
         </article>
         <article class="state-card state-no">
-          <h3>Does not yet</h3>
+          <h3>Not yet</h3>
           <ul>
             <li v-for="item in notYet" :key="item">{{ item }}</li>
           </ul>
         </article>
       </div>
       <p class="state-close">
-        Two claims underpin the whole project and neither has evidence behind it: that employers
+        Two claims underpin the whole project, and neither has evidence behind it: that employers
         will pay for verified skill, and that a credential like this earns real recognition.
         <NuxtLink to="/why-recognition" class="plausible-event-name=Nav-Recognition">Both are written down, with what would change our minds</NuxtLink>.
       </p>
@@ -765,7 +765,7 @@ const featuresOpen = ref(false)
       <div class="hero-scrim" />
       <div class="pad cta-inner">
         <h2>Get in the queue.</h2>
-        <p>Individuals join the waiting list and we write when it is their turn. Organizations run a pilot: one program or one role family, with success measures agreed before anyone starts.</p>
+        <p>Individuals join the waiting list and we write to them when it is their turn. Organizations run a pilot: one program or one role family, with success measures agreed before anyone starts.</p>
         <div class="cta-row">
           <button type="button" class="btn btn-lg plausible-event-name=EarlyAccess" @click="waitlist.open()">
             Join the waiting list
@@ -779,7 +779,7 @@ const featuresOpen = ref(false)
             target="_blank"
             rel="noopener noreferrer"
             class="plausible-event-name=CTA-GitHub"
-          >It's all on GitHub</a>.
+          >It’s all on GitHub</a>.
         </p>
       </div>
     </section>

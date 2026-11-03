@@ -26,7 +26,7 @@
 const ROLE_LINES: Record<string, string> = {
   learner: 'You joined as a learner, so the first thing you will meet is the course library and the credentials that come out of it.',
   instructor: 'You joined as an instructor, so you will be among the people I ask about the authoring and review tools while they can still change.',
-  parent: 'You joined as a parent or guardian, which means linking a guardian to a learner is something I will want tested early.',
+  parent: 'You joined as a parent or guardian, so linking a guardian to a learner is one of the first things I will want tested.',
 }
 
 const TEMPLATE = `<!DOCTYPE html>
@@ -38,7 +38,7 @@ const TEMPLATE = `<!DOCTYPE html>
 <meta name="x-apple-disable-message-reformatting">
 <meta name="color-scheme" content="dark light">
 <meta name="supported-color-schemes" content="dark light">
-<title>You're on the Alexandria waitlist for early access</title>
+<title>You’re on the Alexandria waiting list for early access</title>
 <!--[if mso]>
 <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
 <![endif]-->
@@ -67,7 +67,7 @@ const TEMPLATE = `<!DOCTYPE html>
 <body class="bg" style="margin:0;padding:0;background-color:#0C1024;">
 
 <div style="display:none;font-size:1px;color:#0C1024;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">
-  You're on the waitlist for early access. Here's what Alexandria is, what works today, and what honestly doesn't yet.
+  You’re on the waiting list for early access. Here’s what Alexandria is, what works today and what honestly doesn’t yet.
   &#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;&#8199;
 </div>
 
@@ -79,7 +79,7 @@ const TEMPLATE = `<!DOCTYPE html>
     <!-- HERO -->
     <tr><td bgcolor="#1B1E52" style="background-color:#1B1E52;line-height:0;font-size:0;">
       <a href="https://alexandria.ifftu.dev" style="text-decoration:none;">
-        <img class="fluid" src="https://alexandria.ifftu.dev/email/email-hero.jpg" width="600" height="220" alt="Alexandria — You're on the list. Early access is coming."
+        <img class="fluid" src="https://alexandria.ifftu.dev/email/email-hero.jpg" width="600" height="220" alt="Alexandria — You’re on the list. Early access is coming."
              style="width:600px;max-width:600px;height:auto;display:block;">
       </a>
     </td></tr>
@@ -87,10 +87,10 @@ const TEMPLATE = `<!DOCTYPE html>
     <!-- INTRO -->
     <tr><td class="card px" bgcolor="#141B33" style="background-color:#141B33;padding:30px 40px 24px 40px;">
       <p class="txt" style="margin:0 0 12px 0;font-family:Arial,Helvetica,sans-serif;font-size:17px;line-height:27px;color:#FFFFFF;font-weight:bold;">
-        You're on the waitlist for early access.
+        You’re on the waiting list for early access.
       </p>
       <p class="mut" style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:26px;color:#A9B6CC;">
-        This is the waitlist, not access itself — we're letting people in a group at a time while the alpha settles. You'll hear from me when it's your turn, with what to do next. No drip sequence, no newsletter you didn't ask for. In the meantime, here's what you've put your name down for.
+        This is the waiting list, not access itself — we’re letting people in one group at a time while the alpha settles. You’ll hear from me when it’s your turn, with what to do next. No drip sequence, no newsletter you didn’t ask for. In the meantime, here’s what you’ve put your name down for.
       </p>
           {{ROLE_LINE}}
     </td></tr>
@@ -147,7 +147,7 @@ const TEMPLATE = `<!DOCTYPE html>
             <img src="https://alexandria.ifftu.dev/email/email-icon-device.png" width="40" height="40" alt="" style="width:40px;height:40px;display:block;">
           </td>
           <td valign="top" style="padding-bottom:20px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:25px;color:#A9B6CC;">
-            <span style="color:#FFFFFF;font-weight:bold;">Runs on your device.</span><br>Peer-to-peer and offline-first. No subscriptions, no tracking, and no company server holding your work.
+            <span style="color:#FFFFFF;font-weight:bold;">Runs on your device.</span><br>Peer-to-peer and offline-first. No subscriptions, no tracking and no company server holding your work.
           </td>
         </tr>
         <tr>
@@ -186,10 +186,10 @@ const TEMPLATE = `<!DOCTYPE html>
           <td style="padding:20px 22px;">
             <p style="margin:0 0 10px 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:bold;letter-spacing:2px;color:#FBBF24;">THE HONEST PART</p>
             <p class="mut" style="margin:0 0 12px 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:24px;color:#A9B6CC;">
-              It's an alpha. The interface needs real design work, there's no content moderation yet, and there are open security findings I'm working through in public. Nobody outside the project is using it yet.
+              It’s an alpha. The interface needs real design work, there’s no content moderation yet, and there are open security findings I’m working through in public. Nobody outside the project is using it yet.
             </p>
             <p class="mut" style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:24px;color:#A9B6CC;">
-              I'd rather you heard that from me. If it makes you want to wait, that's completely fair — you'll still hear from me when it's ready.
+              I’d rather you heard that from me. If it makes you want to wait, that’s completely fair — you’ll still hear from me when it’s ready.
             </p>
           </td>
         </tr>
@@ -218,7 +218,7 @@ const TEMPLATE = `<!DOCTYPE html>
     <tr><td class="card px" bgcolor="#141B33" style="background-color:#141B33;padding:0 40px 32px 40px;">
       <div style="height:1px;background-color:#252E4D;line-height:1px;font-size:0;">&nbsp;</div>
       <p class="mut" style="margin:22px 0 0 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:25px;color:#A9B6CC;">
-        If you work in education, assessment, hiring or distributed systems, I'd genuinely like to hear where you think I'm wrong. Just reply — it reaches me directly.
+        If you work in education, assessment, hiring or distributed systems, I’d genuinely like to hear where you think I’m wrong. Just reply — it reaches me directly.
       </p>
       <p class="txt" style="margin:18px 0 0 0;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:23px;color:#FFFFFF;font-weight:bold;">
         Pratyush Pundir
@@ -255,7 +255,7 @@ const TEMPLATE = `<!DOCTYPE html>
         &nbsp;&middot;&nbsp;<a href="https://www.ifftu.dev" style="color:#93A3BC;text-decoration:underline;">ifftu.dev</a>
       </p>
       <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:20px;color:#6E7A94;">
-        You're receiving this because you joined the waitlist for early access to Alexandria.<br>
+        You’re receiving this because you joined the waiting list for early access to Alexandria.<br>
         <a href="{{unsubscribeUrl}}" style="color:#6E7A94;text-decoration:underline;">Unsubscribe</a>
       </p>
     </td></tr>

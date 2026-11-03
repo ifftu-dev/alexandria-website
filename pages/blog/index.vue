@@ -16,7 +16,7 @@ const rest = computed(() => posts.slice(1))
 useHead({
   title: 'Blog — Alexandria',
   meta: [
-    { name: 'description', content: 'Announcements, progress and essays from the people building Alexandria — what we are doing, what has changed, and what we got wrong.' },
+    { name: 'description', content: 'Announcements, progress and essays from the people building Alexandria — what we are doing, what has changed and what we got wrong.' },
     { property: 'og:title', content: 'Blog — Alexandria' },
     { property: 'og:description', content: 'Announcements, progress and essays from the people building Alexandria.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/blog' },
@@ -41,7 +41,7 @@ useHead({
         <h1>Building in the open.</h1>
         <p class="hero-lede">
           Announcements, progress and essays from the people making Alexandria. This is
-          where we say what we are doing, what has changed, and what we got wrong —
+          where we say what we are doing, what has changed and what we got wrong —
           before anyone has to ask.
         </p>
       </div>

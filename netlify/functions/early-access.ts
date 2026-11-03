@@ -123,7 +123,7 @@ export default async function handler(request: Request): Promise<Response> {
     : []
 
   if (platforms.length === 0) {
-    return json({ ok: false, error: 'Pick at least one platform, so we know what to tell you about.' }, 400)
+    return json({ ok: false, error: 'Pick at least one platform so we know what to tell you about.' }, 400)
   }
 
   const detected = typeof payload.detected === 'string' && payload.detected in PLATFORMS
@@ -228,7 +228,7 @@ export default async function handler(request: Request): Promise<Response> {
           to: email,
           from: process.env.PLUNK_FROM ?? DEFAULT_FROM,
           name: process.env.PLUNK_FROM_NAME ?? DEFAULT_FROM_NAME,
-          subject: "You're on the Alexandria waitlist for early access",
+          subject: "You’re on the Alexandria waiting list for early access",
           body: confirmationHtml(role),
         }),
       })

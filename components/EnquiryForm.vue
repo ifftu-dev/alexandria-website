@@ -24,15 +24,15 @@ const ENDPOINTS: Record<string, string> = {
 const COHORTS: Record<string, { value: string, label: string }[]> = {
   employer: [
     { value: 'exploring', label: 'Still exploring' },
-    { value: '1-25', label: 'Up to 25 hires a year' },
+    { value: '1-25', label: 'Fewer than 25 hires a year' },
     { value: '25-200', label: '25–200 a year' },
-    { value: '200+', label: '200+ a year' },
+    { value: '200+', label: 'More than 200 a year' },
   ],
   institution: [
     { value: 'exploring', label: 'Still exploring' },
-    { value: '50-250', label: '50–250 learners' },
+    { value: '50-250', label: 'Fewer than 250 learners' },
     { value: '250-2000', label: '250–2,000 learners' },
-    { value: '2000+', label: '2,000+ learners' },
+    { value: '2000+', label: 'More than 2,000 learners' },
   ],
   partner: [
     { value: 'exploring', label: 'Still exploring' },
@@ -149,14 +149,14 @@ async function submit() {
       <p class="eq-note" :class="{ 'eq-err': state === 'error' }" role="status" aria-live="polite">
         {{ state === 'error'
           ? errorMessage
-          : 'Goes to a person, not a sales sequence. We reply or we say no — no drip campaign either way.' }}
+          : 'Goes to a person, not a sales sequence. We’ll reply either way, and there’s no drip campaign.' }}
       </p>
     </form>
 
     <div v-else class="eq-done" role="status" aria-live="polite">
       <p class="eq-done-t">Thanks — that reached us.</p>
       <p class="eq-note">
-        You'll get a reply from a person. If a pilot doesn't make sense yet, we'll say so rather
+        You’ll get a reply from a person. If this doesn’t make sense for you yet, we’ll say so rather
         than keep you warm.
       </p>
     </div>
