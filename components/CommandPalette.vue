@@ -2,7 +2,7 @@
 /**
  * The `/` palette from the design brief.
  *
- * Six commands navigate, one toggles the theme, and three answer with a deadpan
+ * Most commands navigate (one per page), one toggles the theme, and three answer with a deadpan
  * line instead of going anywhere. The jokes are the point: each one is an
  * argument about the product wearing a joke's clothes, which is why the copy is
  * reproduced as written rather than paraphrased.
@@ -64,16 +64,19 @@ const POST_COMMANDS: Command[] = [
 ]
 
 const COMMANDS: Command[] = [
-  { name: 'Join the waiting list', hint: 'waitlist', run: () => { close(); waitlist.open() } },
+  { name: 'Join the waiting list', hint: 'waiting list', run: () => { close(); waitlist.open() } },
   { name: 'Read the evidence', hint: '/why-recognition', run: () => go('/why-recognition') },
   { name: 'See how it actually works', hint: '/technology', run: () => go('/technology') },
   { name: 'Hire on verified skill', hint: '/employers', run: () => go('/employers') },
   { name: 'Run it at my institution', hint: '/institutions', run: () => go('/institutions') },
-  { name: 'Check a credential', hint: '/verify', run: () => go('/verify') },
-  // Both have Nav- goals and both were missing while every other audience page
-  // was here, which was an oversight rather than a decision.
+  { name: 'Verify a credential', hint: '/verify', run: () => go('/verify') },
+  // Learners and pilots have Nav- goals and were missing while every other
+  // audience page was here, which was an oversight rather than a decision.
   { name: 'Learn for free', hint: '/learners', run: () => go('/learners') },
   { name: 'Run a pilot', hint: '/pilots', run: () => go('/pilots') },
+  { name: 'Partners', hint: '/partners', keywords: 'public programs governments NGOs', run: () => go('/partners') },
+  { name: 'Trust', hint: '/trust', keywords: 'security compliance audit', run: () => go('/trust') },
+  { name: 'Privacy policy', hint: '/privacy', keywords: 'data analytics cookies', run: () => go('/privacy') },
   { name: 'Read the source', hint: 'github', run: () => { close(); window.open(GITHUB, '_blank', 'noopener') } },
   {
     name: 'Switch theme',
@@ -82,23 +85,23 @@ const COMMANDS: Command[] = [
   },
   {
     name: 'Delete all my data',
-    hint: 'nothing to delete',
+    hint: 'already done',
     gag: 'wipe',
-    answer: 'Done. It lived on your device the whole time — we never held a copy to delete.',
+    answer: 'Done. Your learning data lived on your device the whole time — we never held a copy. A waiting-list address or an inquiry is all we keep; email us and it goes too.',
     run: () => {},
   },
   {
     name: 'Make it paid',
     hint: 'denied',
     gag: 'denied',
-    answer: 'Denied. Making that impossible rather than merely unlikely is the entire point of the structure — which we are still putting in place, and say so.',
+    answer: 'Denied. Making that impossible rather than merely unlikely is the entire point of the structure — which, to be clear, we are still putting in place.',
     run: () => {},
   },
   {
     name: 'Show me the roadmap',
     hint: 'three items',
     gag: 'roadmap',
-    answer: 'Ship the alpha. Find out whether employers pay. Panic responsibly.',
+    answer: 'Open the alpha. Find out whether employers pay. Panic responsibly.',
     run: () => {},
   },
 ]
@@ -293,7 +296,7 @@ defineExpose({ openPalette })
           <p v-if="answer" class="cmdk-answer" :class="{ typing }" role="status">{{ answer }}</p>
 
           <p class="cmdk-foot">
-            <span class="cmdk-keys">↑↓ move · ↵ open · </span>this palette does less than the one in the app. That one is real.
+            <span class="cmdk-keys">↑↓ move · ↵ open · </span>This palette does less than the one in the app. That one is real.
           </p>
         </div>
       </div>

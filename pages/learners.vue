@@ -8,7 +8,7 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'For learners — Alexandria',
   meta: [
-    { name: 'description', content: 'Study offline, own the credentials you earn, and keep your data on your own device. Free, open source, and yours to prove without asking anyone.' },
+    { name: 'description', content: 'Study offline, own the credentials you earn and keep your data on your own device. Free, open source and yours to prove without asking anyone.' },
     { property: 'og:title', content: 'For learners — Alexandria' },
     { property: 'og:description', content: 'Study offline, own what you earn, keep your data on your device.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/learners' },
@@ -37,19 +37,19 @@ const problems = [
     n: '01',
     k: 'The gate',
     t: 'A degree is still the shortest way to be taken seriously',
-    b: `And most people do not have one — ${noDegree.value} of American adults over 25 hold no bachelor's degree. The jobs that quietly assume one have not become fewer.`,
+    b: `And most people do not have one — ${noDegree.value} of American adults aged 25 and over hold no bachelor’s degree. The jobs that quietly assume one have not become fewer.`,
   },
   {
     n: '02',
     k: 'The promise',
-    t: 'Dropping degree requirements mostly did not happen',
+    t: 'Dropping degree requirements mostly changed nothing',
     b: `Employers announced it widely. Fewer than 1 in 700 new hires actually benefited. The announcements changed; the hiring did not.`,
   },
   {
     n: '03',
     k: 'The receipt',
     t: 'What you did earn belongs to a platform',
-    b: 'A PDF or a profile on someone else\'s site. Nobody can check it without trusting them — and neither can you, once they shut down.',
+    b: 'A PDF or a profile on someone else’s site. Nobody can check it without trusting them — and neither can you, once they shut down.',
   },
 ]
 
@@ -79,7 +79,7 @@ const steps = [
 const promises = [
   {
     title: 'Free, and free in the way that matters',
-    body: 'Learning is free. Earning a credential is free. Proving it to someone is free. Those three are not the parts we intend to charge for — organizations pay for hosting, integrations and support, never a learner for their own proof.',
+    body: 'Learning is free. Earning a credential is free. Proving it to someone is free. Those three are not the parts we intend to charge for — organizations pay for hosting, integrations and support; no learner ever pays for their own proof.',
     state: 'alpha' as const,
   },
   {
@@ -89,7 +89,7 @@ const promises = [
   },
   {
     title: 'Works where the internet does not',
-    body: 'Courses download to your device and assessments run on it. Nine languages ship today, across three continents — and adding one is translation work, not engineering work, so the list is the beginning rather than the limit.',
+    body: 'Courses download to your device and assessments run on it. Nine languages ship today — and adding one is translation work, not engineering work, so the list is the beginning rather than the limit.',
     state: 'alpha' as const,
   },
   {
@@ -109,7 +109,7 @@ const promises = [
         <p class="eyebrow hero-eyebrow">For learners</p>
         <h1>Learn free. Keep the proof.</h1>
         <p class="hero-lede">
-          Study offline, earn credentials signed under your own key, and prove them to anyone —
+          Study offline, earn credentials signed under your own key and prove them to anyone —
           without an account they control or a company in the middle.
         </p>
         <div class="hero-cta">
@@ -127,7 +127,7 @@ const promises = [
       <p class="eyebrow">The problem</p>
       <h2 class="h-sec">You can already learn almost anything. You still cannot prove any of it.</h2>
       <p class="p-sub">
-        Every course you have finished lives inside someone else's account. The certificate is a page
+        Every course you have finished lives inside someone else’s account. The certificate is a page
         on their website, it is true because they say it is, and it stops being true the day they
         decide otherwise.
       </p>
@@ -148,7 +148,7 @@ const promises = [
 
     <section class="section pad section-wash">
       <p class="eyebrow">How it works</p>
-      <h2 class="h-sec">Install it, learn, and walk away with something that is yours.</h2>
+      <h2 class="h-sec">Install it, learn and walk away with something that is yours.</h2>
       <p class="p-sub">Four steps. None of them registers you with anyone.</p>
 
       <ol class="flow">
@@ -167,7 +167,7 @@ const promises = [
     </section>
 
     <section class="section pad">
-      <h2 class="h-sec">What you get, and what it costs</h2>
+      <h2 class="h-sec">What you get, and what it costs.</h2>
       <p class="p-sub">Labeled, so you can tell what exists today from what is being built.</p>
       <div class="l-grid">
         <div v-for="p in promises" :key="p.title" class="l-card">
@@ -178,13 +178,13 @@ const promises = [
     </section>
 
     <section class="section pad section-wash">
-      <h2 class="h-sec">The honest part</h2>
+      <h2 class="h-sec">The honest part.</h2>
       <div class="l-close">
         <div class="l-honest">
           <p>
             It is an alpha. The interface needs real design work, there is no content moderation yet,
             and nobody outside the project is using it in earnest. The waiting list exists because we
-            are letting people in a group at a time rather than pretending the first day will go well.
+            are letting people in one group at a time rather than pretending the first day will go well.
           </p>
           <p>
             If that makes you want to wait, that is a reasonable thing to want. You will still hear

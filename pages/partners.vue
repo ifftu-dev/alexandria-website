@@ -35,12 +35,12 @@ const fits = [
         <p class="eyebrow hero-eyebrow">Partners</p>
         <h1>Where access is hardest.</h1>
         <p class="hero-lede">
-          Offline-first learning, multilingual delivery, and credentials that keep their meaning
+          Offline-first learning, multilingual delivery and credentials that keep their meaning
           outside the program that issued them.
         </p>
         <div class="hero-cta">
           <a href="#enquiry" class="btn btn-lg">Discuss a deployment</a>
-          <a href="https://www.ifftu.dev/blog/introducing-alexandria/" target="_blank" rel="noopener noreferrer" class="plausible-event-name=Announcement btn-ghost">Read the project brief</a>
+          <a href="https://www.ifftu.dev/blog/introducing-alexandria/" target="_blank" rel="noopener noreferrer" class="plausible-event-name=Announcement btn-ghost">Read the announcement</a>
         </div>
       </div>
     </section>
@@ -65,13 +65,13 @@ const fits = [
       <div class="pa-honest">
         <p>
           Grant and program funding pays for deployment, localization, measurement and support —
-          not for learners' access to their own credentials. That distinction is the whole design,
+          not for learners’ access to their own credentials. That distinction is the whole design,
           and it is not negotiable in a funded deployment either.
         </p>
         <p>
-          Alexandria is pre-production. A partnership now means shaping what gets built and being
+          Alexandria is pre-launch. A partnership now means shaping what gets built and being
           candid in both directions about what is not ready. If a program needs certainty this
-          year, we will say so.
+          year, we will tell you plainly that we cannot offer it yet.
           <NuxtLink to="/trust">What we can claim today</NuxtLink> is written down and dated.
         </p>
       </div>

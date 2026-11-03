@@ -4,7 +4,7 @@ definePageMeta({ layout: 'landing' })
 useHead({
   title: 'Trust — Alexandria',
   meta: [
-    { name: 'description', content: 'What Alexandria can and cannot claim today: security review status, data handling, compliance posture, and where the infrastructure actually sits.' },
+    { name: 'description', content: 'What Alexandria can and cannot claim today: security review status, data handling, compliance posture and where the infrastructure actually sits.' },
     { property: 'og:title', content: 'Trust — Alexandria' },
     { property: 'og:description', content: 'Security status, data handling and compliance posture — dated, not asserted.' },
     { property: 'og:url', content: 'https://alexandria.ifftu.dev/trust' },
@@ -23,7 +23,7 @@ useHead({
  * claim without a date is a claim that quietly expires.
  */
 const posture = [
-  { area: 'Security review', status: 'A full review of the Rust core, Tauri configuration, dependencies and frontend was carried out in February 2026: 32 findings, of which 21 were fixed as of the March remediation pass.', state: 'building' as const },
+  { area: 'Security review', status: 'Three internal passes in 2026. February: the Rust core, Tauri configuration, dependencies and frontend (32 findings). August: every Alexandria repository, including the credential layer and plugin system — every finding fixed or accepted with written reasoning. A further August pass into code the first two skipped left a few items open, each written down.', state: 'building' as const },
   { area: 'Independent audit', status: 'Not yet commissioned. The credential vault, identity system and integrity layer are the areas we would want reviewed first.', state: 'planned' as const },
   { area: 'FERPA', status: 'Readiness work in progress. Not certified, and nobody has assessed us against it.', state: 'building' as const },
   { area: 'GDPR', status: 'The architecture helps — personal data stays on the learner’s device — but a deployment still needs its own assessment. No DPA is published yet.', state: 'building' as const },
@@ -33,8 +33,8 @@ const posture = [
 
 const dataFacts = [
   { k: 'Where learner data lives', v: 'On the learner’s device, in an encrypted SQLite database. Not on our servers, because there are no servers holding it.' },
-  { k: 'What relays see', v: 'Relays help peers find each other. They carry no authority over what passes through them, anyone can run one, and a deployment can use its own.' },
-  { k: 'What this website collects', v: 'An email address if you join the waiting list or send an enquiry, plus the role and platforms you pick. Analytics are cookieless and carry no personal identifiers.' },
+  { k: 'What relays see', v: 'Relays help peers find each other and pass along encrypted bytes they cannot read. They carry no authority over what passes through them, anyone can run one, and a deployment can use its own.' },
+  { k: 'What this website collects', v: 'An email address if you join the waiting list or send an inquiry, plus the role and platforms you pick. Analytics are cookieless and carry no personal identifiers.' },
   { k: 'Credential verification', v: 'Runs in your browser. A credential you check on this site is never uploaded — there is nowhere for it to go.' },
 ]
 </script>
@@ -56,7 +56,7 @@ const dataFacts = [
 
     <section class="section pad">
       <h2 class="h-sec">Security and compliance posture</h2>
-      <p class="p-sub">Last reviewed 31 July 2026.</p>
+      <p class="p-sub">Last reviewed November 3, 2026.</p>
       <div class="t-rows">
         <div v-for="row in posture" :key="row.area" class="t-row">
           <div class="t-area">{{ row.area }}<StatusChip :state="row.state" /></div>
@@ -74,14 +74,14 @@ const dataFacts = [
       </dl>
       <p class="p-sub" style="margin-top: 20px">
         The full policy for this website is on the <NuxtLink to="/privacy">privacy page</NuxtLink>.
-        The implementation is in <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology">the technology page</NuxtLink>.
+        The implementation is described on <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology">the technology page</NuxtLink>.
       </p>
     </section>
 
     <section class="section pad">
       <h2 class="h-sec">Reporting something</h2>
       <p class="p-sub">
-        Security findings go to <a href="mailto:admin@ifftu.dev">admin@ifftu.dev</a>. We would rather
+        Security findings go to <a href="mailto:admin@alexandria.ifftu.dev">admin@alexandria.ifftu.dev</a>. We would rather
         hear it from you than read about it later, and we will credit you unless you ask us not to.
       </p>
     </section>

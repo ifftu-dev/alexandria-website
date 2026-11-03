@@ -90,9 +90,9 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
         <p class="eyebrow hero-eyebrow">Verify</p>
         <h1>Check a credential yourself.</h1>
         <p class="hero-lede">
-          Paste a credential and this page checks its signature against the issuer's own key —
+          Paste a credential and this page checks its signature against the issuer’s own key —
           in your browser, without an account or uploading the credential JSON.
-          Revocation checks may request the issuer's status list.
+          Revocation checks may request the issuer’s status list.
         </p>
       </div>
     </section>
@@ -150,7 +150,7 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
 
           <div v-if="!outcome" class="v-empty">
             <p>Nothing checked yet.</p>
-            <p class="v-note">Load the sample if you don't have a credential to hand.</p>
+            <p class="v-note">Load the sample if you don’t have a credential on hand.</p>
           </div>
 
           <div v-else class="v-result" :class="outcome.valid ? 'ok' : 'no'">
@@ -160,7 +160,7 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
             </p>
             <p v-if="outcome.error" class="v-err">{{ outcome.error }}</p>
             <p class="v-note">
-              Read each check below. A valid signature does not establish the issuer's authority
+              Read each check below. A valid signature does not establish the issuer’s authority
               or the truth of the skill claim. An unchecked revocation status is not proof that
               the credential has not been revoked.
             </p>
@@ -196,7 +196,7 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
         <h2 class="h-sec">What just happened</h2>
         <ol class="v-steps">
           <li>
-            <b>The issuer's key came out of the credential itself.</b>
+            <b>The issuer’s key came out of the credential itself.</b>
             An Alexandria issuer is a <span class="mono">did:key</span>, which carries its own public
             key. There is no key server to ask and no directory to trust.
           </li>
@@ -213,7 +213,7 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
         </ol>
         <p class="v-note">
           <b>Revocation is a separate check.</b> For a supported status-list URL, this page attempts
-          to fetch the list, verifies its issuer and signature, then reads the credential's status
+          to fetch the list, verifies its issuer and signature, then reads the credential’s status
           bit. A missing, unsupported, unreachable or unverifiable list is reported as unchecked,
           not as proof of non-revocation. A valid signature alone does not settle revocation.
         </p>
@@ -223,7 +223,7 @@ const hasSubject = computed(() => Boolean(outcome.value?.subject || outcome.valu
           establish assessment quality, issuer authority or recognition by an institution.
         </p>
         <p class="v-note">
-          <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology">The credential format and how it is signed</NuxtLink> if you would rather
+          See <NuxtLink to="/technology" class="plausible-event-name=Nav-Technology">the credential format and how it is signed</NuxtLink> if you would rather
           read the implementation than trust this page.
         </p>
       </div>

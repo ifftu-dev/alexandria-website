@@ -38,7 +38,7 @@ someone for a stamp on a piece of paper — the walls start to come down. The wa
 scarcity, status, geography. The walls that keep billions of people locked out of
 opportunity not because they lack ability, but because they lack access.
 
-A teenager in a 3rd-world country can watch the same MIT lectures as a student in
+A teenager in a low-income country can watch the same MIT lectures as a student in
 Cambridge. She can do the same problem sets, read the same papers, build the same
 understanding. But the MIT student walks away with a credential that opens doors worldwide,
 and she does not. The knowledge is identical (a bit of a reach, I know, but you get the
@@ -89,7 +89,7 @@ Put together, the picture is clear. We have plenty of free *content*. We do not 
 *recognition*. The credential — the thing that actually opens doors — still belongs to
 whoever charges for it, gatekeeps it, or hosts it.
 
-Alexandria's bet is that in addition to hosting a vast public library, this last piece can
+Alexandria's bet is that, alongside a vast public library, this last piece can
 be rebuilt as a public good too: credentials you earn, hold, and can prove to anyone,
 anywhere, without needing a platform's permission.
 
@@ -100,37 +100,38 @@ or Android phone. The difference is that installing it turns your device into a 
 participant in the network — not a client connecting to a server, but the whole system,
 bundled and running locally. It does six things.
 
-**A learning platform.** Courses, short-form video tutorials, and *Opinions* — credentialed
+**A learning platform.** Courses, short-form video tutorials, and *Discussions* — credentialed
 takes from practitioners who already hold the skill they're commenting on. Learning is
-hands-on: lessons can embed interactive exercises and full in-browser code editors for
+hands-on: lessons can embed interactive exercises and full in-app code editors for
 Python, JavaScript, TypeScript, and C++ that run and grade your work locally — no compiler
 to install, no code leaving your machine, and the very engine you experiment in is the one
 that scores you. When you want a human, live one-on-one video tutoring — camera, audio, and
 screen-share — connects you to a mentor directly, peer to peer, with no call routed through
 a company. Every one of these lesson types is itself a sandboxed, content-addressed plugin
 with a frozen, permanence-oriented interface, so the community can build new kinds of lesson
-without waiting on me. Lessons are stored and shared peer-to-peer between users' devices
+without waiting on me. Lessons are stored and shared peer to peer between users' devices
 (think of it as BitTorrent for coursework), and the interface already runs in nine languages
 — English, Chinese, Spanish, French, Hindi, Urdu, Telugu, Marathi, and Bengali — because the
 point is access for the people currently locked out. Every new install ships with a starter catalog, so there's
 something to learn on day one.
 
-**A living map of what there is to learn.** Every lesson, credential, and opinion is
+**A living map of what there is to learn.** Every lesson, credential, and discussion is
 anchored to a public *skill graph* — a three-tier taxonomy (broad fields like *Computer
 Science* → subjects like *Distributed Systems* → individual skills) with explicit
 prerequisite edges (*calculus requires algebra*) and a mastery level attached to each skill,
 drawn from Bloom's taxonomy: can you *remember* it, *apply* it, *create* with it? This is
 what lets a credential earned in one part of the world mean something precise to someone on
 the other side of it. The graph isn't curated by a central team — proposed changes (adding a
-skill, reshaping prerequisites, deprecating something outdated) are ratified by a domain
-committee, versioned, signed, and gossiped to every node so every participant agrees on what
+skill, reshaping prerequisites, deprecating something outdated) go through committee
+review and a public vote, then are versioned, signed, and gossiped to every node so every participant agrees on what
 a given skill *means*.
 
 **Credentials you actually own.** When you demonstrate a skill — through an assessment, a
 project, or a peer's attestation — you earn a W3C Verifiable Credential that you sign
 yourself, under a `did:key` only you control. No platform holds it. Complete a course's
-assessments and the loop runs on its own: a Cardano validator witnesses the completion, and
-a local observer auto-issues the credential to you. There are six learner credential types —
+assessments and the credential is issued on your device on the spot — no network, no ledger,
+no one's approval. A Cardano validator can also witness the completion, but that is optional
+and never a gate. There are six learner credential types —
 a formal credential, an assessment credential, a peer attestation, and so on — so a
 self-signed practice run reads differently from a proctored exam. Because you sign the
 credential yourself, anyone in the world can verify it offline, with nothing but the file
@@ -147,14 +148,14 @@ beginner calculus might be middling at advanced, and the system shows that inste
 flattening it into one score.
 
 **Honest assessments.** A local integrity layer called Sentinel watches for cheating during
-assessments, the way your browser watches for suspicious logins. All the analysis happens on
-your device; only a final integrity score ever leaves it. Your keystrokes, camera feed, and
+assessments, the way your bank watches for suspicious logins. All the analysis happens on
+your device; only an integrity score and the reasoning behind it ever leave it. Your keystrokes, camera feed, and
 behavior never touch a server.
 
 **Governance that follows expertise, not money.** Every branch of the skill graph has its
 own community ([a DAO](https://en.wikipedia.org/wiki/Decentralized_autonomous_organization),
 if you speak crypto), and voting power in that community comes from *demonstrated
-proficiency in the skills it governs* — not stake, not seniority, not how long you've been
+proficiency in the skills it governs* — not stake, not how long you've been
 around. If you've
 proven you can analyze a topic, you're qualified to vote on decisions about how it's taught
 and assessed in that domain. Proposals move through draft, committee review, and public
@@ -163,7 +164,7 @@ run on fixed cadences — annual for each branch's community, every four years f
 top-level ones. These
 decisions are made off-chain — proposals and votes propagate as signed messages between
 peers, and every node tallies them independently — and each finalized outcome is anchored to
-Cardano so it's tamper-evident and auditable by anyone. Moving the full rule-set on-chain,
+Cardano so it's tamper-evident and auditable by anyone. Moving the full rule set on-chain,
 so no one — including me — can override it, is the direction of travel. The point is simple:
 the people who understand a subject are the people who decide how it's governed.
 
@@ -178,8 +179,8 @@ governance contracts — see the [Protocol Specification](https://github.com/iff
 
 ## What I'm Releasing
 
-**[The codebase](https://github.com/ifftu-dev/alexandria)** — Pretty self-explanatory.
-All of it, open-sourced under the [GNU AGPL v3](https://github.com/ifftu-dev/alexandria/blob/main/LICENSE.md).
+**[The Codebase](https://github.com/ifftu-dev/alexandria)** — Pretty self-explanatory.
+All of it, open-sourced under the [GNU AGPL v3 or later](https://github.com/ifftu-dev/alexandria/blob/main/LICENSE.md).
 Not a permissive license: anyone who runs a modified Alexandria as a service has to
 publish their changes too. Taking this work and closing it is the one thing the license
 does not permit.
@@ -204,15 +205,16 @@ Everything is under active development. I want to be upfront about where it stan
 The core design holds up in the implementation. The reputation model, the credential
 pipeline, the peer-to-peer protocol, the on-device integrity layer, and the offline-first
 architecture are all solid enough to build on, with a large automated test suite behind
-them. A security audit in February surfaced 32 findings; as of the March remediation pass,
-21 are fixed and 11 remain.
+them. Internal security reviews ran in February and August;
+every finding has been fixed or accepted with written reasoning, and the few still open are
+written down in the repository.
 
-What still needs work: UI/UX sucks; my thoughts on the instructor economy feel incomplete;
+What still needs work: the UI/UX (it sucks); my thoughts on the instructor economy feel incomplete;
 there's no content moderation yet (any peer can publish anything, and while the network
 penalizes bad behavior, there's no mechanism for reporting objectionable content); frontend
 test coverage is thin; and the long-term sustainability model — how the non-profit funds
-itself without compromising the platform — needs more depth. *And a lot more I can't even
-think of yet probably…*
+itself without compromising the platform — needs more depth. *And probably a lot more I can't even
+think of yet…*
 
 I'm publishing at this stage deliberately. I'd rather build in the open and get the right
 people contributing early than polish in private and ship something that reflects only one
@@ -236,7 +238,7 @@ identity system, and the Sentinel integrity layer all need independent review.
 credentials like these? What regulatory frameworks apply to a decentralized education
 platform?
 
-**If you're a designer:** The UI has a refined editorial design system, but real UX testing
+**If you're a designer:** The UI has the start of an editorial design system, but real UX testing
 with non-technical users would be valuable — particularly onboarding and the skill graph.
 
 **If you're a learner:** Use it. Break it. Tell me what doesn't make sense.
@@ -261,7 +263,7 @@ rebuilt as a public good. Free, open, verifiable, owned by no one. Not just the 
 and who remains invisible.
 
 By putting a full node on every device — with relay servers that have no authority and that
-anyone can run — there is no meaningful single point of failure. No company to shut down, no
+anyone can run — Alexandria has no meaningful single point of failure. No company to shut down, no
 database to seize, no API keys to revoke.
 
 It might not work. The cold-start problem is real. Getting employers to trust a new
@@ -278,4 +280,4 @@ If any of this resonates, come build with me so I don't have to keep saying "I" 
 
 Pratyush Pundir
 
-→ [pratyush@ifftu.dev](mailto:pratyush@ifftu.dev)
+→ [pratyush@alexandria.ifftu.dev](mailto:pratyush@alexandria.ifftu.dev)

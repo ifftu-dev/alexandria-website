@@ -15,6 +15,8 @@
  */
 import { MODEL_NOTE, RECOGNITION_GAP, SOURCES, TARGETS } from '~/content/evidence'
 
+const noDegree = RECOGNITION_GAP.find(f => f.id === 'no-degree')!
+
 definePageMeta({ layout: 'landing' })
 
 const waitlist = useWaitlist()
@@ -37,7 +39,7 @@ useHead({
 })
 
 const invisible = [
-  { title: 'Learners without institutions', body: 'Capable, self-taught, and invisible to every employer’s filter.' },
+  { title: 'Learners without institutions', body: 'Capable, self-taught and invisible to every employer’s filter.' },
   { title: 'Workers changing trade', body: 'Skills earned on the job that no certificate anywhere records.' },
   { title: 'The displaced', body: 'People whose paperwork was left behind, or never issued at all.' },
 ]
@@ -69,20 +71,20 @@ const unknowns = [
   },
   {
     title: 'That the credential earns real recognition',
-    body: 'A credential is only worth what people accept it for. No independent validity study has been completed. When one is, we publish it — including negative results.',
+    body: 'A credential is only worth what people accept it for. No independent validity study has been completed. When one is, we will publish it — including negative results.',
   },
 ]
 
 const accountability = [
   { k: 'Reach', v: 'Learners, geographies and languages. Reported quarterly.' },
   { k: 'Outcomes', v: 'Credentials issued, hires made, earnings unlocked.' },
-  { k: 'Rigour', v: 'Independent validity studies, published openly — including the ones that go against us.' },
+  { k: 'Rigor', v: 'Independent validity studies, published openly — including the ones that go against us.' },
 ]
 
 const method = [
   {
     k: 'Skills-based hiring',
-    v: 'Harvard Business School Managing the Future of Work with the Burning Glass Institute, 12 February 2024 (Joseph Fuller): 11,300 large US firms, 2014–2023. Fewer than 1 in 700 new hires benefited; where it did take hold, pay rose 25% and retention ran 10 points higher.',
+    v: 'Harvard Business School’s Managing the Future of Work project and the Burning Glass Institute, February 12, 2024 (Joseph Fuller): 11,300 large US firms, 2014–2023. Fewer than 1 in 700 new hires benefited; where skills-based hiring took hold, pay rose 25% and retention ran 10 points higher.',
     url: 'https://www.burningglassinstitute.org/research/skills-based-hiring-2024',
   },
   {
@@ -133,10 +135,10 @@ const method = [
           A teenager in a Mumbai slum can take the same course as one at MIT — the same lectures,
           the same problems, the same hours put in. Only one of them ends up with a credential
           anyone will accept. The knowledge is identical; the recognition is not, and it is the
-          recognition that changes the life.
+          recognition that changes a life.
         </p>
         <p>
-          Nearly two-thirds of American adults hold no bachelor’s degree, and in most of the world
+          {{ noDegree.value }} of American adults aged 25 and over hold no bachelor’s degree, and in most of the world
           the share is far higher. The content problem was solved a decade ago. The proof problem
           was not.
         </p>
@@ -198,7 +200,7 @@ const method = [
           tracked what happened next across 11,300 large firms over nine years.
         </p>
         <p>
-          Fewer than one in 700 new hires actually benefited — about 97,000 people out of 77 million
+          Fewer than 1 in 700 new hires actually benefited — about 97,000 people out of 77 million
           hires in 2023. Not for lack of will, but because nothing replaced the degree as a signal
           an employer could trust.
         </p>
@@ -320,7 +322,7 @@ const method = [
             <button type="button" class="btn plausible-event-name=EarlyAccess" @click="waitlist.open()">
               Join the waiting list
             </button>
-            <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify btn-ghost btn-solid">Check a credential</NuxtLink>
+            <NuxtLink to="/verify" class="plausible-event-name=Nav-Verify btn-ghost btn-solid">Verify a credential</NuxtLink>
           </div>
         </div>
       </div>

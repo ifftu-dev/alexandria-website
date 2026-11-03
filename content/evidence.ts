@@ -39,7 +39,7 @@ export interface Figure {
 export const SOURCES: Record<string, Source> = {
   bgi2024: {
     id: 'bgi2024',
-    line: 'Harvard Business School Managing the Future of Work with the Burning Glass Institute, February 2024 — 11,300 large US firms, 2014–2023.',
+    line: 'Harvard Business School’s Managing the Future of Work project and the Burning Glass Institute, February 2024 — 11,300 large US firms, 2014–2023.',
     url: 'https://www.burningglassinstitute.org/research/skills-based-hiring-2024',
   },
   census2022: {
@@ -62,10 +62,10 @@ export const RECOGNITION_GAP: Figure[] = [
   {
     id: 'no-degree',
     value: '62%',
-    label: 'of American adults hold no bachelor’s degree',
+    label: 'of American adults aged 25 and over hold no bachelor’s degree',
     status: 'sourced',
     source: 'census2022',
-    basis: 'Aged 25 and over. 37.7% hold a bachelor’s or higher.',
+    basis: '37.7% hold a bachelor’s or higher.',
   },
   {
     id: 'one-in-700',
@@ -81,14 +81,14 @@ export const RECOGNITION_GAP: Figure[] = [
   {
     id: 'pay',
     value: '+25%',
-    label: 'average salary increase for workers hired without a degree, where it did take hold',
+    label: 'average salary increase for workers hired without a degree, where skills-based hiring took hold',
     status: 'sourced',
     source: 'bgi2024',
   },
   {
     id: 'retention',
     value: '+10 pts',
-    label: 'higher retention than colleagues who held degrees',
+    label: 'retention compared with colleagues who held degrees',
     status: 'sourced',
     source: 'bgi2024',
   },
@@ -108,7 +108,7 @@ export const RECOGNITION_GAP: Figure[] = [
 export const TARGETS: Figure[] = [
   { id: 'learners', value: '6M', label: 'learners, at no cost to any of them', status: 'projection' },
   { id: 'credentials', value: '1.9M', label: 'credentials issued per year', status: 'projection' },
-  { id: 'share', value: '40%', label: 'of earned revenue goes to the educators who create the skills', status: 'internal' },
+  { id: 'share', value: '40%', label: 'of earned revenue goes to the educators who teach the skills', status: 'internal' },
   { id: 'costs', value: '96%', label: 'of costs met by earned revenue, never by learners', status: 'projection' },
 ]
 
@@ -144,7 +144,7 @@ export const MODEL_NOTE
 export const NTA_2025: Figure = {
   id: 'nta',
   value: '3.8M',
-  label: 'candidates sat NEET-UG and JEE Main in 2025',
+  label: 'candidates registered for NEET-UG and JEE Main in 2025',
   status: 'sourced',
   source: 'nta2025',
   basis: 'NEET-UG 22.76 lakh registered; JEE Main 15.4 lakh across two sessions.',

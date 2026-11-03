@@ -55,7 +55,7 @@ credentials), which answers a question the reader has not been asked yet.
 | :--- | :--- |
 | **/** | The thesis, the app replica, the evidence band, the problem, how it works, the free-forever structure, who pays, and what is *not* built yet |
 | **/why-recognition** | The evidence page. Sections `01`–`06` plus a sources appendix. Section 06, "What we do not know", names the two claims that could sink the project |
-| **/technology** | How identity, sync, integrity, plugins, the skill map and platforms work — named precisely enough to argue with |
+| **/technology** | How identity, sync, integrity, plugins, the skill graph and platforms work — named precisely enough to argue with |
 | **/learners** | Free, portable, offline; what it costs and what it does not |
 | **/employers** | Evidence, the problem they already have, the four-step mechanism, packaging, then "nobody has hired through this yet" |
 | **/institutions** | Self-host tier, what you get, who it fits, how you run it, then "no institution has deployed this yet" |

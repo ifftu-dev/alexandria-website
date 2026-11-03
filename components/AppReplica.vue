@@ -70,7 +70,7 @@ function say(message: string) {
  */
 const NAV: { key: string, label: string, d?: string, rings?: true }[] = [
   { key: 'home', label: 'Home', d: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
-  { key: 'opinions', label: 'Opinions', d: 'M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z' },
+  { key: 'opinions', label: 'Discussions', d: 'M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z' },
   { key: 'goals', label: 'Goals', rings: true },
   { key: 'skills', label: 'Skills & Credentials', d: 'M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z' },
   { key: 'community', label: 'Community', d: 'M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3' },
@@ -98,8 +98,8 @@ const OMNI = [
   { group: 'Skills', title: 'metallurgy.basics', kind: 'skill', to: 'skills' },
   { group: 'Credentials', title: 'Root pass, 6G pipe', kind: 'signed', to: 'skills' },
   { group: 'People', title: 'Ravi Kulkarni', kind: 'tutor', to: 'tutoring' },
-  { group: 'Classrooms', title: 'Welding · Batch 12', kind: '24', to: 'classroom' },
-  { group: 'Opinions', title: 'TIG-first curricula…', kind: 'debate', to: 'opinions' },
+  { group: 'Classrooms', title: 'Welding · Batch 12', kind: '24 members', to: 'classroom' },
+  { group: 'Discussions', title: 'TIG-first curricula…', kind: 'debate', to: 'opinions' },
   { group: 'Governance', title: '6G prerequisite proposal', kind: 'vote', to: 'community' },
 ] as const
 
@@ -301,7 +301,7 @@ onUnmounted(() => {
           </div>
           <div v-show="openSections.tutoring" class="sb-rows">
             <button type="button" class="sb-row" @click="go('tutoring')">
-              <span class="in">RK</span><span class="tt">Ravi K · System design</span><span class="sb-live" />
+              <span class="in">RK</span><span class="tt">Ravi K · System Design</span><span class="sb-live" />
             </button>
             <button type="button" class="sb-row" @click="go('tutoring')">
               <span class="in">AM</span><span class="tt">Aisha M · 6G root pass</span>
@@ -354,7 +354,7 @@ onUnmounted(() => {
             </span>
           </div>
 
-          <div class="sec-h"><b>Skill map</b><button type="button" @click="go('skills')">Open graph</button></div>
+          <div class="sec-h"><b>Skill graph</b><button type="button" @click="go('skills')">Open graph</button></div>
           <div class="card">
             <div class="graph">
               <button type="button" class="node lv3" @click="say('metallurgy.basics — open in the skill graph')">metallurgy.basics</button>
@@ -383,7 +383,7 @@ onUnmounted(() => {
 
         <!-- OPINIONS -->
         <section v-else-if="screen === 'opinions'" class="scr">
-          <p class="greet">Opinions</p>
+          <p class="greet">Discussions</p>
           <p class="greet-sub">Credentialed takes from practitioners who hold the skill</p>
           <div class="op">
             <div class="op-h"><span class="av">RK</span><span class="nm">Ravi Kulkarni</span><span class="cr">Welding · Create</span></div>
@@ -450,7 +450,7 @@ onUnmounted(() => {
         <!-- GOALS -->
         <section v-else-if="screen === 'goals'" class="scr">
           <p class="greet">Goals</p>
-          <p class="greet-sub">Tracked against the public skill map, not a streak counter</p>
+          <p class="greet-sub">Tracked against the public skill graph, not a streak counter</p>
           <div class="card goal">
             <span class="ring" style="--p:58"><span>58%</span></span>
             <span><span class="goal-t">Become an Engineering Manager</span><span class="goal-m">System design at Apply · 2 mentoring attestations short of Analyze</span></span>
@@ -484,7 +484,7 @@ onUnmounted(() => {
               </div>
             </div>
             <div class="ctl">
-              <button type="button" class="ctl-b on" @click="say('Mic stays on your device — the stream is peer to peer')">Mic</button>
+              <button type="button" class="ctl-b on" @click="say('Mic audio goes straight to Ravi’s device — the stream is peer to peer')">Mic</button>
               <button type="button" class="ctl-b on" @click="say('Camera on · encrypted, direct connection')">Camera</button>
               <button type="button" class="ctl-b" @click="say('Share a window or the whole screen')">Share</button>
               <button type="button" class="ctl-b leave" @click="say('Leaves the session — nothing is recorded anywhere')">Leave</button>
@@ -497,17 +497,17 @@ onUnmounted(() => {
           <div class="sec-h"><b>This session</b><button type="button" @click="go('skills')">Open skill</button></div>
           <div class="card agenda">
             <span class="ag-row"><b>Reviewing</b>systems.design.tradeoffs · at Apply, aiming for Analyze</span>
-            <span class="ag-row"><b>Evidence</b>Ravi can attest the skill afterwards — you keep the credential</span>
+            <span class="ag-row"><b>Evidence</b>Ravi can attest to the skill afterwards — you keep the credential</span>
             <span class="ag-row"><b>Notes</b>Stay yours, on this device</span>
           </div>
 
           <div class="sec-h"><b>Upcoming</b><button type="button" @click="say('Mentors are ranked per skill by whether their learners actually progressed')">Find a mentor</button></div>
           <button type="button" class="card slot" @click="say('Thursday 18:00 · joins directly, no lobby')">
             <span class="live-av sm">AM</span>
-            <span><span class="goal-t">Aisha M · 6G root pass review</span><span class="goal-m">Thursday 18:00 local · 45 min · screen-share from the booth camera</span></span>
+            <span><span class="goal-t">Aisha M · 6G root pass review</span><span class="goal-m">Thursday 18:00 local · 45 min · video from the booth camera</span></span>
             <span class="slot-when">Thu</span>
           </button>
-          <button type="button" class="card slot" @click="say('Sunday 09:30 · mock interview, one to one')">
+          <button type="button" class="card slot" @click="say('Sunday 09:30 · mock interview, one-on-one')">
             <span class="live-av sm">DS</span>
             <span><span class="goal-t">Dev S · Mock system design interview</span><span class="goal-m">Sunday 09:30 local · 60 min · counts toward the EM goal</span></span>
             <span class="slot-when">Sun</span>
@@ -517,7 +517,7 @@ onUnmounted(() => {
         <!-- CLASSROOM -->
         <section v-else class="scr">
           <p class="greet">System Design · Cohort 4</p>
-          <p class="greet-sub">Invite-only · 24 members · you decide who's in</p>
+          <p class="greet-sub">Invite-only · 24 members · you decide who’s in</p>
 
           <div class="card chan">
             <span class="chan-row on"><b>#</b>announcements<i class="chan-n">2</i></span>
@@ -532,14 +532,14 @@ onUnmounted(() => {
               <span class="msg-av ins">MR</span>
               <span class="msg-b">
                 <span class="msg-h">Meera R <i>instructor</i><em>09:12</em></span>
-                <span class="msg-t">Design review Friday. Bring a diagram — we assess the tradeoffs you argue for, not the diagram itself.</span>
+                <span class="msg-t">Design review Friday. Bring a diagram — we assess the trade-offs you argue for, not the diagram itself.</span>
               </span>
             </div>
             <div class="msg">
               <span class="msg-av">DS</span>
               <span class="msg-b">
                 <span class="msg-h">Dev S<em>09:31</em></span>
-                <span class="msg-t">Is the assessment offline? I'm on patchy wifi this week.</span>
+                <span class="msg-t">Is the assessment offline? I’m on patchy Wi-Fi this week.</span>
               </span>
             </div>
             <div class="msg">

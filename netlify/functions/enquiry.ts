@@ -107,7 +107,7 @@ export default async function handler(request: Request): Promise<Response> {
   const base = (process.env.PLUNK_API_BASE ?? DEFAULT_BASE).replace(/\/$/, '')
   if (!apiKey) {
     console.error('enquiry: PLUNK_API_KEY is not set')
-    return json({ ok: false, error: 'Enquiries are not configured yet. Try again shortly.' }, 503)
+    return json({ ok: false, error: 'Inquiries are not configured yet. Try again shortly.' }, 503)
   }
 
   const auth = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` }
@@ -164,8 +164,8 @@ export default async function handler(request: Request): Promise<Response> {
         to: process.env.ENQUIRY_TO ?? DEFAULT_TO,
         from: process.env.PLUNK_FROM ?? DEFAULT_FROM,
         name: process.env.PLUNK_FROM_NAME ?? DEFAULT_FROM_NAME,
-        subject: `${audience} enquiry — ${organisation || email}`,
-        body: `<p>New ${escapeHtml(audience)} enquiry.</p><table>${rows}</table>`
+        subject: `${audience} inquiry — ${organisation || email}`,
+        body: `<p>New ${escapeHtml(audience)} inquiry.</p><table>${rows}</table>`
           + (context ? `<p><b>What they said</b><br>${escapeHtml(context).replace(/\n/g, '<br>')}</p>` : '')
           + `<p>Reply to <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>.</p>`,
       }),

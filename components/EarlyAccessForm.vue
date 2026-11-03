@@ -104,7 +104,7 @@ async function submit() {
     // Only reachable if detection failed and they submitted without choosing.
     expanded.value = true
     state.value = 'error'
-    errorMessage.value = 'Pick at least one platform, so we know what to tell you about.'
+    errorMessage.value = 'Pick at least one platform so we know what to tell you about.'
     return
   }
 
@@ -200,7 +200,7 @@ async function submit() {
 
       <div v-if="expanded" id="ea-more" class="ea-more">
         <fieldset class="ea-set">
-          <legend class="ea-legend">I'm joining as</legend>
+          <legend class="ea-legend">I’m joining as</legend>
           <div class="ea-chips" role="group" aria-label="Role">
             <span class="ea-chip on locked">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
@@ -219,11 +219,11 @@ async function submit() {
               @click="toggleRole(r.id)"
             >{{ r.label }}</button>
           </div>
-          <p class="ea-hint">Everyone is a learner, so that one stays on. Add another if you'll also teach or follow a child's learning — changeable in the app later.</p>
+          <p class="ea-hint">Everyone is a learner, so that one stays on. Add another if you’ll also teach or follow a child’s learning — you can change this in the app later.</p>
         </fieldset>
 
         <fieldset class="ea-set">
-          <legend class="ea-legend">Platforms I'd use</legend>
+          <legend class="ea-legend">Platforms I’d use</legend>
           <div class="ea-chips">
             <label
               v-for="p in PLATFORMS"
@@ -244,24 +244,24 @@ async function submit() {
           <p class="ea-hint">
             {{ detected === 'unknown'
               ? 'Pick as many as you like.'
-              : `We guessed ${detectedLabel} — change it if that's wrong, or add more.` }}
+              : `We guessed ${detectedLabel} — change it if that’s wrong, or add more.` }}
           </p>
         </fieldset>
       </div>
 
       <p class="ea-note" :class="{ 'ea-err': state === 'error' }" role="status" aria-live="polite">
-        {{ state === 'error' ? errorMessage : 'This joins the waiting list, not the alpha — we email you when it’s your turn.' }}
+        {{ state === 'error' ? errorMessage : 'This joins the waiting list, not the alpha — we’ll email you when it’s your turn.' }}
       </p>
     </form>
 
     <div v-else class="ea-done" role="status" aria-live="polite">
       <span class="ea-tick" aria-hidden="true">✓</span>
       <div>
-        <p class="ea-done-t">You're on the waiting list.</p>
+        <p class="ea-done-t">You’re on the waiting list.</p>
         <p class="ea-note">
-          Check your inbox — we've sent a confirmation. This doesn't open the alpha yet: we'll
-          email you what to do next when we have apps on these platforms ready for you to take on
-          a test drive. Don't worry! It's close :)
+          If this address is new to the list, a confirmation is on its way. This doesn’t open the alpha yet: we’ll
+          email you what to do next when we have apps on these platforms ready for you to take for
+          a test drive. Don’t worry! It’s close :)
         </p>
       </div>
     </div>

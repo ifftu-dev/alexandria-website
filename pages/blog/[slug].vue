@@ -167,7 +167,7 @@ useHead({
 
       <footer class="pad art-foot">
         <div class="art-foot-in">
-          <p class="art-foot-t">Alexandria is free, open source, and filling its alpha in groups.</p>
+          <p class="art-foot-t">Alexandria is free and open source, and its alpha is opening in groups.</p>
           <div class="art-foot-cta">
             <button type="button" class="btn-gradient plausible-event-name=EarlyAccess" @click="useWaitlist().open()">
               Join the waiting list
